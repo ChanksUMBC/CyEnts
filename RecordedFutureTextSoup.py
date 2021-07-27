@@ -109,6 +109,7 @@ def Main():
             info = {"metadata" : metadata, "text": text}
             source = {url: info}
             json.dump(source, file)
+            file.write("\n")
 
             data["data"].append(source)
 
