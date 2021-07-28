@@ -84,7 +84,7 @@ def Main():
 
         data = {"data": []}
 
-    with open("ibmText.jsonl","w") as file:
+    with open("ibmText.jsonl","w",encoding="utf-8") as file:
         for url in linkList:
             print(url)
 
@@ -104,5 +104,5 @@ def Main():
 
             data["data"].append(source)
 
-    with open("ibmText.json","w") as file:
+    with open("ibmText.json","w",encoding="utf-8") as file:
         json.dump(data, file, indent=4)

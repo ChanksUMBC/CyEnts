@@ -84,7 +84,7 @@ def Main():
 
         data = {"data": []}
 
-    with open("kaperskyText.jsonl","w") as file:
+    with open("kaperskyText.jsonl","w",encoding="utf-8") as file:
         for url in linkList:
             print(url)
 
@@ -99,10 +99,10 @@ def Main():
             metadata = {"dateAccessed":currTime, "dateCreated":timeCreated, "source":source}
             info = {"metadata" : metadata, "text": text}
             source = {url: info}
-            json.dump(source, file)
+            json.dump(source, file, ensure_ascii=False)
             file.write("\n")
 
             data["data"].append(source)
 
-    with open("kaperskyText.json","w") as file:
-        json.dump(data, file, indent=4)
+    with open("kaperskyText.json","w",encoding="utf-8") as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)
