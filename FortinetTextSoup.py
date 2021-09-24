@@ -48,6 +48,20 @@ def GetText(soup):
     text = joinChar.join(strings)
     return text
 
+def GetUnstrippedText(soup):
+
+    strings = []
+
+    body = soup.find_all("div", "cmp cmp-text aem-GridColumn aem-GridColumn--default--12")
+    
+    for item in body:
+        text = item.strings
+        for line in text:
+            if(len(line) >= 100):
+                strings.append(line)
+
+    return strings
+
 
 def GetSource(url):
 
@@ -102,3 +116,21 @@ def Main():
 
     with open("fortinetText.json","w",encoding="utf-8") as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
+
+    with open("fortinetParagraphgs.txt", "w",encoding="utf-8") as file:
+        for source in sourceList:
+
+            linkList = GetRSSLinkList(source)
+
+            for url in linkList:
+                print(url)
+
+                soup = GetSoup(url)
+
+                text = GetUnstrippedText(soup)
+
+                for item in text:
+                    file.write(item)
+                    file.write("\n")
+                    file.write(":\/:")
+                    file.write("\n")

@@ -1,0 +1,350 @@
+                Why Monitoring the Dark Web is Essential for Third-Party Risk Management                            
+:\/:
+The dark web is often portrayed as vast, mysterious, and out of reach for companies without specialized expertise. In reality, the dark web is one of the 
+:\/:
+ in the cybersecurity industry today. However, if you cut through the noise, you’ll find that the dark web is an enormously valuable source of information for third-party risk management professionals. 
+:\/:
+The dark web is a subset of the Internet. It’s accessible via special software such as Tor that allows users and website operators to remain anonymous or untraceable. Websites on the dark web operate in their own unique environment, separated from surface sites such as Amazon, eBay, or Youtube. Cybercriminals use the dark web to coordinate and execute cyber attacks, as well as to sell stolen data and even exploits into companies. 
+:\/:
+However, not all parts of the dark web are equal. Many portions are accessible to anyone willing to download Tor. The information you find in these relatively easy-to-access parts of the dark web are often of limited value. Other parts of the dark web are invite-only, requiring special access that requires years of effort developing personas accepted among the cybercriminal community. This closed part of the dark web is where one more often can find information of high value. These closed channels, also known as the criminal underground, can extend beyond the proper dark web and into private criminal forums hosted on Telegram, Discord, and other places.
+:\/:
+Third-party risk management teams are tasked with assessing risk across the entire full vendor lifecycle, from vendor selection to relationship termination. When it comes to assessing cybersecurity risk, one of the most important questions to understand is “has my vendor recently experienced a cyber attack or breach?”
+:\/:
+Unfortunately, current methods to assess this information – questionnaires, onsite audits, and  penetration testing – can’t fully answer this question.
+:\/:
+The dark web provides a unique view into that you cannot get elsewhere, helping identify several high-risk factors that a vendor has, or is about to breached:  
+:\/:
+Ransomware operators use extortion sites to threaten their victims into paying ransoms, under threat of publicly releasing stolen data. While the practice is deplorable, these dark web sites provide an early warning signal that one of your third-parties has been struck by ransomware. In some cases you can even use the sites to verify if any of your data was leaked via your third-party. 
+:\/:
+Sensitive data including IP, PII, and HIPAA information frequently find their way to the dark web, likely indicating a breach of a third-party.
+:\/:
+Company email addresses and passwords are often for sale on the dark web. Leaked credentials indicate a potential attack coming soon.
+:\/:
+Some threat actors use the dark web to sell direct access to a company through a vulnerability. By identifying the sale of these vulnerabilities, you can proactively stop future breaches of your third parties. 
+:\/:
+Threat actors are known to discuss their recent attacks and upcoming plans on underground channels. Keeping a close eye on mentions of your third parties can help you stay in front of breaches and upcoming cyber attacks. 
+:\/:
+The dark web is too widespread and complex for any single individual to successfully monitor. Third-party intelligence from Recorded Future does that work for you, by automatically collecting and analyzing posts from the dark to deliver high-confidence indicators of risk including ransomware extortion, leaked credentials, and high-volumes of attention on high-tier forums.
+:\/:
+Third-party risk professionals use third-party intelligence to stay on top of their vendors, allowing them to proactively identify and mitigate risk as it surfaces.
+:\/:
+Figure 1: A company intelligence card, highlighting that the company Aperture Science had recent attention on the Netwalker ransomware extortion site. 
+:\/:
+                Simplify and Accelerate Threat Hunting with High-Speed, High-Confidence Threat Intelligence                            
+:\/:
+As your attack surface continues to grow — expanding into the cloud and employees working from their homes — there are even more opportunities for threat actors to breach your organization. Relying on disparate threat feeds and static reports is manual and inefficient, often leading to incomplete threat research and missed threats. 
+:\/:
+To detect and address today’s rapidly evolving threats, security teams need contextualized, high-confidence intelligence. The 
+:\/:
+ pairs high-speed, large-scale collection and automated link analysis to produce high-confidence indicator linkages. These validated linkages are powered by midpoint data sources like 
+:\/:
+, malware sandbox analysis, infrastructure analysis, enabling threat hunters to save time on investigation and radically simplify behavior profiling techniques to inform their security strategies and defenses. 
+:\/:
+, which uses machine-learning and natural language processing to produce real-time, validated intelligence and the most complete picture of your threat landscape. Enhancements to the Threat Intelligence solution arms threat hunters with an unmatched combination of speed, scale, and context so you can:
+:\/:
+The Intelligence Graph collects, aggregates, analyzes, and connects data in any language from a vast number of attacker, midpoint, and victim data sources to produce real-time, validated intelligence.
+:\/:
+Get access to over 5B Intelligence Cards™, which distill everything that’s known about a threat into a single view with dynamic risk scores and rules, to give you the context you need to inform your defenses, expedite threat hunting efforts, and solidify your security strategy. 
+:\/:
+Get instant access to Recorded Future’s cyber repository of high-confidence intelligence and advanced querying capabilities to fuel deep, tailored investigations. Automatically insert threat hunting packages, malware detection rules, and more, into your existing network, endpoint, and malware security solutions to detect more threats and harden your security controls.
+:\/:
+Recorded Future provides access to the largest real-time, automated collection of dark web information to support advanced dark web investigations and provide greater visibility on data leaks, credential harvesting, malware-as-a service offerings, and more. This includes hacker, criminal, invitation-only sites, and extremist forums. Our world class team of human threat intelligence analysts identify, access, and maintain persistence with closed, insider-access forums to support ongoing real-time collection. 
+:\/:
+High-confidence insights, updated in real time, and backed by transparent scoring give threat hunters the information they need to disrupt adversaries and prevent damage to their organization. 
+:\/:
+ of Recorded Future’s Threat Intelligence solution to see how Recorded Future’s high-confidence intelligence can be used to proactively detect, monitor, and defend against adversaries and their threats. 
+:\/:
+                How Contextualized Intelligence Maximizes Security Outcomes in SecOps Tools                            
+:\/:
+As the attack surface grows,  it’s difficult for security teams to maintain a comprehensive, real-time view of the threats at an operational level. With too little time and not enough information, analysts struggle to determine which alerts represent a critical incident and which may just be a redundancy or a false positive — all while true positives may be slipping through the cracks.
+:\/:
+To effectively respond to the multitude of alerts generated each day, security operations teams need a way to prioritize which alerts to focus on so they can maximize their efforts and mitigate risks. The 
+:\/:
+ create clarity in decision making by adding rich context within an organization’s existing SecOps tools to optimize threat detection and response workflows, ultimately reducing risk for the organization.
+:\/:
+When internal alerts come from non contextual threat feeds and disparate systems, they lack the vital information needed for confident, quick threat remediation. Analysts spend valuable cycles manually researching IOCs, only to find incomplete pieces of what they need. With high-confidence, actionable intelligence tailored to SecOps use cases, analysts can spend more time proactively improving the security posture of their organization.
+:\/:
+Recorded Future provides automated, verified intelligence that connects the dots between indicators at scale, providing SecOps analysts with a more complete view of risk to their organization. With 
+:\/:
+ capabilities, Recorded Future SecOps Intelligence module now offers clients even more actionable insights into suspicious and potentially malicious behavior, saving analysts investigation time and enabling comprehensive threat detection, hunting, and blocking workflows in SIEM and SOAR solutions.
+:\/:
+Recorded Future connects the dots between the broadest range of sources to provide the critical context security operations analysts need to quickly discount false positives and identify the most significant threats. Recorded Future’s real-time, machine-readable intelligence makes it easy to access Recorded Future’s automated SecOps intelligence in your unique security tech stack. Our technology partner ecosystem, which includes 
+:\/:
+, the Recorded Future’s new plug-in allows users to detect critical threats and access full context, by correlating external threat intelligence against internal telemetry data in Splunk Mission Control. A correlation dashboard then provides
+:\/:
+ with visibility into technical indicators — and empowers them to make prioritization decisions based on a real-time Recorded Future risk score that is backed by transparent evidence. Splunk analysts can also get hands-on experience of real-time security intelligence to improve threat visibility and accelerate incident response through a 
+:\/:
+The explosive growth of indicators makes finding the needle in the haystack extremely resource-intensive for already overwhelmed security teams. With Recorded Future intelligence, security teams using 
+:\/:
+ over Rapid7 InsightIDR allows users to enrich newly identified threats with evidence-based, real-time risk scores and risk rules — all without having to leave Rapid7 InsightIDR. This empowers users to confidently prioritize the most important findings in their environment, simplify workflows, and maximize the ROI of existing cybersecurity solutions.
+:\/:
+High-confidence insights, updated in real time, and backed by transparent scoring give security operations teams the information they need to disrupt adversaries and prevent damage to their organization. 
+:\/:
+ of Recorded Future’s SecOps Intelligence module to see how you can equip your organization with the right intelligence, at the right time, in the right format, and empower them to identify and prevent threats faster within your SecOps tools and workflows.
+:\/:
+                Powering Enterprise Security with End-to-End Threat Visibility                            
+:\/:
+As your attack surface grows — expanding into the cloud and employees’ homes — there are even more opportunities for threat actors to breach your organization. Relying on disparate threat feeds and static reports is manual and inefficient, often leading to incomplete threat research and missed threats. If you want to uncover and disrupt threats before they impact your business, you need to understand what poses a real risk as quickly as possible.
+:\/:
+Contextualized security intelligence is a crucial component of a truly proactive security strategy. Forrester even emphasizes the necessity of actionable threat intelligence to “drive compelling cyber risk management processes” in their newest report, 
+:\/:
+. In order to minimize risk and maximize security outcomes, organizations must consider integrating real-time security intelligence at both operational and strategic levels of their security program. And now, with the new capabilities for its 
+:\/:
+ solutions, Recorded Future clients are armed with real-time, high-confidence intelligence for faster identification and triage of security concerns within existing security tech stacks and workflows.
+:\/:
+ arms security teams with vital information they need to inform their organization’s security strategy and proactively detect, monitor, and defend against adversaries. Today, Recorded Future 
+:\/:
+ several enhancements to its Threat Intelligence module, simplifying and accelerating advanced behavioral profiling techniques with access to even more validated, high-confidence intelligence. 
+:\/:
+, which collects, aggregates, analyzes, and connects data in any language from a vast number attacker, midpoint, and victim data sources to produce validated intelligence and provide the most complete picture of your organization’s threat landscape. 
+:\/:
+ malware sandbox analysis, and infrastructure analysis dramatically reduces advanced threat research and reporting workflows. Automatically insert 
+:\/:
+, malware detection rules, and more, into your existing network, endpoint, and malware security solutions to detect more threats and harden your security controls.
+:\/:
+, making it easier than ever before to access an end-to-end view of your threat landscape with automated, actionable security intelligence — all directly integrated into your unique security tech stack and workflows for faster threat detection and response.
+:\/:
+Recorded Future connects the dots between the broadest range of sources to provide the critical context security operations analysts need to quickly discount false positives and identify the most significant threats. Real-time, machine-readable intelligence and an ever-expanding technology partner ecosystem, with 
+:\/:
+ currently, simplifies access to high-confidence indicator insights for more confident threat identification and remediation: 
+:\/:
+ with the real-time information and supporting evidence they need to detect threats earlier and prioritize their findings with confidence. Splunk analysts can also get hands-on experience of real-time security intelligence to improve threat visibility and accelerate incident response through a 
+:\/:
+The explosive growth of indicators makes finding the needle in the haystack extremely resource-intensive for already overwhelmed security teams. With Recorded Future intelligence, security teams using 
+:\/:
+ also enables analysts to enrich newly identified threats with evidence-based, real-time risk scores and risk rules — all without having to leave Rapid7 InsightIDR. 
+:\/:
+To learn more about how your organization can integrate an end-to-end view of threats at operational and strategic levels of your security program, download the Forrester report, 
+:\/:
+                Reducing Risk For the Modern Supply Chain With Third-Party Intelligence                            
+:\/:
+ are at an all-time high, and the proliferation of threat actors, ransomware groups, and targeted attacks on your third parties means that companies have serious cause for concern. The cybersecurity community was rocked by the news of 
+:\/:
+Traditional methods to manage third-party risk can’t keep up. Governance, risk, and compliance (GRC) teams, as well as their security counterparts, continue to struggle to accurately assess risk given the continually shifting circumstances surrounding who they do business with. And for many, maintaining on-going visibility into their vendors’ constantly changing risk profile is a difficult or impossible task.
+:\/:
+GRC and security teams need a proactive approach to identify, manage, and mitigate third-party risk, and intelligence is here to help. Intelligence acts as a source of truth on key risk indicators, eliminating the guesswork associated with assessing vendor risk. It reduces the time you spend on vendor risk assessments by 50%, and greatly enhances the quality of those assessments.
+:\/:
+Most importantly, intelligence gives you the confidence and context you need to take control of third-party risk. There’s no need for panicked responses to breaking news on third-party breaches. Intelligence enables you to stay in front of a constantly changing risk landscape.
+:\/:
+ uses the power of the world’s largest commercial collection platform to provide the most complete picture of cyber risk. By automatically collecting, aggregating, and analyzing information from over one million distinct sources, Recorded Future is able to provide real-time visibility into the risks of your third parties. Leveraging our proprietary data sourcing and unique background as an intelligence provider, we provide unprecedented insight into a wide range of security risks to allow you to instantly assess risk including:
+:\/:
+ — Cyber attacks and security breach disclosures are essential risk indicators to monitor third parties for. Our threat research team Insikt Group often adds their own analysis to major security incidents, giving you fast insight into what happened, why it matters, and what you can do about it
+:\/:
+ — Infrastructure abuse such as communication with C2 servers, hosted TOR notes, and malware detections all indicate that a company is highly vulnerable to attack.
+:\/:
+ — Cybercriminals often use the dark web and other underground channels to discuss cyber attacks involving your third parties. Ransomware extortion sites, for example, are a high-risk indicator that your third party was likely struck by ransomware. However, not all dark web sites are equal. Recorded Future is the only third-party intelligence provider granting access to invite-only, high-tier dark web forums.
+:\/:
+ — Exposed data from business accounts used by employees on dark web and paste sites leave third-parties exposed to credential stuffing attacks and account impersonation. Our massive collection of leaked credentials and data dumps is constantly growing.
+:\/:
+For a long time, threat intelligence has held a reputation as being complex and inaccessible to those without a background in it. In fact, ten years ago, the notion of a GRC team actively consuming threat intelligence would have been laughable.
+:\/:
+Recorded Future’s Third-Party Intelligence module is specifically created for the GRC team, providing key risk indicators that help to assess, monitor, and mitigate risk. Transparent remediation details are provided with all findings, giving GRC teams the leverage they need to work with their third-parties to mitigate risk.
+:\/:
+, making it simple to incorporate intelligence directly within existing business practices. If your organization uses NIST as the basis of vendor risk assessments, you can easily map intelligence directly to your questionnaire, allowing you to quickly validate submissions.
+:\/:
+GRC teams and security teams both want to protect the business. However, they often use different terminology, frameworks, and technologies to do their jobs, creating misalignment and miscommunication when the teams need to work together. Modular intelligence offerings from Recorded Future work as your middleman, providing a common language and platform to understand, communicate, and action risk across teams.
+:\/:
+,” on Wednesday, March 31 at 10:00 AM ET to learn how third-party intelligence can help protect your organization.
+:\/:
+, to support security operations teams in developing an end-to-end threat management and security operations strategy. Now more than ever, speed to detect, investigate and remediate threats is key to reduce dwell time and impact of security cyberattacks. 
+:\/:
+ to see how a tightly integrated end-to-end process of threat management can improve your team’s ability to make decisions quickly and mitigate risk.
+:\/:
+As the attack surface grows, the abundance of security threats puts added stress on already overworked security professionals struggling to pinpoint, triage, and respond to real threats targeting their organization. With too little time and not enough information, trying to determine if an alert represents a critical incident or a false positive wastes valuable time while true positives may be slipping through the cracks.
+:\/:
+With IBM Security solutions, you can unite your defenses across the four pillars of threat management – visibility, detection, investigation and response. IBM Security provides real-time monitoring and correlation of the vast amount of security events and network traffic in your organization for faster identification and remediation of incidents. Augmenting these events and alerts with real-time intelligence from Recorded Future delivers more context to improve analyst efficiency and confidence. Using 
+:\/:
+, analysts can reduce time spent understanding “why” an IOC is bad, and more time mitigating risk in their environment.
+:\/:
+ teams need a way to prioritize which alerts to focus on first so they can optimize their effort for maximum risk reduction. Security intelligence from Recorded Future creates clarity by adding rich context 
+:\/:
+. Relevant insights, updated in real time, give security operations analysts the insights they need — when and where they need them — to make faster, more confident security decisions.
+:\/:
+ automates the collection, analysis, and production of security intelligence at scale to drive accelerated responses across vast amounts of data. Using a sophisticated combination of our patented algorithm process and world-class human analysis, Recorded Future fuses the broadest range of open source, dark web, technical sources, and original research. This results in relevant insights integrated with IBM Security QRadar to empower security operations analysts with the insights they need to improve threat detection and response times.
+:\/:
+, the Recorded Future and IBM Security QRadar joint solution resulted in a 25% reduction of false positive QRadar offenses. Keita Nagase, OIST chief information security officer, also shared, “By integrating intelligence into our existing IBM Security QRadar system and workflows, and automating analysis, we believe we have improved the accuracy and operational efficiency of security monitoring by a factor of three or four.”
+:\/:
+Orchestration and automation are key drivers for digital transformation, enabling organizations to optimize existing processes, lower costs, fill personnel gaps, and gain a competitive edge. Recognizing these clear benefits, 
+:\/:
+ are embracing SOAR technology to collect and analyze threat data from multiple sources and automate repeatable incident response tasks. But for SOAR solutions to work effectively, they require a series of defined playbooks designed to automate repeatable security workflows — and these playbooks are only as smart and effective as the data used to construct them.
+:\/:
+IBM Security SOAR helps security teams respond to cyber threats with confidence, automate with intelligence, and collaborate with consistency. It captures and codifies established incident response processes into dynamic playbooks to guide and empower security analysts with knowledge to resolve incidents.
+:\/:
+Augmenting investigations with external intelligence from Recorded Future allows analysts to resolve incidents faster, validate risk assigned to artifacts, and reduce overall risk to the organization. Recorded Future delivers more context than threat feeds, updates in real time so intelligence stays relevant, and 
+:\/:
+. With access to the right intelligence from the broadest set of sources, you can trust that IBM Security SOAR has all the information it needs to automatically make real-time decisions that strengthen your organization’s security.
+:\/:
+Security operations teams are inundated with alerts and threats making it difficult for them to identify what is important.  
+:\/:
+ integrated into third-party products can help prioritize, but one size doesn’t fit all when it comes to intelligence, and bad data can actually lead to more noise.  At Recorded Future we improve security by making it easier to find and address the alerts that matter using  external context around potential threats.
+:\/:
+One of our core guiding principles at Recorded Future is that security intelligence is for everyone. No matter what security role you have or business area you work in within your organization, intelligence makes a big difference. This is why we introduced 
+:\/:
+ — our browser extension that delivers real-time risk scores and context on indicators of compromise and vulnerabilities at zero cost.
+:\/:
+ to dramatically accelerate investigation time. Intelligence is delivered directly on top of AWS GuardDuty, making it fast and easy to ensure that your AWS environment is protected. Use Recorded Future Express with AWS GuardDuty to speed up threat detection, investigation, and response to threats.
+:\/:
+When you see a finding in your AWS GuardDuty platform that you are interested in, simply click on it and then activate that Recorded Future Express browser extension. Express automatically reads the page and reports back with a simple 0-99 risk score, helping you to quickly determine whether you should be concerned. Recorded Future also provides context, showing you exactly why an indicator is risky. You can use this to quickly determine if an alert merits escalation.
+:\/:
+                Security Intelligence Handbook Chapter 10: A Different Kind of Brand Protection                            
+:\/:
+The Security Intelligence Handbook: How to Disrupt Adversaries and Reduce Risk with Security Intelligence
+:\/:
+It only takes one financially motivated criminal, dissatisfied customer, or disgruntled employee to tarnish your company’s hard-earned 
+:\/:
+. Fake or malicious online content, data leaks, and more can negatively influence customers and create 
+:\/:
+Security analysts could spend virtually all of their time scoring the internet for company mentions and analyzing data points and still not be able to keep up with constantly morphing brand threats.   
+:\/:
+, you need to see everywhere your organization’s name, associated products, executive names, and keywords exist across the internet — at any given moment.
+:\/:
+ to not only map, monitor, and score events related to brand risk, but also making it easy to take down malicious content, such as typosquat domains and  disinformation on social media.
+:\/:
+The Security Intelligence Handbook, Third Edition: How to Disrupt Adversaries and Reduce Risk With Security Intelligence
+:\/:
+.” In this excerpt, which has been edited and condensed, see how a large HR solutions provider defeated typosquatting with a proactive approach to digital brand protection: 
+:\/:
+Brand protection involves safeguarding an organization’s image, reputation, and customers from attacks that primarily never touch its network or systems. These threats include: 
+:\/:
+Fake websites and social media accounts used to impersonate the organization or its employees for fraud and phishing attacks
+:\/:
+Malicious content and false information about the organization and its products posted on websites and social media platforms
+:\/:
+Most of these threats are posed by financially motivated criminals, but they may also involve hacktivists, dissatisfied customers, competitors, and careless or disgruntled employees who reveal information online. 
+:\/:
+To truly protect your brand, you need to be concerned about threats that leverage it to harm or influence your customers. Customers who are lured into a scam or fraud from an imitation of your website may hold your organization responsible. Those who buy a low-quality, counterfeit version of your product from an online marketplace may lose trust in your brand. Those who think one of your executives has published offensive content on the web may boycott your products — even if it wasn’t your executive who posted it. Pleading “it wasn’t our fault” won’t restore their trust or your reputation in any of these scenarios. 
+:\/:
+Most of the activities we have been discussing in this handbook involve creating intelligence about attackers and their tools. Brand intelligence includes some of that, as well, but the emphasis is instead on detecting your organization’s name and brand everywhere they occur across the internet. 
+:\/:
+You need to be rigorous about listing and searching for mentions of all your brand and product names, and keywords that are associated with them. These include the names of:
+:\/:
+It also includes trademarks, service marks, and advertising slogans that appear on your organization’s authorized websites, since these are frequently used on phony websites. 
+:\/:
+Knowing what to look for empowers you to find evidence of brand impersonation and abuse in places many organizations never search. For example, a brand intelligence solution enables you to: 
+:\/:
+Search domain registries to find domain names that include your organization or product name, or variations of them
+:\/:
+Monitor social media to alert you to hashtags that include your organization or product name, or variations of them
+:\/:
+Scan social media to detect accounts that claim to belong to your organization, your executives, or your employees
+:\/:
+Typosquatting involves manipulating the characters in an organization’s domain name into nearly identical domains. For instance, threat actors targeting example.com might create a typosquat URL of exanple.com. Attackers often register thousands of domains differing by a single character from their target organizations’ URLs. They do this for reasons ranging from suspicious to fully malicious. 
+:\/:
+Rogue websites using these modified domain names are built to look like legitimate websites. The rogue domains and websites are often used in spear-phishing campaigns against employees or customers, watering-hole attacks, and drive-by download attacks. 
+:\/:
+Being alerted to newly registered phishing and typosquatting domains in real time is the best way to narrow the window of opportunity for threat actors to impersonate your brand and defraud unsuspecting users. Once the malicious infrastructure is identified, you’re able to employ a takedown service to nullify the threat. 
+:\/:
+By monitoring the web — including private forums on the dark web — brand intelligence solutions enable you to uncover evidence of data breaches within your organization and partner ecosystem. You may find: 
+:\/:
+It’s often possible to narrow down the source of a leak by looking at exactly what information and artifacts are found on the web, where they are found, and what else is found in the same place. For example, if you find product designs or software code on a dark web site and recognize that they were shared with only a few suppliers, you would know to investigate the security controls of those suppliers as part of your third-party risk management program. If your organization’s name was mentioned on a hacker’s forum whose members are known to attack certain applications, you could increase protection of the targeted applications by patching the systems they run on, monitoring them more closely, and adding security controls. 
+:\/:
+Threat actors make money from many types of compromised personal information and corporate intellectual property. Examples of compromised data for sale on the dark web include medical records, cloned and compromised gift cards, and stolen credentials to “pay for” services like Netflix and Uber, and items charged via PayPal, as illustrated in Figure 10-1. 
+:\/:
+A high percentage of hacking-related breaches leverage stolen or weak passwords. Threat actors regularly upload massive caches of usernames and passwords to paste sites and the dark web, or make them available for sale on underground marketplaces. These data dumps may include corporate email addresses and passwords, as well as login details for other sites. 
+:\/:
+Monitoring external sources for this type of intelligence will dramatically increase your visibility — not just into leaked credentials, but also into potential breaches of corporate data and proprietary code. 
+:\/:
+Of course, mitigating digital risk to your brand is not simply a matter of stumbling across one typosquatting domain or some isolated piece of stolen data. Somebody, or something, has to do the broader work of collecting masses of data, sifting through thousands of data points, analyzing relationships among the data points, deciding priorities, and ultimately taking action. 
+:\/:
+: Automation at the data-collection stage saves analysts precious time. The best solutions gather data not only from open web sources, but also from the dark web and technical sources.
+:\/:
+: Through automation, advanced data science, and analytical techniques like natural language processing, effective brand intelligence tools enable analysts to link business attributes with related digital assets and detect, score, and prioritize events related to brand risk.
+:\/:
+: Robust brand intelligence solutions generate alerts and reports that provide information on how to remediate problems. They also integrate with tools that perform remediation immediately and with service providers that take down instances of domain abuse.
+:\/:
+This chapter is one of many in our new book that demonstrates how to disrupt adversaries and measurably reduce risk with security intelligence at the center of your security program. Additional chapters explore different use cases, including the benefits of security intelligence for 
+:\/:
+ within their own Splunk environment, empowering them to make faster, more confident security decisions.
+:\/:
+ is for everyone. Security intelligence provides clear, actionable context that all security roles can use, to work smarter and amplify their impact.
+:\/:
+ to collect, correlate, and analyze security event logs from a variety of sources across their network environments. SIEM tools were built to help teams quickly detect and respond to threats, while streamlining compliance reporting and post-incident investigation. Yet as the attack surface grows, the abundance of security alerts puts added stress on already overworked security professionals. 
+:\/:
+If you’re like most analysts, you’re plagued by alert fatigue and you struggle to pinpoint, triage, and respond to real threats targeting your organization using only information from your internal environment. You’re dealing with too little time and not enough information while your 
+:\/:
+ continues to generate thousands of security alerts each day, making it difficult to determine which alert represents a critical incident and which may just be a redundancy or a false positive. Valuable time is wasted getting to “no” for irrelevant alerts, while true positives may be slipping through the cracks.
+:\/:
+To effectively respond to the multitude of alerts generated each day, security operations teams need a way to prioritize which alerts to focus on first so they can optimize their effort for maximum risk reduction. Security intelligence from Recorded Future creates clarity by adding rich context within 
+:\/:
+. Relevant insights, updated in real time, give security operations analysts the insights they need — when they need them — to make faster, more confident security decisions.
+:\/:
+Recorded Future automates the collection, analysis, and production of security intelligence at scale to drive accelerated responses across vast amounts of data. Using a sophisticated combination of our patented algorithm process and world-class human analysis, Recorded Future fuses the broadest range of open source, dark web, technical sources, and original research. This results in relevant, real-time insights, integrated with Splunk to empower security operations analysts with the insights they need to accomplish the following use cases:
+:\/:
+: Recorded Future enriches Splunk alerts with a risk score that updates in real time and is backed by transparent evidence. This provides the context analysts need to quickly discount false positives, identify the most significant threats, and take immediate action.
+:\/:
+: Quickly identify potential threats by automatically correlating internal data with Recorded Future intelligence and risk scores. This enables you to detect threats earlier and respond faster by adding valuable context in Splunk to internal network observables from firewall, email security, and endpoint solutions.
+:\/:
+Relevant insights, updated in real time, and integrated out-of-the-box into Splunk give security operations teams the right information at the right time to disrupt adversaries and prevent damage to their organization. 
+:\/:
+                Security Intelligence Handbook Chapter 9: Manage Third-Party Risk in Real Time                            
+:\/:
+The Security Intelligence Handbook: How to Disrupt Adversaries and Reduce Risk with Security Intelligence
+:\/:
+.” Here, we’re looking at chapter nine, “Third-Party Intelligence.” To read the entire section, download your free copy of the handbook.
+:\/:
+. Yet supply chain attacks are not new, and most organizations are exposed to significant risks through their relationships with third parties. A recent Ponemon Institute study found 
+:\/:
+As both digital and physical supply chains grow in size and complexity, every third-party relationship introduces an element of risk to your organization. That’s why you need a way to objectively understand, monitor, and measure your exposure to third-party risk in real time across your supply chain.
+:\/:
+Static risk assessment methods often fall short. Spreadsheets, questionnaires, and email are labor-intensive, prone to error or bias, and only capture risk at a point in time. Not to mention that companies often learn that their third party suffered a breach days or weeks after they’ve been reported. Organizations need real-time intelligence on their third parties to take rapid and informed risk-based action. 
+:\/:
+ provides automated visibility at scale to identify risk exposures hidden across the third-party ecosystem so that security and risk teams are able to prioritize and proactively manage third-party risk.
+:\/:
+The Security Intelligence Handbook, Third Edition: How to Disrupt Adversaries and Reduce Risk With Security Intelligence
+:\/:
+.” In this excerpt, which has been edited and condensed, you’ll learn how to reduce your overall risk of data breaches and reputational damage brought about through vulnerable third parties:
+:\/:
+Because businesses and their supply chains are so tightly integrated, it’s critical to consider the security of your partners, vendors, and other third parties when assessing the risk profile of your own organization. 
+:\/:
+A recent survey by the Ponemon Institute, “Digital Transformation & Cyber Risk: What You Need to Know to Stay Safe,” found that 55 percent of organizations have had a breach that originated from a third party, and 53 percent say their tools for managing third-party risk are only somewhat effective or are not effective. These and related statistics are shown in Figure 9-1. 
+:\/:
+The writing is on the wall: Third-party attacks will continue to increase and get worse and will further complicate cyber risk management. 
+:\/:
+Traditional third-party risk assessment methods rely on static outputs, like self-assessments, financial audits, monthly reports about new vulnerabilities discovered in the systems an organization uses, and occasional reports on the status of security control compliance. All of these become outdated quickly, and they don’t provide the comprehensive intelligence you need to make informed decisions about managing third-party risks to your organization. 
+:\/:
+In contrast, real-time security intelligence, specifically thirdparty intelligence, enables you to accurately assess risk posed by third parties and keep assessments current as conditions change and new threats emerge. 
+:\/:
+Many of the most common third-party risk management practices employed today lag behind security requirements. Static assessments of risk — like financial audits and security certificate verifications — are still important, but they often lack context and timeliness. 
+:\/:
+Organizations following traditional approaches to managing third-party risk often use these three steps: 
+:\/:
+They attempt to understand their organization’s business relationship with a third party and how it exposes their organization to threats.
+:\/:
+Based on that understanding, they identify frameworks to evaluate the third party’s financial health, corporate controls, and IT security and hygiene, as well as how these factors relate to their own organization’s approach to security.
+:\/:
+Using those frameworks, they assess the third party to determine whether it is compliant with security standards like SOC 2 or FISMA. Sometimes they conduct a financial audit of the third party.
+:\/:
+While these steps are essential for evaluating third-party risk, they don’t tell the whole story. The outputs are static and cannot reflect quickly changing conditions and emerging threats. The analysis is often too simplistic to produce actionable recommendations. Sometimes, the final report is opaque, making it impossible to dig deeper into the methodology behind the analysis. All of these factors create blind spots that leave decision-makers unsure whether crucial pieces of information might have been overlooked. 
+:\/:
+When assessing third-party risk, do not rely entirely on self reporting questionnaires or a vendor’s inwardly focused view of their own security defenses. Round these out with an external, unbiased perspective on the vendor’s threat landscape. 
+:\/:
+To accurately evaluate third-party risk in real time, you need a solution that offers immediate context on the current threat landscape. Security intelligence — delivered in the form of third-party intelligence — provides critical context that enables you to determine which shortcomings in your supply-chain partners’ defenses represent meaningful risks to your organization. Those include not only the risks present at the time of assessment, but also current risks and a historical view — which provide even more context to detect, prevent, and resolve risks. 
+:\/:
+To manage risk for your organization, you need access to massive amounts of threat data from a wide variety of sources across the open web, the dark web, as well as technical and news sources and discussion forums. The same applies to assessing risks introduced by the third parties in your supply chain.
+:\/:
+However, given the scale of cybersecurity-related content from these sources, totaling billions of facts, you need a third-party intelligence solution that uses automation and algorithms to collect and analyze these details. It must be able to: 
+:\/:
+Analyze, classify, connect, fuse, and index data points using natural language processing and multiple analytical models
+:\/:
+Static assessments quickly become outdated. Weekly or monthly intelligence reports produced by human analysts provide essential overviews, but often arrive too late to enable effective action. Risk scoring is much more effective when it updates in real time and draws on a large pool of sources. These capabilities make risk scores much more reliable for making immediate assessments and reaching security decisions. 
+:\/:
+For example, a trading partner might generally be regarded as low risk based on standard reporting. However, let’s say the partner suffers a data breach that may or may not affect your organization. If you rely solely on static risk assessments, you likely won’t know the breach happened in the first place — or you’ll find out too late. You may have to wait too long to acquire the intelligence needed to accurately evaluate the risk. What was the cause of the breach? Was it an exploited vulnerability in a system used by the partner? A social engineering attack? Static assessments alone do not provide the evidence required to justify asking that third party to put additional security controls in place. 
+:\/:
+If you want to boost the effectiveness of your third-party risk program, start by thinking critically about five key questions: 
+:\/:
+What’s the point of a risk assessment if you can’t use it to get your third parties to take action? 
+:\/:
+Information without context leaves us like Cassandra in Greek mythology. In a bid for her love, the god Apollo gave her the gift of prophecy, but still she scorned his romantic advances. In his anger, Apollo let her keep her foresight, but he cursed her so that nobody would ever believe her warnings about the future. 
+:\/:
+Many risk assessments today suffer the same fate as Cassandra’s prophecies. When we rely on vague scoring methods or opaque sourcing, our advice is hard to accept, even if it’s accurate. Too often, organizations fail to act on intelligence because leaders don’t understand it or don’t know the source. 
+:\/:
+A security intelligence solution must show the risk rules that are triggered by an alert — and be transparent about its sources (Figure 9-2). This enables security professionals to see for themselves why something like an alert on a particular IP address might represent a real risk. The extra detail also eliminates the suspicion that information might have been overlooked. This context allows for faster due diligence and reference checking, including when evaluating static assessments. 
+:\/:
+What do you do when faced with high risk scores for a third party? Not every data breach justifies terminating business with that partner. Just about every organization contends with cyberattacks and unexpected downtime, and partners are no exception. The more important issue is how they (and you) deal with incidents and take steps to reduce future risks. 
+:\/:
+A change in risk scores may present an opportunity to talk with your business partners about their approach to security. On your end, it’s important to look more closely at whether the risk rules that were triggered will impact your organization’s network. For example, a partner’s risk score might increase because typosquatting websites closely resembling legitimate websites operated by the partner were discovered. Putting those sites on the deny list in your own network is one way to thwart phishing campaigns while you investigate what steps that partner plans to take to protect its brand identity. 
+:\/:
+For smart security decisions that involve your third parties, you need up-to-the-minute context and evidence provided by third-party intelligence. 
+:\/:
+This chapter is one of many in our new book that demonstrates how to disrupt adversaries and measurably reduce risk with security intelligence at the center of your security program. Additional chapters explore different use cases, including the benefits of security intelligence for 
+:\/:

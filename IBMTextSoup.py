@@ -54,6 +54,20 @@ def GetText(soup):
     text = joinChar.join(strings)
     return text
 
+def GetUnstrippedText(soup):
+
+    strings = []
+    #this creates a list of human readable strings on the page
+    body = soup.find_all("div", "single__content-itself")
+
+    for item in body:
+        text = item.strings
+        for line in text:
+            if(len(line) >= 100):
+                strings.append(line)
+
+    return strings
+
 
 def GetSource(url):
 
@@ -106,3 +120,21 @@ def Main():
 
     with open("ibmText.json","w",encoding="utf-8") as file:
         json.dump(data, file, indent=4)
+
+    with open("ibmParagraphgs.txt", "w",encoding="utf-8") as file:
+        for source in sourceList:
+
+            linkList = GetRSSLinkList(source)
+
+            for url in linkList:
+                print(url)
+
+                soup = GetSoup(url)
+
+                text = GetUnstrippedText(soup)
+
+                for item in text:
+                    file.write(item)
+                    file.write("\n")
+                    file.write(":\/:")
+                    file.write("\n")
