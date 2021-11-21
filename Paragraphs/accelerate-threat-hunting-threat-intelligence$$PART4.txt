@@ -1,0 +1,3 @@
+
+Accelerate advanced investigations, threat research, and threat hunting Get instant access to Recorded Future’s cyber repository of high-confidence intelligence and advanced querying capabilities to fuel deep, tailored investigations.
+Automatically insert threat hunting packages, malware detection rules, and more, into your existing network, endpoint, and malware security solutions to detect more threats and harden your security controls.

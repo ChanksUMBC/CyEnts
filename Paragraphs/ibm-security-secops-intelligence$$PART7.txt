@@ -1,0 +1,7 @@
+
+Augmenting investigations with external intelligence from Recorded Future allows analysts to resolve incidents faster, validate risk assigned to artifacts, and reduce overall risk to the organization.
+Recorded Future delivers more context than threat feeds, updates in real time so intelligence stays relevant, and integrates out-of-the-box with IBM Security SOAR .
+With access to the right intelligence from the broadest set of sources, you can trust that IBM Security SOAR has all the information it needs to automatically make real-time decisions that strengthen your organization’s security.
+Register now to see the IBM Security and Recorded Future solutions in action, or request a personalized demo .
+
+

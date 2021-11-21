@@ -1,0 +1,169 @@
+Security Intelligence Handbook Chapter 9: Manage Third-Party Risk in Real Time February 16, 2021 •\n                
+
+The Recorded Future Team Editor’s Note : We’re sharing excerpts from the third edition of our popular book, “ The Security Intelligence Handbook: How to Disrupt Adversaries and Reduce Risk with Security Intelligence .”
+
+Here, we’re looking at chapter nine, “Third-Party Intelligence.”
+
+To read the entire section, download your free copy of the handbook.
+
+The SolarWinds breach continues to make headlines, underscoring the importance of third-party risk management programs .
+
+Yet supply chain attacks are not new, and most organizations are exposed to significant risks through their relationships with third parties.
+
+A recent Ponemon Institute study found more than half of organizations have had a breach that originated from a third party.
+
+As both digital and physical supply chains grow in size and complexity, every third-party relationship introduces an element of risk to your organization.
+
+That’s why you need a way to objectively understand, monitor, and measure your exposure to third-party risk in real time across your supply chain.
+
+Static risk assessment methods often fall short.
+
+Spreadsheets, questionnaires, and email are labor-intensive, prone to error or bias, and only capture risk at a point in time.
+
+Not to mention that companies often learn that their third party suffered a breach days or weeks after they’ve been reported.
+
+Organizations need real-time intelligence on their third parties to take rapid and informed risk-based action.
+
+Precision third-party intelligence provides automated visibility at scale to identify risk exposures hidden across the third-party ecosystem so that security and risk teams are able to prioritize and proactively manage third-party risk.
+
+Explore the impact of increasing third-party risk in “ The Security Intelligence Handbook, Third Edition: How to Disrupt Adversaries and Reduce Risk With Security Intelligence .”
+
+In this excerpt, which has been edited and condensed, you’ll learn how to reduce your overall risk of data breaches and reputational damage brought about through vulnerable third parties: Third-Party Risk Looms Large Because businesses and their supply chains are so tightly integrated, it’s critical to consider the security of your partners, vendors, and other third parties when assessing the risk profile of your own organization.
+
+A recent survey by the Ponemon Institute, “Digital Transformation & Cyber Risk: What You Need to Know to Stay Safe,” found that 55 percent of organizations have had a breach that originated from a third party, and 53 percent say their tools for managing third-party risk are only somewhat effective or are not effective.
+
+These and related statistics are shown in Figure 9-1.
+
+The writing is on the wall: Third-party attacks will continue to increase and get worse and will further complicate cyber risk management.
+
+Traditional third-party risk assessment methods rely on static outputs, like self-assessments, financial audits, monthly reports about new vulnerabilities discovered in the systems an organization uses, and occasional reports on the status of security control compliance.
+
+All of these become outdated quickly, and they don’t provide the comprehensive intelligence you need to make informed decisions about managing third-party risks to your organization.
+
+In contrast, real-time security intelligence, specifically thirdparty intelligence, enables you to accurately assess risk posed by third parties and keep assessments current as conditions change and new threats emerge.
+
+Traditional Risk Assessments Fall
+
+Short Many of the most common third-party risk management practices employed today lag behind security requirements.
+
+Static assessments of risk — like financial audits and security certificate verifications — are still important, but they often lack context and timeliness.
+
+Organizations following traditional approaches to managing third-party risk often use these three steps: They attempt to understand their organization’s business relationship with a third party and how it exposes their organization to threats.
+
+Based on that understanding, they identify frameworks to evaluate the third party’s financial health, corporate controls, and IT security and hygiene, as well as how these factors relate to their own organization’s approach to security.
+
+Using those frameworks, they assess the third party to determine whether it is compliant with security standards like SOC 2 or FISMA.
+
+Sometimes they conduct a financial audit of the third party.
+
+While these steps are essential for evaluating third-party risk, they don’t tell the whole story.
+
+The outputs are static and cannot reflect quickly changing conditions and emerging threats.
+
+The analysis is often too simplistic to produce actionable recommendations.
+
+Sometimes, the final report is opaque, making it impossible to dig deeper into the methodology behind the analysis.
+
+All of these factors create blind spots that leave decision-makers unsure whether crucial pieces of information might have been overlooked.
+
+When assessing third-party risk, do not rely entirely on self reporting questionnaires or a vendor’s inwardly focused view of their own security defenses.
+
+Round these out with an external, unbiased perspective on the vendor’s threat landscape.
+
+Three Things to Look for in Security Intelligence To accurately evaluate third-party risk in real time, you need a solution that offers immediate context on the current threat landscape.
+
+Security intelligence — delivered in the form of third-party intelligence — provides critical context that enables you to determine which shortcomings in your supply-chain partners’ defenses represent meaningful risks to your organization.
+
+Those include not only the risks present at the time of assessment, but also current risks and a historical view — which provide even more context to detect, prevent, and resolve risks.
+
+To effectively evaluate third-party risk, a third-party intelligence solution needs to offer: Automation and analytics to quickly and comprehensively sort massive amounts of data Real-time alerts on threats and changes to risks Ongoing visibility into your partners’ ever-changing threat environments Automation and analytics To manage risk for your organization, you need access to massive amounts of threat data from a wide variety of sources across the open web, the dark web, as well as technical and news sources and discussion forums.
+
+The same applies to assessing risks introduced by the third parties in your supply chain.
+
+However, given the scale of cybersecurity-related content from these sources, totaling billions of facts, you need a third-party intelligence solution that uses automation and algorithms to collect and analyze these details.
+
+It must be able to: Analyze, classify, connect, fuse, and index data points using natural language processing and multiple analytical models Generate objective, data-driven risk scores using a straightforward formula Provide clear, accessible evidence for the risk scores it assigns Real-time updates to risk scores Static assessments quickly become outdated.
+
+Weekly or monthly intelligence reports produced by human analysts provide essential overviews, but often arrive too late to enable effective action.
+
+Risk scoring is much more effective when it updates in real time and draws on a large pool of sources.
+
+These capabilities make risk scores much more reliable for making immediate assessments and reaching security decisions.
+
+For example, a trading partner might generally be regarded as low risk based on standard reporting.
+
+However, let’s say the partner suffers a data breach that may or may not affect your organization.
+
+If you rely solely on static risk assessments, you likely won’t know the breach happened in the first place — or you’ll find out too late.
+
+You may have to wait too long to acquire the intelligence needed to accurately evaluate the risk.
+
+What was the cause of the breach?
+
+Was it an exploited vulnerability in a system used by the partner?
+
+A social engineering attack?
+
+Static assessments alone do not provide the evidence required to justify asking that third party to put additional security controls in place.
+
+If you want to boost the effectiveness of your third-party risk program, start by thinking critically about five key questions: Who are my most critical vendors?
+
+What am I legally accountable for?
+
+What is my current vendor risk assessment process?
+
+Who else in my organization needs this information?
+
+How does the global threat landscape affect my partners?
+
+Transparent risk assessments What’s the point of a risk assessment if you can’t use it to get your third parties to take action?
+
+Information without context leaves us like Cassandra in Greek mythology.
+
+In a bid for her love, the god Apollo gave her the gift of prophecy, but still she scorned his romantic advances.
+
+In his anger, Apollo let her keep her foresight, but he cursed her so that nobody would ever believe her warnings about the future.
+
+Many risk assessments today suffer the same fate as Cassandra’s prophecies.
+
+When we rely on vague scoring methods or opaque sourcing, our advice is hard to accept, even if it’s accurate.
+
+Too often, organizations fail to act on intelligence because leaders don’t understand it or don’t know the source.
+
+A security intelligence solution must show the risk rules that are triggered by an alert — and be transparent about its sources (Figure 9-2).
+
+This enables security professionals to see for themselves why something like an alert on a particular IP address might represent a real risk.
+
+The extra detail also eliminates the suspicion that information might have been overlooked.
+
+This context allows for faster due diligence and reference checking, including when evaluating static assessments.
+
+Responding to High Third-Party Risk Scores What do you do when faced with high risk scores for a third party?
+
+Not every data breach justifies terminating business with that partner.
+
+Just about every organization contends with cyberattacks and unexpected downtime, and partners are no exception.
+
+The more important issue is how they (and you) deal with incidents and take steps to reduce future risks.
+
+A change in risk scores may present an opportunity to talk with your business partners about their approach to security.
+
+On your end, it’s important to look more closely at whether the risk rules that were triggered will impact your organization’s network.
+
+For example, a partner’s risk score might increase because typosquatting websites closely resembling legitimate websites operated by the partner were discovered.
+
+Putting those sites on the deny list in your own network is one way to thwart phishing campaigns while you investigate what steps that partner plans to take to protect its brand identity.
+
+For smart security decisions that involve your third parties, you need up-to-the-minute context and evidence provided by third-party intelligence.
+
+Get ‘The Security Intelligence Handbook’
+
+This chapter is one of many in our new book that demonstrates how to disrupt adversaries and measurably reduce risk with security intelligence at the center of your security program.
+
+Additional chapters explore different use cases, including the benefits of security intelligence for SecOps , vulnerability management , brand protection , and more.
+
+Download your copy of “The Security Intelligence Handbook” now .
+
+
+
+

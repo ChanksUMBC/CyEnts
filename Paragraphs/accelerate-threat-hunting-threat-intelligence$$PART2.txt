@@ -1,0 +1,6 @@
+
+Relying on disparate threat feeds and static reports is manual and inefficient, often leading to incomplete threat research and missed threats.
+To detect and address today’s rapidly evolving threats, security teams need contextualized, high-confidence intelligence.
+The latest release for Recorded Future’s Threat Intelligence pairs high-speed, large-scale collection and automated link analysis to produce high-confidence indicator linkages.
+These validated linkages are powered by midpoint data sources like network traffic analysis , malware sandbox analysis, infrastructure analysis, enabling threat hunters to save time on investigation and radically simplify behavior profiling techniques to inform their security strategies and defenses.
+Purpose-Built Intelligence for Threat Hunters Recorded Future’s Threat Intelligence is powered by a proprietary analysis engine, the Intelligence Graph , which uses machine-learning and natural language processing to produce real-time, validated intelligence and the most complete picture of your threat landscape.

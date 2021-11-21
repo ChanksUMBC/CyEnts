@@ -1,0 +1,59 @@
+IBM Security and Recorded Future:
+
+Better Together March 11, 2021 •\n                
+
+Ellen Wilson Today, IBM Security and Recorded Future are joining forces in a live webinar, Better Together: IBM Security + Recorded Future , to support security operations teams in developing an end-to-end threat management and security operations strategy.
+
+Now more than ever, speed to detect, investigate and remediate threats is key to reduce dwell time and impact of security cyberattacks.
+
+Register now to see how a tightly integrated end-to-end process of threat management can improve your team’s ability to make decisions quickly and mitigate risk.
+
+End-to-End Integrated Threat Management Solution As the attack surface grows, the abundance of security threats puts added stress on already overworked security professionals struggling to pinpoint, triage, and respond to real threats targeting their organization.
+
+With too little time and not enough information, trying to determine if an alert represents a critical incident or a false positive wastes valuable time while true positives may be slipping through the cracks.
+
+With IBM Security solutions, you can unite your defenses across the four pillars of threat management – visibility, detection, investigation and response.
+
+IBM Security provides real-time monitoring and correlation of the vast amount of security events and network traffic in your organization for faster identification and remediation of incidents.
+
+Augmenting these events and alerts with real-time intelligence from Recorded Future delivers more context to improve analyst efficiency and confidence.
+
+Using our joint solutions , analysts can reduce time spent understanding “why” an IOC is bad, and more time mitigating risk in their environment.
+
+Supercharging IBM Security QRadar with SecOps Intelligence To effectively respond to the multitude of alerts generated each day, security operations teams need a way to prioritize which alerts to focus on first so they can optimize their effort for maximum risk reduction.
+
+Security intelligence from Recorded Future creates clarity by adding rich context within IBM Security QRadar .
+
+Relevant insights, updated in real time, give security operations analysts the insights they need — when and where they need them — to make faster, more confident security decisions.
+
+Recorded Future automates the collection, analysis, and production of security intelligence at scale to drive accelerated responses across vast amounts of data.
+
+Using a sophisticated combination of our patented algorithm process and world-class human analysis, Recorded Future fuses the broadest range of open source, dark web, technical sources, and original research.
+
+This results in relevant insights integrated with IBM Security QRadar to empower security operations analysts with the insights they need to improve threat detection and response times.
+
+For the Okinawa Institute of Science and Technology (OIST) , the Recorded Future and IBM Security QRadar joint solution resulted in a 25% reduction of false positive QRadar offenses.
+
+Keita Nagase, OIST chief information security officer, also shared, “By integrating intelligence into our existing IBM Security QRadar system and workflows, and automating analysis, we believe we have improved the accuracy and operational efficiency of security monitoring by a factor of three or four.”
+
+Accelerating Intelligence-Driven Investigations in IBM Security SOAR Orchestration and automation are key drivers for digital transformation, enabling organizations to optimize existing processes, lower costs, fill personnel gaps, and gain a competitive edge.
+
+Recognizing these clear benefits, security operations teams are embracing SOAR technology to collect and analyze threat data from multiple sources and automate repeatable incident response tasks.
+
+But for SOAR solutions to work effectively, they require a series of defined playbooks designed to automate repeatable security workflows — and these playbooks are only as smart and effective as the data used to construct them.
+
+IBM Security SOAR helps security teams respond to cyber threats with confidence, automate with intelligence, and collaborate with consistency.
+
+It captures and codifies established incident response processes into dynamic playbooks to guide and empower security analysts with knowledge to resolve incidents.
+
+Augmenting investigations with external intelligence from Recorded Future allows analysts to resolve incidents faster, validate risk assigned to artifacts, and reduce overall risk to the organization.
+
+Recorded Future delivers more context than threat feeds, updates in real time so intelligence stays relevant, and integrates out-of-the-box with IBM Security SOAR .
+
+With access to the right intelligence from the broadest set of sources, you can trust that IBM Security SOAR has all the information it needs to automatically make real-time decisions that strengthen your organization’s security.
+
+Register now to see the IBM Security and Recorded Future solutions in action, or request a personalized demo .
+
+
+
+

@@ -1,0 +1,6 @@
+
+InsightIDR:
+The explosive growth of indicators makes finding the needle in the haystack extremely resource-intensive for already overwhelmed security teams.
+With Recorded Future intelligence, security teams using Rapid7 InsightIDR can easily discover and validate findings.
+Utilizing the Recorded Future browser extension over Rapid7 InsightIDR allows users to enrich newly identified threats with evidence-based, real-time risk scores and risk rules — all without having to leave Rapid7 InsightIDR.
+This empowers users to confidently prioritize the most important findings in their environment, simplify workflows, and maximize the ROI of existing cybersecurity solutions.

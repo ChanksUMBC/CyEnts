@@ -1,0 +1,7 @@
+
+To effectively respond to the multitude of alerts generated each day, security operations teams need a way to prioritize which alerts to focus on first so they can optimize their effort for maximum risk reduction.
+Security intelligence from Recorded Future creates clarity by adding rich context within Splunk Enterprise and ES .
+Relevant insights, updated in real time, give security operations analysts the insights they need — when they need them — to make faster, more confident security decisions.
+Recorded Future automates the collection, analysis, and production of security intelligence at scale to drive accelerated responses across vast amounts of data.
+Using a sophisticated combination of our patented algorithm process and world-class human analysis, Recorded Future fuses the broadest range of open source, dark web, technical sources, and original research.
+This results in relevant, real-time insights, integrated with Splunk to empower security operations analysts with the insights they need to accomplish the following use cases: Alert Triage : Recorded Future enriches Splunk alerts with a risk score that updates in real time and is backed by transparent evidence.

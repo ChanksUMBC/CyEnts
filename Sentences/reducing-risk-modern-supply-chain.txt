@@ -1,0 +1,67 @@
+Reducing Risk For the Modern Supply Chain With Third-Party Intelligence March 23, 2021 •\n                
+
+Trevor Lyness Third-party breaches are at an all-time high, and the proliferation of threat actors, ransomware groups, and targeted attacks on your third parties means that companies have serious cause for concern.
+
+The cybersecurity community was rocked by the news of SolarWinds , and news keeps flying as we see widespread attacks on technology such as Accellion FTA and Microsoft Exchange .
+
+Traditional methods to manage third-party risk can’t keep up.
+
+Governance, risk, and compliance (GRC) teams, as well as their security counterparts, continue to struggle to accurately assess risk given the continually shifting circumstances surrounding who they do business with.
+
+And for many, maintaining on-going visibility into their vendors’ constantly changing risk profile is a difficult or impossible task.
+
+There’s A Better Way To Manage Third-Party Risk — With Intelligence GRC and security teams need a proactive approach to identify, manage, and mitigate third-party risk, and intelligence is here to help.
+
+Intelligence acts as a source of truth on key risk indicators, eliminating the guesswork associated with assessing vendor risk.
+
+It reduces the time you spend on vendor risk assessments by 50%, and greatly enhances the quality of those assessments.
+
+Most importantly, intelligence gives you the confidence and context you need to take control of third-party risk.
+
+There’s no need for panicked responses to breaking news on third-party breaches.
+
+Intelligence enables you to stay in front of a constantly changing risk landscape.
+
+Gain Unparalleled Visibility into Your Third-Parties’ Risk in Real-Time Recorded Future’s Third-Party Intelligence Module uses the power of the world’s largest commercial collection platform to provide the most complete picture of cyber risk.
+
+By automatically collecting, aggregating, and analyzing information from over one million distinct sources, Recorded Future is able to provide real-time visibility into the risks of your third parties.
+
+Leveraging our proprietary data sourcing and unique background as an intelligence provider, we provide unprecedented insight into a wide range of security risks to allow you to instantly assess risk including: Security incidents — Cyber attacks and security breach disclosures are essential risk indicators to monitor third parties for.
+
+Our threat research team Insikt Group often adds their own analysis to major security incidents, giving you fast insight into what happened, why it matters, and what you can do about it Malicious network activity — Infrastructure abuse such as communication with C2 servers, hosted TOR notes, and malware detections all indicate that a company is highly vulnerable to attack.
+
+Dark web and ransomware extortion site attention — Cybercriminals often use the dark web and other underground channels to discuss cyber attacks involving your third parties.
+
+Ransomware extortion sites, for example, are a high-risk indicator that your third party was likely struck by ransomware.
+
+However, not all dark web sites are equal.
+
+Recorded Future is the only third-party intelligence provider granting access to invite-only, high-tier dark web forums.
+
+Leaked credentials — Exposed data from business accounts used by employees on dark web and paste sites leave third-parties exposed to credential stuffing attacks and account impersonation.
+
+Our massive collection of leaked credentials and data dumps is constantly growing.
+
+Intelligence Tailor-Made for Risk Management Teams For a long time, threat intelligence has held a reputation as being complex and inaccessible to those without a background in it.
+
+In fact, ten years ago, the notion of a GRC team actively consuming threat intelligence would have been laughable.
+
+Recorded Future’s Third-Party Intelligence module is specifically created for the GRC team, providing key risk indicators that help to assess, monitor, and mitigate risk.
+
+Transparent remediation details are provided with all findings, giving GRC teams the leverage they need to work with their third-parties to mitigate risk.
+
+In addition, intelligence is aligned to the NIST cybersecurity framework , making it simple to incorporate intelligence directly within existing business practices.
+
+If your organization uses NIST as the basis of vendor risk assessments, you can easily map intelligence directly to your questionnaire, allowing you to quickly validate submissions.
+
+Break Down Barriers Between Risk and Security Teams GRC teams and security teams both want to protect the business.
+
+However, they often use different terminology, frameworks, and technologies to do their jobs, creating misalignment and miscommunication when the teams need to work together.
+
+Modular intelligence offerings from Recorded Future work as your middleman, providing a common language and platform to understand, communicate, and action risk across teams.
+
+See Third-Party Intelligence In Action Tune into our upcoming webinar, “ Deconstructing Supply Chain Attacks for Better Risk Management ,” on Wednesday, March 31 at 10:00 AM ET to learn how third-party intelligence can help protect your organization.
+
+
+
+

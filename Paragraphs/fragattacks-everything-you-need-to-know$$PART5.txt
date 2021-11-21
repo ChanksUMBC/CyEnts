@@ -1,0 +1,7 @@
+
+Threat actors could also intercept a device owner\u2019s information by tricking the client into using a malicious DNS server.
+Or, they could bypass the NAT firewall, giving the attacker potential access to devices connected to the Wi-Fi network.
+Multiple Types of Attack The flaws enable three different types of attack: An aggregation attack exploits the frame aggregation feature of Wi-Fi.
+In this attack, the threat actor tricks a victim into changing the setting on specific packets.
+This allows the attacker to intercept traffic by making it use a malicious DNS server.
+A mixed key attack exploits the fact that the fragmentation feature of Wi-Fi assumes broken-up packets are encrypted using the same key as the larger original packet.

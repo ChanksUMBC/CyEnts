@@ -1,0 +1,4 @@
+
+But for SOAR solutions to work effectively, they require a series of defined playbooks designed to automate repeatable security workflows — and these playbooks are only as smart and effective as the data used to construct them.
+IBM Security SOAR helps security teams respond to cyber threats with confidence, automate with intelligence, and collaborate with consistency.
+It captures and codifies established incident response processes into dynamic playbooks to guide and empower security analysts with knowledge to resolve incidents.

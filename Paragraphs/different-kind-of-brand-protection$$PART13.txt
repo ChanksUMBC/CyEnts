@@ -1,0 +1,10 @@
+
+Maps, monitors, and scores brand risk : Through automation, advanced data science, and analytical techniques like natural language processing, effective brand intelligence tools enable analysts to link business attributes with related digital assets and detect, score, and prioritize events related to brand risk.
+Coordinates remediation : Robust brand intelligence solutions generate alerts and reports that provide information on how to remediate problems.
+They also integrate with tools that perform remediation immediately and with service providers that take down instances of domain abuse.
+Get ‘The Security Intelligence Handbook’
+This chapter is one of many in our new book that demonstrates how to disrupt adversaries and measurably reduce risk with security intelligence at the center of your security program.
+Additional chapters explore different use cases, including the benefits of security intelligence for SecOps , vulnerability management , security leadership , and more.
+Download your copy of “The Security Intelligence Handbook” now .
+
+

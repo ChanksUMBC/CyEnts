@@ -1,0 +1,5 @@
+Announcing Security Intelligence for Splunk — For Free February 23, 2021 •\n                
+Ellen Wilson Today, we’re thrilled to announce the launch of a free 30-day trial of our integration for Splunk Enterprise and ES .
+This free trial offers Splunk users full access to our high-confidence, actionable, real-time SecOps intelligence within their own Splunk environment, empowering them to make faster, more confident security decisions.
+This announcement is directly related to one of our core guiding principles at Recorded Future, security intelligence is for everyone.
+Security intelligence provides clear, actionable context that all security roles can use, to work smarter and amplify their impact.

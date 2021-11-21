@@ -1,0 +1,6 @@
+Security Intelligence Handbook Chapter 9: Manage Third-Party Risk in Real Time February 16, 2021 •\n                
+The Recorded Future Team Editor’s Note : We’re sharing excerpts from the third edition of our popular book, “ The Security Intelligence Handbook: How to Disrupt Adversaries and Reduce Risk with Security Intelligence .”
+Here, we’re looking at chapter nine, “Third-Party Intelligence.”
+To read the entire section, download your free copy of the handbook.
+The SolarWinds breach continues to make headlines, underscoring the importance of third-party risk management programs .
+Yet supply chain attacks are not new, and most organizations are exposed to significant risks through their relationships with third parties.

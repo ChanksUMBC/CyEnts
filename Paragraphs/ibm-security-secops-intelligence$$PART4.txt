@@ -1,0 +1,4 @@
+
+This results in relevant insights integrated with IBM Security QRadar to empower security operations analysts with the insights they need to improve threat detection and response times.
+For the Okinawa Institute of Science and Technology (OIST) , the Recorded Future and IBM Security QRadar joint solution resulted in a 25% reduction of false positive QRadar offenses.
+Keita Nagase, OIST chief information security officer, also shared, “By integrating intelligence into our existing IBM Security QRadar system and workflows, and automating analysis, we believe we have improved the accuracy and operational efficiency of security monitoring by a factor of three or four.”

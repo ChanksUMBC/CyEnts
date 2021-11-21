@@ -1,0 +1,7 @@
+
+Shortening the “Time to No”: Real-Time Context for Splunk For years, security operations teams have relied on SIEM technologies like Splunk to collect, correlate, and analyze security event logs from a variety of sources across their network environments.
+SIEM tools were built to help teams quickly detect and respond to threats, while streamlining compliance reporting and post-incident investigation.
+Yet as the attack surface grows, the abundance of security alerts puts added stress on already overworked security professionals.
+If you’re like most analysts, you’re plagued by alert fatigue and you struggle to pinpoint, triage, and respond to real threats targeting your organization using only information from your internal environment.
+You’re dealing with too little time and not enough information while your SIEM continues to generate thousands of security alerts each day, making it difficult to determine which alert represents a critical incident and which may just be a redundancy or a false positive.
+Valuable time is wasted getting to “no” for irrelevant alerts, while true positives may be slipping through the cracks.

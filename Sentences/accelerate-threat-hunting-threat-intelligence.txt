@@ -1,0 +1,35 @@
+Simplify and Accelerate Threat Hunting with High-Speed, High-Confidence Threat Intelligence April 15, 2021 •\n                
+
+Neha Mehra As your attack surface continues to grow — expanding into the cloud and employees working from their homes — there are even more opportunities for threat actors to breach your organization.
+
+Relying on disparate threat feeds and static reports is manual and inefficient, often leading to incomplete threat research and missed threats.
+
+To detect and address today’s rapidly evolving threats, security teams need contextualized, high-confidence intelligence.
+
+The latest release for Recorded Future’s Threat Intelligence pairs high-speed, large-scale collection and automated link analysis to produce high-confidence indicator linkages.
+
+These validated linkages are powered by midpoint data sources like network traffic analysis , malware sandbox analysis, infrastructure analysis, enabling threat hunters to save time on investigation and radically simplify behavior profiling techniques to inform their security strategies and defenses.
+
+Purpose-Built Intelligence for Threat Hunters Recorded Future’s Threat Intelligence is powered by a proprietary analysis engine, the Intelligence Graph , which uses machine-learning and natural language processing to produce real-time, validated intelligence and the most complete picture of your threat landscape.
+
+Enhancements to the Threat Intelligence solution arms threat hunters with an unmatched combination of speed, scale, and context so you can: Get a thorough end-to-end view of your threat landscape The Intelligence Graph collects, aggregates, analyzes, and connects data in any language from a vast number of attacker, midpoint, and victim data sources to produce real-time, validated intelligence.
+
+Make faster, more informed decisions to reduce cyber risk and improve your risk posture Get access to over 5B Intelligence Cards™, which distill everything that’s known about a threat into a single view with dynamic risk scores and rules, to give you the context you need to inform your defenses, expedite threat hunting efforts, and solidify your security strategy.
+
+Accelerate advanced investigations, threat research, and threat hunting Get instant access to Recorded Future’s cyber repository of high-confidence intelligence and advanced querying capabilities to fuel deep, tailored investigations.
+
+Automatically insert threat hunting packages, malware detection rules, and more, into your existing network, endpoint, and malware security solutions to detect more threats and harden your security controls.
+
+Shine a light into the dark web to expand your visibility Recorded Future provides access to the largest real-time, automated collection of dark web information to support advanced dark web investigations and provide greater visibility on data leaks, credential harvesting, malware-as-a service offerings, and more.
+
+This includes hacker, criminal, invitation-only sites, and extremist forums.
+
+Our world class team of human threat intelligence analysts identify, access, and maintain persistence with closed, insider-access forums to support ongoing real-time collection.
+
+High-confidence insights, updated in real time, and backed by transparent scoring give threat hunters the information they need to disrupt adversaries and prevent damage to their organization.
+
+Request a demo of Recorded Future’s Threat Intelligence solution to see how Recorded Future’s high-confidence intelligence can be used to proactively detect, monitor, and defend against adversaries and their threats.
+
+
+
+

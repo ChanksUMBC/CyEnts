@@ -1,0 +1,4 @@
+
+For example, a brand intelligence solution enables you to: Search domain registries to find domain names that include your organization or product name, or variations of them Crawl the web to find typosquatting domains Monitor social media to alert you to hashtags that include your organization or product name, or variations of them Scan social media to detect accounts that claim to belong to your organization, your executives, or your employees Check app stores to uncover unauthorized mobile apps using your branding Comb web forums for threat actors planning to impersonate your brand Use case: Typosquatting and fraudulent domains Typosquatting involves manipulating the characters in an organization’s domain name into nearly identical domains.
+For instance, threat actors targeting example.com might create a typosquat URL of exanple.com.
+Attackers often register thousands of domains differing by a single character from their target organizations’ URLs.

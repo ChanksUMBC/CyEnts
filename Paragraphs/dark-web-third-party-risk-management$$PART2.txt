@@ -1,0 +1,7 @@
+
+However, if you cut through the noise, you’ll find that the dark web is an enormously valuable source of information for third-party risk management professionals.
+What is the Dark Web?
+The dark web is a subset of the Internet.
+It’s accessible via special software such as Tor that allows users and website operators to remain anonymous or untraceable.
+Websites on the dark web operate in their own unique environment, separated from surface sites such as Amazon, eBay, or Youtube.
+Cybercriminals use the dark web to coordinate and execute cyber attacks, as well as to sell stolen data and even exploits into companies.

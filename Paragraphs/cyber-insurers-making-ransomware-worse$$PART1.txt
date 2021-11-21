@@ -1,0 +1,10 @@
+In mid-May, one of the largest insurance companies in the U.S. paid $40 million to ransomware attackers.
+Two people familiar with the matter told Bloomberg that the malicious actors stole an undisclosed quantity of data and then effectively locked the insurer out of its network for two weeks.
+The company ignored the attackers\u2019 demands at first.
+But, a week into the infection, it decided to make contact with the attackers.
+This effort led to negotiations in which the insurer convinced the attackers to drop the ransom from $60 million to $40 million.
+Cyber Insurers\u2019 Straight and Narrow View of Ransomware The attack discussed above stands out for a couple of reasons.
+First, it\u2019s worth noting that $40 million is the largest ransom paid by any ransomware victim anywhere to date.
+Second, it\u2019s important to point out that the victim was a company that offers cyber insurance itself.
+Why is the second point relevant?
+Well, there\u2019s a paradox when it comes to cyber insurance companies and ransomware attackers.

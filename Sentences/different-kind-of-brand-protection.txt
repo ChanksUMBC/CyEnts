@@ -1,0 +1,107 @@
+Security Intelligence Handbook Chapter 10:
+
+A Different Kind of Brand Protection March 4, 2021 •\n                
+
+The Recorded Future Team Editor’s Note : We’re sharing excerpts from the third edition of our popular book, “ The Security Intelligence Handbook: How to Disrupt Adversaries and Reduce Risk with Security Intelligence .”
+
+Here, we’re looking at chapter 10, “Brand Intelligence.”
+
+To read the entire section, download your free copy of the handbook.
+
+It only takes one financially motivated criminal, dissatisfied customer, or disgruntled employee to tarnish your company’s hard-earned brand reputation .
+
+Fake or malicious online content, data leaks, and more can negatively influence customers and create financial risk for your organization — without ever touching your network or systems.
+
+Security analysts could spend virtually all of their time scoring the internet for company mentions and analyzing data points and still not be able to keep up with constantly morphing brand threats.
+
+To proactively protect your brand , you need to see everywhere your organization’s name, associated products, executive names, and keywords exist across the internet — at any given moment.
+
+That’s where brand intelligence comes in – harnessing automation, analytics, andhuman expertise to not only map, monitor, and score events related to brand risk, but also making it easy to take down malicious content, such as typosquat domains and  disinformation on social media.
+
+Discover what’s putting your brand at risk in “ The Security Intelligence Handbook, Third Edition: How to Disrupt Adversaries and Reduce Risk With Security Intelligence .”
+
+In this excerpt, which has been edited and condensed, see how a large HR solutions provider defeated typosquatting with a proactive approach to digital brand protection: Brand protection involves safeguarding an organization’s image, reputation, and customers from attacks that primarily never touch its network or systems.
+
+These threats include: Fake websites and social media accounts used to impersonate the organization or its employees for fraud and phishing attacks Malicious content and false information about the organization and its products posted on websites and social media platforms Counterfeit products and software offered in digital marketplaces and app stores Data leaks and leaked credentials from employees and executives Most of these threats are posed by financially motivated criminals, but they may also involve hacktivists, dissatisfied customers, competitors, and careless or disgruntled employees who reveal information online.
+
+Protect Your Brand and Your Customers To truly protect your brand, you need to be concerned about threats that leverage it to harm or influence your customers.
+
+Customers who are lured into a scam or fraud from an imitation of your website may hold your organization responsible.
+
+Those who buy a low-quality, counterfeit version of your product from an online marketplace may lose trust in your brand.
+
+Those who think one of your executives has published offensive content on the web may boycott your products — even if it wasn’t your executive who posted it.
+
+Pleading “it wasn’t our fault” won’t restore their trust or your reputation in any of these scenarios.
+
+A Different Kind of Detection Most of the activities we have been discussing in this handbook involve creating intelligence about attackers and their tools.
+
+Brand intelligence includes some of that, as well, but the emphasis is instead on detecting your organization’s name and brand everywhere they occur across the internet.
+
+You need to be rigorous about listing and searching for mentions of all your brand and product names, and keywords that are associated with them.
+
+These include the names of: Your parent organization Subsidiaries and business units Products Executives Managers and employees who engage with the public in web forums and via social media It also includes trademarks, service marks, and advertising slogans that appear on your organization’s authorized websites, since these are frequently used on phony websites.
+
+Uncovering Evidence of Brand Impersonation and Abuse Knowing what to look for empowers you to find evidence of brand impersonation and abuse in places many organizations never search.
+
+For example, a brand intelligence solution enables you to: Search domain registries to find domain names that include your organization or product name, or variations of them Crawl the web to find typosquatting domains Monitor social media to alert you to hashtags that include your organization or product name, or variations of them Scan social media to detect accounts that claim to belong to your organization, your executives, or your employees Check app stores to uncover unauthorized mobile apps using your branding Comb web forums for threat actors planning to impersonate your brand Use case: Typosquatting and fraudulent domains Typosquatting involves manipulating the characters in an organization’s domain name into nearly identical domains.
+
+For instance, threat actors targeting example.com might create a typosquat URL of exanple.com.
+
+Attackers often register thousands of domains differing by a single character from their target organizations’ URLs.
+
+They do this for reasons ranging from suspicious to fully malicious.
+
+Rogue websites using these modified domain names are built to look like legitimate websites.
+
+The rogue domains and websites are often used in spear-phishing campaigns against employees or customers, watering-hole attacks, and drive-by download attacks.
+
+Being alerted to newly registered phishing and typosquatting domains in real time is the best way to narrow the window of opportunity for threat actors to impersonate your brand and defraud unsuspecting users.
+
+Once the malicious infrastructure is identified, you’re able to employ a takedown service to nullify the threat.
+
+Uncovering Evidence of Breaches on the Web By monitoring the web — including private forums on the dark web — brand intelligence solutions enable you to uncover evidence of data breaches within your organization and partner ecosystem.
+
+You may find: Your customers’ names and data Financial account data and Social Security numbers Leaked or stolen credentials from your employees Paste and bin sites containing your proprietary software code Forums mentioning your organization and announcing intentions to attack it Forums selling tools and discussing techniques to attack organizations like yours Timely discovery of these indicators enables you to: Secure the sources of the data Find and fix vulnerabilities and misconfigurations in your infrastructure Mitigate future risks by improving security controls Identify ways to improve employee training and coding practices Enable your SecOps and incident response teams to recognize attacks faster It’s often possible to narrow down the source of a leak by looking at exactly what information and artifacts are found on the web, where they are found, and what else is found in the same place.
+
+For example, if you find product designs or software code on a dark web site and recognize that they were shared with only a few suppliers, you would know to investigate the security controls of those suppliers as part of your third-party risk management program.
+
+If your organization’s name was mentioned on a hacker’s forum whose members are known to attack certain applications, you could increase protection of the targeted applications by patching the systems they run on, monitoring them more closely, and adding security controls.
+
+Use case: Compromised data Threat actors make money from many types of compromised personal information and corporate intellectual property.
+
+Examples of compromised data for sale on the dark web include medical records, cloned and compromised gift cards, and stolen credentials to “pay for” services like Netflix and Uber, and items charged via PayPal, as illustrated in Figure 10-1.
+
+A high percentage of hacking-related breaches leverage stolen or weak passwords.
+
+Threat actors regularly upload massive caches of usernames and passwords to paste sites and the dark web, or make them available for sale on underground marketplaces.
+
+These data dumps may include corporate email addresses and passwords, as well as login details for other sites.
+
+Monitoring external sources for this type of intelligence will dramatically increase your visibility — not just into leaked credentials, but also into potential breaches of corporate data and proprietary code.
+
+Critical Qualities for Security Intelligence Solutions Of course, mitigating digital risk to your brand is not simply a matter of stumbling across one typosquatting domain or some isolated piece of stolen data.
+
+Somebody, or something, has to do the broader work of collecting masses of data, sifting through thousands of data points, analyzing relationships among the data points, deciding priorities, and ultimately taking action.
+
+The best approach is to use a brand intelligence solution that: Collects and scans data from the broadest range and variety of sources : Automation at the data-collection stage saves analysts precious time.
+
+The best solutions gather data not only from open web sources, but also from the dark web and technical sources.
+
+Maps, monitors, and scores brand risk : Through automation, advanced data science, and analytical techniques like natural language processing, effective brand intelligence tools enable analysts to link business attributes with related digital assets and detect, score, and prioritize events related to brand risk.
+
+Coordinates remediation : Robust brand intelligence solutions generate alerts and reports that provide information on how to remediate problems.
+
+They also integrate with tools that perform remediation immediately and with service providers that take down instances of domain abuse.
+
+Get ‘The Security Intelligence Handbook’
+
+This chapter is one of many in our new book that demonstrates how to disrupt adversaries and measurably reduce risk with security intelligence at the center of your security program.
+
+Additional chapters explore different use cases, including the benefits of security intelligence for SecOps , vulnerability management , security leadership , and more.
+
+Download your copy of “The Security Intelligence Handbook” now .
+
+
+
+

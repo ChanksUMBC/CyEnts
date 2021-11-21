@@ -1,0 +1,3 @@
+Reducing Risk For the Modern Supply Chain With Third-Party Intelligence March 23, 2021 •\n                
+Trevor Lyness Third-party breaches are at an all-time high, and the proliferation of threat actors, ransomware groups, and targeted attacks on your third parties means that companies have serious cause for concern.
+The cybersecurity community was rocked by the news of SolarWinds , and news keeps flying as we see widespread attacks on technology such as Accellion FTA and Microsoft Exchange .

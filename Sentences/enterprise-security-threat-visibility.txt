@@ -1,0 +1,53 @@
+Powering Enterprise Security with End-to-End Threat Visibility April 13, 2021 •\n                
+
+Ellen Wilson As your attack surface grows — expanding into the cloud and employees’ homes — there are even more opportunities for threat actors to breach your organization.
+
+Relying on disparate threat feeds and static reports is manual and inefficient, often leading to incomplete threat research and missed threats.
+
+If you want to uncover and disrupt threats before they impact your business, you need to understand what poses a real risk as quickly as possible.
+
+Contextualized security intelligence is a crucial component of a truly proactive security strategy.
+
+Forrester even emphasizes the necessity of actionable threat intelligence to “drive compelling cyber risk management processes” in their newest report, How to Integrate Threat Intelligence Into Your Security Program .
+
+In order to minimize risk and maximize security outcomes, organizations must consider integrating real-time security intelligence at both operational and strategic levels of their security program.
+
+And now, with the new capabilities for its Threat Intelligence and SecOps Intelligence solutions, Recorded Future clients are armed with real-time, high-confidence intelligence for faster identification and triage of security concerns within existing security tech stacks and workflows.
+
+Threat Intelligence Accelerates Advanced Investigations Developed for threat hunters and security analysts, Recorded Future’s Threat Intelligence module arms security teams with vital information they need to inform their organization’s security strategy and proactively detect, monitor, and defend against adversaries.
+
+Today, Recorded Future announced several enhancements to its Threat Intelligence module, simplifying and accelerating advanced behavioral profiling techniques with access to even more validated, high-confidence intelligence.
+
+Recorded Future’s Threat Intelligence module is powered by a proprietary analysis engine, the Security Intelligence Graph , which collects, aggregates, analyzes, and connects data in any language from a vast number attacker, midpoint, and victim data sources to produce validated intelligence and provide the most complete picture of your organization’s threat landscape.
+
+Our unique combination of intelligence from network traffic analysis, malware sandbox analysis, and infrastructure analysis dramatically reduces advanced threat research and reporting workflows.
+
+Automatically insert threat hunting packages , malware detection rules, and more, into your existing network, endpoint, and malware security solutions to detect more threats and harden your security controls.
+
+SecOps Intelligence Simplifies Threat Detection and Triage Today, Recorded Future announced several major enhancements to the SecOps Intelligence module , making it easier than ever before to access an end-to-end view of your threat landscape with automated, actionable security intelligence — all directly integrated into your unique security tech stack and workflows for faster threat detection and response.
+
+Recorded Future connects the dots between the broadest range of sources to provide the critical context security operations analysts need to quickly discount false positives and identify the most significant threats.
+
+Real-time, machine-readable intelligence and an ever-expanding technology partner ecosystem, with over 90 integrations currently, simplifies access to high-confidence indicator insights for more confident threat identification and remediation: Splunk Mission Control:
+
+Recorded Future delivers security intelligence to arm security and IT teams that use Splunk Mission Control with the real-time information and supporting evidence they need to detect threats earlier and prioritize their findings with confidence.
+
+Splunk analysts can also get hands-on experience of real-time security intelligence to improve threat visibility and accelerate incident response through a free trial of the Recorded Future integration for Splunk Enterprise and ES .
+
+Start yours today to see Recorded Future intelligence in action in your own Splunk environment.
+
+Rapid7
+
+InsightIDR:
+
+The explosive growth of indicators makes finding the needle in the haystack extremely resource-intensive for already overwhelmed security teams.
+
+With Recorded Future intelligence, security teams using Rapid7 InsightIDR can easily discover and validate findings.
+
+The Recorded Future browser extension also enables analysts to enrich newly identified threats with evidence-based, real-time risk scores and risk rules — all without having to leave Rapid7 InsightIDR.
+
+To learn more about how your organization can integrate an end-to-end view of threats at operational and strategic levels of your security program, download the Forrester report, How to Integrate Threat Intelligence Into Your Security Program .
+
+
+
+

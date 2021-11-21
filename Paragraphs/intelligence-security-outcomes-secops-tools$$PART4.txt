@@ -1,0 +1,4 @@
+
+Intelligence Tailor-Made for SecOps Tools and Workflows Recorded Future connects the dots between the broadest range of sources to provide the critical context security operations analysts need to quickly discount false positives and identify the most significant threats.
+Recorded Future’s real-time, machine-readable intelligence makes it easy to access Recorded Future’s automated SecOps intelligence in your unique security tech stack.
+Our technology partner ecosystem, which includes over 90 integrations with leading security and technology providers, now includes integrations for the following SecOps tools: Splunk Mission Control:

@@ -1,0 +1,51 @@
+Announcing Security Intelligence for Splunk — For Free February 23, 2021 •\n                
+
+Ellen Wilson Today, we’re thrilled to announce the launch of a free 30-day trial of our integration for Splunk Enterprise and ES .
+
+This free trial offers Splunk users full access to our high-confidence, actionable, real-time SecOps intelligence within their own Splunk environment, empowering them to make faster, more confident security decisions.
+
+This announcement is directly related to one of our core guiding principles at Recorded Future, security intelligence is for everyone.
+
+Security intelligence provides clear, actionable context that all security roles can use, to work smarter and amplify their impact.
+
+Shortening the “Time to No”: Real-Time Context for Splunk For years, security operations teams have relied on SIEM technologies like Splunk to collect, correlate, and analyze security event logs from a variety of sources across their network environments.
+
+SIEM tools were built to help teams quickly detect and respond to threats, while streamlining compliance reporting and post-incident investigation.
+
+Yet as the attack surface grows, the abundance of security alerts puts added stress on already overworked security professionals.
+
+If you’re like most analysts, you’re plagued by alert fatigue and you struggle to pinpoint, triage, and respond to real threats targeting your organization using only information from your internal environment.
+
+You’re dealing with too little time and not enough information while your SIEM continues to generate thousands of security alerts each day, making it difficult to determine which alert represents a critical incident and which may just be a redundancy or a false positive.
+
+Valuable time is wasted getting to “no” for irrelevant alerts, while true positives may be slipping through the cracks.
+
+To effectively respond to the multitude of alerts generated each day, security operations teams need a way to prioritize which alerts to focus on first so they can optimize their effort for maximum risk reduction.
+
+Security intelligence from Recorded Future creates clarity by adding rich context within Splunk Enterprise and ES .
+
+Relevant insights, updated in real time, give security operations analysts the insights they need — when they need them — to make faster, more confident security decisions.
+
+Recorded Future automates the collection, analysis, and production of security intelligence at scale to drive accelerated responses across vast amounts of data.
+
+Using a sophisticated combination of our patented algorithm process and world-class human analysis, Recorded Future fuses the broadest range of open source, dark web, technical sources, and original research.
+
+This results in relevant, real-time insights, integrated with Splunk to empower security operations analysts with the insights they need to accomplish the following use cases: Alert Triage : Recorded Future enriches Splunk alerts with a risk score that updates in real time and is backed by transparent evidence.
+
+This provides the context analysts need to quickly discount false positives, identify the most significant threats, and take immediate action.
+
+Threat Detection : Quickly identify potential threats by automatically correlating internal data with Recorded Future intelligence and risk scores.
+
+This enables you to detect threats earlier and respond faster by adding valuable context in Splunk to internal network observables from firewall, email security, and endpoint solutions.
+
+Relevant insights, updated in real time, and integrated out-of-the-box into Splunk give security operations teams the right information at the right time to disrupt adversaries and prevent damage to their organization.
+
+See the power of Recorded Future for yourself by starting your free 30-day trial today!
+
+Not a user of Splunk?
+
+Check out Express, our free browser extension to access to our intelligence .
+
+
+
+

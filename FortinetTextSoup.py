@@ -75,62 +75,63 @@ def GetRSSLinkList(rssURL):
     source = result.content
     soup = BeautifulSoup(source, "lxml")
     #print(soup.prettify())
-    headers = soup.find_all("feedburner:origlink")
-
     linkList = []
 
-    for header in headers:
-        linkList.append(header.contents[0])
+    step1 = str(soup).split("<link/>")[2:]
+    for item in step1:
+        linkList.append(item.split("<pubdate>")[0])
     
     return linkList
+
+
+def getSourceList(json_past):
+
+    source_list = []
+    for source in json_past["data"]:
+        for link in source:
+            source_list.append(link)
+    
+    return source_list
     
 
 def Main():
     sourceList = ["http://feeds.feedburner.com/fortinet/blog/threat-research"]
 
-    with open("fortinetText.jsonl","w",encoding="utf-8") as file:
+    past_data = {}
+    with open("cyberJson/fortinetText.json", "r", encoding="utf-8") as file:
+        past_data = json.load(file)
+    
+    source_list = getSourceList(past_data)
+
+    linkList = GetRSSLinkList(sourceList[0])
+
+
+    with open("cyberJson/fortinetText.jsonl","w",encoding="utf-8") as file:
         for source in sourceList:
 
             linkList = GetRSSLinkList(source)
 
-            data = {"data": []}
+            data = past_data
 
             for url in linkList:
-                print(url)
+                if(url not in source_list):
+                    print(url)
 
-                soup = GetSoup(url)
-                source = GetSource(url)
+                    soup = GetSoup(url)
+                    source = GetSource(url)
 
-                currTime = GetCurrTime()
+                    currTime = GetCurrTime()
 
-                timeCreated = GetTimeCreated(soup)
-                text = GetText(soup)
+                    timeCreated = GetTimeCreated(soup)
+                    text = GetText(soup)
 
-                metadata = {"dateAccessed":currTime, "dateCreated":timeCreated, "source":source}
-                info = {"metadata" : metadata, "text": text}
-                source = {url: info}
-                json.dump(source, file, ensure_ascii=False)
-                file.write("\n")
+                    metadata = {"dateAccessed":currTime, "dateCreated":timeCreated, "source":source}
+                    info = {"metadata" : metadata, "text": text}
+                    source = {url: info}
+                    json.dump(source, file, ensure_ascii=False)
+                    file.write("\n")
 
-                data["data"].append(source)
+                    data["data"].append(source)
 
-    with open("fortinetText.json","w",encoding="utf-8") as file:
+    with open("cyberJson/fortinetText.json","w",encoding="utf-8") as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
-
-    with open("fortinetParagraphgs.txt", "w",encoding="utf-8") as file:
-        for source in sourceList:
-
-            linkList = GetRSSLinkList(source)
-
-            for url in linkList:
-                print(url)
-
-                soup = GetSoup(url)
-
-                text = GetUnstrippedText(soup)
-
-                for item in text:
-                    file.write(item)
-                    file.write("\n")
-                    file.write(":\/:")
-                    file.write("\n")

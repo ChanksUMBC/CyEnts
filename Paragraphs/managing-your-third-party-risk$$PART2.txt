@@ -1,0 +1,9 @@
+
+A recent Ponemon Institute study found more than half of organizations have had a breach that originated from a third party.
+As both digital and physical supply chains grow in size and complexity, every third-party relationship introduces an element of risk to your organization.
+That’s why you need a way to objectively understand, monitor, and measure your exposure to third-party risk in real time across your supply chain.
+Static risk assessment methods often fall short.
+Spreadsheets, questionnaires, and email are labor-intensive, prone to error or bias, and only capture risk at a point in time.
+Not to mention that companies often learn that their third party suffered a breach days or weeks after they’ve been reported.
+Organizations need real-time intelligence on their third parties to take rapid and informed risk-based action.
+Precision third-party intelligence provides automated visibility at scale to identify risk exposures hidden across the third-party ecosystem so that security and risk teams are able to prioritize and proactively manage third-party risk.

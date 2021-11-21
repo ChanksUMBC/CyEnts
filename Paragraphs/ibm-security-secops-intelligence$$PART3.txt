@@ -1,0 +1,8 @@
+
+Augmenting these events and alerts with real-time intelligence from Recorded Future delivers more context to improve analyst efficiency and confidence.
+Using our joint solutions , analysts can reduce time spent understanding “why” an IOC is bad, and more time mitigating risk in their environment.
+Supercharging IBM Security QRadar with SecOps Intelligence To effectively respond to the multitude of alerts generated each day, security operations teams need a way to prioritize which alerts to focus on first so they can optimize their effort for maximum risk reduction.
+Security intelligence from Recorded Future creates clarity by adding rich context within IBM Security QRadar .
+Relevant insights, updated in real time, give security operations analysts the insights they need — when and where they need them — to make faster, more confident security decisions.
+Recorded Future automates the collection, analysis, and production of security intelligence at scale to drive accelerated responses across vast amounts of data.
+Using a sophisticated combination of our patented algorithm process and world-class human analysis, Recorded Future fuses the broadest range of open source, dark web, technical sources, and original research.

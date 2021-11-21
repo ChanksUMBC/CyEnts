@@ -1,0 +1,10 @@
+
+For example, a trading partner might generally be regarded as low risk based on standard reporting.
+However, let’s say the partner suffers a data breach that may or may not affect your organization.
+If you rely solely on static risk assessments, you likely won’t know the breach happened in the first place — or you’ll find out too late.
+You may have to wait too long to acquire the intelligence needed to accurately evaluate the risk.
+What was the cause of the breach?
+Was it an exploited vulnerability in a system used by the partner?
+A social engineering attack?
+Static assessments alone do not provide the evidence required to justify asking that third party to put additional security controls in place.
+If you want to boost the effectiveness of your third-party risk program, start by thinking critically about five key questions: Who are my most critical vendors?

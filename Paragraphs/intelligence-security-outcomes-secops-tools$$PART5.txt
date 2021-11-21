@@ -1,0 +1,6 @@
+
+As an inaugural technology partner for Splunk Mission Control , the Recorded Future’s new plug-in allows users to detect critical threats and access full context, by correlating external threat intelligence against internal telemetry data in Splunk Mission Control.
+A correlation dashboard then provides Splunk users with visibility into technical indicators — and empowers them to make prioritization decisions based on a real-time Recorded Future risk score that is backed by transparent evidence.
+Splunk analysts can also get hands-on experience of real-time security intelligence to improve threat visibility and accelerate incident response through a free trial of the Recorded Future integration for Splunk Enterprise and ES .
+Start yours today to see Recorded Future intelligence in action in your own Splunk environment.
+Rapid7

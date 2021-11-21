@@ -1,0 +1,4 @@
+
+This provides the context analysts need to quickly discount false positives, identify the most significant threats, and take immediate action.
+Threat Detection : Quickly identify potential threats by automatically correlating internal data with Recorded Future intelligence and risk scores.
+This enables you to detect threats earlier and respond faster by adding valuable context in Splunk to internal network observables from firewall, email security, and endpoint solutions.

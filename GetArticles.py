@@ -13,5 +13,7 @@ def GetArticles():
     RecordedFutureTextSoup.Main()
     FireeyeTextSoup.Main()
     IBMTextSoup.Main()
+    JuniperTextSoup.Main()
 
-GetArticles()
+if __name__ == "__main__":
+    GetArticles()

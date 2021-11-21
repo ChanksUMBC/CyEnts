@@ -89,6 +89,15 @@ def GetRSSLinkList(rssURL):
 
     return listOfLinks
 
+def getSourceList(json_past):
+
+    source_list = []
+    for source in json_past["data"]:
+        for link in source:
+            source_list.append(link)
+    
+    return source_list
+
 
 def Main():
     sourceList = ["https://blogs.juniper.net/threat-research/feed"]
@@ -99,45 +108,34 @@ def Main():
 
         data = {"data": []}
 
-    with open("juniperText.jsonl","w",encoding="utf-8") as file:
+    past_data = {}
+    with open("cyberJson/juniperText.json", "r", encoding="utf-8") as file:
+        past_data = json.load(file)
+    
+    source_list = getSourceList(past_data)
+
+    data = past_data
+
+    with open("cyberJson/juniperText.jsonl","w",encoding="utf-8") as file:
         for url in linkList:
-            print(url)
-
-            soup = GetSoup(url)
-            source = GetSource(url)
-
-            currTime = GetCurrTime()
-
-            text = GetText(soup)
-            timeCreated = GetTimeCreated(soup)
-
-            metadata = {"dateAccessed":currTime, "dateCreated":timeCreated, "source":source}
-            info = {"metadata" : metadata, "text": text}
-            source = {url: info}
-            json.dump(source, file, ensure_ascii=False)
-            file.write("\n")
-
-            data["data"].append(source)
-
-    with open("juniperText.json","w",encoding="utf-8") as file:
-        json.dump(data, file, indent=4, ensure_ascii=False)
-
-
-    with open("juniperParagraphgs.txt", "w",encoding="utf-8") as file:
-        for source in sourceList:
-
-            linkList = GetRSSLinkList(source)
-
-            for url in linkList:
+            if(url not in source_list):
                 print(url)
 
                 soup = GetSoup(url)
+                source = GetSource(url)
 
-                text = GetUnstrippedText(soup)
+                currTime = GetCurrTime()
 
-                for item in text:
-                    file.write(item)
-                    file.write("\n")
-                    file.write(":\/:")
-                    file.write("\n")
-    
+                text = GetText(soup)
+                timeCreated = GetTimeCreated(soup)
+
+                metadata = {"dateAccessed":currTime, "dateCreated":timeCreated, "source":source}
+                info = {"metadata" : metadata, "text": text}
+                source = {url: info}
+                json.dump(source, file, ensure_ascii=False)
+                file.write("\n")
+
+                data["data"].append(source)
+
+    with open("cyberJson/juniperText.json","w",encoding="utf-8") as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)

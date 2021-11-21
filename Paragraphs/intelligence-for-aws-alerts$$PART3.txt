@@ -1,0 +1,7 @@
+
+Express automatically reads the page and reports back with a simple 0-99 risk score, helping you to quickly determine whether you should be concerned.
+Recorded Future also provides context, showing you exactly why an indicator is risky.
+You can use this to quickly determine if an alert merits escalation.
+Sign up for Recorded Future Express at no cost today !
+
+

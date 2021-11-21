@@ -1,0 +1,53 @@
+How Contextualized Intelligence Maximizes Security Outcomes in SecOps Tools April 14, 2021 •\n                
+
+Ellen Wilson As the attack surface grows,  it’s difficult for security teams to maintain a comprehensive, real-time view of the threats at an operational level.
+
+With too little time and not enough information, analysts struggle to determine which alerts represent a critical incident and which may just be a redundancy or a false positive — all while true positives may be slipping through the cracks.
+
+To effectively respond to the multitude of alerts generated each day, security operations teams need a way to prioritize which alerts to focus on so they can maximize their efforts and mitigate risks.
+
+The latest releases for Recorded Future SecOps Intelligence create clarity in decision making by adding rich context within an organization’s existing SecOps tools to optimize threat detection and response workflows, ultimately reducing risk for the organization.
+
+Real-Time Context Drives Clarity in Decision-Making When internal alerts come from non contextual threat feeds and disparate systems, they lack the vital information needed for confident, quick threat remediation.
+
+Analysts spend valuable cycles manually researching IOCs, only to find incomplete pieces of what they need.
+
+With high-confidence, actionable intelligence tailored to SecOps use cases, analysts can spend more time proactively improving the security posture of their organization.
+
+Recorded Future provides automated, verified intelligence that connects the dots between indicators at scale, providing SecOps analysts with a more complete view of risk to their organization.
+
+With recent updates to our malware sandbox analysis and its Network Traffic Analysis capabilities, Recorded Future SecOps Intelligence module now offers clients even more actionable insights into suspicious and potentially malicious behavior, saving analysts investigation time and enabling comprehensive threat detection, hunting, and blocking workflows in SIEM and SOAR solutions.
+
+Intelligence Tailor-Made for SecOps Tools and Workflows Recorded Future connects the dots between the broadest range of sources to provide the critical context security operations analysts need to quickly discount false positives and identify the most significant threats.
+
+Recorded Future’s real-time, machine-readable intelligence makes it easy to access Recorded Future’s automated SecOps intelligence in your unique security tech stack.
+
+Our technology partner ecosystem, which includes over 90 integrations with leading security and technology providers, now includes integrations for the following SecOps tools: Splunk Mission Control:
+
+As an inaugural technology partner for Splunk Mission Control , the Recorded Future’s new plug-in allows users to detect critical threats and access full context, by correlating external threat intelligence against internal telemetry data in Splunk Mission Control.
+
+A correlation dashboard then provides Splunk users with visibility into technical indicators — and empowers them to make prioritization decisions based on a real-time Recorded Future risk score that is backed by transparent evidence.
+
+Splunk analysts can also get hands-on experience of real-time security intelligence to improve threat visibility and accelerate incident response through a free trial of the Recorded Future integration for Splunk Enterprise and ES .
+
+Start yours today to see Recorded Future intelligence in action in your own Splunk environment.
+
+Rapid7
+
+InsightIDR:
+
+The explosive growth of indicators makes finding the needle in the haystack extremely resource-intensive for already overwhelmed security teams.
+
+With Recorded Future intelligence, security teams using Rapid7 InsightIDR can easily discover and validate findings.
+
+Utilizing the Recorded Future browser extension over Rapid7 InsightIDR allows users to enrich newly identified threats with evidence-based, real-time risk scores and risk rules — all without having to leave Rapid7 InsightIDR.
+
+This empowers users to confidently prioritize the most important findings in their environment, simplify workflows, and maximize the ROI of existing cybersecurity solutions.
+
+High-confidence insights, updated in real time, and backed by transparent scoring give security operations teams the information they need to disrupt adversaries and prevent damage to their organization.
+
+Request a demo of Recorded Future’s SecOps Intelligence module to see how you can equip your organization with the right intelligence, at the right time, in the right format, and empower them to identify and prevent threats faster within your SecOps tools and workflows.
+
+
+
+

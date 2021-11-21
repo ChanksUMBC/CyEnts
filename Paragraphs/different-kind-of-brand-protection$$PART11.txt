@@ -1,0 +1,5 @@
+
+Use case: Compromised data Threat actors make money from many types of compromised personal information and corporate intellectual property.
+Examples of compromised data for sale on the dark web include medical records, cloned and compromised gift cards, and stolen credentials to “pay for” services like Netflix and Uber, and items charged via PayPal, as illustrated in Figure 10-1.
+A high percentage of hacking-related breaches leverage stolen or weak passwords.
+Threat actors regularly upload massive caches of usernames and passwords to paste sites and the dark web, or make them available for sale on underground marketplaces.

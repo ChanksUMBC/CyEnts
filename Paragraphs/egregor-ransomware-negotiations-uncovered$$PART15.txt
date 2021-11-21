@@ -1,0 +1,7 @@
+
+Implement a strategy to prevent unauthorized data theft, especially as it applies to uploading large amounts of data to legitimate cloud storage platforms that attackers can abuse.
+Consider blocking outbound traffic to unapproved cloud hosting services.
+Employ user and entity behavior analytics to identify potential security incidents.
+When triggered, assume a breach has taken place.
+Audit, monitor and quickly act on suspected abuse related to privileged accounts and groups.
+Deploy multifactor authentication on all remote access points into an enterprise network \u2014 with particular care given to secure or disable remote desktop protocol (RDP) access.

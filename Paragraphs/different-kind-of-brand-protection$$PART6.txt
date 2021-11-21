@@ -1,0 +1,6 @@
+
+A Different Kind of Detection Most of the activities we have been discussing in this handbook involve creating intelligence about attackers and their tools.
+Brand intelligence includes some of that, as well, but the emphasis is instead on detecting your organization’s name and brand everywhere they occur across the internet.
+You need to be rigorous about listing and searching for mentions of all your brand and product names, and keywords that are associated with them.
+These include the names of: Your parent organization Subsidiaries and business units Products Executives Managers and employees who engage with the public in web forums and via social media It also includes trademarks, service marks, and advertising slogans that appear on your organization’s authorized websites, since these are frequently used on phony websites.
+Uncovering Evidence of Brand Impersonation and Abuse Knowing what to look for empowers you to find evidence of brand impersonation and abuse in places many organizations never search.

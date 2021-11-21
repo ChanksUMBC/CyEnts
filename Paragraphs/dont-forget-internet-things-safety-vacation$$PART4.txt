@@ -1,0 +1,4 @@
+
+\u201cYou are staying in an open environment,\u201d says Ree. \u201cDon\u2019t assume it is your house.
+In a vacation rental home, an attacker could easily scan open ports and see what\u2019s connected.\u201d Invisible Connections
+Every time you rent a vacation home and connect to its network or an IoT device , you leave a footprint behind that can be leveraged by an attacker.

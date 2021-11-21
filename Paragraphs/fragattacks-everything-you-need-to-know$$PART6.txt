@@ -1,0 +1,5 @@
+
+By mixing fragments encrypted with different keys, attackers can exfiltrate data from the network.
+And the third enables a fragment cache attack.
+This exploits non-reassembled fragments left in memory and involves injecting a malicious fragment in the fragment cache of the targeted access point.
+When a victim connects and sends a fragmented frame, it can be reassembled with the malicious fragments.

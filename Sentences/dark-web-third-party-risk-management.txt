@@ -1,0 +1,85 @@
+Why Monitoring the Dark Web is Essential for Third-Party Risk Management May 13, 2021 •\n                
+
+Trevor Lyness
+
+The dark web is often portrayed as vast, mysterious, and out of reach for companies without specialized expertise.
+
+In reality, the dark web is one of the most over-hyped and misunderstood terms in the cybersecurity industry today.
+
+However, if you cut through the noise, you’ll find that the dark web is an enormously valuable source of information for third-party risk management professionals.
+
+What is the Dark Web?
+
+The dark web is a subset of the Internet.
+
+It’s accessible via special software such as Tor that allows users and website operators to remain anonymous or untraceable.
+
+Websites on the dark web operate in their own unique environment, separated from surface sites such as Amazon, eBay, or Youtube.
+
+Cybercriminals use the dark web to coordinate and execute cyber attacks, as well as to sell stolen data and even exploits into companies.
+
+However, not all parts of the dark web are equal.
+
+Many portions are accessible to anyone willing to download Tor.
+
+The information you find in these relatively easy-to-access parts of the dark web are often of limited value.
+
+Other parts of the dark web are invite-only, requiring special access that requires years of effort developing personas accepted among the cybercriminal community.
+
+This closed part of the dark web is where one more often can find information of high value.
+
+These closed channels, also known as the criminal underground, can extend beyond the proper dark web and into private criminal forums hosted on Telegram, Discord, and other places.
+
+Why Does the Dark Web Matter for Third-Party Risk Management?
+
+Third-party risk management teams are tasked with assessing risk across the entire full vendor lifecycle, from vendor selection to relationship termination.
+
+When it comes to assessing cybersecurity risk, one of the most important questions to understand is “has my vendor recently experienced a cyber attack or breach?”
+
+Unfortunately, current methods to assess this information – questionnaires, onsite audits, and  penetration testing – can’t fully answer this question.
+
+The dark web provides a unique view into that you cannot get elsewhere, helping identify several high-risk factors that a vendor has, or is about to breached: Ransomware extortion.
+
+Ransomware operators use extortion sites to threaten their victims into paying ransoms, under threat of publicly releasing stolen data.
+
+While the practice is deplorable, these dark web sites provide an early warning signal that one of your third-parties has been struck by ransomware.
+
+In some cases you can even use the sites to verify if any of your data was leaked via your third-party.
+
+Stolen data .
+
+Sensitive data including IP, PII, and HIPAA information frequently find their way to the dark web, likely indicating a breach of a third-party.
+
+Leaked credentials.
+
+Company email addresses and passwords are often for sale on the dark web.
+
+Leaked credentials indicate a potential attack coming soon.
+
+Company access for sale.
+
+Some threat actors use the dark web to sell direct access to a company through a vulnerability.
+
+By identifying the sale of these vulnerabilities, you can proactively stop future breaches of your third parties.
+
+Cyber chatter.
+
+Threat actors are known to discuss their recent attacks and upcoming plans on underground channels.
+
+Keeping a close eye on mentions of your third parties can help you stay in front of breaches and upcoming cyber attacks.
+
+Continuously Monitor the Dark Web with Third-Party Intelligence The dark web is too widespread and complex for any single individual to successfully monitor.
+
+Third-party intelligence from Recorded Future does that work for you, by automatically collecting and analyzing posts from the dark to deliver high-confidence indicators of risk including ransomware extortion, leaked credentials, and high-volumes of attention on high-tier forums.
+
+Third-party risk professionals use third-party intelligence to stay on top of their vendors, allowing them to proactively identify and mitigate risk as it surfaces.
+
+Figure 1:
+
+A company intelligence card, highlighting that the company Aperture Science had recent attention on the Netwalker ransomware extortion site.
+
+Learn More For more, tune into our webinar How to Use Dark Web Data to Shine a Light on Your Third-Party Vendors on Tuesday, May 18 at 11:00 AM ET.
+
+
+
+

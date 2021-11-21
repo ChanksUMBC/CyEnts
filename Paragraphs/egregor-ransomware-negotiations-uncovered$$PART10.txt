@@ -1,0 +1,4 @@
+
+Both paying a ransom or deciding not to pay carry consequences.
+We encourage organizations to review X-Force\u2019s Definitive Guide to Ransomware , which lists the main topics companies should consider when the question arises as to whether they should pay a ransom.
+Our review of the Egregor chat logs provides some insight into what mitigation or ransom reduction techniques could be effective if one is ever faced with a ransomware incident: Using company size to discount the ransom: In some cases, victims explained the size of their business with Egregor actors, which resulted in lower ransom demands.
