@@ -110,6 +110,10 @@ def Main():
     print(source_list)
 
     with open("cyberJson/mcAfeeText.jsonl","w",encoding="utf-8") as file:
+        for source in past_data["data"]:
+            json.dump(source, file, ensure_ascii=False)
+            file.write("\n")
+            
         for url in linkList:
             if(url not in source_list):
                 print(url)

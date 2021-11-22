@@ -107,6 +107,10 @@ def Main():
 
 
     with open("cyberJson/fortinetText.jsonl","w",encoding="utf-8") as file:
+        for source in past_data["data"]:
+            json.dump(source, file, ensure_ascii=False)
+            file.write("\n")
+
         for source in sourceList:
 
             linkList = GetRSSLinkList(source)
@@ -132,6 +136,8 @@ def Main():
                     file.write("\n")
 
                     data["data"].append(source)
+            
+
 
     with open("cyberJson/fortinetText.json","w",encoding="utf-8") as file:
         json.dump(data, file, indent=4, ensure_ascii=False)

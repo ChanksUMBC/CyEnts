@@ -485,17 +485,17 @@ def main():
             with open(source,encoding="utf-8") as file:
                 for line in file:
                     text += line
-            
-            separatedText = tt.tokenize(text)
+            if(len(text) > 100):
+                separatedText = tt.tokenize(text)
 
-            count = 1
-            for item in separatedText:
-                newSource = source.split("Sentences\\")[1][:-4] + "$$" +"PART" + str(count) + ".txt"
-                sourceList.append(newSource)
-                finalSource = "Paragraphs\\"+newSource
-                with open(finalSource, "w", encoding = "utf-8") as paraFile:
-                    paraFile.write(item.replace("\n\n", "\n"))
-                count += 1
+                count = 1
+                for item in separatedText:
+                    newSource = source.split("Sentences\\")[1][:-4] + "$$" +"PART" + str(count) + ".txt"
+                    sourceList.append(newSource)
+                    finalSource = "Paragraphs\\"+newSource
+                    with open(finalSource, "w", encoding = "utf-8") as paraFile:
+                        paraFile.write(item.replace("\n\n", "\n"))
+                    count += 1
     with open("paragraphFileNames.txt","w", encoding = "utf-8") as file:
         for source in sourceList:
             file.write(source)
