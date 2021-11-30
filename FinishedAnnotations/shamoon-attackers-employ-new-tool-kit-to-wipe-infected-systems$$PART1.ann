@@ -1,0 +1,6 @@
+T2	Malware_Type 176 181	wiper
+T1	Malware_Name 167 174	Shamoon
+T3	Malware_Name 318 325	Shamoon
+T4	Malware_Name 486 493	Shamoon
+T5	Threat_Actor 580 585	APT33
+T6	Threat_Actor 613 618	APT33

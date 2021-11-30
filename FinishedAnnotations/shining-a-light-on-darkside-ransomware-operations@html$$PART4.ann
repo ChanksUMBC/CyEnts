@@ -1,0 +1,13 @@
+T1	Malware_Name 15 23	DARKSIDE
+T2	Malware_Name 209 217	DARKSIDE
+T3	Software_Name 84 107	Mandiant Advantage Free
+T4	Malware_Name 292 300	DARKSIDE
+T5	Malware_Name 551 559	DARKSIDE
+T6	Malware_Name 785 793	DARKSIDE
+T7	Malware_Name 920 928	DARKSIDE
+T8	Malware_Type 929 939	ransomware
+T9	Malware_Name 981 989	DARKSIDE
+T10	Malware_Name 1027 1035	DARKSIDE
+T11	Malware_Type 1036 1046	Ransomware
+T12	Malware_Name 1134 1142	DARKSIDE
+T13	Threat_Actor 1112 1120	darksupp

@@ -1,0 +1,25 @@
+T1	Malware_Name 9 16	Shamoon
+T2	Malware_Name 69 76	Shamoon
+T3	Version_Tag 77 86	Version 2
+T4	Malware_Name 107 117	Stonedrill
+T5	Malware_Type 87 92	wiper
+T6	Malware_Type 101 106	wiper
+T7	Version_Tag 161 170	Version 3
+T8	Malware_Name 153 160	Shamoon
+T9	Malware_Name 198 206	Filerase
+T10	Malware_Type 171 176	wiper
+T11	Malware_Type 192 197	wiper
+T12	Malware_Type 249 254	wiper
+T13	Malware_Name 264 272	Filerase
+T14	Malware_Name 290 297	Shamoon
+T15	Version_Tag 298 307	Version 3
+T16	Malware_Name 350 357	Shamoon
+T17	Tool 450 458	OCLC.exe
+T18	Tool 578 590	spreader.exe
+T19	Tool 633 645	Spreader.exe
+T20	Tool 759 777	SpreaderPsexec.exe
+T21	Tool 813 823	psexec.exe
+T22	Tool 856 866	SlHost.exe
+T23	Malware_Type 877 882	wiper
+T24	Version_Tag 999 1001	V2
+T25	Malware_Name 1006 1013	Shamoon
