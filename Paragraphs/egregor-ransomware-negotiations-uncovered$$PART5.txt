@@ -1,4 +1,0 @@
-
-Egregor gained significant recognition in 2021 as affiliates shifted from Maze to using this new ransomware family and leaked stolen information from impacted organizations, extorting them in efforts to collect a ransom.
-The impact of Egregor ransomware has been felt worldwide with an estimated $80 million dollars in profit through their operations against at least 150 organizations.
-Regarding victims, the highest number of reported cases was in the United States with infections clustered primarily within the manufacturing and retail industries.\u00a0

@@ -1,3 +1,0 @@
-How Contextualized Intelligence Maximizes Security Outcomes in SecOps Tools April 14, 2021 •\n                
-Ellen Wilson As the attack surface grows,  it’s difficult for security teams to maintain a comprehensive, real-time view of the threats at an operational level.
-With too little time and not enough information, analysts struggle to determine which alerts represent a critical incident and which may just be a redundancy or a false positive — all while true positives may be slipping through the cracks.

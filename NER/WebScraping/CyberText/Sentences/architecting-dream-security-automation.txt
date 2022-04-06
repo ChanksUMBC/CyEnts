@@ -1,0 +1,45 @@
+Architecting Your Dream Security Automation?
+
+Here’s What You Need To Know February 17, 2022 •\nSam
+
+Langrock Few topics spark conversation like security automation.
+
+Automation is the entire premise around programming; routines and repetitive patterns are tasked to computers while humans work only on higher priorities.
+
+For security practitioners, this is essential because even a small network can have thousands of endpoints that need protecting while the security staff is miniscule.
+
+Yet the challenge facing organizations in 2022 is how to automate, not just the collation and data collection tasks where machines excel, but to automate the repetitive human decisions made daily to defend an enterprise.
+
+Join us for a three part blog series on automation and for a webinar on February 22nd titled, “Fight Ransomware Robots With Automation Intelligence”.
+
+In 2017, vendor research firm Gartner coined the term “SOAR: security orchestration, automation, and response” to describe the emergence of tools custom built to solve the problem of automated response.
+
+Many of these early tools were straightforward and offered limited functionality to service specific workflows.
+
+As these tools matured, several added case management functionality to supplement the programmatic security workflows.
+
+These workflows, typically called playbooks , were designed to allow security teams to translate their manual security analysis and response runbooks into a programmatic flow the SOAR application could apply.
+
+Clear, documented security processes were vital.
+
+What quickly emerged was that these solutions, while valuable, were far from turnkey.
+
+First, SOAR applications did not come with any playbooks out-of-the-box in an attempt to stay neutral to the wide variety of technologies implemented across different enterprises.
+
+As a result, clients often struggled to gain quick value out of a fairly complex security appliance.
+
+Second, security teams often relied on external sources of information to validate maliciousness and convict detected suspicious events.
+
+Security events are not automatically malicious, but more akin to “indictments” with further evidence required to “convict” the incident as malicious.
+
+Security analysts used a variety of external threat intelligence: from threat feeds—publicly available technical indicators ingested into a SIEM—to bespoke databases curated by the security team to queries on public search engines for open source articles and blog posts mentioning any IP address, domain name, or file hash value in your investigation.
+
+While SOAR applications were capable of ingesting threat intelligence data, the fidelity and speed of threat intelligence became critical—and too often lacking.
+
+Without actionable, real-time data on active and emerging threats, it’s impossible to effectively and proactively reduce risk.
+
+Join us for a webinar on February 22nd titled, “Fight Ransomware Robots With Automation Intelligence” to learn more about how automation can assist your organization.
+
+
+
+

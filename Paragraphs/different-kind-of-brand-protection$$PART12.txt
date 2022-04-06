@@ -1,7 +1,0 @@
-
-These data dumps may include corporate email addresses and passwords, as well as login details for other sites.
-Monitoring external sources for this type of intelligence will dramatically increase your visibility — not just into leaked credentials, but also into potential breaches of corporate data and proprietary code.
-Critical Qualities for Security Intelligence Solutions Of course, mitigating digital risk to your brand is not simply a matter of stumbling across one typosquatting domain or some isolated piece of stolen data.
-Somebody, or something, has to do the broader work of collecting masses of data, sifting through thousands of data points, analyzing relationships among the data points, deciding priorities, and ultimately taking action.
-The best approach is to use a brand intelligence solution that: Collects and scans data from the broadest range and variety of sources : Automation at the data-collection stage saves analysts precious time.
-The best solutions gather data not only from open web sources, but also from the dark web and technical sources.

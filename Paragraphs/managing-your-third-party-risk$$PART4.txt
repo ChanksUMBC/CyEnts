@@ -1,4 +1,0 @@
-
-A recent survey by the Ponemon Institute, “Digital Transformation & Cyber Risk: What You Need to Know to Stay Safe,” found that 55 percent of organizations have had a breach that originated from a third party, and 53 percent say their tools for managing third-party risk are only somewhat effective or are not effective.
-These and related statistics are shown in Figure 9-1.
-The writing is on the wall: Third-party attacks will continue to increase and get worse and will further complicate cyber risk management.

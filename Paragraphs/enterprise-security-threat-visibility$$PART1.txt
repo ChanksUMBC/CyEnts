@@ -1,3 +1,0 @@
-Powering Enterprise Security with End-to-End Threat Visibility April 13, 2021 •\n                
-Ellen Wilson As your attack surface grows — expanding into the cloud and employees’ homes — there are even more opportunities for threat actors to breach your organization.
-Relying on disparate threat feeds and static reports is manual and inefficient, often leading to incomplete threat research and missed threats.

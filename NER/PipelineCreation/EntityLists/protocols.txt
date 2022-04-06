@@ -1,0 +1,79 @@
+Border Gateway Patrol
+BGP
+Telnet
+Extensible Provisioning Protocol
+EPP
+TACACS
+HTTPS
+Remote Desktop Protocol
+RDP
+Secure Shell
+SSH
+Exterior Gateway Protocol
+EGP
+Internet Control Message Protocol for IPv6
+ICMPv6
+ICMP for IPv6
+File Transfer Protocol
+FTP
+Domain Name System
+DNS
+Hypertext Transfer Protocol
+HTTP
+Simple Mail Transfer Protocol
+SMTP
+XMPP
+Internet Message Access Protocol
+IMAP
+IMAP4
+RADIUS
+Internet Relay Chat
+IRC
+Internet Protocol
+IP
+User Datagram Protocol 
+UDP
+Z39.50
+z39.50
+Z39.50 standard
+ANSI Z39.50
+ANSI/NISO Z39.50
+Lightweight Directory Access Protocol
+LDAP
+Kerberos
+Versatile Message Transaction Protocol
+VMTP
+Hyper Text Coffee Pot Control Protocol
+HTCPCP
+HTCPCP-TEA
+Transmission Control Protocol
+TCP
+Three-way handshake
+three times handshake
+SYN_(TCP)
+Internet Protocol version 4
+IPv4
+DHCPv6
+Dynamic Host Configuration Protocol version 6
+Internet Control Message Protocol
+ICMP
+ICMPv4
+Internet Group Management Protocol
+IGMP
+Address Resolution Protocol
+ARP
+HTTP Speed+Mobility 
+Microsoft Speed + Mobility
+Microsoft S&M
+Microsoft S+M
+Synchronous Digital Hierarchy
+SDH
+synchronous optical networking
+SONET
+MPLS-TP
+Parallel Redundancy Protocol
+BitTorrent
+BT
+Bit Torrent
+Torrent
+SOAP

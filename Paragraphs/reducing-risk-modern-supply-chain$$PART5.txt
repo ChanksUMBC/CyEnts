@@ -1,7 +1,0 @@
-
-Our threat research team Insikt Group often adds their own analysis to major security incidents, giving you fast insight into what happened, why it matters, and what you can do about it Malicious network activity — Infrastructure abuse such as communication with C2 servers, hosted TOR notes, and malware detections all indicate that a company is highly vulnerable to attack.
-Dark web and ransomware extortion site attention — Cybercriminals often use the dark web and other underground channels to discuss cyber attacks involving your third parties.
-Ransomware extortion sites, for example, are a high-risk indicator that your third party was likely struck by ransomware.
-However, not all dark web sites are equal.
-Recorded Future is the only third-party intelligence provider granting access to invite-only, high-tier dark web forums.
-Leaked credentials — Exposed data from business accounts used by employees on dark web and paste sites leave third-parties exposed to credential stuffing attacks and account impersonation.

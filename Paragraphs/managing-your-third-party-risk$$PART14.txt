@@ -1,8 +1,0 @@
-
-Responding to High Third-Party Risk Scores What do you do when faced with high risk scores for a third party?
-Not every data breach justifies terminating business with that partner.
-Just about every organization contends with cyberattacks and unexpected downtime, and partners are no exception.
-The more important issue is how they (and you) deal with incidents and take steps to reduce future risks.
-A change in risk scores may present an opportunity to talk with your business partners about their approach to security.
-On your end, it’s important to look more closely at whether the risk rules that were triggered will impact your organization’s network.
-For example, a partner’s risk score might increase because typosquatting websites closely resembling legitimate websites operated by the partner were discovered.

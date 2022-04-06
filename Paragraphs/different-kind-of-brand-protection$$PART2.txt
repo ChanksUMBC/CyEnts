@@ -1,5 +1,0 @@
-
-Fake or malicious online content, data leaks, and more can negatively influence customers and create financial risk for your organization — without ever touching your network or systems.
-Security analysts could spend virtually all of their time scoring the internet for company mentions and analyzing data points and still not be able to keep up with constantly morphing brand threats.
-To proactively protect your brand , you need to see everywhere your organization’s name, associated products, executive names, and keywords exist across the internet — at any given moment.
-That’s where brand intelligence comes in – harnessing automation, analytics, andhuman expertise to not only map, monitor, and score events related to brand risk, but also making it easy to take down malicious content, such as typosquat domains and  disinformation on social media.

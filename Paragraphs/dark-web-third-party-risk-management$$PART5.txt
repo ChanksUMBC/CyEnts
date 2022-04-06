@@ -1,6 +1,0 @@
-
-Ransomware operators use extortion sites to threaten their victims into paying ransoms, under threat of publicly releasing stolen data.
-While the practice is deplorable, these dark web sites provide an early warning signal that one of your third-parties has been struck by ransomware.
-In some cases you can even use the sites to verify if any of your data was leaked via your third-party.
-Stolen data .
-Sensitive data including IP, PII, and HIPAA information frequently find their way to the dark web, likely indicating a breach of a third-party.

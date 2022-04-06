@@ -1,6 +1,0 @@
-
-They do this for reasons ranging from suspicious to fully malicious.
-Rogue websites using these modified domain names are built to look like legitimate websites.
-The rogue domains and websites are often used in spear-phishing campaigns against employees or customers, watering-hole attacks, and drive-by download attacks.
-Being alerted to newly registered phishing and typosquatting domains in real time is the best way to narrow the window of opportunity for threat actors to impersonate your brand and defraud unsuspecting users.
-Once the malicious infrastructure is identified, you’re able to employ a takedown service to nullify the threat.

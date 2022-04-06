@@ -1,8 +1,0 @@
-
-Real-time, machine-readable intelligence and an ever-expanding technology partner ecosystem, with over 90 integrations currently, simplifies access to high-confidence indicator insights for more confident threat identification and remediation: Splunk Mission Control:
-Recorded Future delivers security intelligence to arm security and IT teams that use Splunk Mission Control with the real-time information and supporting evidence they need to detect threats earlier and prioritize their findings with confidence.
-Splunk analysts can also get hands-on experience of real-time security intelligence to improve threat visibility and accelerate incident response through a free trial of the Recorded Future integration for Splunk Enterprise and ES .
-Start yours today to see Recorded Future intelligence in action in your own Splunk environment.
-Rapid7
-InsightIDR:
-The explosive growth of indicators makes finding the needle in the haystack extremely resource-intensive for already overwhelmed security teams.

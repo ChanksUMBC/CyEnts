@@ -1,7 +1,0 @@
-
-Relevant insights, updated in real time, and integrated out-of-the-box into Splunk give security operations teams the right information at the right time to disrupt adversaries and prevent damage to their organization.
-See the power of Recorded Future for yourself by starting your free 30-day trial today!
-Not a user of Splunk?
-Check out Express, our free browser extension to access to our intelligence .
-
-

@@ -1,6 +1,0 @@
-
-The Next Steps: Reducing the Risk of Compromise So, what should you do about it?
-We recommend you install the latest patch for the Cisco Unified Communications Products from the Cisco security advisories.
-The patches for both the CUCM and the CUCM IM & Presence are shown in the charts below.
-Links to the advisories are located in the References section.
-A continuous penetration testing program can also help discover and fix these types of vulnerabilities.

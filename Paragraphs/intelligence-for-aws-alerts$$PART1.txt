@@ -1,5 +1,0 @@
-Using Intelligence to Prioritize AWS Guard Duty Alerts March 10, 2021 •\n                
-Meghan McGowan Security operations teams are inundated with alerts and threats making it difficult for them to identify what is important.
-Intelligence integrated into third-party products can help prioritize, but one size doesn’t fit all when it comes to intelligence, and bad data can actually lead to more noise.
- 
-At Recorded Future we improve security by making it easier to find and address the alerts that matter using  external context around potential threats.

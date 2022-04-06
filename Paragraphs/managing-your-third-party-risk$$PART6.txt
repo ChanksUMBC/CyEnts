@@ -1,9 +1,0 @@
-
-Static assessments of risk — like financial audits and security certificate verifications — are still important, but they often lack context and timeliness.
-Organizations following traditional approaches to managing third-party risk often use these three steps: They attempt to understand their organization’s business relationship with a third party and how it exposes their organization to threats.
-Based on that understanding, they identify frameworks to evaluate the third party’s financial health, corporate controls, and IT security and hygiene, as well as how these factors relate to their own organization’s approach to security.
-Using those frameworks, they assess the third party to determine whether it is compliant with security standards like SOC 2 or FISMA.
-Sometimes they conduct a financial audit of the third party.
-While these steps are essential for evaluating third-party risk, they don’t tell the whole story.
-The outputs are static and cannot reflect quickly changing conditions and emerging threats.
-The analysis is often too simplistic to produce actionable recommendations.

@@ -1,3 +1,0 @@
-
-It has not been long since the world had to reckon with major supply chain attacks that call to mind the devastating SolarWinds\u2019 Orion breach and the Accelion attacks in which one poisoned software update infected a fleet of customers.
-Right ahead of the United States\u2019 Independence Day holiday weekend, REvil ransomware gang affiliates managed to launch what appears to be a premeditated attack that took a page out of the same playbook, wreaking havoc across the globe.

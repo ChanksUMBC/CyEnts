@@ -1,6 +1,0 @@
-
-With Recorded Future intelligence, security teams using Rapid7 InsightIDR can easily discover and validate findings.
-The Recorded Future browser extension also enables analysts to enrich newly identified threats with evidence-based, real-time risk scores and risk rules — all without having to leave Rapid7 InsightIDR.
-To learn more about how your organization can integrate an end-to-end view of threats at operational and strategic levels of your security program, download the Forrester report, How to Integrate Threat Intelligence Into Your Security Program .
-
-

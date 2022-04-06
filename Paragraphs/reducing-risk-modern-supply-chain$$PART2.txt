@@ -1,7 +1,0 @@
-
-Traditional methods to manage third-party risk can’t keep up.
-Governance, risk, and compliance (GRC) teams, as well as their security counterparts, continue to struggle to accurately assess risk given the continually shifting circumstances surrounding who they do business with.
-And for many, maintaining on-going visibility into their vendors’ constantly changing risk profile is a difficult or impossible task.
-There’s A Better Way To Manage Third-Party Risk — With Intelligence GRC and security teams need a proactive approach to identify, manage, and mitigate third-party risk, and intelligence is here to help.
-Intelligence acts as a source of truth on key risk indicators, eliminating the guesswork associated with assessing vendor risk.
-It reduces the time you spend on vendor risk assessments by 50%, and greatly enhances the quality of those assessments.

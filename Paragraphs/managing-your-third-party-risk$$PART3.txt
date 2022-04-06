@@ -1,3 +1,0 @@
-
-Explore the impact of increasing third-party risk in “ The Security Intelligence Handbook, Third Edition: How to Disrupt Adversaries and Reduce Risk With Security Intelligence .”
-In this excerpt, which has been edited and condensed, you’ll learn how to reduce your overall risk of data breaches and reputational damage brought about through vulnerable third parties: Third-Party Risk Looms Large Because businesses and their supply chains are so tightly integrated, it’s critical to consider the security of your partners, vendors, and other third parties when assessing the risk profile of your own organization.

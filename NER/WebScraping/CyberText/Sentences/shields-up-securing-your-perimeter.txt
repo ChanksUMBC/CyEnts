@@ -1,0 +1,87 @@
+Shields Up: Securing Your Perimeter March 22, 2022 •\nSara Jelen Editor’s Note: The following post originated here .
+
+Due to further sanctions and political measures from the U.S. and European countries on Russia, governments on both sides of the Atlantic have warned about the cybersecurity implications of Russia’s war on Ukraine and the potential for cyber attacks.
+
+Just yesterday, the White House reiterated those warnings , based on evolving intelligence that the Russian government is exploring options for potential cyberattacks.
+
+The UK’s National Cyber Security Centre (NCSC) has also warned British organizations about the heightened state of cyber risk and urges them to begin strengthening their digital defenses sooner rather than later.
+
+As these government agencies urge private sector partners to harden cyber defenses immediately and to focus on their digital perimeter, the Cybersecurity & Infrastructure Security Agency (CISA) has shared their Shields Up guidance memo for all organizations seeking to adopt a heightened cybersecurity posture and protect their critical assets.
+
+The advice includes improving access control, adding layers of user authentication to their networks, patching all systems, and getting effective incident response plans on the ground—all to reduce the likelihood of a severe cyber attack on critical assets.
+
+Reduce the likelihood of damaging cyber intrusion CISA’s Shields Up advisement recommends protecting and hardening the most critical assets in an organization, while recognizing the challenges that many organizations face in finding the resources needed to execute these urgent security improvements.
+
+Attack Surface Intelligence from Recorded Future can be the best ally for following this guidance.
+
+The solution enables security teams to easily discover and locate all critical assets, as well as identify and prioritize risks to them so that organizations can act fast, armed with reliable data.
+
+How can an organization make sure it’s following Shields Up guidance, to prevent an organization from falling victim to cyber attacks?
+
+Verify remote access points Shields Up spotlights the importance of verifying that all remote access to an organization’s network is secure.
+
+The first step is to make sure teams have the necessary understanding and control over what and who can connect to an infrastructure.
+
+This way, teams will be able to monitor for threats in order to catch and mitigate potential attacks as quickly as possible.
+
+Attack Surface Intelligence allows organizations to discover all remote access points and VPNs used on its network, instantly.
+
+By knowing how users are connecting to a network and from where, security teams will be able to limit the number of access points, making them easier to monitor and control.
+
+Furthermore, it provides them with additional information on each remote access point, informing them if there are any unused ports, protocols and services, and allowing them to restrict them from being accessible.
+
+Prioritize remediation of vulnerabilities and misconfigurations As per the guidance offered by CISA’s Shields Up memo, one of the main practices toward improving your security posture and reducing the likelihood of an attack is to ensure that all devices, software and internet-facing assets are patched for any vulnerabilities or misconfigurations.
+
+Malicious actors can easily scan external infrastructure to find unmanaged and vulnerable internet-facing assets.
+
+Organizations should also be prioritizing patches that address the known vulnerabilities listed by CISA here .
+
+Attack Surface Intelligence scans an organization’s assets against an ever-growing list of risk rules—helping teams to quickly identify which areas of an attack surface might be at risk and need to be patched first.
+
+Ranging from assets with potential risks that only need to be monitored for the time being to CVEs requiring triage as quickly as possible, teams will be continuously informed of all vulnerabilities and risks to their assets, mitigating the potential for an attack.
+
+Security teams can stay advised of any risks to their assets as well, such as hostnames pointing to local networks, staging and development subdomains that might be exposing sensitive information to the public, and even hostnames with self-signed certificates that when exposed can give attackers insight to internal servers.
+
+Disable all non-essential ports When threat actors begin reconnaissance on an organization, one of the first steps involves massive or localized port scanning.
+
+Shields Up also recognizes this, advising all organizations to catalog and disable non-essential ports.
+
+By keeping an inventory of all your external-facing assets, open ports, and services on each port, organizations can gain control in reducing its attack surface and maintaining security posture in the wake of current threats.
+
+The attack surface scanning from the Recorded Future Attack Surface Intelligence module provides a look into each open port, and every hostname, service and IP using those ports.
+
+It can also advise regarding particularly dangerous open ports—ones that are used by databases that can allow adversaries to exfiltrate data if left unprotected, without ACLs in place.
+
+Protect cloud assets CISA notes that misconfigurations and unsecure cloud services and applications are often the primary attack vector for adversaries.
+
+Threat actors use phishing and other techniques to exploit poor cloud security hygiene practices in organizations’ cloud services configuration.
+
+With so many new cloud assets being spun in, it can be challenging for your organization to maintain visibility over internet-facing perimeter while keeping a complete asset list that includes all cloud assets .
+
+Attack Surface Intelligence provides complete and persistent visibility into a cloud environment, ensuring that there are no unmanaged or misconfigured cloud assets that need to be decommissioned.
+
+With a chronological timeline of evolving infrastructure, security teams will know how many assets were created each day with information that connects each asset to known service platforms—which is crucial for spotting any newly spun up cloud instances.
+
+Heighten and maintain cyber hygiene The final step in CISA’s Shields Up advisory is to follow their cyber hygiene best practices to help reduce exposure to threats.
+
+One of their key points involves evaluating external network presence by conducting continuous vulnerability scanning.
+
+With Attack Surface Intelligence , an organization will be informed of any new or unknown assets quickly, allowing for timely investigation to uncover any malicious intent.
+
+And the resulting list of all newly identified assets will contribute to further targeted vulnerability scanning.
+
+Summary
+
+The implications for organizations during the war in Ukraine, whether economic, cyber, or both, will be felt well beyond the immediate region.
+
+Operations will be affected and supply chains can be attacked and interrupted.
+
+At this pivotal moment, organizations’ cybersecurity postures are truly being put to the test.
+
+The right moment to put shields up and protect infrastructure is now, and Recorded Future can aid organizations in navigating CISA’s Shields Up cybersecurity recommendations to ensure you are prepared to respond to and mitigate potential threats.
+
+To learn more, visit https://www.recordedfuture.com/solutions/attack-surface-intelligence/ Editor’s Note: The following post originated here .
+
+
+
+

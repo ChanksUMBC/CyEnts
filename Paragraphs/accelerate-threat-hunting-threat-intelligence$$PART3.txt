@@ -1,3 +1,0 @@
-
-Enhancements to the Threat Intelligence solution arms threat hunters with an unmatched combination of speed, scale, and context so you can: Get a thorough end-to-end view of your threat landscape The Intelligence Graph collects, aggregates, analyzes, and connects data in any language from a vast number of attacker, midpoint, and victim data sources to produce real-time, validated intelligence.
-Make faster, more informed decisions to reduce cyber risk and improve your risk posture Get access to over 5B Intelligence Cards™, which distill everything that’s known about a threat into a single view with dynamic risk scores and rules, to give you the context you need to inform your defenses, expedite threat hunting efforts, and solidify your security strategy.

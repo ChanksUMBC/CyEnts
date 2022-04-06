@@ -1,3 +1,0 @@
-
-SecOps Intelligence Simplifies Threat Detection and Triage Today, Recorded Future announced several major enhancements to the SecOps Intelligence module , making it easier than ever before to access an end-to-end view of your threat landscape with automated, actionable security intelligence — all directly integrated into your unique security tech stack and workflows for faster threat detection and response.
-Recorded Future connects the dots between the broadest range of sources to provide the critical context security operations analysts need to quickly discount false positives and identify the most significant threats.

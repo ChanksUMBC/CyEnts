@@ -1,9 +1,0 @@
-
-Our massive collection of leaked credentials and data dumps is constantly growing.
-Intelligence Tailor-Made for Risk Management Teams For a long time, threat intelligence has held a reputation as being complex and inaccessible to those without a background in it.
-In fact, ten years ago, the notion of a GRC team actively consuming threat intelligence would have been laughable.
-Recorded Future’s Third-Party Intelligence module is specifically created for the GRC team, providing key risk indicators that help to assess, monitor, and mitigate risk.
-Transparent remediation details are provided with all findings, giving GRC teams the leverage they need to work with their third-parties to mitigate risk.
-In addition, intelligence is aligned to the NIST cybersecurity framework , making it simple to incorporate intelligence directly within existing business practices.
-If your organization uses NIST as the basis of vendor risk assessments, you can easily map intelligence directly to your questionnaire, allowing you to quickly validate submissions.
-Break Down Barriers Between Risk and Security Teams GRC teams and security teams both want to protect the business.

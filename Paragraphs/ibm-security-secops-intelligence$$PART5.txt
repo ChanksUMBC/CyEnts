@@ -1,3 +1,0 @@
-
-Accelerating Intelligence-Driven Investigations in IBM Security SOAR Orchestration and automation are key drivers for digital transformation, enabling organizations to optimize existing processes, lower costs, fill personnel gaps, and gain a competitive edge.
-Recognizing these clear benefits, security operations teams are embracing SOAR technology to collect and analyze threat data from multiple sources and automate repeatable incident response tasks.

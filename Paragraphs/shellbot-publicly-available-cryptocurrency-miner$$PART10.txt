@@ -1,7 +1,0 @@
-
-The operation X-Force tracked was probably rather fresh.
-When the researchers followed the migrated bots to the Pola server, they noticed that it was created that very same day.
-It already contained 143 bots, which were most likely migrated from other channels.
-Within the next day, the number of bots doubled, suggesting that there must have been additional servers like Blackcat moving higher value bots to the Pola server.
-Once on the Pola server, the filtering for higher value bots continued and a third payload \u2014
-miner3.tgz \u2014 was deployed to the selected bots in a series of commands launched by the botnet\u2019s operators.

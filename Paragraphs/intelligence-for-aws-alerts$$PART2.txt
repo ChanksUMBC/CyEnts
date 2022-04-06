@@ -1,8 +1,0 @@
-
-One of our core guiding principles at Recorded Future is that security intelligence is for everyone.
-No matter what security role you have or business area you work in within your organization, intelligence makes a big difference.
-This is why we introduced Recorded Future Express — our browser extension that delivers real-time risk scores and context on indicators of compromise and vulnerabilities at zero cost.
-Recorded Future Express works with AWS Guard Duty to dramatically accelerate investigation time.
-Intelligence is delivered directly on top of AWS GuardDuty, making it fast and easy to ensure that your AWS environment is protected.
-Use Recorded Future Express with AWS GuardDuty to speed up threat detection, investigation, and response to threats.
-Keeping your AWS Environments safe with Recorded Future Express When you see a finding in your AWS GuardDuty platform that you are interested in, simply click on it and then activate that Recorded Future Express browser extension.

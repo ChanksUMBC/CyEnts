@@ -1,0 +1,84 @@
+Phishing
+Whaling
+Pharming
+Man-in-the-Middle
+Man in the Middle
+MitM
+MITM
+Denial-of-Service
+Denial of Service
+DOS
+DoS
+Distributed-Denial-of-Service
+Distributed Denial of Service
+DDOS
+DDos
+SQL Injections
+SQL Injection
+Zero-day Exploit
+Zero Day Exploit
+Zero-day Exploits
+Zero Day Exploits
+Password Attack
+Password Attacks
+Cross-site Scripting
+Cross Site Scripting
+XSS
+Internet of Things Attack
+Internet of Things Attacks
+IoT Attack
+IoT Attacks
+Drive-by Attack
+Drive-by Attacks
+Eavesdropping attack
+Eavesdropping attacks
+Birthday attack
+Birthday attacks
+DNS Tunneling
+DNS Spoofing
+Session Hijacking
+URL Interpretation
+Brute force attack
+Web Attack
+phishing
+whaling
+pharming
+man-in-the-middle
+man in the middle
+mitm
+mitm
+denial-of-service
+denial of service
+dos
+dos
+distributed-denial-of-service
+distributed denial of service
+ddos
+ddos
+sql injections
+sql injection
+zero-day exploit
+zero day exploit
+zero-day exploits
+zero day exploits
+password attack
+password attacks
+cross-site scripting
+cross site scripting
+xss
+internet of things attack
+internet of things attacks
+iot attack
+iot attacks
+drive-by attack
+drive-by attacks
+eavesdropping attack
+eavesdropping attacks
+birthday attack
+birthday attacks
+dns tunneling
+dns spoofing
+session hijacking
+url interpretation
+brute force attack
+web attack

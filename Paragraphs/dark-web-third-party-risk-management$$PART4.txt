@@ -1,8 +1,0 @@
-
-This closed part of the dark web is where one more often can find information of high value.
-These closed channels, also known as the criminal underground, can extend beyond the proper dark web and into private criminal forums hosted on Telegram, Discord, and other places.
-Why Does the Dark Web Matter for Third-Party Risk Management?
-Third-party risk management teams are tasked with assessing risk across the entire full vendor lifecycle, from vendor selection to relationship termination.
-When it comes to assessing cybersecurity risk, one of the most important questions to understand is “has my vendor recently experienced a cyber attack or breach?”
-Unfortunately, current methods to assess this information – questionnaires, onsite audits, and  penetration testing – can’t fully answer this question.
-The dark web provides a unique view into that you cannot get elsewhere, helping identify several high-risk factors that a vendor has, or is about to breached: Ransomware extortion.

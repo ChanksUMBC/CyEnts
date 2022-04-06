@@ -1,7 +1,0 @@
-
-Getting money and cryptocurrency takes time: In other instances, analysts observed victims explaining the process for acquiring money to pay the ransom, which extended the time before the actors leaked information about the compromised organization.
-Well-Organized Cybercrime While parsing through multiple conversations, X-Force and Cylera analysts noticed a variety of roles the threat actors alluded to during the negotiation process.
-Egregor negotiators referred to themselves as \u201cmembers of the support team\u201d who only get a fixed salary and fear being fired.
-During discussions, they referred to other teams, including the financial department, data manager, attackers/IT specialists, PR manager, publications manager, and decryption tool master-maker.
-Operators with a Heart?
-Despite the intention of stealing millions of dollars from victims, the attackers have backed off from their demands in some circumstances if they believed they could receive positive press for doing so.

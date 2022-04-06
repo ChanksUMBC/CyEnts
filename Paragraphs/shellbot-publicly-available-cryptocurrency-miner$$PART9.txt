@@ -1,6 +1,0 @@
-
-Figure 4:
-Operators probing for GPU info and sorting bots into #nvidia channel After sorting machines based on their mining capabilities, the operators would go on to download and execute a new ShellBot Perl script on those machines.
-The \u2018pola\u2019 version contained new IRC parameters, forcing the bots to join a different IRC server, which appeared like the operators were migrating active bots to a different network.
-Figure 5:
-Operators deploying secondary malware with different IRC parameters to move bots to Pola server Graduating to the Pola Server

@@ -1,8 +1,0 @@
-
-Many risk assessments today suffer the same fate as Cassandra’s prophecies.
-When we rely on vague scoring methods or opaque sourcing, our advice is hard to accept, even if it’s accurate.
-Too often, organizations fail to act on intelligence because leaders don’t understand it or don’t know the source.
-A security intelligence solution must show the risk rules that are triggered by an alert — and be transparent about its sources (Figure 9-2).
-This enables security professionals to see for themselves why something like an alert on a particular IP address might represent a real risk.
-The extra detail also eliminates the suspicion that information might have been overlooked.
-This context allows for faster due diligence and reference checking, including when evaluating static assessments.
