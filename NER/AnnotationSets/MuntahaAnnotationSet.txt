@@ -1,0 +1,760 @@
+FortiGuard Labs Threat Research Report Affected Platforms : All OS Impacted Parties :   Online Shoppers Impact :                     Loss of personally identifiable information and/or money Severity Level :         Low Black Friday, one of the biggest retail spending days of the year, is fast approaching.
+According to Adobe Analytics , consumer spending on that day last year reached a whopping $9.03 billion dollars (21.6% Year-over-Year growth), and 2021 is expected to be even bigger.
+Amazon is the industry’s prime online shopping web site for consumers looking to buy goods at discounted prices on Black Friday.
+According to an Amazon blog , sales from Black Friday through Cyber Monday last year topped $4.8 billion worldwide (60% Year-over-Year growth).
+Given the popularity, volume, and money related to this event, cybercriminals would not pass up on this lucrative opportunity to fool consumers any way they can for financial gain.
+In this blog, we will elaborate how cybercriminals are using a fake Amazon gift card generator to steal cryptocurrency from their victims and using fake documents to lure those victims into potentially giving out their personal information, such as credentials for online shopping sites, credit card numbers, and home addresses.
+We also look at a similar scam preying on high interest in gaming consoles due to the global chip shortage.
+Nothing is More Expensive than Free Legitimate gift cards are often used online to purchase items on Amazon.
+FortiGuard Labs recently discovered a malicious file named Amazon Gift Tool.exe.
+The file was found in a zip file hosted on a publicly available file repository site.
+While we don’t know exactly how this tool was presented to potential victims, but criminals most likely advertised the tool as a free Amazon gift card generator.
+Obviously, a tool that provides free gift cards does not exist, but the hope of getting something for nothing can be hugely attractive to many people.
+However, once the victim executes the fake Amazon gift card generator it drops and executes a malicious winlogin.exe that monitors the victim’s clipboard.
+The purpose of the malware is simple.
+If the victim tries to add money to their anon-bitcoin wallet by copying and pasting the wallet address, the malware overwrites the victim’s wallet address on the clipboard with its own, resulting in the money potentially going to the attacker.
+The malicious code works as follows: As previously stated, the malware monitors the victim’s clipboard for any copy/paste operations.
+When the victim copies any data into the clipboard, the malware searches for three criteria: Clipboard text is 54 characters long (which is the length of a wallet address preceded by the string “bitcoincash:”)
+Clipboard text is not “bitcoincash:<attacker’s wallet>”because replacing the wallet address would no longer be necessary Clipboard text contains “bitcoincash:” to make sure the user is currently involved in trying to transfer Bitcoin Cash If all three of the criteria match, then the malware replaces the clipboard information with the attacker’s Bitcoin Cash wallet address.
+The attacker is hoping that the victim will not notice the overwritten crypto wallet address when the victim pastes it during the crypto transaction.
+Figure 1 shows a part of the malware code that searches the clipboard for potential cryptocurrency wallet addresses.
+The malware also sets different flags depending on the type of cryptocurrency it is testing for.
+Looking at the criteria above, we can see the malware uses flag5 to test for Bitcoin Cash.
+If one of the three criteria is not satisfied, the malware moves onto the next cryptocurrency target, Ethereum (flag6), and checks for: Clipboard text is 42 characters long, which is the length of an Ethereum wallet Clipboard is NOT already the attacker’s Bitcoin or Ethereum wallet Wallet address starts with“0”.
+This is because Ethereum wallet addresses start with “0x”.
+If all conditions match, the malware replaces the clipboard with the attacker’s Ethereum wallet address.
+Figure 2 shows some of the cryptocurrency wallets the attacker owns (Bitcoin, Ethereum, Binancecoin, Litecoin, Dogecoin, and Ripple) that it tries to replace the victim’s alt-coin wallet address with.
+We also found that the malicious winlogin.exe was distributed by a number of droppers with enticing names, such as Crunchyroll Breaker.exe, Netflix Tools.exe, Multi Gift Tools.exe, etc.
+Free generator of this sort has been around and scammed people for years.
+But given the market power of Amazon, this new scam is especially enticing.
+Consumers are eager to shop as much as they can on Black Friday as a lot of goods go on sale.
+Free Amazon gift cards are very attractive to those who want to spend less for the holiday season.
+However, be careful with what you wish for and don’t fall a victim to scams like this one.
+Gaming Console Phishing Another scam FortiGuard Labs recently observed is related to gaming consoles.
+With the ongoing global chip shortages, consumers are still having a hard time getting their hands on the next generation of gaming consoles, such as the PlayStation 5 and Xbox Series X and S systems that debuted late last year.
+FortiGuard Labs researchers recently identified a series of malicious PDFs online, with titles like, “how_much_do_xbox_one_cost_on_black_Friday.pdf” and “Walmart_black_Friday_ps5_pickup.pdf”.
+The first page of each PDF uses CAPTCHA to prove the user is a human.
+The Continue button on the same page does not work as expected because the user gets redirected to a web site as soon as they click the CAPTCHA checkbox.
+Unfortunately for us (and fortunately for the readers), the sites the user is redirected to were no longer available at the time of the investigation.
+However, based on Fortinet’s Webfiltering data, both sites have been used for Phishing.
+As such, the victim may be lured into giving out confidential information such credentials for online shopping sites, credit card numbers, and home address.
+Although these scams are not new, users should pay extra attention to the potential scams ahead of the Black Friday shopping spree.
+Black Friday Scam Season has Begun While online shopping towards Black Friday is fun and exciting, it also provides cyber criminals with ample opportunities to exploit and monetize a victim’s giving spirit and greed.
+If a discount or availability of a hard to find item seem too good to be true, think twice before making a purchase.
+Recommended Actions and Precautions Because these criminals are using phishing techniques to socially engineer and lure victims into following the steps laid out by the attacker, it is vital to address these challenges ahead of time.
+The most effective tool in the fight against spam and malicious email links and attachments is a secure email gateway with advanced detection and response technologies.
+Fortinet's Secure Email Gateway not only sees and effectively stops such threats but can be easily integrated into an organization's larger security strategy, rather than operating as a stand-alone solution, enabling organizations to deploy FortiMail as part of a complete end-to-end security solution.
+Organizations are also strongly encouraged to conduct ongoing training designed to educate and inform personnel about the latest phishing/spearphishing techniques and how to spot and respond to them.In the wake of recent hacking tool dumps, the FLARE team saw a spike in malware samples detonating kernel shellcode.
+Although most samples can be analyzed statically, the FLARE team sometimes debugs these samples to confirm specific functionality.
+Debugging can be an efficient way to get around packing or obfuscation and quickly identify the structures, system routines, and processes that a kernel shellcode sample is accessing.
+This post begins a series centered on kernel software analysis, and introduces a tool that uses a custom Windows kernel driver to load and execute Windows kernel shellcode.
+I’ll walk through a brief case study of some kernel shellcode, how to load shellcode with FLARE’s kernel shellcode loader , how to build your own copy, and how it works.
+As always, only analyze malware in a safe environment such as a VM; never use tools such as a kernel shellcode loader on any system that you rely on to get your work done.
+A Tale of Square Pegs and Round Holes Depending upon how a shellcode sample is encountered, the analyst may not know whether it is meant to target user space or kernel space.
+A common triage step is to load the sample in a shellcode loader and debug it in user space.
+With kernel shellcode, this can have unexpected results such as the access violation in Figure 1.
+Figure 1: Access violation from shellcode dereferencing null pointer The kernel environment is a world apart from user mode: various registers take on different meanings and point to totally different structures.
+For instance, while the gs segment register in 64-bit Windows user mode points to the Thread Information Block (TIB) whose size is only 0x38 bytes, in kernel mode it points to the Processor Control Region (KPCR) which is much larger.
+In Figure 1 at address 0x2e07d9, the shellcode is attempting to access the IdtBase member of the KPCR, but because it is running in user mode, the value at offset 0x38 from the gs segment is null.
+This causes the next instruction to attempt to access invalid memory in the NULL page.
+What the code is trying to do doesn’t make sense in the user mode environment, and it has crashed as a result.
+In contrast, kernel mode is a perfect fit.
+Figure 2 shows WinDbg’s dt command being used to display the _KPCR type defined within ntoskrnl.pdb, highlighting the field at offset 0x38 named IdtBase.
+Figure 2: KPCR structure
+Given the rest of the code in this sample, accessing the IdtBase field of the KPCR made perfect sense.
+Determining that this was kernel shellcode allowed me to quickly resolve the rest of my questions, but to confirm my findings, I wrote a kernel shellcode loader.
+Here’s what it looks like to use this tool to load a small, do-nothing piece of shellcode.
+Using FLARE’s Kernel Shellcode Loader I booted a target system with a kernel debugger and opened an administrative command prompt in the directory where I copied the shellcode loader (kscldr.exe).
+The shellcode loader expects to receive the name of the file on disk where the shellcode is located as its only argument.
+Figure 3 shows an example where I’ve used a hex editor to write the opcodes for the NOP (0x90) and RET (0xC3) instructions into a binary file and invoked kscldr.exe to pass that code to the kernel shellcode loader driver.
+I created my file using the Windows port of xxd that comes with Vim for Windows .
+Figure 3: Using kscldr.exe to load kernel shellcode The shellcode loader prompts with a security warning.
+After clicking yes, kscldr.exe installs its driver and uses it to execute the shellcode.
+The system is frozen at this point because the kernel driver has already issued its breakpoint and the kernel debugger is awaiting commands.
+Figure 4 shows WinDbg hitting the breakpoint and displaying the corresponding source code for kscldr.sys.
+Figure 4:
+Breaking in kscldr.sys From the breakpoint, I use WinDbg with source-level debugging to step and trace into the shellcode buffer.
+Figure 5 shows WinDbg’s disassembly of the buffer after doing this.
+Figure 5:
+Tracing into and disassembling the shellcode The disassembly shows the 0x90 and 0xc3 opcodes from before, demonstrating that the shellcode buffer is indeed being executed.
+From here, the powerful facilities of WinDbg are available to debug and analyze the code’s behavior.
+Building It Yourself To try out FLARE’s kernel shellcode loader for yourself, you’ll need to download the source code .
+To get started building it, download and install the Windows Driver Kit (WDK) .
+I’m using Windows Driver Kit Version 7.1.0 , which is command line driven, whereas more modern versions of the WDK integrate with Visual Studio.
+If you feel comfortable using a newer kit, you’re welcomed to do so, but beware, you’ll have to take matters into your own hands regarding build commands and dependencies.
+Since WDK 7.1.0 is adequate for purposes of this tool, that is the version I will describe in this post.
+Once you have downloaded and installed the WDK, browse to the Windows Driver Kits directory in the start menu on your development system and select the appropriate environment.
+Figure 6 shows the WDK program group on a Windows 7 system.
+The term “checked build” indicates that debugging checks will be included.
+I plan to load 64-bit kernel shellcode, and I like having Windows catch my mistakes early, so I’m using the x64 Checked Build Environment.
+Figure 6: Windows Driver Kits program group In the WDK command prompt, change to the directory where you downloaded the FLARE kernel shellcode loader and type ez.cmd.
+The script will cause prompts to appear asking you to supply and use a password for a test signing certificate.
+Once the build completes, visit the bin directory and copy kscldr.exe to your debug target.
+Before you can commence using your custom copy of this tool, you’ll need to follow just a few more steps to prepare the target system to allow it.
+Preparing the Debug Target To debug kernel shellcode, I wrote a Windows software-only driver that loads and runs shellcode at privilege level 0.
+Normally, Windows only loads drivers that are signed with a special cross-certificate , but Windows allows you to enable testsigning to load drivers signed with a test certificate.
+We can create this test certificate for free, and it won’t allow the driver to be loaded on production systems, which is ideal.
+In addition to enabling testsigning mode, it is necessary to enable kernel debugging to be able to really follow what is happening after the kernel shellcode gains execution.
+Starting with Windows Vista, we can enable both testsigning and kernel debugging by issuing the following two commands in an administrative command prompt followed by a reboot: bcdedit.exe /set testsigning on bcdedit.exe /set debug on For debugging in a VM, I install VirtualKD , but you can also follow your virtualization vendor’s directions for connecting a serial port to a named pipe or other mechanism that WinDbg understands.
+Once that is set up and tested, we’re ready to go!
+If you try the shellcode loader and get a blue screen indicating stop code 0x3B (SYSTEM_SERVICE_EXCEPTION), then you likely did not successfully connect the kernel debugger beforehand.
+Remember that the driver issues a software interrupt to give control to the debugger immediately before executing the shellcode; if the debugger is not successfully attached, Windows will blue screen.By Raj Samani on Dec 18, 2018 The McAfee Advanced Threat Research team today published the McAfee® Labs Threats Report, December 2018.
+In this edition, we highlight the notable investigative research and trends in threats statistics and observations gathered by the McAfee Advanced Threat Research and McAfee Labs teams in Q3 of 2018.
+We are very excited to present to you new insights and a new format in this report.
+We are dedicated to listening to our customers to determine what you find important
+and how we can add value.
+In recent months we have gathered more threat intelligence, correlating and analyzing data to provide more useful insights into what is happening in the evolving threat landscape.
+McAfee is collaborating closely with MITRE Corporation in extending the techniques of its MITRE ATT&CK™ knowledge base, and we now include the model in our report.
+We are always working to refine our process and reports.
+You can expect more from us, and we welcome your feedback.
+As we dissect the threat landscape for Q3, some noticeable statistics jump out of the report.
+  
+In particular, the continued rise in cryptojacking, which has made an unexpected emergence over the course of a year.
+In Q3 the growth of coin miner malware returned to unprecedented levels after a temporary slowdown in Q2.
+Our analysis of recent threats included one notable introduction in a disturbing category.
+In Q3 we saw two new exploit kits: Fallout and Underminer.
+Fallout almost certainly had a bearing on the spread of GandCrab, the leading ransomware.
+Five years ago we published the report “Cybercrime Exposed,” which detailed the rise of cybercrime as a service.
+Exploit kits are the epitome of this economy, affording anyone the opportunity to easily and cheaply enter the digital crime business.
+New malware samples jumped up again in Q3 after a decline during the last two quarters.
+Although the upward trend applies to almost every category, we did measure a decline in new mobile malware samples following three quarters of continual growth.
+This post is only a small snapshot of the comprehensive analysis provided in the December Threats Report.
+We hope you enjoy the new format, and we welcome your feedback.
+
+
+FortiGuard Labs Threat Research Report Affected platforms : Hikvision Product Impact parties : IP Cam/NVR Impact :
+Attacker can exploit the vulnerability to launch a command injection attack by sending some messages with malicious commands in the web server Severity :
+Critical Last September 18th, a threat researcher released a write-up about a remote code execution vulnerability that affects various products from Hikvision, one of the largest video surveillance brands in the world.
+ Hikvision is a CVE CNA and quickly assigned the CVE number, CVE-2021-36260 and released a patch for the vulnerability on the same day as the threat researcher’s disclosure.
+Shortly after, FortiGuard Labs developed an IPS signature to address it.
+During our analysis, we observed numerous payloads attempting to leverage this vulnerability to probing the status of devices or extracting sensitive data from victims.
+One payload in particular caught our attention.
+It tries to drop a downloader that exhibits infection behavior and that also executes Moobot, which is a DDoS botnet based on Mirai.
+In this blog we explain how an attacker delivers this payload through the Hikvision vulnerability, along with details of the botnet.
+Stage 0 – Exploitation and Propagation CVE-2021-36260 results from insufficient input validation, allowing unauthenticated users to inject malicious content into a <language> tag to trigger a command injection attack on a Hikvision product.
+Below is an example of a request leveraging this exploit: We collected a number of payloads leveraging this vulnerability, and eventually found a downloader.
+After tracing the traffic capture, the complete payload is shown in the following  figure: First, because the final Moobot will be saved as “macHelper,” it first tries to remove any file already named “macHelper.”
+It then echoes code into “downloader,” which is a small ELF 32-bit LSB ARM file.
+After downloader completes downloading, it executes Moobot with the parameter “hikivision”.
+Finally, it changes commonly used commands, such as “reboot,” to prevent an administrator from invoking reboot on the affected device.
+Stage 1 - Downloader The attacker leverages this vulnerability to drop a downloader (SHA256: 1DCE6F3BA4A8D355DF21A17584C514697EE0C37B51AB5657BC5B3A297B65955F).
+It has only one job: download the main botnet.
+It downloads the malware with “/arm5”
+URI form server 199.195.250[.]233:80 and prints “RAY” if the downloading process was successful.
+The following image shows the disassembled code: From the IP address we not only get the moobot variants for different architectures, we also get the historic malware from directory “/h/“.
+Stage 2 - Moobot Based on our analysis, the malware (SHA256: 38414BB5850A7076F4B33BF81BAC9DB0376A4DF188355FAC39D80193D7C7F557) downloaded in the previous stage is Moobot, which is Mirai-based.
+Its most obvious feature is that it contains the data string “w5q6he3dbrsgmclkiu4to18npavj702f”, which is used in the “rand_alphastr” function.
+It is used to create random alphanumeric strings with different purposes, such as for a setup process name or to generate data for attacking.
+It also has some elements from Satori, which is another Mirai variant botnet.
+It contains a “ downloader” that targets a victim’s IoT devices, and it prints a “9xsspnvgc8aj5pi7m28p” string after execution.
+This variant also forks itself with the process name “/usr/sbin*” to try to look like a normal process while wiping out the original file, “macHelper”.
+Since it is based on Mirai, the botnet also contains a data section to store its configuration.
+The plaintext configuration can be decoded after XOR with 0x22:
+After getting the C2 server (life.zerobytes[.]cc) from its configuration, it starts sending heartbeat (\\x00\\x00) packets and then waits for the next control command from the C2 server.
+Once the victim system receives the command, it starts a DDoS attack to a specific IP address and port number.
+One example of the DDoS attack traffic is shown below: The DDoS attack command is 24 bytes and can be seen in the Data section in Figure 8.
+This detail is illustrated in the following figure, which includes the flood method and the target IP/Port.
+Except for SYN flood, the C2 server has other attacking commands, such as 0x06 for UDP flood, 0x04 for ACK flood, and 0x05 for ACK+PUSH flood.
+The complete attack scenario from trying to infect Hikvision product to deploying Moobot is shown in figure 10: We also noticed that a DDoS service provider based the packet capture from our machine in Figure 11.
+We tracked down a telegram channel named “tianrian,” which provides a DDoS service.
+They use a specific string, “openmeokbye”, in their login interface, shown in Figure 12.
+This channel was created on June 11, 2021, and started its service in August.
+From the chatting channel we can see that the service is still updating.
+Users should always look out for DDoS attacks and apply patches to vulnerable devices.
+Conclusion Hikvision is one the biggest provider of IP cam/NVR products in the global market.
+CVE-2021-36260 is a critical vulnerability that makes Hikvision products a target for Moobot.
+In this blog we showed how an attacker can leverage CVE-2021-36260 and elaborated in detail each stage of the process.
+Although a patch has been released to address this vulnerability, this IoT botnet will never stop looking for a vulnerable end point.
+Because of this, users should upgrade affected devices immediately as well as apply FortiGuard protection.
+Fortinet Protections Fortinet released IPS signature Hikvision.
+Product.
+SDK.WebLanguage.
+Tag.
+Command.
+Injection for CVE-2021-36260 to proactively protect our customers.
+The signature is officially released in IPS definition version 18.192.
+The downloader and all related malware from that site are detected and blocked by FortiGuard AntiVirus: ELF/Mirai.
+AE!tr ELF/Mirai.
+BO!tr ELF/Mirai.
+D!tr ELF/Mirai.
+AYU!tr ELF/Mirai.
+WJ!tr Linux/Mirai.
+WJ!tr Both the downloading URL and C2 server have been rated as \"Malicious Websites\" by the FortiGuard Web Filtering service.
+IOCs SHA256: 1DCE6F3BA4A8D355DF21A17584C514697EE0C37B51AB5657BC5B3A297B65955F 38414BB5850A7076F4B33BF81BAC9DB0376A4DF188355FAC39D80193D7C7F557 Learn more about Fortinet’s FortiGuard Labs threat research and intelligence organization and the FortiGuard Security Subscriptions and Services portfolio .
+
+
+Over the last few months, FireEye has tracked an in-the-wild campaign that leverages compromised sites to spread fake updates.
+In some cases, the payload was the NetSupport Manager remote access tool (RAT).
+NetSupport Manager is a commercially available RAT that can be used legitimately by system administrators for remotely accessing client computers.
+However, malicious actors are abusing this application by installing it to the victims’ systems without their knowledge to gain unauthorized access to their machines.
+This blog details our analysis of the JavaScript and components used in instances where the identified payload was NetSupport RAT.
+Infection Vector
+The operator behind these campaigns uses compromised sites to spread fake updates masquerading as Adobe Flash, Chrome, and FireFox updates.
+When users navigate to the compromised website, the malicious JavaScript file is downloaded, mostly from a DropBox link.
+Before delivering the payload, the JavaScript sends basic system information to the server.
+After receiving further commands from the server, it then executes the final JavaScript to deliver the final payload.
+In our case, the JavaScript that delivers the payload is named Update.js, and it is executed from %AppData% with the help of wscript.exe.
+Figure 1 shows the infection flow.
+Figure 1: Infection Flow In-Depth Analysis of JavaScript The initial JavaScript file contains multiple layers of obfuscation.
+Like other malicious scripts, the first layer has obfuscation that builds and executes the second layer as a new function.
+The second layer of the JavaScript contains the dec function, which is used to decrypt and execute more JavaScript code.
+Figure 2 shows a snapshot of the second layer.
+Figure 2:
+Second Layer of Initial JavaScript File
+In the second JavaScript file, the malware author uses a tricky method to make the analysis harder for reverse engineers.
+The author uses the caller and callee function code to get the key for decryption.
+During normal JavaScript analysis, if an analyst finds any obfuscated script, the analyst tries to de-obfuscate or beautify the script for analysis.
+JavaScript beautification tools generally add line breaks and tabs to make the script code look better and easier to analyze.
+The tools also try to rename the local variables and remove unreferenced variables and code from the script, which helps to analyze core code only.
+But in this case, since the malware uses the caller and callee function code to derive the key, if the analyst adds or removes anything from the first or second layer script, the script will not be able to retrieve the key and will terminate with an exception.
+The code snippet in Figure 3 shows this trick.
+Figure 3: Anti-Analysis Trick Implemented in JavaScript (Beautified Code)
+The code decrypts and executes the JavaScript code as a function.
+This decrypted function contains code that initiates the network connection.
+In the decoded function, the command and control (C2) URL and a value named tid are hard-coded in the script and protected with some encoded function.
+During its first communication to the server, the malware sends the tid value and the current date of the system in encoded format, and waits for the response from the server.
+It decodes the server response and executes the response as a function, as shown in Figure 4.
+Figure 4:
+Initial Server Communication and Response
+The response from the server is JavaScript code that the malware executes as a function named step2.
+The step2 function uses WScript.
+Network and Windows Management Instrumentation(WMI) to collect the following system information, which it then encodes and sends to the server: Architecture, ComputerName, UserName, Processors, OS, Domain, Manufacturer, Model, BIOS_Version, AntiSpywareProduct, AntiVirusProduct, MACAddress, Keyboard, PointingDevice, DisplayControllerConfiguration, ProcessList; After sending the system information to the server, the response from the server contains two parts: content2 and content3 .
+The script ( step2 function) decodes both parts.
+The decoded content3 part contains the function named as step3 , as shown in Figure 5.
+Figure 5: Decrypting and Executing Response step3 The step3 function contains code that writes decoded content2 into a %temp% directory as Update.js .
+Update.js contains code to download and execute the final payload.
+The step3 function also sends the resulting data, such as runFileResult and _tempFilePath, to the server, as shown in Figure 6.
+Figure 6: Script to Drop and Execute Update.js
+The Update.js file also contains multi-layer obfuscation.
+After decoding, the JavaScript contains code to drop multiple files in %AppData%, including a 7zip standalone executable (7za.exe), password-protected archive (Loglist.rtf), and batch script (Upd.cmd).
+We will talk more about these components later.
+JavaScript uses PowerShell commands to download the files from the server.
+It sets the attribute’s execution policy to bypass and window-style to hidden to hide itself from the end user.
+Components of the Attack Figure 7 shows the index of the malicious server where we have observed the malware author updating the script content.
+Figure 7:
+Index of Malicious Server 7za.exe: 7zip standalone executable LogList.rtf: Password-protected archive file Upd.cmd: Batch script to install the NetSupport Client Downloads.txt: List of IPs (possibly the infected systems)
+Get.php:
+Downloads LogList.rtf Upd.cmd
+This file is a batch script that extracts the archive file and installs the remote control tool on the system.
+The script is obfuscated with the variable substitution method.
+This file was regularly updated by the malware during our analysis.
+After de-obfuscating the script, we can see the batch commands in the script (Figure 8).
+Figure 8: De-Obfuscated Upd.cmd Script The script performs the following tasks: Extract the archive using the 7zip executable with the password mentioned in the script.
+After extraction, delete the downloaded archive file (loglist.rtf).
+Disable Windows Error Reporting and App Compatibility.
+Add the remote control client executable to the firewall’s allowed program list.
+Run remote control tool (client32.exe).
+Add Run registry entry with the name “ManifestStore” or downloads shortcut file to Startup folder.
+Hide the files using attributes.
+Delete all the artifacts (7zip executable, script, archive file).
+Note: While analyzing the script, we found some typos in the script (Figure 9).
+Yes, malware authors make mistakes too.
+This script might be in beta phase.
+In the later version of script, the author has removed these typos.
+Figure 9:
+Registry Entry Bloopers Artifact Cleaning As mentioned, the script contains code to remove the artifacts used in the attack from the victim’s system.
+While monitoring the server, we also observed some change in the script related to this code, as shown in Figure 10.
+Figure 10:
+Artifact Cleaning Commands The highlighted command in one of the variants indicates that it might drop or use this file in the attack.
+The file could be a decoy document.
+Persistence Mechanism
+During our analysis, we observed two variants of this attack with different persistence mechanisms.
+In the first variant, the malware author uses a RUN registry entry to remain persistent in the system.
+In the second variant, the malware author uses the shortcut file (named desktop.ini.lnk ), which is hosted on the server.
+It downloads the shortcut file and places it into the Startup folder, as shown in Figure 11.
+Figure 11:
+Downloading Shortcut File
+The target command for the shortcut file points to the remote application “client32.exe,” which was dropped in %AppData%, to start the application on startup.
+LogList.rtf
+Although the file extension is .rtf, the file is actually a 7zipped archive.
+This archive file is password-protected and contains the NetSupport Manager RAT.I (Matthew Haigh) recently contributed to FLARE’s FakeNet-NG network simulator by adding content-based protocol detection and configuration.
+This feature is useful for analyzing malware that uses a protocol over a non-standard port; for example, HTTP over port 81.
+The new feature also detects and adapts to SSL so that any protocol can be used with SSL and handled appropriately by FakeNet-NG.
+We were motivated to add this feature since it was a feature of the original FakeNet and it was needed for real world malware.
+What is FakeNet-NG FakeNet-NG simulates a network so malware analysts can run samples with network functionality without the risks of an Internet connection.
+Analysts can examine network-based indicators via FakeNet-NG’s textual and pcap output.
+It is plug-and-play, configurable, and works on both Windows and Linux.
+FakeNet-NG simulates common protocols to trick malware into thinking it is connected to the Internet.
+FakeNet-NG supports the following protocols: DNS, HTTP, FTP, POP, SMTP, IRC, SSL, and TFTP.
+Previous Design Previously FakeNet-NG employed Listener modules, which were bound to configurable ports for each protocol.
+Any traffic on those ports was received by the socket and processed by the Listener.
+In the previous architecture, packets were redirected using a Diverter module that utilized WinDivert for Windows and netfilter for Linux.
+Each incoming and outgoing packet was examined by the Diverter, which kept a running list of connections.
+Packets destined for outbound ports were redirected to a default Listener, which would respond to any packet with an echo of the same data.
+The Diverter also redirected packets based on whether FakeNet-NG was run in Single-Host or Multi-Host mode, and if any applications were blacklisted or whitelisted according to the configuration.
+It would simply release the packet on the appropriate port and the intended Listener would receive it on the socket.
+New Design My challenge was to eliminate this port/protocol dependency.
+In order to disassociate the Listeners from the corresponding ports, a new architecture was needed.
+The first challenge was to maintain Listener functionality.
+The original architecture relied on Python libraries that interact with the socket.
+Therefore, we needed to maintain “socket autonomy” in the Listener, so we added a “taste()” function for each Listener.
+The routine returns a confidence score based on the likelihood that the packet is associated with the protocol.
+Figure 1 demonstrates the taste() routine for HTTP, which looks for the request method string at the beginning of the packet data.
+It gives an additional point if the packet is on a common HTTP port.
+There were several choices for how these scores were to be tabulated.
+It could not happen in the Diverter because of the TCP handshake.
+The Diverter could not sample data from data-less handshake packets, and if the Diverter completed the handshake, the connection could not easily be passed to a different socket at the Listener without disrupting the connection.
+Figure 1: HTTP taste() example Proxy We ultimately decided to add a proxy Listener that maintains full-duplex connections with the client and the Listener, with both sides unaware of the other.
+This solves the handshake problem and maintains socket autonomy at the Listener.
+The proxy is also easily configurable and enables new functionality.
+We substituted the proxy for the echo-server default Listener, which would receive traffic destined for unbound ports.
+The proxy peeks at the data on the socket, polls the Listeners, and creates a new connection with the Listener that returns the highest score.
+The echo-server always returns a score of one, so it will be chosen if no better option is detected.
+The analyst controls which Listeners are bound to ports and which Listeners are polled by the proxy.
+This means that the listeners do not have to be exposed at all; everything can be decided by the proxy.
+The user can set the Hidden option in the configuration file to False to ensure the Listener will be bound to the port indicated in the configuration file.
+Setting Hidden to True will force any packets to go through the proxy before accessing the Listener.
+For example, if the analyst suspects that malware is using FTP on port 80, she can ‘hide’ HTTP from catching the traffic, and let the proxy detect FTP and forward the packet to the FTP Listener.
+Additional configuration options exist for choosing which protocols are polled by the proxy.
+See Figure 2 and Figure 3 for configuration examples.
+Figure 2 is a basic configuration for a Listener, and Figure 3 demonstrates how the proxy is configurable for TCP and UDP.
+Figure 2:
+Listener Configuration Options Figure3:
+Proxy Configuration Options The proxy also handles SSL detection.
+Before polling the Listeners, the proxy examines the packet.
+If SSL is detected, the proxy “wraps” the socket in SSL using Python’s OpenSSL library.
+With the combination of protocol and SSL detection, each independent of the other, FakeNet-NG can now handle just about any protocol combination.
+The proxied SSL implementation also allows for improved packet analysis.
+The connection between the proxy and the Listener is not encrypted, which allows FakeNet to dump un-encrypted packets to the pcap output.
+This makes it easier for the analyst to examine the packet data.
+FakeNet continues to produce pcap output that includes packet data before and after modification by FakeNet.
+While this results in repetitive data, it is often useful to see the original packet along with the modification.
+Example Figure 4 shows verbose (-v) output from FakeNet on Windows responding to an HTTP request on port 81 from a clowncar malware variant (SHA-256 8d2dfd609bcbc94ff28116a80cf680660188ae162fc46821e65c10382a0b44dc).
+Malware such as clowncar use traditional protocols over non-standard ports for many reasons.
+FakeNet gives the malware analyst the flexibility to detect and respond to these cases automatically.
+Figure 4: clowncar malware using HTTP on port 81 Conclusion FLARE’s FakeNet-NG tool is a powerful network-simulation tool available for Windows and Linux.
+The new content-based protocol detection and SSL detection features ensure that FakeNet-NG remains the most useful tool for malware analysts.
+Configuration options give programmers the flexibility necessary to respond to malware using most protocols on any port.
+Subscribe to Blogs Get email updates as new blog posts are added.
+
+
+By Ryan Sherstobitoff on Mar 02, 2018
+This post was written with contributions from Jessica Saavedra-Morales, Thomas Roccia, and Asheer Malhotra.
+McAfee Advanced Threat Research analysts have discovered a new operation targeting humanitarian aid organizations and using North Korean political topics as bait to lure victims into opening malicious Microsoft Word documents.
+Our analysts have named this Operation Honeybee, based on the names of the malicious documents used in the attacks.
+Advanced Threat Research analysts have also discovered malicious documents authored by the same actor that indicate a tactical shift.
+These documents do not contain the typical lures by this actor, instead using Word compatibility messages to entice victims into opening them.
+The Advanced Threat Research team also observed a heavy concentration of the implant in Vietnam from January 15–17.
+Background On January 15, Advanced Threat Research discovered an operation using a new variant of the SYSCON backdoor.
+The Korean-language Word document manual.doc appeared in Vietnam on January 17, with the original author name of Honeybee.
+Document properties.
+This malicious document contains a Visual Basic macro that dropped and executed an upgraded version of the implant known as SYSCON, which appeared in 2017 in malicious Word documents as part of several campaigns using North Korea–related topics.
+The malicious Visual Basic script uses a unique key (custom alphabet) to encode data.
+We have seen this in previous operations using SYSCON.
+This key was also used in the Honeybee campaign and appears to have been used since August 2017.
+Examples of decoy documents.
+Several additional documents surfaced between January 17 and February 3.
+All contain the same Visual Basic macro code and author name as Honeybee.
+Some of the malicious documents were test files without the implant.
+From our analysis, most these documents were submitted from South Korea, indicating that some of the targeting was in South Korea.
+These Honeybee documents did not contain any specific lures, rather variations of a “not compatible” message attempting to convince the user to enable content.
+We also observed a related malicious document created January 12 by the author Windows User that contained a different encoding key, but essentially used the same macro and same type of implant as we saw with the recent Honeybee documents.
+This document, “International Federation of Red Cross and Red Crescent Societies – DPRK Country Office,” drops an implant with the control server address 1113427185.ifastnet.org, which resolves to the same server used by the implants dropped in the Honeybee case.
+The directory contents of control server 1113427185.ifastnet.org.
+The directory contents of ftp.byethost11.com, from Honeybee samples.
+Log files of compromised machines from February 2018 Honeybee samples.
+MaoCheng Dropper Aside from finding the malicious documents, the Advanced Threat Research team discovered a Win32-based executable dropper.
+This dropper uses a stolen digital signature from Adobe Systems.
+This certificate is also used by another Korean-language malware compiled January 16 (hash: 35904f482d37f5ce6034d6042bae207418e450f4) with an interesting program database (PDB) path.
+D:\\Task\\DDE Attack\\MaoCheng\\Release\\Dropper.pdb
+The malware is a Win32 executable that pretends to be a Word document based on its icon.
+This is a dropper for the same type of malware as observed with the other Word documents.
+This sample also dropped a decoy document with the author name Honeybee.
+This sample, however, contained a bug that interfered with the execution flow of the dropper, suggesting that the authors did not test the malware after code signing it.
+The decoy document uses the cloud-based accounting software company Xero as a lure: A decoy document from MaoCheng dropper.
+Possible Operator The Advanced Threat Research team has identified the following persona (snoopykiller@mail.ru) tied to this recent operation.
+Based on our analysis, the actor registered two free hosting accounts: navermail.byethost3.com, which refers to the popular South Korean search engine, and nihon.byethost11.com.
+The email address was used to register a free account for a control server in all the implants described in our analysis.
+Technical Analysis Let’s start with an overview of the attack: We continue with the components involved in this operation.
+The malicious Word file is the beginning of the infection chain and acts as a dropper for two DLL files.
+The Word file contains malicious Visual Basic macro code that runs when the document is opened in Word using the Document_Open() autoload function.
+The word file also contains a Base64-encoded file (encoded with a custom key) in it that is read, decoded, and dropped to the disk by the macro.
+The Document_Open() subroutine implementing the malicious functionality.
+The Visual Basic macro performs the following tasks: Opens a handle to the malicious document to read the encoded CAB file Decodes the CAB file and writes it to the disk at %temp%\\setup.cab Encoded CAB file in the Word document.
+Decoding and writing the CAB file to %temp%.
+The decoded CAB file in the Visual Basic memory buffer.
+The CAB file contains the following files and functions: dll: A malicious DLL used to launch batch files (used with cliconfg.exe for UAC bypass).
+The DLL contains the following PDB path: D:\\Task\\MiMul\\NTWDBLIB\\Release\\NTWDBLIB.pdb.
+bat:
+A batch file to set up the service COMSysApp, for an x64 system bat: A batch file to set up the service COMSysApp, for an x86 system ini: A data file with Base64-encoded data for connecting to an FTP server.
+Credentials are encoded in the .ini file.
+Decoded credential data contained in ipnet.ini.
+dll:
+The malicious DLL file run as a service (using svchost.exe).
+The DLL contains the following PDB path: D:\\Task\\MiMul\\FTPCom_vs10\\Release\\Engine.pdb.
+The macro then extracts the CAB file into %systemroo%\\system32, using either wusa.exe or expand.exe (depending on the OS) to again bypass UAC prompts Once the files have been extracted, the Visual Basic macro deletes the CAB file and runs the malicious NTWDBLIB.dll via cliconfg.exe (to gain privileges and bypass UAC protections)
+Command lines used by the Visual Basic macro: cmd /c wusa %TEMP%\\setup.cab /quiet
+/extract:%SystemRoot%\\System32 && del /f /q %TEMP%\\setup.cab && cliconfg.exe\r\ncmd /c
+expand %TEMP%\\setup.cab -F:*
+%SystemRoot%\\System32 && del /f /q %TEMP%\\setup.cab && cliconfg.exe
+A combination of NTWDBLIB.dll and cliconfg.exe are used to bypass UAC protections; this is a familiar attack on Windows.
+UAC bypass via DLL hijacking requires: A Windows executable with the auto-elevate property in its manifest A Windows executable in a secure directory (%systemroot%\\system32)
+The malicious NTWDBLIB DLL performs the simple task of setting up the malicious ipnet.dll as a service by running one of the two batch files contained in the CAB file (which is also dropped to %systemroot%\\system32): NTWDBLIB executing the installer batch files under the context of cliconfg.exe.
+The batch files involved in the attack modify the system service COMSysApp to load the malicious ipnet.dll.FireEye’s Data Science and Information Operations Analysis teams released this blog post to coincide with our Black Hat USA 2020 Briefing , which details how open source, pre-trained neural networks can be leveraged to generate synthetic media for malicious purposes.
+To summarize our presentation, we first demonstrate three successive proof of concepts for how machine learning models can be fine-tuned in order to generate customizable synthetic media in the text, image, and audio domains.
+Next, we illustrate examples in which synthetically generated media have been weaponized for information operations (IO), as detected on the front lines by Mandiant Threat Intelligence.
+Finally, we outline challenges in detecting synthetically generated content, and lay out potential paths forward in a future where synthetically generated media will increasingly look, speak, and write like us.
+Highlights Open source, pre-trained natural language processing, computer vision, and speech recognition neural networks can be weaponized for offensive social media-driven IO campaigns.
+Detection, attribution, and response is challenging in scenarios where actors can anonymously generate and distribute credible fake content using proprietary training datasets.
+The security community can and should help AI researchers, policy makers, and other stakeholders mitigate the harmful use of open source models.
+Background: Synthetic Media, Generative Models, and Transfer Learning Synthetic media is by no means a new development; methods for manipulating media for specific agendas are as old as the media themselves.
+In the 1930’s, the chief of the Soviet secret police was photographed walking alongside Joseph Stalin before being retouched out of an official press photo, after he himself was arrested and executed during the Great Purge .
+Digital graphic manipulation like this became prominent with the advent of Photoshop.
+Then later in the 2010’s, the term “deepfake” was coined.
+While deepfake videos, including techniques like face swapping and lip syncing, are concerning in the long term, this blog post focuses on more basic, but we argue more believable, synthetic media generation advancements in the text, static image, and audio domains.
+Machine learning approaches for creating synthetic media are underpinned by generative models, which have been effectively misused to fabricate high volume submissions to federal public comment websites and clone a voice to trick an executive into handing over $240,000 .
+The pre-training required to produce models capable of synthetic media generation can cost thousands of dollars, take weeks or months of time, and require access to expensive GPU clusters.
+However, the application of transfer learning can drastically reduce the amount of time and effort involved.
+In transfer learning, we start from a large generic model that has been pre-trained for an initial task where copious data is available.
+We then leverage the model’s acquired knowledge to train it further on a different, smaller dataset so that it excels at a subsequent, related task.
+This process of training the model further is referred to as fine-tuning , which typically requires less resources compared to pre-training from scratch.
+You can think of this in more relatable terms—if you’re a professional tennis player, you don’t need to completely relearn how to swing a racket in order to excel at badminton.
+In practice though, the benefits of transfer learning are only\nrealized when people share their pre-trained models.
+As illustrated by\nFigure 1, it turns out that it’s commonplace for well-resourced\nindustry and academic researchers to release their model checkpoints\nwhen their state of the art (SOTA) work gets accepted into a top-tier\nconference.
+Code is typically released in the form of GitHub\nrepositories with extensive HOWTO guides and well-documented READMEs.\nThis allows anyone to easily reproduce figures from the initial\npapers, and potentially use this source code as a starting point for\ntheir own research or projects.
+This process plays out on loop,\nensuring a healthy, self-reinforcing model supply chain and ultimately\na quicker pace of scientific innovation.
+However, while this emergent\nmodel sharing ecosystem beneficially lowers the barrier to entry for\nnon-experts, it also gives a leg up to those seeking to leverage open\nsource models for malicious purposes.
+Just how much has this barrier to entry been lowered though?\nFine-tuning can be performed in a fraction of the time, cost, data\nsize, and compute compared to training models from scratch.
+Whether\nit's a cloud hosted notebook with GPU access, or a cloud GPU instance\nreservation for just a single day, we're talking on the order of just\ntens of dollars to fine-tune one of these models.
+Skill-wise,\nfine-tuning is not necessarily trivial, but it’s also not “brain\nsurgery”—authors or other open source contributors often release\nadditional code and tutorials for how to fine-tune.
+The pre-trained models covered here were each released just within\nthe last year, so the demonstrations in the next section should be\nseen through the lens of the present moment in time.
+However, open\nsource releases are accelerating, and the bar for generating credible\nsynthetic content will likely lower even further in the years to come.
+See No Evil As a first proof of concept, we’ll demonstrate how StyleGAN2 can be\nfine-tuned in order to generate custom portraits to impersonate a\ntarget individual.
+StyleGAN2, like its\npredecessor StyleGAN, is architected as a generative adversarial\nneural network (or GAN) .
+GANs consist of 2 underlying networks\nthat are pitted against each other (hence “adversarial”)
+- a\ngenerator, which generates new instances of data, and a discriminator,\nwhich evaluates these instances for authenticity by deciding whether\neach one belongs to the actual training dataset or not.
+If you\ngenerate images from pre-trained StyleGAN2 off-the-shelf, it outputs random,\nhigh quality, and highly diverse images that appear in a similar\norientation as the images that it was pre-trained on .
+These\nimages are not present in StyleGAN2’s original training set, but are\ncompletely fabricated from the generative model—these people in fact\ndo not exist, and never have.
+StyleGAN2 can also be fine-tuned on private datasets to generate\noutputs for custom tasks that the user of the open source model can\ncontrol.
+As illustrated in Figure 2, we downloaded a few hundred\nimages of Tom Hanks from online image search services, cropped them so\nthat they were each face-centered and 512x512 pixels as required by\nthe pre-trained model, and simply continued training StyleGAN2 by\npointing it at this new smaller dataset using a slightly smaller\nlearning rate.
+After less than a day of fine-tuning on a single GPU,\nwe then used the fine-tuned StyleGAN2 model to generate arbitrarily\nmany fake images of Mr. Hanks, which exhibit a high level of\nresemblance to his authentic online images.
+In theory, we could\ncollect cropped images from any target of our choosing and perform the\nsame exercise to generate arbitrarily many fake images of them.
+Hear No Evil As a second proof of concept, we’ll switch to the audio domain where\nwe demonstrate how SV2TTS can be fine-tuned on audio samples in order\nto impersonate the voice of a target individual.
+SV2TTS is a complex,\n3-stage model that can perform Voice Cloning —or text-to-speech from arbitrary text inputs to captured reference\nspeech in real time.
+SV2TTS is comprised of three underlying neural\nnetworks – first, the speaker encoder is trained on thousands of\nspeakers in order to learn an abstract representation of human speech\nand squeeze it into a compressed embedding of floating pointBy Christiaan Beek on Sep 24, 2018 As we look over some of the key issues from the newly released McAfee Labs Threats Report, we read terms such as voice assistant, blockchain, billing fraud, and cryptojacking.
+Although voice assistants fall in a different category, the other three are closely linked and driven by the goal of fast, profitable attacks that result in a quick return on a cybercriminal’s investment.
+One of the most significant shifts we see is that cryptojacking is still on the rise, while traditional ransomware attacks—aka “shoot and pray they pay”—are decreasing.
+Ransomware attacks are becoming more targeted as actors conduct their research to pick likely victims, breach their networks, and launch the malware followed by a high-pressure demand to pay the ransom.
+Although the total number of ransomware samples has fallen for two quarters, one family continues to spawn new variants.
+The Scarab ransomware family, which entered the threat landscape in June 2017, developed a dozen new variants in Q2.
+These variants combined make up more than 50% of the total number of Scarab samples to date.
+What spiked the movement, starting in fall 2017, toward cryptojacking?
+The first reason is the value of cryptocurrency.
+If attacker can steal Bitcoins, for example, from a victim’s system, that’s enough.
+If direct theft is not possible, why not mine coins using a large number of hijacked systems.
+There’s no need to pay for hardware, electricity, or CPU cycles; it’s an easy way for criminals to earn money.
+We once thought that CPUs in routers and video-recording devices were useless for mining, but default or missing passwords wipe away this view.
+If an attacker can hijack enough systems, mining in high volume can be profitable.
+Not only individuals struggle with protecting against these attacks; companies suffer from them as well.
+Securing cloud environments can be a challenge.
+Building applications in the cloud with container technology is effective and fast, but we also need to create the right amount of security controls.
+We have seen breaches in which bad actors uploaded their own containers and added them to a company’s cloud environment—which started to mine cryptocurrency.
+New technologies and improvements to current ones are great, but we need to find the balance of securing them appropriately.
+Who would guess to use an embedded voice assistant to hack a computer?
+Who looks for potential attack vectors in new technologies and starts a dialog with the industry?
+One of those is the McAfee Advanced Threat Research team, which provides most of the analysis behind our threats reports.
+With a mix of the world’s best researchers in their key areas, they take on the challenge of making the (cyber) world safer.
+From testing vulnerabilities in new technologies to examining malware and the techniques of nation-state campaigns, we responsibly disclose our research to organizations and the industry.
+We take what we learn from analyzing attacks to evaluate, adapt, and innovate to improve our technology.
+
+
+With the recent integration of Mandiant Web Historian™ into Mandiant Redline™ , you may be asking \"How do I review my Web History using Redline?\
+" If so, then follow along as I explain how to collect and review web history data in Redline - with a focus on areas where the workflow and features differ from that of Web Historian.
+For those of you unfamiliar with Redline, it is Mandiant's premier free tool, providing host investigative capabilities to help users find signs of malicious activity through memory and file analysis and the development of a threat assessment profile.
+Configuring Web History Data Collection Web Historian provided three options for choosing how to find web history data that you want to analyze: scan my local system, scan a profile folder, and parse an individual history file.
+Redline allows you to accomplish all three of these operations using a single option, Analyze this Computer , which is found under the Main Menu in the upper left corner.
+Specifying the path to a profile folder or a history file will require some additional configuration:
+Figure 1: Finding your web history data Web Historian (Left) vs. Redline (Right)
+Click on Analyze this Computer to begin configuring your analysis session.
+To ensure that Redline collects your desired web history data, click the link to Edit your script .
+On the View and Edit Your Script window are several options; take a look around and turn on any and all data that might interest you.
+For our purposes, we will be focusing on the Browser History options underneath the Network tab.
+This section contains all of the familiar options from Web Historian; simply select the boxes corresponding to the data you wish to collect.
+One difference you may notice is the absence of an option to specify the browser(s)
+you would like to target.
+You can now find that option by selecting Show Advanced Parameters from the upper right corner of the window.
+Once advanced parameters are enabled, simply type the name of any browser(s)
+you would like to target, each on its own separate line in the Target Browser field.
+To have Redline collect any web history data regardless of browser, just leave this field empty.
+You may also notice that enabling advanced parameters activates a field for History Files Location .
+As you may have guessed, this is where you can specify a path to a profile folder or history file to analyze directly, as you were able to do in Web Historian.
+Figure 2:
+Configuring Redline to Collect Browser History Data Now that you have finished configuring your script, choose a location to save your analysis session and then hit OK .
+Redline will run the script, which will require Administrator privileges and may trigger a UAC prompt before running depending on how your system is configured.
+After a brief collecting and processing time, your web history data will be ready for review.
+Reviewing your Data For the actual review of your web history data, you should feel right at home in Redline.
+Just like Web Historian, Redline uses a sortable, searchable, configurable table view for each of the individual categories of web history data.
+Figure 3: Displaying your web history data for review in both Web Historian (behind) and Redline (front)
+Although similar, Redline does have a few minor differences in how it visualizes your data: Redline does not break the data into pages; instead it will discretely page in large data sets (25k+ rows) automatically as you scroll down through the list.
+To configure the table view, you will need to manipulate the column headers for ordering and resizing, and right-click on a column header to show and hide columns - as opposed to using the column configuration menu in Web Historian.
+Searching and simple filtering is done in each individual table view and is not applied globally.
+To access the find options, either press the magnifying glass in the bottom right corner, or press Ctrl-f while a table view is selected.
+To export your data to a CSV (comma separated values) format file, click on export in the bottom right corner.
+Like Web Historian, Redline will only export data currently in the table view.
+If you applied any filtering or tags, those will affect the data as it is exported.
+In addition to the features that have always been available in Web Historian, Redline also allows you to review your web history with its full suite of analytical capabilities and investigative tools.
+Check out the Redline user guide for a full description of these capabilities.
+Here are just a few of the most popular: Timeline provides a chronological listing of all web-based events (e.g., URL last browsed to, File Download Started, etc.) in a single heterogeneous display.
+You can employ this to follow the activities of a user or attacker as they played out on the system.
+You can also quickly reduce your target investigative scope using the Timeline's powerful filtering capabilities.
+Use tags and comments to mark-up your findings as you perform your investigation, making it easier to keep track of what you have seen while moving forward.
+You can then go back and export those results into your favorite reporting solution.
+Use Indicators of Compromise (IOCs) as a quick way to determine if your system contains any potential security breaches or other evidence of compromise.
+Visit http://www.openioc.org/ to learn more about IOCs.
+Last but not least, Redline gives you the ability to examine an entire system worth of metadata.
+With Redline, you are not simply restricted to Web History related data; you can investigate security incidents with the scope and context of the full system.
+If your favorite feature from Web Historian has not yet been included in Redline (Graphing, Complex Filtering, etc.), feel free to make a request using one of the contact methods specified below.
+We will be taking feedback into consideration when choosing what the Redline team works on in the future.
+As always, feel free to contact us with send any additional questions.
+And just in case you do not already have it, the latest version of Redline (v1.10 as of the time of this writing) can always be found here .
+Subscribe to Blogs Get email updates as new blog posts are added.
+
+
+FireEye Labs has recently discovered six variants of a new Android threat that steals text messages and intercepts phone calls.
+We named this sample set “Android.
+HeHe”
+after the name of the activity that is used consistently across all samples.
+Here is a list of known bot variants: MD5 VirusTotal Detection Ratio 1caa31272daabb43180e079bca5e23c1 1caa31272daabb43180e079bca5e23c1 2/48 2/48 8265041aca378d37006799975fa471d9 8265041aca378d37006799975fa471d9 1/47 1/47 2af4de1df7587fa0035dcefededaedae 2af4de1df7587fa0035dcefededaedae 2/45 2/45 2b41fbfb5087f521be193d8c1f5efb4c 2b41fbfb5087f521be193d8c1f5efb4c 2/46 2/46 aa0ed04426562df25916ff70258daf6c aa0ed04426562df25916ff70258daf6c 1/46 1/46 9507f93d9a64d718682c0871bf354e6f 9507f93d9a64d718682c0871bf354e6f
+1/47 1/47 Summary
+The app disguises itself as “android security” (Figure 1), attempting to provide the users what is advertised as an OS Update.
+ It contacts the command-and-control (CnC) server to register itself then goes on to monitor incoming SMS messages.
+The CnC is expected to respond with a list of phone numbers that are of interest to the malware author.
+If one of these numbers sends an SMS or makes a call to an infected device, the malware intercepts the message or call, suppresses device notifications from the device, and removes any trace of the message or call from device logs.
+Any SMS messages from one of these numbers are logged into an internal database and sent to the CnC server.
+Any phone calls from these numbers are silenced and rejected.
+[caption id=\"attachment_4369\" align=\"aligncenter\" width=\"302\"] Figure 1[/caption]
+Analysis This app starts the main HeHe activity at startup.
+The constructor of the HeHeActivity registers a handler using the android.os.
+Handle , which acts as a thread waiting for an object of type android.os.
+Message to perform different actions, which are outlined below.
+Because the HeHeActivity implements the standard DailogInterfaceOnClickListener , the start of the app causes the showAlterDailog message to be displayed (Figure 2).
+[caption id=\"attachment_4373\" align=\"aligncenter\" width=\"404\"] Figure 2:
+The above messages make the user believe that an OS update check is under progress[/caption]
+The app then sends an intent to start three services in the background.
+These services are explained below.
+Sandbox-evasion tactic This app checks for the presence of an emulator by calling the isEmulator function, which does the following: It checks the value of the MODEL of the device (emulators with the Google ADT bundle have the string “sdk” as a part of the MODEL variable).
+It also checks to see if the IMSI code is “null” — emulators do not have an IMSI code associated with them.
+Here is the isEmulator code: String v0 = TelephonyUtils.getImsi(((Context)this)); if(v0 == null) { return; } public static boolean isEmulator() { boolean v0; if((Build.
+MODEL.equalsIgnoreCase(\"sdk\"))
+|| (Build.
+MODEL.equalsIgnoreCase(\"google_sdk\"))) { v0 = true; } else { v0 = false; } return v0; } The code checks whether the the app is being run in the Android QEMU emulator.
+It also checks whether the value of IMSI is equal to null
+RegisterService This service runs in the background.
+Once started the app calls the setComponentEnabledSetting method as follows: this.getPackageManager().setComponentEnabledSetting(new ComponentName(((Context)this), HeheActivity.class), 2, 1); This removes the app from the main menu of the phone leading the user to believe that the app is no longer installed on the phone.
+It then goes on to check the network status of the phone as shown below public void checkNetwork() { \nif(!this.isNetworkAvailable()) {\nthis.setMobileDataEnabled();\n}\n}\n\nAfter the service has been created.
+The onStart method is called, which checks the message provided as a part of the intent.
+The message types are START and LOGIN START
+If the message in the intent is START , The app calls the sendReigsterRequest() function.
+The sendRegisterRequest function first checks for the presence of an emulator as explained in the \"Sandbox-evasion tactic\" section It then collects the IMSI IMEI, phone number, SMS address and channel ID.
+It packs all this information into a JSON object.
+Once the JSON object is created.
+It is converted to a string, which is sent to the CnC server.
+The CnC communication is explained below.
+LOGIN
+If the message in the intent is LOGIN , the app calls the sendLoginRequest method, which in turn collects the following: Version number of the app (hard-coded as \"1.0.0\")
+The model of the phone The version of the operating system The type of network associated with the device (GSM/CDMA)
+This information is also packed into a JSON object, converted into a string, and sent to the CnC server.
+RegisterBroadcastReceiver service This service is invoked at the start of the app as the RegisterService .
+It in turn registers the IncomeCallAndSmsReceiver(), which is set to respond to these three intents: android.provider.
+Telephony.
+SMS_RECEIVED , which notifies once a SMS has been received on the device android.intent.action.
+PHONE_STATE , which notifies once the cellular state of the device has changed.
+Examples include RINGING and OFF_HOOK.
+android.intent.action.
+SCREEN_ON , which notifies once the screen has been turned on or turned off.
+Additionally, it also sets observers over Android content URIs as follows: The SmsObserver is set to observe the content://sms, which enables it to access all SMS messages that are present on the device.
+The CallObserver is set to observe the content://call_log/calls, which allows it to access the call log of all incoming, outgoing and missed calls on the device.
+ConnectionService The main HeHe activity mentioned at the start issues the ACTION_START intent to the ConnectionService class as follows:
+Intent v2 = new Intent(((Context)this), ConnectionService.class); v2.setAction(ConnectionService.ACTION_START); v2.setFlags(268435456);\n\nthis.startService(v2);\n\nLogUtils.debug(\"heheActivity\", \"start connectionService service\");\n\nThe app then starts a timer task that is scheduled to be invoked every 5000 seconds.In 2019, Mandiant’s Red Team discovered a series of vulnerabilities present within Digi International’s ConnectPort X2e device, which allows for remote code execution as a privileged user.
+Specifically, Mandiant’s research focused on SolarCity’s (now owned by Tesla) rebranded ConnectPort X2e device, which is used in residential solar installations.
+Mandiant performs this type of work both for research purposes and in a professional capacity for their global clients.
+Mandiant collaborated with Digi International and SolarCity/Tesla to responsibly disclose the results of the research, resulting in the following two CVEs: Hardcoded Credentials (CVE-2020-9306, CVSS3.0: 8.8) Execution with Unnecessary Privileges (CVE-2020-12878, CVSS3.0: 8.4) Technical details can be found in Digi International’s 3.2.30.6 software release , and on FireEye’s Vulnerability Disclosures GitHub project ( FEYE-2020-0019 and FEYE-2020-0020 ).
+This two-part blog series will discuss our analysis at a high level, explore the novel techniques used to gain initial access to the ConnectPort X2e device, and share the technical details of the vulnerabilities discovered.
+Topics to be covered will include physical device inspection, debugging interface probing, chip-off techniques, firmware analysis, glitch attacks, and software exploitation.
+If you’re interested in continuing the story in Part Two, you can read it now .
+FAQ What devices are affected, and (potentially) how many devices are affected?
+The vulnerabilities described in this post affect ConnectPort X2e devices as well as the SolarCity rebranded variant.
+Other vendor devices may also be vulnerable.
+It is unclear how many ConnectPort X2e devices are deployed in the wild.
+How is the issue being addressed?
+Mandiant worked independently with Digi International and Tesla to remediate the vulnerabilities.
+Mandiant would like to thank Digi International and Tesla for their cooperation and dedication to improving the security of their products.
+How would an attacker exploit these vulnerabilities?
+An attacker with local network access (such as being connected to an individual’s home network via Ethernet) to a vulnerable X2e device can exploit CVE-2020-9306 and CVE-2020-12878 to gain privileged access to the device.
+Who discovered these vulnerabilities?
+Jake Valletta (@jake_valletta), Sam Sabetan (@samsabetan)
+More information such as videos and datasheets on Mandiant’s Embedded Device Assessments can be found here .
+Technical Analysis Device Overview Before diving into the details, we’ll discuss the ConnectPort X2e device (referred to as X2e device throughout the post) at a high level.
+The X2e device is a programmable gateway that connects to and collects data from ZigBee devices.
+It is commonly used as a Smart Energy gateway to interpret and send energy readings from a residential Solar Inverter.
+Vendors will often purchase an X2e device and configure it to read power consumption generated by a customer’s Solar Inverter.
+Figure 1 outlines a typical residential solar installation and highlights the X2e’s role.
+Figure 1:
+Typical X2e residential deployment For our research, we focused on the X2e device used by SolarCity, now Tesla, to retrieve data from residential solar installations.
+A typical setup would involve SolarCity providing a customer with a gateway that would be connected to the Internet via an Ethernet cable on the customer’s home network.
+Figure 2 shows one of the SolarCity branded X2e devices that we tested.
+Figure 2: X2e device Without even plugging in the X2e device, we know of at least two separate interfaces to explore: the Ethernet interface and the ZigBee radio.
+Note that we did not review the ZigBee interface between the X2e and a solar invertor, and that interface will not be covered in either Part One or Part Two of this series.
+Initial Analysis and Physical Inspection Network Reconnaissance We started our research by assessing the X2e device from a network perspective.
+By using nmap , we discovered that the device exposed both SSH and HTTP/HTTPS, shown in Figure 3.
+Figure 3:
+Port scan results from the X2e Upon accessing these services remotely, we noted that both services required authentication.
+We also performed limited brute force attempts, which were unsuccessful.
+Additionally, the underlying services were not vulnerable to any public exploits.
+With not many network-based leads to follow, we shifted our analysis to a hardware perspective to determine if any local attacks may be possible to gain initial access onto the device.
+Physical Board Inspection To begin our hardware analysis, we removed the plastic casing from the device and mapped out the various integrated circuit (IC) components and searched for potential debugging interfaces.
+Inventorying the components present on the circuit board (also known as a PCB) is a crucial step in understanding how the device was designed and what can be expected down the road.
+Figure 4 shows the mapped-out components as well as a cluster of pins that resembled a typical 3-pin universal asynchronous transmit/receive (UART) connection, a common debugging interface on embedded devices.
+Figure 4: X2e components and suspicious cluster of pins Without a remote connection to the X2e device, UART is an attractive target.
+UART typically provides the equivalent functionality of a service like SSH or Telnet and the added benefit of watching verbose output during system boot.
+To determine if the cluster of pins was a UART interface, we first soldered a 3-pin through-hole header to the PCB.
+Using a combination of continuity tests with a multimeter and the digital logic analyzer Saleae , it became apparent that we were in fact dealing with a UART interface.
+The Figure 5 shows the three pins (Ground, TX, RX) connected to the header.
+Attached to the other end of the three wires was a FTDI serial TTL-232 to USB adapter , which was connected to a Linux virtual machine.
+Figure 5:
+Connecting to potential UART interface In addition to correctly identifying the UART pins and a UART to USB adapter, we also needed software to read/write from the interface as well as knowledge of the baud rate.
+Baud rates vary but typically follow standard values, including 9600, 14400, 19200, 38400, 57600, and 115200.
+Using the python module pySerial , we connected to the USB adapter and tried standard baud rates until one of the rates produced readable ASCII output (an incorrect baud rate will typically produce non-readable output), and determined the X2e used a baud rate of 115200.
+Upon booting the X2e, we noted output from the BootROM, bootloader (which was Das U-Boot 2009.8, a common embedded bootloader), as well as output from the Linux kernel transmitted over the UART connection, shown in Figure 6.
+Figure 6: UART boot messages Many configurations of U-Boot allow a physically connected user (using an interface such as UART) the ability to interrupt the boot process; however, this configuration explicitly disabled that feature, shown in Figure 7.Introduction Through FireEye’s Email Threat Prevention (ETP) solution, FireEye Labs discovered a phishing campaign in the wild targeting the credit card data and other personal information of Netflix users primarily based in the United States.
+This campaign is interesting because of the evasion techniques that were used by the attackers: The phishing pages were hosted on legitimate, but compromised web servers.
+Client-side HTML code was obfuscated with AES encryption to evade text-based detection.
+Phishing pages were not displayed to users from certain IP addresses if its DNS resolved to companies such as Google or PhishTank.
+At the time of posting, the phishing websites we observed were no longer active.
+Attack Flow The attack seems to start with an email notification – sent by the attackers – that asks the user to update their Netflix membership details.
+The phishing link inside the email body directs recipients to a page that attempts to mimic a Netflix login page, as seen in Figure 1.
+Figure 1: Fake login page mimicking the Netflix website Upon submitting their credentials, victims are then directed to webpages requesting additional membership details (Figure 2) and payment information (Figure 3).
+These websites also attempt to mimic authentic Netflix webpages and appear legitimate.
+Once the user has entered their information, they are taken to the legitimate Netflix homepage.
+Figure 2:
+Fake webpage asking users to update their personal details Figure 3: Netflix phishing webpage used to steal credit card information Technical Details
+The phishing kit uses techniques to evade phishing filters.
+One technique is the use of AES encryption to encode the content presented at the client’s side, as seen in Figure 4.
+The purpose of using this technique is code obfuscation, which helps to evade text-based detection.
+By obfuscating the webpage, attackers try to deceive text-based classifiers and prevent them from inspecting webpage content.
+This technique employs two files, a PHP and a JavaScript file that have functions to encrypt and decrypt input strings.
+The PHP file is used to encrypt the webpages at the server side, as seen in Figure 5.
+At the client side, the encrypted content is decoded using a defined function in the JavaScript file, as seen in Figure 6.
+Finally, the webpage is rendered using the ‘document.write’ function.
+Figure 4: Client-side code obfuscation using AES encryption Figure 5: PHP code used at server side for encryption Figure 6:
+JavaScript code used at client-side for decryption Another technique is the host-based evasion, as seen in Figure 7.
+The host name of organizations such as ‘phishtank’ and ‘google’ are blacklisted.
+The host name of the client is compared against a list of blacklisted host names.
+If there is a match against the blacklist, a “404 Not Found” error page is presented.
+Figure 7:
+Server side code for blacklisting known hosts.
+Click image to enlarge.
+As with the majority of phishing attacks, this campaign uses PHP mail utility to send the attacker the stolen credentials.
+The advantage of using this technique is that the attacker can host their phishing kits on a number of websites and still get the stolen credentials and other information from a single email account.
+This enables attackers to extend their reach.
+Figure 8:
+Stolen information is sent to an email address using mail() function Tips to Secure your Netflix Account To learn more about securing your Netflix account, Netflix provides additional information on how to keep your account safe from phishing scams and other fraudulent activity at https://www.netflix.com/security.
+Subscribe to Blogs Get email updates as new blog posts are added.
+
+
+By Christiaan Beek on Mar 11, 2018 The nonperishable nature of medical data makes an irresistible target for cybercriminals.
+The art of hacking requires significant time and effort, encouraging experienced cybercriminals to plot their attacks based on the return they will see from their investment.
+Those who have successfully gained access to medical data have been well rewarded for their efforts.
+One seller stated in an interview that “someone wanted to buy all the … records specifically,” claiming that the effort had netted US$100,000.
+While at a doctor’s appointment with my wife watching a beautiful 4D ultrasound of our unborn child, I noticed the words “saving data to image” flash on the screen.
+Although this phrase would not catch the attention of most people, given my research on how cybercriminals are targeting the health care industry , I quickly began to wonder why an ultrasound of our child would not instead save to a file.
+Intrigued, I decided to dig into the world of medical imaging and its possible security risks.
+The results were disturbing; ultimately, we were able to combine attack vectors to reconstruct body parts from the images and make a three-dimensional model.
+PACS Most hospitals or medical research facilities use PACS, for picture archiving and communication system, so that images such as ultrasounds, mammograms, MRIs, etc. can be accessed from the various systems within their facility, or through the cloud.
+A PACS setup contains multiple components, including a workstation, imaging device, acquisition gateway, PACS controller, database, and archiving—as illustrated in the following graphic: The basic elements of PACS infrastructure.
+The imaging device creates a picture, such as an ultrasound or MRI, which is uploaded to an acquisition gateway.
+Because much of the imaging equipment in use by medical facilities does not align with security best practices, acquisition gateways are placed in the network to enable the digital exchange of the images.
+The acquisition gateway also often acts as the server connecting to the hospital’s information system (using the HL7 protocol) to enrich images with patient data.
+The PACS controller is the central unit coordinating all traffic among the different components.
+The final component in the PACS infrastructure is the database and archiving system.
+The system ensures that all images are correctly stored and labeled for either short- or long-term storage.
+Larger implementations might have multiple imaging devices and acquisition gateways in various locations, connected over the Internet.
+During our investigation, we noticed many small medical practices around the world using free, open-source PACS software, which was not always securely implemented.
+To determine how many PACS servers are connected depends on on how you search using Shodan, a search engine for finding specific types of computers connected to the Internet.
+Some servers connect over TCP 104; others use HTTP TCP 80 or HTTPS TCP 443.
+A quick search revealed more than 1,100 PACS directly connected to the Internet, not behind a recommended layer of network security measures or virtual private networks (VPNs).
+PACS systems connected to the Internet.
+Darker colors represent more systems.
+Our eyebrows began to rise very early in our research, as we came across “IE 6 support only” messages or ActiveX controls and old Java support; many of these products are vulnerable to a plethora of exploits.
+For example, one of the PACS generated an error page when we changed one parameter.
+This is a very basic common way of testing if the application developers did proper input sanitation check to prevent attackers inserting code or generating failures that could reveal data about the application and can give clues to compromise the system.
+A stack-trace error.
+The stack-trace dump revealed the use of Apache Tomcat Version 7.0.13, which has more than 40 vulnerabilities.
+When communicating with the DICOM (digital imaging and communications in medicine) port, TCP 104, it is possible to grab the banner of a server and get a response.
+As we queried, we recorded different responses.
+Let’s look at one: \\x02\\x00\\x00\\x00\\x00\\xbe\\x00\\x01\\x00\\x00ANY-SCP         FINDSCU         \\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x10\\x00\\x00\\x151.2.840.10008.3.1.1.1!\\x00\\x00\\x1b\\x01\\x00\\x00\\x00@\\x00\\x00\\x131.2.840.10008.1.2.1P\\x00\\x00>Q\\x00\\x00\\x04\\x00\\x00@\\x00R\\x00\\x00\"1.2.826.0.1.3680043.2.135.1066.101U\\x00\\x00\\x0c1.4.16/WIN32
+The FINDSCU string refers to the findscu tool, which can be used to query a PACS system.
+The DICOM standard defines three data models for the query/retrieve service.
+Each data model has been assigned with one unique ID for the C-FIND, one for the C-MOVE, and one for C-GET; so all together there are nine unique IDs, three for each model.
+In the preceding banner, we retrieved two of those IDs:
+2.840.10008.1.2.1: A transfer unique ID that defines the value “Explicit VR Little Endian” for data transfer 2.826.0.1.3680043.2.135.1066.101:
+A value referring to the implementation class Another value in the banner, “1.4.16/WIN32,” refers to the implementation version.
+In the context of the medical servers, this refers to the version of XAMPP, aka Apache with MariaDB, PHP, and Perl.
+This server was running Apache 2.4.9, which is publicly known to contain nine vulnerabilities.
+In other cases, there was no need to search for vulnerabilities.
+The management interface was wide open and could be accessed without credentials.
+What does this mean?
+It is possible to access the images.
+Vulnerabilities In addition to expensive commercial PACS systems, open-source or small-fee PACS are available for small health care institutions or practices.
+As we investigated these systems, we found that our fears were well founded.
+One web server/client setup used the defaults “admin/password” as credentials without enforcing a change when the server is started for the first time.
+We found more problems: Unencrypted traffic between client and server Click jacking Cross-site scripting (reflected) Cross-site scripting stored as cross-site request forgery Document object model–based link manipulation Remote creation of admin accounts Disclosure of information Many of these are ranked on the list of OWASP Top 10 Most Critical Web Application Security Risks list, which highlights severe flaws that should be addressed in any product delivered to a customer.
+We have reported the vulnerabilities we discovered to these vendors following our responsible disclosure process.
+They cooperated with us in investigating the vulnerabilities and taking appropriate actions to fix the issues.
+But why should we spend so much time and effort in researching vulnerabilities when there are many other ways to retrieve medical images from the Internet?
+Medical Image Formats The medical world uses several image formats for different purposes.
+Each format has different requirements and works with different equipment, protocols, etc.
+A few format examples: NifTi Neuroimaging Informatics Technology Initiative Dicom Digital Imaging and Communications in Medicine MINC Medical Imaging NetCDF
+NRRD
+Nearly Raw Raster Data Searching open directories and FTP servers while using several search engines, we gathered thousands of images—some of them complete MRI scans, mostly in DICOM format.
+One example: An open directory of images.
+The DICOM format originated in the 1980s, before cybersecurity was a key component.
+The standard format contains a detailed list of tags such as patient name, station name, hospital, etc.
+All are included as metadata with the image.
+Opening an image with a text editor presents the following screen:
+An example of the DICOM file format.
+The file begins with the prefix DICM, an indicator that we are dealing with a DICOM file.
+  Other (now obscured) strings in this example include the hospital’s name, city, patient name, and more.
+The Health Insurance Portability and Accountability Act requires a secure medical imaging workflow, which includes the removal or anonymizing of metadata in DICOM files.Though COVID-19 has had enormous effects on our society and economy, its effects on the cyber threat landscape remain limited.
+For the most part, the same actors we have always tracked are behaving in the same manner they did prior to the crisis.
+There are some new challenges, but they are perceptible, and we—and our customers—are prepared to continue this fight through this period of unprecedented change.
+The significant shifts in the threat landscape we are currently tracking include: The sudden major increase in a remote workforce has changed the nature and vulnerability of enterprise networks.
+Threat actors are now leveraging COVID-19 and related topics in social engineering ploys.
+We anticipate increased collection by cyber espionage actors seeking to gather intelligence on the crisis.
+Healthcare operations, related manufacturing, logistics, and administration organizations, as well as government offices involved in responding to the crisis are increasingly critical and vulnerable to disruptive attacks such as ransomware.
+Information operations actors have seized on the crisis to promote narratives primarily to domestic or near-abroad audiences.
+Same Actors, New Content The same threat actors and malware families that we observed prior to the crisis are largely pursuing the same objectives as before the crisis, using many of the same tools.
+They are simply now leveraging the crisis as a means of social engineering.
+This pattern of behavior is familiar.
+Threat actors have always capitalized on major events and crises to entice users.
+Many of the actors who are now using this approach have been tracked for years.
+Ultimately, COVID-19 is being adopted broadly in social engineering approaches because it is has widespread, generic appeal, and there is a genuine thirst for information on the subject that encourages users to take actions when they might otherwise have been circumspect.
+We have seen it used by several cyber criminal and cyber espionage actors, and in underground communities some actors have created tools to enable effective social engineering exploiting the coronavirus pandemic.
+Nonetheless, COVID-19 content is still only used in two percent of malicious emails.
+For the time being, we do not believe this social engineering will be abetting.
+In fact, it is likely to take many forms as changes in policy, economics, and other unforeseen consequences manifest.
+Recently we predicted a spike in stimulus related social engineering , for example.
+Additionally, the FBI has recently released a press release anticipating a rise in COVID-19 related Business Email Compromise (BEC) scams.
+State Actors Likely Very Busy Given that COVID-19 is the undoubtedly the overwhelming concern of governments worldwide for the time being, we anticipated targeting of government, healthcare, biotech, and other sectors by cyber espionage actors.
+We have not yet observed an incident of cyber espionage targeting COVID-19 related information; however, it is often difficult to determine what information these actors are targeting.
+There has been at least one case reported publicly which we have not independently confirmed.
+We have seen state actors, such as those from Russia, China and North Korea, leverage COVID-19 related social engineering, but given wide interest in that subject, that does not necessarily indicate targeting of COVID-19 related information.
+Threat to Healthcare Though we have no reason to believe there is a sudden, elevated threat to healthcare, the criticality of these systems has probably never been greater, and thus the risk to this sector will be elevated throughout this crisis.
+The threat of disruption is especially disconcerting as it could affect the ability of these organizations to provide safe and timely care.
+This threat extends beyond hospitals to pharmaceutical companies, as well as manufacturing, administration and logistics organizations providing vital support.
+Additionally, many critical public health resources lie at the state and local level.
+Though there is some anecdotal evidence suggesting some ransomware actors are avoiding healthcare targets, we do not expect that all actors will practice this restraint.
+Additionally, an attack on state and local governments, which have been a major target of ransomware actors, could have a disruptive effect on treatment and prevention efforts.
+Remote Work The sudden and unanticipated shift of many workers to work from home status will represent an opportunity for threat actors.
+Organizations will be challenged to move quickly to ensure sufficient capacity, as well as that security controls and policies are in place.
+Disruptive situations can reduce morale and increase stress, leading to adverse behavior such as decreasing users’ reticence to open suspicious messages, and even increasing the risk of insider threats.
+Distractions while working at home can cause lowered vigilance in scrutinizing and avoiding suspicious content as workers struggle to balance work and home responsibilities at the same time.
+Furthermore, the rapid adoption of platforms will undoubtedly lead to security mistakes and attract the attention of the threat actors.
+Secure remote access will likely rely on use of VPNs and user access permissions and authentication procedures intended to limit exposure of proprietary data.
+Hardware and infrastructure protection should include ensuring full disk encryption on enterprise devices, maintaining visibility on devices through an endpoint security tool, and maintaining regular software updates.
+For more on this issue, see our blog post on the risks associated with remote connectivity .
+The Information Operations Threat We have seen information operations actors promote narratives associated with COVID-19 to manipulate primarily domestic or near-abroad audiences.
+We observed accounts in Chinese-language networks operating in support of the People's Republic of China (PRC), some of which we previously identified to be promoting messaging pertaining to the Hong Kong protests, shift their focus to praising the PRC's response to the COVID-19 outbreak, criticizing the response of Hong Kong medical workers and the U.S. to the pandemic, and covertly promoting a conspiracy theory that the U.S. was responsible for the outbreak of the coronavirus in Wuhan.
+We have also identified multiple information operations promoting COVID-19-related narratives that were aimed at Russian- and Ukrainian-speaking audiences, including some that we assess with high confidence are part of the broader suspected Russian influence campaign publicly referred to as \"Secondary Infektion,\" as well as other suspected Russian activity.
+These operations have included leveraging a false hacktivist persona to spread the conspiracy theory that the U.S. developed the coronavirus in a weapons laboratory in Central Asia, taking advantage of physical protests in Ukraine to push the narrative that Ukrainians repatriated from Wuhan will infect the broader Ukrainian population, and claiming that the Ukrainian healthcare system is ill-equipped to deal with the pandemic.
+Other operations alleged that U.S. government or military personnel were responsible for outbreaks of the coronavirus in various countries including Lithuania and Ukraine, or insisted that U.S. personnel would contribute to the pandemic's spread if scheduled multilateral military exercises in the region were to continue as planned.

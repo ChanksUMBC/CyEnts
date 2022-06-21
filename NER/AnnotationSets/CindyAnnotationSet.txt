@@ -1,0 +1,810 @@
+By Douglas McKee and Mark Bereza on Aug 09, 2019 The McAfee Labs Advanced Threat Research team is committed to uncovering security issues in both software and hardware to help developers provide safer products for businesses and consumers.
+We recently investigated an industrial control system (ICS) produced by Delta Controls.
+The product, called “enteliBUS Manager”, is used for several applications, including building management.
+Our research into the Delta controller led to the discovery of an unreported buffer overflow in the “main.so” library.
+This flaw, identified by CVE-2019-9569, ultimately allows for remote code execution, which could be used by a malicious attacker to manipulate access control, pressure rooms, HVAC and more.
+We reported this research to Delta Controls on December 7 th , 2018.
+Within just a few weeks, Delta responded, and we began an ongoing dialog while a security fix was built, tested and rolled out in late June of 2019.
+We commend Delta for their efforts and partnership throughout the entire process.
+The vulnerable firmware version tested by McAfee’s Advanced Threat Research team is 3.40.571848.
+It is likely earlier versions of the firmware are also vulnerable, however ATR has not specifically tested these.
+We have confirmed the patched firmware version 3.40.612850 effectively remediates the vulnerability.
+This blog is intended to provide a deep and thorough technical analysis of the vulnerability and its potential impact.
+For a high-level, non-technical walk through of this vulnerability, please refer to our summary blog post here .
+Exploring the Attack Surface
+The first task when researching a new device is to understand how it works from both a software and hardware perspective.
+Like many devices in the ICS realm, this device has three main software components; the bootloader, system applications, and user-defined programming.
+While looking at software for an attack vector is important, we do not focus on any surface which is defined by the users since this will potentially change for every install.
+Therefore, we want to focus on the bootloader and the system applications.
+With the operating system, it is common for manufacturers to implement custom code to operate the device regardless of an individual user’s programming.
+This custom code is often where most vulnerabilities exist and extends across the entire product install base.
+Yet, how do we access this code?
+As this is a critical system, the firmware and software are not publicly available and there is limited documentation.
+Thus, we are limited to external reconnaissance of the underlying system software.
+Since the most critical vulnerabilities are remote, it made sense to start with a simple network scan of the device.
+A TCP scan showed no ports open and a UDP scan only showed ports 47808 and 47809 to be open.
+Referring to the documentation, we determined this is most likely used for a protocol called Building Automation Control Network (BACnet).
+Using a BACnet-specific network enumeration script, we determined slightly more information: root@kali:~
+# nmap –script bacnet-info -sU
+-p 47808 192.168.7.15
+Starting Nmap 7.60 ( https://nmap.org ) at 2018-10-01 11:03 EDT Nmap scan report for 192.168.7.15 Host is up (0.00032s latency).
+PORT STATE SERVICE 47808/udp open bacnet | bacnet-info: | Vendor ID:
+Delta Controls (8) | Vendor Name: Delta Controls | Object-identifier: 29000 | Firmware: 571848 | Application Software: V3.40 | Model Name: eBMGR-TCH
+The next question is, what can we learn from the hardware?
+To answer this question, the device was first carefully disassembled, as shown in Figure 1.
+Figure 1 The controller has one board to manage the display and a main baseboard which holds a System on a Module (SOM) chip containing both the processor and flash modules.
+With a closer look at the baseboard, we made a few key observations.
+First, the processor is an ARM926EJ core processor, the flash module is a ball grid array (BGA) chip, and there are several unpopulated headers on the board.
+Figure 2 To examine the software more effectively, we needed to determine a method of extracting the firmware.
+The BGA chip used by the system for flash memory will mostly likely hold the firmware; however, this poses another challenge.
+Unlike other chips, BGA chips do not provide pins externally which can be attached to.
+This means to access the chip directly, we would need to desolder the chip from the board.
+This is not ideal since we risk damaging the system.
+We also noticed several unpopulated headers on the board.
+This was promising as we could find an alternative method of exacting the firmware using one of these headers.
+Soldering pins to each of the unpopulated headers and using a logic analyzer, we determined that the 4-pin header in the center of the board is a universal asynchronous receiver-transmitter (UART) header running at a baud rate of 115200.
+Figure 3 Using the Exodus XI Breakout board (shout out to @Logan_Brown and the Exodus team) to connect to the UART headers, we were met with an unprotected root prompt on the system.
+Now with full access to the system, we could start to gain a deeper understanding of how the system works and extract the firmware.
+Figure 4 Firmware Extraction and System Analysis With the UART interface, we could now explore the system in real-time, but how could we extract the firmware for offline analysis?
+The device has two USB ports which we were able to use to mount a USB drive.
+This allowed us to copy what is running in memory using dd onto a flash drive, effectively extracting the firmware.
+The next question was, what do we copy?
+Using “/proc/mtd” to gain information about how memory is partitioned, we could see file systems located on mtd4 and mtd5.
+We used dd to copy off both the mtd4 and mtd5 partitions.
+We later discovered that one of the images is a backup used as a system fall back if a persistent issue is detected.
+This filesystem copied became increasingly useful as the project continued With the active UART connection, it was now possible to investigate more about how the system is running.
+Since we were able to previously determine the device is only listening on ports 47808 and 47809, whichever application is listening on these ports would be the only point of an attack for a remote exploit.
+This was quickly confirmed using “netstat -nap” from the UART console.
+We noticed that port 47808 was being used by an application called “dactetra”.
+With minimal further investigation, it was determined that this is a Delta-controller-specific binary was responsible for the main functions of the device.
+Finding a Vulnerability With a device-specific binary listening on the network via an open port, we had an ideal place to start looking for a vulnerability.
+We used the common approach of network fuzzing to start our investigation.
+To implement network fuzzing for BACnet, we turned to a tool produced by Synopsys called Defensics, which has a module designed for BACnet servers.
+Although this device is not a BACnet server and functions more as a router, this test suite provided several universal test cases which gave us a great place to start.
+BACnet utilizes several types of broadcast packets to communicate.
+Two such broadcast packets, “Who-Is” and “I-Am” packets, are universal to all BACnet devices and Defensics provides modules to work with them.
+Using the Defensics fuzzer to create mutations of these packets, we were able to observe the device encountering a failure point, producing a core dump and immediately rebooting, shown in Figure 5.
+Figure 5 The test case which caused the crash was then isolated and run several more times to confirm the crash was repeatable.
+We discovered during this process that it takes an additional 96 packets sent after the original malformed packet to cause the crash.
+The malformed packet in the series was an “I-Am” packet, as seen below.
+The full packet is not shown due to its size.
+Figure 6 Examining further, we could quickly see that the fuzzer created a packet with a BACnet layer size of 8216 bytes, using “0x22”.When discussing suspected Middle Eastern hacker groups with destructive capabilities, many automatically think of the suspected Iranian group that previously used SHAMOON – aka Disttrack – to target organizations in the Persian Gulf.
+However, over the past few years, we have been tracking a separate, less widely known suspected Iranian group with potential destructive capabilities, whom we call APT33.
+Our analysis reveals that APT33 is a capable group that has carried out cyber espionage operations since at least 2013.
+We assess APT33 works at the behest of the Iranian government.
+Recent investigations by FireEye’s Mandiant incident response consultants combined with FireEye iSIGHT Threat Intelligence analysis have given us a more complete picture of APT33’s operations, capabilities, and potential motivations.
+This blog highlights some of our analysis.
+Our detailed report on FireEye Threat Intelligence contains a more thorough review of our supporting evidence and analysis.
+We will also be discussing this threat group further during our webinar on Sept. 21 at 8 a.m. ET.
+Targeting APT33 has targeted organizations – spanning multiple industries – headquartered in the United States, Saudi Arabia and South Korea.
+APT33 has shown particular interest in organizations in the aviation sector involved in both military and commercial capacities, as well as organizations in the energy sector with ties to petrochemical production.
+From mid-2016 through early 2017, APT33 compromised a U.S. organization in the aerospace sector and targeted a business conglomerate located in Saudi Arabia with aviation holdings.
+During the same time period, APT33 also targeted a South Korean company involved in oil refining and petrochemicals.
+More recently, in May 2017, APT33 appeared to target a Saudi organization and a South Korean business conglomerate using a malicious file that attempted to entice victims with job vacancies for a Saudi Arabian petrochemical company.
+We assess the targeting of multiple companies with aviation-related partnerships to Saudi Arabia indicates that APT33 may possibly be looking to gain insights on Saudi Arabia’s military aviation capabilities to enhance Iran’s domestic aviation capabilities or to support Iran’s military and strategic decision making vis a vis Saudi Arabia.
+We believe the targeting of the Saudi organization may have been an attempt to gain insight into regional rivals, while the targeting of South Korean companies may be due to South Korea’s recent partnerships with Iran’s petrochemical industry as well as South Korea’s relationships with Saudi petrochemical companies.
+Iran has expressed interest in growing their petrochemical industry and often posited this expansion in competition to Saudi petrochemical companies.
+APT33 may have targeted these organizations as a result of Iran’s desire to expand its own petrochemical production and improve its competitiveness within the region.
+The generalized targeting of organizations involved in energy and petrochemicals mirrors previously observed targeting by other suspected Iranian threat groups, indicating a common interest in the sectors across Iranian actors.
+Figure 1 shows the global scope of APT33 targeting.
+Figure 1: Scope of APT33 Targeting Spear
+Phishing APT33 sent spear phishing emails to employees whose jobs related to the aviation industry.
+These emails included recruitment themed lures and contained links to malicious HTML application (.hta) files.
+The .hta files contained job descriptions and links to legitimate job postings on popular employment websites that would be relevant to the targeted individuals.
+An example .hta
+file excerpt is provided in Figure 2.
+To the user, the file would appear as benign references to legitimate job postings; however, unbeknownst to the user, the .hta file also contained embedded code that automatically downloaded a custom APT33 backdoor.
+Figure 2: Excerpt of an APT33 malicious .hta
+file We assess APT33 used a built-in phishing module within
+the publicly available ALFA
+TEaM Shell (aka ALFASHELL) to send hundreds of spear phishing emails to targeted individuals in 2016.
+Many of the phishing emails appeared legitimate – they referenced a specific job opportunity and salary, provided a link to the spoofed company’s employment website, and even included the spoofed company’s Equal Opportunity hiring statement.
+However, in a few cases, APT33 operators left in the default values of the shell’s phishing module.
+These appear to be mistakes, as minutes after sending the emails with the default values, APT33 sent emails to the same recipients with the default values removed.
+As shown in Figure 3, the “fake mail” phishing module in the ALFA Shell contains default values, including the sender email address (solevisible@gmail[.]com), subject line (“your site hacked by me”), and email body (“Hi Dear Admin”).
+Figure 3:
+ALFA TEaM Shell v2-Fake Mail (Default) Figure 4 shows an example email containing the default values the shell.
+Figure 4:
+Example Email Generated by the ALFA Shell with Default Values Domain Masquerading APT33 registered multiple domains that masquerade as Saudi Arabian aviation companies and Western organizations that together have partnerships to provide training, maintenance and support for Saudi’s military and commercial fleet.
+Based on observed targeting patterns, APT33 likely used these domains in spear phishing emails to target victim organizations.
+The following domains masquerade as these organizations: Boeing, Alsalam Aircraft Company, Northrop Grumman Aviation Arabia (NGAAKSA), and Vinnell Arabia.
+boeing.servehttp[.]com
+alsalam.ddns[.]net ngaaksa.ddns[.]net ngaaksa.sytes[.]net vinnellarabia.myftp[.]org Boeing, Alsalam Aircraft company, and Saudia Aerospace Engineering Industries entered into a joint venture to create the Saudi Rotorcraft Support Center in Saudi Arabia in 2015 with the goal of servicing Saudi Arabia’s rotorcraft fleet and building a self-sustaining workforce in the Saudi aerospace supply base.
+Alsalam Aircraft Company also offers military and commercial maintenance, technical support, and interior design and refurbishment services.
+Two of the domains appeared to mimic Northrop Grumman joint ventures.
+These joint ventures – Vinnell Arabia and Northrop Grumman Aviation Arabia – provide aviation support in the Middle East, specifically in Saudi Arabia.
+Both Vinnell Arabia and Northrop Grumman Aviation Arabia have been involved in contracts to train Saudi Arabia’s Ministry of National Guard.
+Identified Persona Linked to Iranian Government We identified APT33 malware tied to an Iranian persona who may have been employed by the Iranian government to conduct cyber threat activity against its adversaries.
+We assess an actor using the handle “xman_1365_x” may have been involved in the development and potential use of APT33’s TURNEDUP backdoor due to the inclusion of the handle in the processing-debugging (PDB) paths of many of TURNEDUP samples.
+An example can be seen in Figure 5.
+Figure 5: “xman_1365_x\" PDB String in TURNEDUP Sample Xman_1365_x was also a community manager in the Barnamenevis Iranian programming and software engineering forum, and registered accounts in the well-known Iranian Shabgard and Ashiyane forums, though we did not find evidence to suggest that this actor was ever a formal member of the Shabgard or Ashiyane hacktivist groups.
+Open source reporting links the “xman_1365_x” actor to the “Nasr Institute,” which is purported to be equivalent to Iran’s “cyber army” and controlled by the Iranian government.
+Separately, additional evidence ties the “Nasr Institute” to the 2011-2013 attacks on the financial industry, a series of denial of service attacks dubbed Operation Ababil.
+In March 2016, the U.S. Department of Justice unsealed an indictment that named two individuals allegedly hired by the Iranian government to build attack infrastructure and conduct distributed denial of service attacks in support of Operation Ababil.
+While the individuals and the activity described in indictment are different than what is discussed in this report, it provides some evidence that individuals associated with the “Nasr Institute” may have ties to the Iranian government.
+Potential Ties to Destructive Capabilities and Comparisons with SHAMOON One of the droppers used by APT33, which we refer to as DROPSHOT, has been linked to the wiper malware SHAPESHIFT.
+Open source research indicates SHAPESHIFT may have been used to target organizations in Saudi Arabia.FortiGuard Labs Research Thanks to Val Saengphaibul and Fred Gutierrez who helped contribute to this blog.
+Affected Platforms: Windows Impacted Users: Windows users Impact:
+Compromised machines are under the control of the threat actor Severity Level: Medium Spearphishing crafted with industry-specific terms derived from intelligence gathering techniques to trick a recipient into opening a file is especially difficult to identify.
+This is especially true when an adversary has knowledge of how a business works and the processes that underpin it.
+Using this knowledge, a lure can be crafted that takes advantage of these day-to-day processes – for example, settling the cost of a fuel transaction.
+FortiGuard Labs recently encountered such a scenario, where a fuel company in Kyiv, Ukraine received a spearphishing e-mail that contained an attached invoice—seemingly from another fuel provider—that was spoofed.
+The attachment is a zip file that contains the IcedID Trojan.
+IcedID has been observed as far back as 2017.
+Its primary function is to steal banking credentials and personal information.
+It is also capable of deploying additional malware from the same group or partner organizations.
+This instance also uses an interesting deployment method.
+It uses the ISO format, which is mounted automatically as a disk in Windows.
+ISO files can also be used to create bootable CD-ROMs or install an operating system or virtual machine.
+It also contains a LNK (shortcut file) used to launch a DLL (Dynamic-link Library).
+This blog details the infection process and subsequent malware deployment by the threat actors behind IcedID.
+The Phishing E-mail The e-mail originated from an IP address in Belize, at 179[.]60[.]150[.]96.
+It spoofs the originating e-mail address to appear to have been sent from another fuel provider in Ukraine.
+The e-mail contains both English and Ukrainian elements and looks realistic given the mention of extra security measures regarding the attachment.
+Attached to the e-mail is a file named “invoice_15.zip”.
+Extracting the Zip file will drop “invoice_15.iso” and begin the first phase of infection.
+ISO Windows is capable of mounting iso files as external disks.
+Doing so will present the user with a shortcut called “document.”
+In most cases, the file extension will be hidden from the user, making it appear as an actual document.
+When the full contents of the iso container are revealed, a DLL file can also be seen.
+LNK As seen in Figure 4, the shortcut file was created some time prior to the sending of the phishing e-mail.
+Additionally, the highlighted area shows what will occur should the shortcut be clicked on by a user.
+In this case, Regsvr32 is used to register “main.dll” with the Windows registry and launch the code contained within.
+This action begins the next phase of infection.
+Dropper “main.dll” acts as a dropper for IcedID.
+Static analysis of the file reveals an interesting point.
+What at appears at first glance to be an easy win for IOCs (Indicators of Compromise) because it contains a domain and IP address, turns out to be slightly more complicated.
+In comparing the area of code where the strings in Figure 5 are stored, we find that this area is not called by any functions within “main.dll”.
+To illustrate this, the right-hand side of the very first line in Figure 6 contains “Data XREF:”.
+This indicates that it is referenced elsewhere in the code.
+The strings from Figure 5, however, do not include this information, indicating they are not.
+By investigating further, the story becomes even more interesting.
+This code appears in a StackOverflow question from approximately 10 years ago concerning an issue about downloading an image over HTTP ( https://stackoverflow.com/questions/9389183/downloading-a-picture-with-http-get-only-downloads-a-small-part-of-it ).
+It should be noted that there is no malicious intent with the content of that posting.
+That it is now part of “main.dll” indicates it is a decoy for analysts in the hope the actual indicators won’t be blocked.
+As can be seen in Figure 7, once running, the malware uses several Windows command-line tools to obtain information about the local environment.
+These include capturing the local IP address (ipconfig), enumerating domain trusts (nltest), and capturing a list of domain administrators (net group), among others.
+The sample then tries to communicate outbound to a command and control (C2) server.
+There are multiple addresses the malware can connect to in the event one of the destinations becomes unavailable.
+If a connection to a C2 server has been made, the malware then moves to ensure persistence.
+It installs a copy of itself in the user’s temp directory, “%APPDATA%\\local\\temp”.
+Conclusion Threat actors that are knowledgeable of their targets are able to increase their chances of installing an implant within an organization.
+Based on our observations, the efforts used in this IcedID attack highlight the groups methodical effort, as evidenced by their research of Ukraine's retail fuel industry.
+Additionally, the use of uncommon deployment methods (zipped ISO file) to establish a foothold—and ultimately gain persistence within an organization—reveals how crafty the threat actors are able to be to obtain unauthorized access.
+Fortinet Protections
+All IcedID samples mentioned in this blog are detected by the following (AV) signatures: W32/Kryptik.
+HOTN!tr W64/Kryptik.
+CXY!tr W64/Kryptik.
+CXY!tr W64/Kryptik.
+CXY!tr LNK/IceID.AW!tr W64/Kryptik.
+CXY!tr All network based URI’s are blocked by the WebFiltering client.
+Fortinet has multiple solutions designed to help train users to understand and detect phishing threats: The FortiPhish Phishing Simulation Service uses real-world simulations to help organizations test user awareness and vigilance to phishing threats and to train and reinforce proper practices when users encounter targeted phishing attacks.
+In addition to these protections, we suggest that organizations also have their end users go through our FREE NSE training : NSE 1 – Information Security Awareness .
+It includes a module on Internet threats that is designed to help end users learn how to identify and protect themselves from various types of phishing attacks.
+IOCs Filename SHA256 invoice_15.zip 83bd20009107e1f60479016046b80d473436d3883ad6989e5d42bc08e142b5bb invoice_15.iso 3542d5179100a7644e0a747139d775dbc8d914245292209bc9038ad2413b3213 document.lnk a17e32b43f96c8db69c979865a8732f3784c7c42714197091866473bcfac8250 main.dll 698a0348c4bb8fffc806a1f915592b20193229568647807e88a39d2ab81cb4c2 Arur.exe 283d5eea1f9fc34e351deacc25006fc1997566932fae44db4597c84f1f1f3a30 Network IOCs: 160[.]153[.]32[.]99 160[.]90[.]198[.]40 yourgroceries[.]top ssddds1ssd2[.]com ip-160-153-32-99[.]ip[.]secureserver[.]net
+Learn more about Fortinet’s FortiGuard Labs threat research and intelligence organization and the FortiGuard Security Subscriptions and Services portfolio .
+
+
+Although we recently reported finding 20 apps in Google Play posing as Minecraft modpacks — the most popular with more than a million downloads — Minecraft -themed malware continues to pop up in Google Play.
+Instead of doing anything they claimed, the apps turned users’ smartphones and tablets into extremely intrusive advertising tools.
+To be clear, the apps were totally useless from a user perspective.
+Instead, after the first run they hid their icons and repeatedly opened the browser to flash ads.
+They could also play videos from YouTube, open Google Play app pages, and more.
+The version we analyzed, for example, opened the browser every two minutes, rendering the device essentially unusable.
+The thing was especially troubling, because it was extremely hard for a user to figure out what was going on, which app was responsible for the troubles and how to stop it.
+We notified Google about our find, and the malicious apps were quickly removed from the store.
+New versions of malicious apps Deletion from Google’s app store does not necessarily defeat malware; historically, its makers simply upload new, slightly modified, versions using different names and from different developer accounts.
+One example of the cycle comes from the VK Music Trojan, which stole VK user accounts and, despite being reported, dug in to Google Play for several years .
+Mindful of that, we revisited the case of the harmful Minecraft modpacks in Google Play to find out whether reporting had helped.
+To that end, we launched a search for similar apps — and found some.
+New, improved versions First, we found several apps using the abovementioned approach, but with some improvements.
+In a basic scenario the apps accept push message commands from the attackers to show full-screen ads (no user interaction required).
+The apps are designed to download an extra module as well.
+With that module downloaded, more functions become available, enabling the apps to hide their icons, run the browser, play YouTube videos, open Google Play app pages, and so forth.
+This time, the list of compromised apps included, in addition to Minecraft mods, a file recovery utility called File Recovery – Recover Deleted Files .
+Version 1.1.0, available from Google Play until February 2021 had a malicious payload.
+That version has been removed, and version 1.1.1, which is now on Google Play, is safe.
+Simplified version with paid subscription on Google Play Second, we found a couple of Minecraft modpacks with basic functionality, a configuration in which the apps occasionally show full screen ads, even with the app inactive, but are unable to hide their icons or run the browser, YouTube, or Google Play.
+For extra monetization, the in-app purchases function is used.
+One of the malicious Minecraft modpacks in Google Play
+Interestingly, one of the apps is now available from the store as a “basic” version and with in-app purchases enabled, whereas a couple of months back it relied on the extra downloadable module.
+From this we conclude that their owners are continuing to experiment with monetization options.
+Facebook-account-stealing version Third, we found several more apps were found in which the described above malicious functionality was not the core one.
+A while ago, for example, Google Play carried a fake Madgicx advertising network app and a fake TikTok ad-management app that would insistently prompt for the user’s Facebook account data and, if user provided it, would steal the account.
+Apps from alternative stores Finally, many such apps remain available from alternative stores even after Google removes them from its store.
+Which is no surprise; even Google, with vastly more resources than the average company, can’t always promptly moderate the great volume of existing apps.
+Yet we decided to mention this aspect here, as it provides clear evidence that alternative stores are unsafe to use.
+If still intending to use them for whatsoever reason, at least install a reliable mobile antivirus to protect you against dangerous apps.
+That said, as we see from this story, as well as many other episodes of malware getting into the official Google app store , even if you download your apps only from Google Play, you are still better off with an antivirus on your smartphone.
+
+
+Affected platforms: Microsoft Windows Impacted parties: 64-bit Windows Users Impact: Controls a victim’s device and collects sensitive information Severity level: Critical Fortinet’s FortiGuard Labs recently captured more than 500 Microsoft Excel files involved in a campaign to deliver a fresh Emotet Trojan onto the victim’s device.
+Emotet, known as a modular Trojan, was first discovered in the middle of 2014.
+Since then, it has become very active, continually updating itself.
+It has also been highlighted in cybersecurity news from time to time.
+Emotet uses social engineering, like email, to lure recipients into opening attached document files (including Word, Excel, PDF, etc.) or to click links within the content of the email that downloads the latest Emotet variant onto the victim’s device and then executes it.
+In Part I of this post , I explained how this variant of Emotet is spread by malicious VBA code in Excel documents, how the downloaded Emotet malware runs within a Rundll32 program, what kind of anti-analysis techniques this variant uses.
+, how it encrypts and submits its victim’s data to its C2 server.
+, what Emotet does when it receives response data from the C2 server, and what Emotet does to enable persistence on the victim’s device.
+In this post, you will learn what the data in response packets with malicious modules look like, what modules have been received from the C2 server for the current Emotet campaign, and how they are deployed in the victim’s device.
+You will also discover what sensitive data those modules steal from a victim’s device.
+When X.dll Receives a Response with a Module Once the C2 server has processed and detected the first submitted packet that includes critical data—such as the victim’s device system version, Windows architecture, etc.—it replies with malicious modules for Emotet to execute in the victim’s device.
+All the received modules are fileless.
+That is, they only exist in memory and are processed by the X.dll (the core of Emotet) running in Rundll32.exe.
+Figure 1.1 is a screenshot of X.dll’s code and memory.
+The bottom is a C2’s response packet, just decrypted in memory by calling a function of 10012371.
+Referring to Figure 5.3 in part I of this series will help you understand the structure of the packet.
+The box marked in red is the verification data (99 DE … DD A5), a signed hash of the rest data of the packet.
+The following dword, 0x00000000, marked in yellow, is a flag that tells Emotet how to run the replied module.
+0x00 tells it to execute the module in a newly-created thread.
+The binary block in blue is the module.
+It starts with the module size, 0x79400 in this example, and the rest part is the module binary data (4D 5A 90 00 …).
+Emotet has to verify the decrypted data, as shown in Figure 1.1, using the 40H verification data.
+It then deploys the received module into memory and prepares to execute it.
+It then calls its entry point in a newly created thread.
+This post will refer to this module as a “thread-module.”
+Its primary purposes are to extract and execute the final functional module that steals sensitive data from the victim’s device and to submit the stolen data to its C2 server, which will be discussed later in this analysis.
+Figure 1.2 shows where the thread function ASM code calls the entry point of the deployed thread-module.
+Thread-Module — Performs Process Hollowing The thread-module proceeds to decrypt a PE file, the final functional module, from its .text section into memory.
+To execute this module, it performs process hollowing.
+It does this by copying a Windows file, “certutil.exe”, from either “%Windir%\\SysWOW64\\certutil.exe” or “%Windir%\\system32\\certutil.exe” into the “%temp%” folder.
+It then renames it to a random file name, like “uvbubqj.exe”.
+Next, the thread-module creates a suspended process with this file.
+As you may see in the command line string in Figure 2.1, “uvbubqj.exe” is the copied “certutil.exe”, “/scomma” and the subsequent temporary file —“C:\\Users\\Bobs\\AppData\\Local\\Temp\\60B2.tmp” — are the parameters for the process.
+The temporary file name is generated by calling the API GetTempFileNameW().
+The path of the temporary file “60B2.tmp” is read by the functional module and used to save stolen information.
+The sixth argument to CreateProcessW() is 0x00000004, which is a creation flag indicating “CREATE_SUSPENDED” with which CreateProcessW() creates a process and enters suspended status.
+It then calls a group of APIs, like GetThreadContext(), VirtualAllocEx(), ReadProcessMemory(), WriteProcessMemory(), and so on, to inject the final functional module into the new process’  memory.
+The API SetThreadContext() is called later to set the new process EIP register pointing to the entry point of the functional module, which is invoked after calling the API ResumeThread().
+Afterward, the thread-module starts to monitor the temporary file in a loop until it is created with the stolen information from the victim’s device.
+Looking at the Functional Modules In the above analysis, I explained how a C2 module is loaded and executed in the victim’s device.
+The C2 server can return many modules, each going through the same process as described above.
+They will have a thread-module, run in their thread, and perform their own process hollowing.
+I received three C2 modules.
+I will elaborate on how they work on the victim’s device in the following sections.
+Module1 - Stealing Credentials from a Victim’s Browsers A Self-Extracting packer protects this module.
+It decrypts a PE file when it runs, overrides the existing code of “certutil.exe”, and then gets it executed.
+The unpacked PE file is a freeware called “WebBrowserPassView” developed by NirSoft.
+It was designed as a password recovery tool but has been abused by malicious actors to steal the victim’s credentials.
+A user interface displays the saved credentials stored within several web browsers.
+Figure 3.1 shows what this module looks like when I open it in my test environment.
+This Emotet variant uses WebBrowserPassView v2.06.
+Its thread-module passes command line parameters like “/scomma C:\\Users\\Bobs\\AppData\\Local\\Temp\\7B3C.tmp” to the process, which can switch WebBrowserPassView to a No-Window mode and save the retrieved credentials to a given temporary file.
+From its code, I learned it could collect the credentials from a variety of web browsers: Microsoft IE, Microsoft Edge, Google Chrome, Mozilla Firefox, Opera, Apple Safari, SeaMonkey, Yandex, Vivaldi, Waterfox, and all other Chromium-based browsers.
+The stolen credentials contain the following information: • URL: The URLs that credentials are saved for •
+Web Browser:
+The browser name that holds the credentials • User Name, Password: The credentials • Password Strength: Strong or weak •
+User Name Field:
+The control name type into the user name field • Password Field:
+The string entered in the password field •
+Created Time: When it was saved •
+Modified Time: Time when credentials were updated •
+Filename: What file it has stolen the credentials from All the credentials are saved in a temporary file.
+Module2 - Stealing Email Contact Information
+This module steals its victim’s email contacts from their email folders inside Microsoft Outlook by going through the victim’s emails one by one.At FireEye Mandiant , we conduct numerous red team engagements within Windows Active Directory environments.
+Consequently, we frequently encounter Linux systems integrated within Active Directory environments.
+Compromising an individual domain-joined Linux system can provide useful data on its own, but the best value is obtaining data, such as Kerberos tickets, that will facilitate lateral movement techniques.
+By passing these Kerberos Tickets from a Linux system, it is possible to move laterally from a compromised Linux system to the rest of the Active Directory domain.
+There are several ways to configure a Linux system to store Kerberos tickets.
+In this blog post, we will introduce Kerberos and cover some of the various storage solutions.
+We will also introduce a new tool that extracts Kerberos tickets from domain-joined systems that utilize the System Security Services Daemon Kerberos Cache Manager (SSSD KCM).
+What is Kerberos Kerberos is a standardized authentication protocol that was originally created by MIT in the 1980s.
+The protocol has evolved over time.
+Today, Kerberos Version 5 is implemented by numerous products, including Microsoft Active Directory.
+ Kerberos was originally designed to mutually authenticate identities over an unsecured communication line.
+The Microsoft implementation of Kerberos is used in Active Directory environments to securely authenticate users to various services, such as the domain (LDAP), database servers (MSSQL) and file shares (SMB/CIFS).
+While other authentication protocols exist within Active Directory, Kerberos is one of the most popular methods.
+Technical documentation on how Microsoft implemented Kerberos Protocol Extensions within Active Directory can be found in the MS-KILE standards published on MSDN.
+Short Example of Kerberos Authentication in Active Directory To illustrate how Kerberos works, we have selected a common scenario where a user John Smith with the account
+ACMENET.CORP\\sa_jsmith wishes to authenticate to a Windows SMB (CIFS) file share in the Acme Corporation domain, hosted on the server SQLSERVER.ACMENET.CORP.
+There are two main types of Kerberos tickets used in Active Directory: Ticket Granting Ticket (TGT) and service tickets.
+Service tickets are obtained from the Ticket Granting Service (TGS).
+The TGT is used to authenticate the identity of a particular entity in Active Directory, such as a user account.
+Service tickets are used to authenticate a user to a specific service hosted on a system.
+A valid TGT can be used to request service tickets from the Key Distribution Center (KDC).
+In Active Directory environments, the KDC is hosted on a Domain Controller.
+The diagram in Figure 1 shows the authentication flow.
+Figure 1:
+Example Kerberos authentication flow In summary:
+The user requests a Ticket Granting Ticket (TGT) from the Domain Controller.
+Once granted, the user passes the TGT back to the Domain Controller and requests a service ticket for cifs/SQLSERVER.ACMENET.CORP.
+After the Domain Controller validates the request, a service ticket is issued that will authenticate the user to the CIFS (SMB) service on SQLSERVER.ACMENET.CORP.
+The user receives the service ticket from the Domain Controller and initiates an SMB negotiation with SQLSERVER.ACMENET.CORP.
+During the authentication process, the user provides a Kerberos blob inside an “AP-REQ” structure that includes the service ticket previously obtained.
+The server validates the service ticket and authenticates the user.
+If the server determines that the user has permissions to access the share, the user can begin making SMB queries.
+For an in-depth example of how Kerberos authentication works, scroll down to view the appendix at the bottom of this article.
+Kerberos On Linux Domain-Joined Systems When a Linux system is joined to an Active Directory domain, it also needs to use Kerberos tickets to access services on the Windows Active Directory domain.
+Linux uses a different Kerberos implementation.
+Instead of Windows formatted tickets (commonly referred to as the KIRBI format), Linux uses MIT format Kerberos Credential Caches (CCACHE files).
+When a user on a Linux system wants to access a remote service with Kerberos, such as a file share, the same procedure is used to request the TGT and corresponding service ticket.
+In older, more traditional implementations, Linux systems often stored credential cache files in the /tmp directory.
+Although the files are locked down and not world-readable, a malicious user with root access to the Linux system could trivially obtain a copy of the Kerberos tickets and reuse them.
+On modern versions of Red Hat Enterprise Linux and derivative distributions, the System Security Services Daemon (SSSD) is used to manage Kerberos tickets on domain-joined systems.
+SSSD implements its own form of Kerberos Cache Manager (KCM) and encrypts tickets within a database on the system.
+When a user needs access to a TGT or service ticket, the ticket is retrieved from the database, decrypted, and then passed to the remote service (for more on SSSD, check out this great research from Portcullis Labs ).
+By default, SSSD maintains a copy of the database at the path /var/lib/sss/secrets/secrets.ldb.
+The corresponding key is stored as a hidden file at the path /var/lib/sss/secrets/.secrets.mkey.
+By default, the key is only readable if you have root permissions.
+If a user is able to extract both of these files, it is possible to decrypt the files offline and obtain valid Kerberos tickets.
+We have published a new tool called SSSDKCMExtractor that will decrypt relevant secrets in the SSSD database and pull out  the credential cache Kerberos blob.
+This blob can be converted into a usable Kerberos CCache file that can be passed to other tools, such as Mimikatz , Impacket , and smbclient .
+CCache files can be converted into Windows format using tools such as Kekeo .
+We leave it as an exercise to the reader to convert the decrypted Kerberos blob into a usable credential cache file for pass-the-cache and pass-the-ticket operations.
+Using SSSDKCMExtractor is simple.
+An example SSSD KCM database and key are shown in Figure 2.
+Figure 2: SSSD KCM files Invoking SSSDKCMExtractor with the --database and --key parameters will parse the database and decrypt the secrets as shown in Figure 3.
+Figure 3: Extracting Kerberos data After manipulating the data retrieved, it is possible to use the CCACHE in smbclient as shown in Figure 4.
+In this example, a domain administrator ticket was obtained and used to access the domain controller’s C$ share.
+Figure 4:
+Compromising domain controller with extracted tickets The Python script and instructions can be found on the FireEye Github.
+Conclusion By obtaining privileged access to a domain-joined Linux system, it is often possible to scrape Kerberos tickets useful for lateral movement.
+Although it is still common to find these tickets in the /tmp directory, it is now possible to also scrape these tickets from modern Linux systems that utilize the SSSD KCM.
+With the right Kerberos tickets, it is possible to move laterally to the rest of the Active Directory domain.
+If a privileged user authenticates to a compromised Linux system (such as a Domain Admin) and leaves a ticket behind, it would be possible to steal that user's ticket and obtain privileged rights in the Active Directory domain.O n February 1 st , Juniper Threat Labs observed an attack that attempt ed to i nject malicious code in to Secure Shell (SSH) servers on Linux.
+The attack begins with an exploit against the C ontrol Web Panel (CWP, formerly known as Centos Web Panel) server administration web application, injects code via LD_PRELOAD , and uses a custom, encrypted binary command-and-co ntrol protocol to exfiltrate credentials and machine capabilities.
+As of this writing, the malware command-and-control server is still active.
+Figure 1.
+Attack chain Exploit Th e attack starts with a command injection against Control Web Panel: Figure 2.
+HTTP request from initial attack CWP has been plagued by security issues, including 37 0-day vulnerabilities disclosed by the Zero Day Initiative in 2020 .
+Among these is a failure to sanitize the service_restart paramet er , which follows a similar set of vulnerabilities in 2018 .
+Because of the number of vulnerabilities in CWP, the intentional encryption and obfuscation of the ir source code ostensibly f or security reasons , and CWP ’s failure to respond to ZDI’s recent disclosures, it is difficult to ascertain which versions of CWP are or remain vulnerable to this attack.
+In 2020, there were over 215k CWP installations accessible from the open internet, so the number of computers compromised in this campaign may be substantial.
+Installation On successful exploitation of the web panel, the following commands are executed.
+Figure 3.
+Commands executed via CWP exploit First, the “sshins” installer binary is retrieved, executed, and deleted .
+Then the CWP logs are wiped of any mention of sshins and the shell history is cleared.
+The sshins binary is a 64-bit Linux ELF executable.
+It is packed with UPX and t he packed file has garbage bytes appended to it in an attempt to hinder automated unpacking.
+It does 3 things: Drops a Linux shared library to an architecture-specific location (in this case, /lib64/libs.so).
+Writes the name of the dropped file to a text file at /etc/ld.so.preload Restarts the OpenSSH service.
+Figure 4.
+Console output from the installer Hijacking the OpenSSH server process Injecting the malicious code The file /etc/ld.so.preload contains a directive to the dynamic linker telling it to load the specified shared library first , and to give precedence to the exported functions from the ld-preloaded library .
+Because the malicious libs.so library exports its own version of the bind () function, applications will use the backdoored version of this function instead of the standard implementation from Linux system libraries .
+When the Open-SSH server daemon ( sshd ) restarts, libs.so will first execute an initialization function as the library is loaded, and then has the ability to inject its own code whenever sshd calls bind().
+The sshd server processes use this hook in order to periodically beacon to the command-and-control (C2) server and to exfiltrate data , including a listing of system information such as CPU and OS details , amount of RAM, available disk space , and OpenSSH configuration :
+Figure 5.
+Strings from the disassembled library indicating data to be exfiltrated.
+In addition to the continuously-ru nning server processes , sshd forks() a pair of new process es to handle each login connection .
+From these session-specific processes, th e malicious bind() function launches an additional temporary sshd process that exfiltrates the incoming user’s login credentials .
+Figure 6.
+User credentials and computer identifier exfiltrated by the malware.
+C2 communication
+The C2 communication involves the server 176[.]111.174.26 on port 443.
+Port 443 is typically used for HTTPS but here the traffic is raw TCP , hiding in plain sight on a common port.
+The server has a Russian IP address that is associated with a Bulgarian webhosting provider.
+The client initiates communication with a simple directive , padded out to 8 bytes.
+(As we’ll discuss below, the malware uses an encryption algorithm with an 8-byte block size, but even unencrypted messages are always a multiple of 8 in length .)
+Following is the first packet sent to the server after the TCP handshake, with the 8-byte message highlighted.
+Figure 7.
+Initial TCP packet to C2 server, with payload highlighted.
+The C2 server replies with the following message (TCP packet omitted for clarity) : Figure 8.
+Server response.
+The response consists of a header with the payload length (24 bytes), a command (0x0201), and the CRC32 checksum of the payload.
+The 24-byte payload is used to encrypt the exfiltrated data that i s then sent back to the C2 server , as we’ll see in the next section.
+Cryptography Data sent back to the C2 server is encrypted using a variant of the Blowfish encryption algorithm that was used to secure game assets on the Nin tendo and , more recently, incorp o rated into a reverse-engineering challenge from Kaspersky Lab .
+Below is publicly available encryption code that was reverse-engineered from the DS : Figure 9.
+Reverse-engineered Nintendo DS encryption routine, from https://github.com/RocketRobz/NTR_Launcher_3D/blob/master/twlnand-side/BootLoader/source/encryption.c.
+Then we have the decompiled encryption routine from the preloaded library: Figure 10.
+Corresponding encryption routine from the malware.
+Note, in particular, the use of the constants 0x12, 0x112, 0x212, and 0x312 , which differs from the standard Blowfish implementation.
+( The decom piled code is functionally identical to the Gameboy routine, differing only due to loop-unrolling and other compiler optimizations . )
+While the underlying encryption routine is taken directly from publicly available code , the malware authors incorporate some additional tricks to thwart analysis and decryption.
+Both Blowfish and the Nintendo variant require a n S-box lookup table that remains constant throughout the encryption and decryption processes.
+But u nlike the Nintendo implementation , the malware mutate s its S-box prior to use.
+First, as the table is loaded from program memory, it is subject to several static transformations that make it harder to correlate the stored table with the one used for encryption.Windows Management Instrumentation (WMI) is a remote management framework that enables the collection of host information, execution of code, and provides an eventing system that can respond to operating system events in real time.
+FireEye has recently seen a surge in attacker use of WMI to carry out objectives such as system reconnaissance, remote code execution, persistence, lateral movement, covert data storage, and VM detection.
+Defenders and forensic analysts have largely remained unaware of the value of WMI due to its relative obscurity and completely undocumented file format.
+After extensive reverse engineering, the FireEye FLARE team has documented the WMI repository file format in detail, developed libraries to parse it, and formed a methodology for finding evil in the repository.
+The FLARE team is now publishing a whitepaper that takes a deep dive into the architecture of WMI, reveals case studies in attacker use of WMI in the wild, describes WMI attack mitigation strategies, and shows how to mine its repository for forensic artifacts.
+The document also demonstrates how to detect attacker activity in real-time by tapping into the WMI eventing system.
+WMI is a valuable asset not just for system administrators and attackers, but equally so for defenders and forensic analysts.
+Download a copy of the whitepaper today!
+Subscribe to Blogs Get email updates as new blog posts are added.
+
+
+If you run a popular blog and promote your business through Instagram, an account ban simply isn’t in the plan.
+For responsible users, the idea of being banned for, say, displaying suicidal content or trying to impersonate someone else might seem like a bad dream or a cruel joke, but it’s quite real for victims of the new wave of so-called ban attacks.
+Here’s how these attacks work, how to defend against them, and what to do if your account has been hit.
+How cybercriminals block Instagram profiles It’s all quite simple: Detractors or competitors can pay a fee (the amount depends on the seller or even the number of followers) to have your profile blocked.
+Such attacks began last fall , but of late they’ve become particularly high-profile.
+Recently, online magazine Motherboard connected with a cybercriminal group and learned how they exploit Instagram’s policy to make money through ban-as-a-service offerings .
+The group’s favored tactic is the fake impersonation complaint, which involves verified accounts, identifiable by the blue check next to the username.
+The attackers use verified accounts to create a full copy of the victim’s profile, right down to the avatar and description.
+Then they file a complaint against the original, accusing the owner of impersonation.
+If the victim’s account is not verified, the support service bans the victim.
+The second blocking method is to inundate tech support with messages alleging that the victim’s profile contains images of suicide or self-mutilation.
+In many cases, Instagram takes the easier path, blocking accounts on the basis of such complaints without first checking their actual content.
+Unlike phishing and other similar schemes that still require action from the victim — clicking a dangerous link, for example — a ban attack works with no victim participation whatsoever.
+The target, who might never even dream of violating the terms of use, simply finds their account blocked.
+According to the Motherboard reporters, the service is inexpensive, running about $5 to $60, so the cybercriminals have no shortage of customers.
+However, not all users who abuse Instagram’s moderation practices are in it to make money.
+Malicious scripts are freely available, and any online hooligan can use them to settle a personal score or silence a disagreeable blogger.
+Instagram unblocking for a fee In fact, blocking Instagram accounts opens up another money-generating avenue: restoring them.
+Unblocking carries a far higher fee than blocking — reportedly up to $3,500–$4,000.
+Whether the same people are behind the banning and the unblocking services, or whether it’s an accidental symbiosis, remains unclear for now.
+Some users do receive an offer to reinstate their account just a few minutes after the blocking, however, and those offers often come from followers of the accounts from which the original complaints came.
+What to do if your Instagram profile gets blocked If you’re already the victim of a ban attack, contact Instagram support immediately with an explanation of what happened.
+Bans are appealable only through the app .
+To do so, you will need to enter your username and password, then follow the instructions.
+If anyone comes knocking with an offer to restore your account for money, don’t pay!
+First, you have no guarantee that anything will come of it.
+Second, doing so supports confirmed miscreants — perhaps even the ones who got your account banned in the first place.
+Third, the official recovery procedure through Instagram support is free.
+How to protect your Instagram profile Unfortunately, users tend to learn about a ban attack only after the fact.
+Instagram told Motherboard that it plans to sniff out cybercriminal accounts on the platform, and asks users to report any suspicious activity, but that approach is time-consuming.
+In the meantime, we suggest you take some measures to protect yourself.
+Verify your account
+The ban-attack business centers on accusations of impersonation, so the best way to protect yourself is to convince Instagram that you are you before anything happens.
+In other words, you should verify your account now.
+The social network won’t check every user, but you may have some points in your favor.
+For example, if you or your business has been mentioned in multiple news sources , that helps.
+To get the coveted blue check mark, you’ll want to complete your profile and delete any old accounts to avoid arousing suspicion.
+Naturally, the account must also be public and not violate Instagram’s terms of use.
+Once you’ve ensured your account is ready, send a verification request .
+You can do it directly through the app:
+Go to your profile settings; Select Account ; Select Request Verification ; Enter your full name and attach required documentation; Follow the subsequent instructions.
+Make your account private
+What if you’re not famous enough to pass blue-check verification?
+You can take the radical step of closing your account to the public.
+If you make your account private, then your posts, photos, and videos will be available only to subscribers, which means that an attacker won’t be able to copy them and accuse you of impersonation.
+Whether in the app or a browser, it is not difficult to make your account private.
+See our post on setting up Instagram security and privacy for detailed instructions.
+Be sure to take the trouble to clean up your list of followers as well, and check future follower requests before accepting them.
+Bots and other barely there accounts can hide attackers, and you’re under no obligation to let them in.
+Change your profile pic For business profiles that you cannot close but that aren’t well-known enough for verification — or that you feel you must keep open for any other reason — there’s another way to reduce the risk of ban attacks: Change your avatar.
+Fake impersonation complaints work best on profiles with a real photo of the owner.
+Some underground ban-attack services even refuse to target accounts with other avatars.
+That means putting up something that isn’t your portrait complicates attempts to do harm; every bit helps.
+Maintain a backup and update contact information Instagram admins do what they can to combat wrongful complaints, but they’re working against cybercriminals who continually improve their money-making schemes.
+In a perfect world you wouldn’t have to, but here and now, you should prepare an escape route.
+First, make sure you have access to the e-mail address and phone number linked to your profile.
+If your account is wrongfully blocked, you can use them for recovery.
+Second, save your content regularly.
+That way, if worse comes to worst, you can use it to migrate to a new account.
+
+
+Introduction In December 2017, FireEye's Mandiant discussed an incident response involving the TRITON framework .
+The TRITON attack and many of the publicly discussed ICS intrusions involved routine techniques where the threat actors used only what is necessary to succeed in their mission.
+For both INDUSTROYER and TRITON, the attackers moved from the IT network to the OT (operational technology) network through systems that were accessible to both environments.
+Traditional malware backdoors, Mimikatz distillates, remote desktop sessions, and other well-documented, easily-detected attack methods were used throughout these intrusions.
+Despite the routine techniques employed to gain access to an OT environment, the threat actors behind the TRITON malware framework invested significant time learning about the Triconex Safety Instrumented System (SIS) controllers and TriStation, a proprietary network communications protocol.
+The investment and purpose of the Triconex SIS controllers leads Mandiant to assess the attacker's objective was likely to build the capability to cause physical consequences.
+TriStation remains closed source
+and there is no official public information detailing the structure of the protocol, raising several questions about how the TRITON framework was developed.
+Did the actor have access to a Triconex controller and TriStation 1131 software suite?
+When did development first start?
+How did the threat actor reverse engineer the protocol, and to what extent?
+What is the protocol structure?
+FireEye’s Advanced Practices Team was born to investigate adversary methodologies, and to answer these types of questions, so we started with a deeper look at the TRITON’s own Python scripts.
+Glossary: TRITON – Malware framework designed to operate Triconex SIS controllers via the TriStation protocol.
+TriStation – UDP network protocol specific to Triconex controllers.
+TRITON threat actor – The human beings who developed, deployed and/or operated TRITON.
+Diving into TRITON's Implementation of TriStation TriStation is a proprietary network protocol and there is no public documentation detailing its structure or how to create software applications that use TriStation.
+The current TriStation UDP/IP protocol is little understood, but natively implemented through the TriStation 1131 software suite.
+TriStation operates by UDP over port 1502 and allows for communications between designated masters (PCs with the software that are “engineering workstations”) and clients (Triconex controllers with special communications modules) over a network.
+To us, the Triconex systems, software and associated terminology sound foreign and complicated, and the TriStation protocol is no different.
+Attempting to understand the protocol from ground zero would take a considerable amount of time and reverse engineering effort – so why not learn from TRITON itself?
+With the TRITON framework containing TriStation communication functionality, we pursued studying the framework to better understand this mysterious protocol.
+Work smarter, not harder, amirite?
+The TRITON framework has a multitude of functionalities, but we started with the basic components: TS_cnames.pyc
+# Compiled at: 2017-08-03 10:52:33 TsBase.pyc # Compiled at: 2017-08-03 10:52:33 TsHi.pyc # Compiled at: 2017-08-04 02:04:01 TsLow.pyc
+# Compiled at: 2017-08-03 10:46:51 TsLow.pyc (Figure 1) contains several pieces of code for error handling, but these also present some cues to the protocol structure.
+Figure 1: TsLow.pyc function print_last_error()
+In the TsLow.pyc’s function for print_last_error we see error handling for “TCM Error”.
+This compares the TriStation packet value at offset 0 with a value in a corresponding array from TS_cnames.pyc (Figure 2), which is largely used as a “dictionary” for the protocol.
+Figure 2:
+TS_cnames.pyc TS_cst array From this we can infer that offset 0 of the TriStation protocol contains message types.
+This is supported by an additional function, tcm_result, which declares type, size = struct.unpack('<HH', data_received[0:4]), stating that the first two bytes should be handled as integer type and the second two bytes are integer size of the TriStation message.
+This is our first glimpse into what the threat actor(s) understood about the TriStation protocol.
+Since there are only 11 defined message types, it really doesn't matter much if the type is one byte or two because the second byte will always be 0x00.
+We also have indications that message type 5 is for all Execution Command Requests and Responses, so it is curious to observe that the TRITON developers called this “Command Reply.”
+(We won’t understand this naming convention until later.)
+Next we examine TsLow.pyc’s print_last_error function (Figure 3) to look at “TS Error” and “TS_names.”
+We begin by looking at the ts_err variable and see that it references ts_result.
+Figure 3: TsLow.pyc function print_last_error() with ts_err highlighted
+We follow that thread to ts_result, which defines a few variables in the next 10 bytes (Figure 4): dir, cid, cmd, cnt, unk, cks, siz = struct.unpack('<, ts_packet[0:10]).
+Now things are heating up.
+What fun.
+There’s a lot to unpack here, but the most interesting thing is how this piece script breaks down 10 bytes from ts_packet into different variables.
+Figure 4: ts_result with ts_packet header variables highlighted Figure 5: tcm_result Referencing tcm_result (Figure 5) we see that it defines type and size as the first four bytes (offset 0 – 3) and tcm_result returns the packet bytes 4:-2 (offset 4 to the end minus 2, because the last two bytes are the CRC-16 checksum).
+Now that we know where tcm_result leaves off, we know that the ts_reply “cmd” is a single byte at offset 6, and corresponds to the values in the TS_cnames.pyc array and TS_names (Figure 6).
+The TRITON script also tells us that any integer value over 100 is a likely “command reply.”
+Sweet.
+When looking back at the ts_result packet header definitions, we begin to see some gaps in the TRITON developer's knowledge: dir, cid, cmd, cnt, unk, cks, siz = struct.unpack('<, ts_packet[0:10]).
+We're clearly speculating based on naming conventions, but we get an impression that offsets 4, 5 and 6 could be \"direction\", \"controller ID\" and \"command\", respectively.
+Values such as \"unk\" show that the developer either did not know or did not care to identify this value.
+We suspect it is a constant, but this value is still unknown to us.
+Figure 6: Excerpt TS_cnames.pyc TS_names array, which contain TRITON actor’s notes for execution command function codes TriStation Protocol Packet Structure The TRITON threat actor’s knowledge and reverse engineering effort provides us a better understanding of the protocol.
+From here we can start to form a more complete picture and document the basic functionality of TriStation.
+We are primarily interested in message type 5, Execution Command, which best illustrates the overall structure of the protocol.
+Other, smaller message types will have varying structure.
+Figure 7: Sample TriStation \"Allocate Program\" Execution Command, with color annotation and protocol legend Corroborating the TriStation Analysis Minute discrepancies aside, the TriStation structure detailed in Figure 7 is supported by other public analyses.
+Foremost, researchers from the Coordinated Science Laboratory (CSL) at University of Illinois at Urbana-Champaign published a 2017 paper titled \" Attack Induced Common-Mode Failures on PLC-based Safety System in a Nuclear Power Plant\".
+The CSL team mentions that they used the Triconex System Access Application (TSAA) protocol to reverse engineer elements of the TriStation protocol.Continuing our discussion of image parsing vulnerabilities in Windows , we take a look at a comparatively less popular vulnerability class: uninitialized memory.
+In this post, we will look at Windows’ inbuilt image parsers—specifically for vulnerabilities involving the use of uninitialized memory.
+The Vulnerability: Uninitialized Memory In unmanaged languages, such as C or C++, variables are not initialized by default.
+Using uninitialized variables causes undefined behavior and may cause a crash.
+There are roughly two variants of uninitialized memory: Direct uninitialized memory usage: An uninitialized pointer or an index is used in read or write.
+This may cause a crash.
+Information leakage (info leak) through usage of uninitialized memory: Uninitialized memory content is accessible across a security boundary.
+An example: an uninitialized kernel buffer accessible from user mode, leading to information disclosure.
+In this post we will be looking closely at the second variant in Windows image parsers, which will lead to information disclosure in situations such as web browsers where an attacker can read the decoded image back using JavaScript.
+Detecting Uninitialized Memory Vulnerabilities Compared to memory corruption vulnerabilities such as heap overflow and use-after-free, uninitialized memory vulnerabilities on their own do not access memory out of bound or out of scope.
+This makes detection of these vulnerabilities slightly more complicated than memory corruption vulnerabilities.
+While direct uninitialized memory usage can cause a crash and can be detected, information leakage doesn’t usually cause any crashes.
+Detecting it requires compiler instrumentations such as MemorySanitizer or binary instrumentation/recompilation tools such as Valgrind.
+Detour: Detecting Uninitialized Memory in Linux Let's take a little detour and look at detecting uninitialized memory in Linux and compare with Windows’ built-in capabilities.
+Even though compilers warn about some uninitialized variables, most of the complicated cases of uninitialized memory usage are not detected at compile time.
+For this, we can use a run-time detection mechanism.
+MemorySanitizer is a compiler instrumentation for both GCC and Clang, which detects uninitialized memory reads.
+A sample of how it works is given in Figure 1.
+$ cat sample.cc #include <stdio.h> int main() { int *arr = new int[10]; if(arr[3] == 0) { printf(\"Yay!\\n\"); } printf(\"%08x\\n\", arr[3]); return 0; } $ clang++ -fsanitize=memory -fno-omit-frame-pointer -g sample.cc $ ./a.out ==
+29745==WARNING: MemorySanitizer: use-of-uninitialized-value #0 0x496db8  (/home/dan/uni/a.out+0x496db8)
+#1 0x7f463c5f1bf6  (/lib/
+x86_64-linux-gnu/libc.so.6+0x21bf6) #2 0x41ad69  (/home/dan/uni/a.out+0x41ad69)
+SUMMARY:
+MemorySanitizer: use-of-uninitialized-value (/home/dan/uni/a.out+0x496db8)
+Exiting Figure 1: MemorySanitizer detection of uninitialized memory Similarly, Valgrind can also be used to detect uninitialized memory during run-time.
+Detecting Uninitialized Memory in Windows Compared to Linux, Windows lacks any built-in mechanism for detecting uninitialized memory usage.
+While Visual Studio and Clang-cl recently introduced AddressSanitizer support , MemorySanitizer and other sanitizers are not implemented as of this writing.
+Some of the useful tools in Windows to detect memory corruption vulnerabilities such as PageHeap do not help in detecting uninitialized memory.
+On the contrary, PageHeap fills the memory allocations with patterns, which essentially makes them initialized.
+There are few third-party tools, including Dr.Memory, that use binary instrumentation to detect memory safety issues such as heap overflows, uninitialized memory usages, use-after-frees, and others.
+Detecting Uninitialized Memory in Image Decoding Detecting uninitialized memory in Windows usually requires binary instrumentation, especially when we do not have access to source code.
+One of the indicators we can use to detect uninitialized memory usage, specifically in the case of image decoding, is the resulting pixels after the image is decoded.
+When an image is decoded, it results in a set of raw pixels.
+If image decoding uses any uninitialized memory, some or all of the pixels may end up as random.
+In simpler words, decoding an image multiple times may result in different output each time if uninitialized memory is used.
+This difference of output can be used to detect uninitialized memory and aid writing a fuzzing harness targeting Windows image decoders.
+An example fuzzing harness is presented in Figure 2.
+#define ROUNDS 20 unsigned char* DecodeImage(char *imagePath) { unsigned char *pixels = NULL; // use GDI or WIC to decode image and get the resulting pixels ... ... return pixels; } void Fuzz(char *imagePath) { unsigned char *refPixels = DecodeImage(imagePath); if(refPixels !
+= NULL) { for(int i = 0; i < ROUNDS; i++) { unsigned char *currPixels = DecodeImage(imagePath); if(!ComparePixels(refPixels, currPixels))
+{ // the reference pixels and current pixels don't match // crash now to let the fuzzer know of this file CrashProgram(); } free(currPixels); } free(refPixels); } } Figure 2:
+Diff harness The idea behind this fuzzing harness is not entirely new; previously, lcamtuf used a similar idea to detect uninitialized memory in open-source image parsers and used a web page to display the pixel differences.
+Fuzzing With the diffing harness ready, one can proceed to look for the supported image formats and gather corpuses.
+Gathering image files for corpus is considerably easy given the near unlimited availability on the internet, but at the same time it is harder to find good corpuses among millions of files with unique code coverage.
+Code coverage information for Windows image parsing is tracked from WindowsCodecs.dll.
+Note that unlike regular Windows fuzzing, we will not be enabling PageHeap this time as PageHeap “initializes” the heap allocations with patterns.
+Results
+During my research, I found three cases of uninitialized memory usage while fuzzing Windows built-in image parsers.
+Two of them are explained in detail in the next sections.
+Root cause analysis of uninitialized memory usage is non-trivial.
+We don’t have a crash location to back trace, and have to use the resulting pixel buffer to back trace to find the root cause—or use clever tricks to find the deviation.
+CVE-2020-0853 Let’s look at the rendering of the proof of concept (PoC) file before going into the root cause of this vulnerability.
+For this we will use lcamtuf’s HTML, which loads the PoC image multiple times and compares the pixels with reference pixels.
+Figure 3: CVE-2020-0853 As we can see from the resulting images (Figure 3), the output varies drastically in each decoding and we can assume this PoC leaks a lot of uninitialized memory.
+To identify the root cause of these vulnerabilities, I used Time Travel Debugging (TTD) extensively.
+Tracing back the execution and keeping track of the memory address is a tedious task, but TTD makes it only slightly less painful by keeping the addresses and values constant and providing unlimited forward and backward executions.A “computer virus” is one of the few transcendent technical terms everyone understands, including children.
+Regardless of socioeconomic background or age, everyone has an immediate negative connotation to that term.
+It is usually associated with something destructive to the technology we all rely on, whether it’s a laptop, smartphone, application, or gaming system, demonstrating how ubiquitous computers and technology have become in our daily lives.
+Part of the reason is that we have all been exposed to the impact of viruses, such as the flu or the common cold.
+And like its biological counterparts, a computer virus also replicates and can be transmitted from one host to another, creating problems ranging from annoying to downright destructive.
+So, in recognition of over 50 years since the first computer virus was discovered, we have decided to provide a brief historical insight into the history of computer malware from the pre-internet era to the current world of botnets, ransomware, viruses, worms, and more.
+To start, here is some basic terminology: A virus cannot replicate without human interaction, whether clicking a link, opening an attachment, launching an application, or downloading a file.
+A worm does not require human interaction and can replicate on its own, tunnel deep into systems, and move between devices.
+Malware is a generic term that encapsulates all threats—viruses, worms, botnets, ransomware , etc.—anything malicious that is software-related.
+It would be impossible to cover all malware and events over the past 50 years in such a short blog post.
+Instead, we’ve highlighted many of the most notable examples and memorable events of the past 50 years.
+The early years 1971:
+The first Proof of Concept Before the internet existed, at least in the form we know today, there was the Advanced Research Projects Agency Network, or ARPANET, for short.
+ARPANET began in 1967 to try and connect remote computers.
+The first computers were connected in 1969, and one year later, the Network Control Program (NCP) was developed (the predecessor to the modern TCP/IP stack).
+NCP was the first network transport layer to enable data to flow from computer to computer.
+In 1971, the first microprocessor was developed, the Intel 4004.
+It was the first commercially produced general-purpose CPU.
+Its size (two inches rather than 12), price ($60), and performance (comparable to much larger and more expensive processors) ushered in a new era in computing Ironically, 1971 also saw the premier of the world’s first virus Proof of Concept, dubbed “The Creeper.”
+Although credited and referenced by various entities as the world’s first computer virus, the Creeper actually exhibited the behavior of a worm.
+Based on a concept first articulated by German mathematician John von Neumann in the 1940s, it was built at BBN (an American research and development company later acquired by Raytheon) by engineer Bob Thomas.
+It spread through ARPANET computers and posted the following message: \"I'm the creeper, catch me if you can!\" Like its modern worm successors, it spread via a network protocol.
+The intent was not for malicious or devious reasons, but to see if the “I’m the creeper, catch me if you can” message could propagate to other computers via ARPANET.
+It did. 1982
+:
+The first Mac virus
+Contrary to what every non-technical person says, “Macs are not susceptible to viruses,” the first computer virus found in the wild, dubbed “Elk Cloner,” was designed to target Apple II computers.
+It was written by a then-15-year-old, who wrote such programs to play pranks on his friends.
+This boot sector virus propagated whenever an infected disk was run.
+The virus would reside in memory and look for a clean floppy disk to infect.
+It displayed the following message: On the fiftieth boot, Elk Cloner would display a poem to the user: Elk Cloner: The program with a personality It will get on all your disks It will infiltrate your chips
+Yes, it’s Cloner!
+It will stick to you like glue It will modify RAM too Send in the Cloner! 1986:
+The first PC virus In 1986, computing was still rudimentary (slow and not internet connected).
+The very first iterations of the internet were relegated to governments and universities.
+It would be at least three years before Internet Service Providers (ISPs) started providing public access to the internet, in 1989.
+Sure, Bulletin Board Systems (BBS) existed, but they required making a phone call to a direct point of presence (POP) hosted by the BBS operator.
+Connections to the BBS were usually limited to the local audience of the BBS because phone calls to the BBS from outside the area code were billed by the minute, making them quite expensive.
+However, 1986 also saw the launch of the first PC virus, dubbed “Brain.”
+It changed the information security world as we know it today.
+It originated in Pakistan but quickly spread worldwide to Europe and North America.
+Ironically, the virus had replicated from machine to machine because of an anti-piracy countermeasure.
+The Brain virus was developed by Amjad Farooq Alvi and Basit Farooq Alvi, two brothers from Pakistan who created a boot sector virus that loaded a warning to individuals using a pirated copy of their medical software.
+Of course, because there wasn’t any internet, it spread through human interaction via the copying of floppy disks.
+Unbeknownst to the user, the master boot record (MBR) of the victim’s machine was infected while making an illegal copy of the software and spread when the disk was inserted into the next machine.
+Because there was no way to know that an infected MBR virus was coming along for the ride, it spread until it became a global phenomenon.
+Luckily for many, it wasn’t a destructive virus.
+It hid a particular sector so the machine wouldn’t boot and displayed a notification that included contact information of the Farooq Alvi brothers for remediation.
+They claim that they wanted affected individuals to call them to discuss how to obtain their software legally.
+Within the notification, it stated: Welcome to the Dungeon (c) 1986
+Amjads (pvt) Ltd VIRUS_SHOE RECORD V9.0 Dedicated to the dynamic memories of millions of viruses who are no longer with us
+today - Thanks GOODNESS!!!
+BEWARE OF THE er..VIRUS : this program is catching program follows after these messages....$#@%$@ !!
+Welcome to the Dungeon
+© 1986 Basit & Amjads (pvt).
+BRAIN COMPUTER SERVICES 730
+NIZAM LBOCK
+ALLAMA
+IQBAL TOWN LAHORE-PAKISTAN PHONE: 430791,443248,280530.
+Beware of this VIRUS....
+Contact us for vaccination...
+Their ingenious plan proved to be so successful that the brothers were swamped with phone calls from all over the world.
+1988:
+The Morris worm The difference between a virus and a worm is that a worm doesn’t need human interaction to propagate.
+Over 30 years ago, the world’s first worm was born.
+It was called the Morris worm, after its author, Robert Morris.
+This worm was not malicious.
+It was created as a Proof of Concept to see if hands-off replication was possible.
+The worm contained several firsts.
+It exploited vulnerabilities in various programs and services and checked to see if an existing infection was present, all behaviors of modern malware.
+And because Morris was worried that system administrators would quarantine the worm and ignore the infection, he programmed it for persistence.
+However, there was no way to stop the self-replication process, so it caused high loads on devices, rendering them inoperable, and caused a denial-of-service (DoS) in networks as it spread from machine to machine.
+Mr. Morris was the first convicted under the Computer Fraud and Abuse Act.
+However, he later became a successful entrepreneur and was awarded tenure at the Massachusetts Institute of Technology (MIT).
+1989:
+World’s first ransomware In 1989, the AIDS Trojan debuted, making it the worlds’ first observed ransomware .Ransomware is a common method of cyber extortion for financial gain that typically involves users being unable to interact with their files, applications or systems until a ransom is paid.
+Accessibility of cryptocurrency such as Bitcoin has directly contributed to this ransomware model.
+Based on data from FireEye Dynamic Threat Intelligence (DTI), ransomware activities have been rising fairly steadily since mid-2015.
+On June 10, 2016, FireEye’s HX detected a Cerber ransomware campaign involving the distribution of emails with a malicious Microsoft Word document attached.
+If a recipient were to open the document a malicious macro would contact an attacker-controlled website to download and install the Cerber family of ransomware.
+Exploit Guard, a major new feature of FireEye Endpoint Security (HX) , detected the threat and alerted HX customers on infections in the field so that organizations could inhibit the deployment of Cerber ransomware.
+After investigating further, the FireEye research team worked with security agency CERT-Netherlands, as well as web hosting providers who unknowingly hosted the Cerber installer, and were able to shut down that instance of the Cerber command and control (C2) within hours of detecting the activity.
+With the attacker-controlled servers offline, macros and other malicious payloads configured to download are incapable of infecting users with ransomware.
+FireEye hasn’t seen any additional infections from this attacker since shutting down the C2 server, although the attacker could configure one or more additional C2 servers and resume the campaign at any time.
+This particular campaign was observed on six unique endpoints from three different FireEye endpoint security customers.
+HX has proven effective at detecting and inhibiting the success of Cerber malware.
+Attack Process
+The Cerber ransomware attack cycle we observed can be broadly broken down into eight steps: Target receives and opens a Word document.
+Macro in document is invoked to run PowerShell in hidden mode.
+Control is passed to PowerShell, which connects to a malicious site to download the ransomware.
+On successful connection, the ransomware is written to the disk of the victim.
+PowerShell executes the ransomware.
+The malware configures multiple concurrent persistence mechanisms by creating command processor, screensaver, startup.run and runonce registry entries.
+The executable uses native Windows utilities such as WMIC and/or VSSAdmin to delete backups and shadow copies.
+Files are encrypted and messages are presented to the user requesting payment.
+Rather than waiting for the payload to be downloaded or started around stage four or five of the aforementioned attack cycle, Exploit Guard provides coverage for most steps of the attack cycle – beginning in this case at the second step.
+The most common way to deliver ransomware is via Word documents with embedded macros or a Microsoft Office exploit.
+FireEye Exploit Guard detects both of these attacks at the initial stage of the attack cycle.
+PowerShell Abuse When the victim opens the attached Word document, the malicious macro writes a small piece of VBScript into memory and executes it.
+This VBScript executes PowerShell to connect to an attacker-controlled server and download the ransomware (profilest.exe), as seen in Figure 1.
+Figure 1.
+Launch sequence of Cerber – the macro is responsible for invoking PowerShell and PowerShell downloads and runs the malware
+It has been increasingly common for threat actors to use malicious macros to infect users because the majority of organizations permit macros to run from Internet-sourced office documents.
+In this case we observed the macrocode calling PowerShell to bypass execution policies – and run in hidden as well as encrypted mode – with the intention that PowerShell would download the ransomware and execute it without the knowledge of the victim.
+Further investigation of the link and executable showed that every few seconds the malware hash changed with a more current compilation timestamp and different appended data bytes – a technique often used to evade hash-based detection.
+Cerber in Action Initial payload behavior Upon execution, the Cerber malware will check to see where it is being launched from.
+Unless it is being launched from a specific location (%APPDATA%\\&#60GUID&#62), it creates a copy of itself in the victim's %APPDATA% folder under a filename chosen randomly and obtained from the %WINDIR%\\system32 folder.
+If the malware is launched from the specific aforementioned folder and after eliminating any blacklisted filenames from an internal list, then the malware creates a renamed copy of itself to “%APPDATA%\\&#60GUID&#62” using a pseudo-randomly selected name from the “system32” directory.
+The malware executes the malware from the new location and then cleans up after itself.
+Shadow deletion As with many other ransomware families, Cerber will bypass UAC checks, delete any volume shadow copies and disable safe boot options.
+Cerber accomplished this by launching the following processes using respective arguments: Vssadmin.exe \"delete shadows /all /quiet\" WMIC.exe \"shadowcopy delete\" Bcdedit.exe \"/set {default} recoveryenabled no\" Bcdedit.exe \"/set {default} bootstatuspolicy ignoreallfailures Coercion People may wonder why victims pay the ransom to the threat actors.
+In some cases it is as simple as needing to get files back, but in other instances a victim may feel coerced or even intimidated.
+We noticed these tactics being used in this campaign, where the victim is shown the message in Figure 2 upon being infected with Cerber.
+Figure 2.
+A message to the victim after encryption The ransomware authors attempt to incentivize the victim into paying quickly by providing a 50 percent discount if the ransom is paid within a certain timeframe, as seen in Figure 3.
+Figure 3.
+Ransom offered to victim, which is discounted for five days Multilingual Support As seen in Figure 4, the Cerber ransomware presented its message and instructions in 12 different languages, indicating this attack was on a global scale.
+Figure 4.
+   Interface provided to the victim to pay ransom supports 12 languages Encryption Cerber targets 294 different file extensions for encryption, including .doc
+(typically Microsoft Word documents), .ppt
+(generally Microsoft PowerPoint slideshows), .jpg and other images.
+It also targets financial file formats such as.
+ibank (used with certain personal finance management software) and .wallet (used for Bitcoin).
+Selective Targeting Selective targeting was used in this campaign.
+The attackers were observed checking the country code of a host machine’s public IP address against a list of blacklisted countries in the JSON configuration, utilizing online services such as ipinfo.io to verify the information.
+Blacklisted (protected) countries include: Armenia, Azerbaijan, Belarus, Georgia, Kyrgyzstan, Kazakhstan, Moldova, Russia, Turkmenistan, Tajikistan, Ukraine, and Uzbekistan .
+The attack also checked a system's keyboard layout to further ensure it avoided infecting machines in the attackers geography: 1049—Russian, ¨ 1058—Ukrainian, 1059—Belarusian, 1064—Tajik, 1067—Armenian, 1068—Azeri, (Latin), 1079—Georgian, 1087—Kazakh, 1088—Kyrgyz (Cyrillic), 1090—Turkmen, 1091—Uzbek (Latin), 2072—Romanian (Moldova), 2073—Russian (Moldova), 2092—Azeri (Cyrillic), 2115—Uzbek (Cyrillic).
+Selective targeting has historically been used to keep malware from infecting endpoints within the author’s geographical region, thus protecting them from the wrath of local authorities.
+The actor also controls their exposure using this technique.
+In this case, there is reason to suspect the attackers are based in Russia or the surrounding region.
+Anti VM Checks
+The malware searches for a series of hooked modules, specific filenames and paths, and known sandbox volume serial numbers, including: sbiedll.dll, dir_watch.dll, api_log.dll, dbghelp.dll, Frz_State, C:\\popupkiller.exe, C:\\stimulator.exe, C:\\TOOLS\\execute.exe, \\sand-box\\, \\cwsandbox\\, \\sandbox\\, 0CD1A40, 6CBBC508, 774E1682, 837F873E, 8B6F64BC.
+Aside from the aforementioned checks and blacklisting, there is also a wait option built in where the payload will delay execution on an infected machine before it launches an encryption routine.
+This technique was likely implemented to further avoid detection within sandbox environments.
+Persistence Once executed, Cerber deploys the following persistence techniques to make sure a system remains infected: A registry key is added to launch the malware instead of the screensaver when the system becomes idle.
+The “CommandProcessor” Autorun keyvalue is changed to point to the Cerber payload so that the malware will be launched each time the Windows terminal, “cmd.exe”, is launched.Introduction Through FireEye Dynamic Threat Intelligence (DTI), we observed RIG Exploit Kit (EK) delivering a dropper that leverages the PROPagate injection technique to inject code that downloads and executes a Monero miner (similar activity has been reported by Trend Micro ).
+Apart from leveraging a relatively lesser known injection technique, the attack chain has some other interesting properties that we will touch on in this blog post.
+Attack Chain
+The attack chain starts when the user visits a compromised website that loads the RIG EK landing page in an iframe.
+The RIG EK uses various techniques to deliver the NSIS (Nullsoft Scriptable Install System) loader, which leverages the PROPagate injection technique to inject shellcode into explorer.exe.
+This shellcode executes the next payload, which downloads and executes the Monero miner.
+The flow chart for the attack chain is shown in Figure 1.
+Figure 1: Attack chain flow chart Exploit Kit Analysis When the user visits a compromised site that is injected with an iframe, the iframe loads the landing page.
+The iframe injected into a compromised website is shown in Figure 2.
+Figure 2:
+Injected iframe
+The landing page contains three different JavaScripts snippets, each of which uses a different technique to deliver the payload.
+Each of these are not new techniques, so we will only be giving a brief overview of each one in this post.
+JavaScript 1
+The first JavaScript has a function, fa, which returns a VBScript that will be executed using the execScript function, as shown by the code in Figure 3.
+Figure 3:
+JavaScript 1 code snippet The VBScript exploits CVE-2016-0189 which allows it to download the payload and execute it using the code snippet seen in Figure 4.
+Figure 4: VBScript code snippet JavaScript 2 The second JavaScript contains a function that will retrieve additional JavaScript code and append this script code to the HTML page using the code snippet seen in Figure 5.
+Figure 5: JavaScript 2 code snippet This newly appended JavaScript exploits CVE-2015-2419 which utilizes a vulnerability in JSON.stringify.
+This script obfuscates the call to JSON.stringify by storing pieces of the exploit in the variables shown in Figure 6.
+Figure 6: Obfuscation using variables Using these variables, the JavaScript calls JSON.stringify with malformed parameters in order to trigger CVE-2015-2419 which in turn will cause native code execution, as shown in Figure 7.
+Figure 7:
+Call to JSON.Stringify JavaScript 3 The third JavaScript has code that adds additional JavaScript, similar to the second JavaScript.
+This additional JavaScript adds a flash object that exploits CVE-2018-4878 , as shown in Figure 8.
+Figure 8:
+JavaScript 3 code snippet Once the exploitation is successful, the shellcode invokes a command line to create a JavaScript file with filename u32.tmp, as shown in Figure 9.
+Figure 9: WScript command line This JavaScript file is launched using WScript, which downloads the next-stage payload and executes it using the command line in Figure 10.
+Figure 10:
+Malicious command line Payload Analysis For this attack, the actor has used multiple payloads and anti-analysis techniques to bypass the analysis environment.
+Figure 11 shows the complete malware activity flow chart.
+Figure 11:
+Malware activity flow chart Analysis of NSIS Loader (SmokeLoader)
+The first payload dropped by the RIG EK is a compiled NSIS executable famously known as SmokeLoader.
+Apart from NSIS files, the payload has two components: a DLL, and a data file (named ‘kumar.dll’ and ‘abaram.dat’ in our analysis case).
+The DLL has an export function that is invoked by the NSIS executable.
+This export function has code to read and decrypt the data file, which yields the second stage payload (a portable executable file).
+The DLL then spawns itself (dropper) in SUSPENDED_MODE and injects the decrypted PE using process hollowing.
+Analysis of Injected Code (Second Stage Payload)
+The second stage payload is a highly obfuscated executable.
+It consists of a routine that decrypts a chunk of code, executes it, and re-encrypts it.
+At the entry point, the executable contains code that checks the OS major version, which it extracts from the Process Environment Block (PEB).
+If the OS version value is less than 6 (prior to Windows Vista), the executable terminates itself.
+It also contains code that checks whether the executable is in debugged mode, which it extracts from offset 0x2 of the PEB.
+If the BeingDebugged flag is set, the executable terminates itself.
+The malware also implements an Anti-VM check by opening the registry key HKLM\\SYSTEM\\ControlSet001\\Services\\Disk\\Enum with value 0.
+It checks whether the registry value data contains any of the strings: vmware, virtual, qemu, or xen.
+ 
+Each of these strings is indictative of virtual machines After running the anti-analysis and environment check, the malware starts executing the core code to perform the malicious activity.
+The malware uses the PROPagate injection method to inject and execute the code in a targeted process.
+The PROPagate method is similar to the SetWindowLong injection technique.
+In this method, the malware uses the SetPropA function to modify the callback for UxSubclassInfo and cause the remote process to execute the malicious code.
+This code injection technique only works for a process with lesser or equal integrity level.
+The malware first checks whether the integrity of the current running process is medium integrity level (2000, SECURITY_MANDATORY_MEDIUM_RID).FireEye Labs recently discovered a malicious phishing domain designed to steal a variety of information – including credentials and mobile numbers – from customers of several banks in India.
+Currently, we have not observed this domain being used in any campaigns.
+The phishing websites appear to be in the earlier stages of development and through this post we hope users will be able to identify these types of emerging threats in the future.
+FireEye phishing detection technology identified a newly registered domain, “csecurepay[.]com”, that was registered on Oct. 23, 2016.
+The website purports to offer online payment gateway services, but is actually a phishing website that leads to the capturing of victim logon credentials – and other information – for multiple banks operating in India.
+Prior to publication, FireEye notified the Indian Computer Emergency Response Team.
+Phishing Template Presentation and Techniques Step 1 URL: hxxp://csecurepay[.]com/load-cash-step2.aspx
+When navigating to the URL, the domain appears to be a payment gateway and requests that the user enter their bank account number and the amount to be transferred, as seen in Figure 1.
+The victim is allowed to choose their bank from a list that is provided.
+Figure 1: Bank information being requested By looking at the list, it is clear that only Indian banks are being targeted at this time.
+A total of 26 banks are available and these are named in the Appendix.
+Step 2 URL:  hxxp://csecurepay[.]com/
+PaymentConfirmation.aspx
+The next website requests the victim to enter their valid 10-digit mobile number and email ID (Figure 2), which makes the website appear more legitimate.
+Figure 2: Personal information being requested Step 3
+The victim will then be redirected to the spoofed online banking page of the bank they selected, which requests that they log in using their user name and password.
+Figure 3 shows a fake login page for State Bank of India.
+See the Appendix for more banks that have spoofed login pages.
+Figure 3: Fake login page for State Bank of India After entering their login credentials, the victim will be asked to key in their One Time Password (OTP), as seen in Figure 4.
+Figure 4:
+OTP being requested Step 4 URL: hxxp://csecurepay[.]com/
+Final.aspx
+Once all of the sensitive data is gathered, a fake failed login message will be displayed to the victim, as seen in Figure 5.
+Figure 5: Fake error message being displayed Credit and Debit Card Phishing Website Using the registrant information from the csecurepay domain, we found another domain registered by the phisher as “nsecurepay[.]com”.
+The domain, registered in latest August 2016, aims to steal credit and debit card information.
+The following are among the list of cards that are targeted: 1.
+     ICICI Credit Card 2.
+     ICICI Debit Card 3.
+     Visa/Master Credit Card 4.
+     Visa/Master Debit Card 5.
+     SBI Debit Card Only At the time of this writing, the nsecurepay website was producing errors when redirecting to spoofed credit and debit card pages.
+Figure 6 shows the front end.
+Figure 6:
+Nsecurepay front end Conclusion Phishing has its own development lifecycle.
+It usually starts off with building the tools and developing the “hooks” for luring victims into providing their financial information.
+Once the phishing website (or websites) is fully operational, we typically begin to see a wave of phishing emails pointing to it.
+In this case, we see that phishing websites have been crafted to spoof multiple banks in India.
+These attackers can potentially grab sensitive online banking information and other personal data, and even provided support for multifactor authentication and OTP.
+Moreover, disguising the initial presentation to appear as an online payment gateway service makes the phishing attack seem more legitimate.
+FireEye Labs detects this phishing attack and customers will be protected against the usage of these sites in possible future campaigns.
+Appendix Fake login pages were served for 26 banks.
+The following is a list of some of the banks: -Bank of Baroda - Corporate -Bank of Baroda - Retail -Bank of Maharashtra -HDFC Bank Figure 7: HDFC Bank fake login page -ICICI Bank -IDBI Bank -Indian Bank -IndusInd Bank -Jammu and Kashmir Bank -Kotak
+Bank
+-Lakshmi Vilas Bank - Corporate -Lakshmi Vilas Bank - Retail -State Bank of Hyderabad -State Bank of India -State Bank of Jaipur -State Bank of Mysore -State Bank of Patiala -State Bank of Bikaner -State Bank of Travancore -Tamilnad Mercantile Bank -United Bank of India Subscribe to Blogs Get email updates as new blog posts are added.
+
+

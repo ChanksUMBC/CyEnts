@@ -4,16 +4,13 @@ Whaling
 Pharming
 Man-in-the-Middle
 Man in the Middle
-MitM
 MITM
 Denial-of-Service
 Denial of Service
 DOS
-DoS
 Distributed-Denial-of-Service
 Distributed Denial of Service
 DDOS
-DDos
 SQL Injections
 SQL Injection
 Zero-day Exploit
@@ -45,52 +42,7 @@ URL Interpretation
 URL Poisoning
 Brute force attack
 Web Attack
-phishing
-whaling
-pharming
-man-in-the-middle
-man in the middle
-mitm
-denial-of-service
-denial of service
-dos
-dos
-distributed-denial-of-service
-distributed denial of service
-ddos
-ddos
-sql injections
-sql injection
-zero-day exploit
-zero day exploit
-zero-day exploits
-zero day exploits
-password attack
-password attacks
-cross-site scripting
-cross site scripting
-xss
-internet of things attack
-internet of things attacks
-iot attack
-iot attacks
-drive-by attack
-drive-by attacks
-eavesdropping attack
-eavesdropping attacks
-birthday attack
-birthday attacks
-dns tunneling
-dns spoofing
-DNS Spoofing
-session hijacking
-url interpretation
-brute force attack
-web attack
 Spear Phishing
-Spear phishing
-spear phishing
 Spear-phishing
-Spear-Phishing
 Insider Threats
 Malware attack

