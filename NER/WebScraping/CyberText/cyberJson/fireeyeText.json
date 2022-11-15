@@ -1859,6 +1859,1006 @@
                 },
                 "text": "FireEye Labs recently found a more advanced variant of Android.MisoSMS, the SMS-stealing malware that we uncovered last December — yet another sign of cybercriminals’ growing interest in hijacking mobile devices for surveillance and data theft. Like the original version of the malware, the new variant sends copies of users’ text messages to servers in China. But the newest rendition adds a few features that make it harder to detect, including a new disguise, encrypted transmissions, and command-and-control (CnC) communications that are handled natively rather than over email. FireEye Mobile Threat Prevention customers are already protected from both variants. Both variants of MisoSMS use the same names for receivers and services. While the old variant masquerades as an Android settings application, the new version presents itself as “Gplay Dsc” to the user. The new variant also abandons SMTP email as the transport method. It now handles all CnC communication natively in C++, making it harder for an analyst to analyze the malware by disassembling its ARM code. The newer version also hard codes specific public DNS servers such as the following: resolver1.opendns.com nscache.prserv.com resolver1.qwest.net resolver2.opendns.com google-public-dns-b.google.com google-public-dns-a.google.com mx1.oray.net.cn 183.136.132.176 183.136.132.170 The new MisoSMS attempts to resolve its CnC domain name(puk[dot]nespigt[dot]iego[dot]net) from one of these DNS servers. In this way, MisoSMS stays quiet in sandbox environments, which typically use internal DNS servers and cut off access to outside networks. If the malware cannot access the hard-coded DNS servers, it does nothing and is therefore not detected. The new MisoSMS also uses a variant of the XTEA encryption algorithm to communicate with its CnC server. The request and responses of the CnC server are structured so that the first four bytes of the request and response contain the length of the encrypted blob of data. By skipping the first four bytes, we can decrypt the communications using the key embedded in the native binary. Figure 1 shows MisoSMS registering a newly infected device with the CnC server. The first four bytes in the encrypted payload mark the length of the message. The rest of the payload contains information about the infected device. [caption id=\"attachment_5080\" align=\"aligncenter\" width=\"621\"] Figure 1 - New Infection Registration[/caption] Figure 2 and Figure 3 show the SMS exfiltration mechanism, as seen in Figure 1, the first four bytes of the encrypted payload contains the length indicator of the payload. The intercepted SMS message is sent to the CnC with the Device ID of the already compromised device. [caption id=\"attachment_5078\" align=\"aligncenter\" width=\"640\"] Figure 2 - Encrypted CnC Communication containing stolen SMS[/caption] [caption id=\"attachment_5079\" align=\"aligncenter\" width=\"640\"] Figure 3 - Decrypted CnC Communication containing stolen SMS[/caption] The domain name of the CnC is also encrypted and stored as a byte array in the native binary. Once the encrypted byte array containing the CnC information is decrypted, the malware checks to see whether the CnC is a domain or an IP address. That check is  meaningful. Its existence implies the ability to change the CnC information dynamically. And that ability, in turn, suggests that MisoSMS uses excerpts of publically available code. The CnC server currently serves a Web page that resembles an Android app, as shown in Figure 4. [caption id=\"attachment_5081\" align=\"aligncenter\" width=\"349\"] Figure 4 - CnC serving an webpage[/caption] The Web page contains a link pointing to “hxxps://www.dropbox.com/s/t47d2nheqbhky64/%EA%B2%BD%20%EC%B0%B0%20%EC%B2%AD[dot]apk,” which is currently not available. Like the website, the MisoSMS app itself displays Korean text. The newest version of MisoSMS suggests that cyber attackers are increasingly eyeing mobile devices — and the valuable information they store — as targets. It also serves as a vivid reminder of how crucial protecting this threat vector is in today’s mobile environment. Subscribe to Blogs Get email updates as new blog posts are added."
             }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/08/bios-boots-what-finding-evil-in-boot-code-at-scale.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/09/bypassing-antivirus-for-your-antivirus-bypass.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/02/recovering-stackstrings-using-emulation-with-ironstrings.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2016/11/extending_linux_exec.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2016/03/surge_in_spam_campai.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/04/new-zero-day-exploit-targeting-internet-explorer-versions-9-through-11-identified-in-targeted-attacks.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/02/ground-windows-scripting-host-wsh.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2021/09/elfant-in-the-room-capa-v3.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2021/08/announcing-the-eighth-annual-flare-on-challenge.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2021/07/capa-2-better-stronger-faster.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2021/03/fuzzing-image-parsing-in-windows-uninitialized-memory.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2021/01/phishing-campaign-woff-obfuscation-telegram-communications.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2021/01/training-transformers-for-cyber-security-tasks-malicious-url-prediction.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2021/01/emulation-of-kernel-mode-rootkits-with-speakeasy.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2020/12/using-speakeasy-emulation-framework-programmatically-to-unpack-malware.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/06/a-not-so-civic-duty-asprox-botnet-campaign-spreads-court-dates-and-malware.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/02/the-2013-fireeye-advanced-threat-report.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2016/07/cerber-ransomware-attack.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2017/01/credit_card_dataand.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2016/11/one-stop-shop-phishing-domain.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2016/10/rotten_apples_resur.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2016/06/irongate_ics_malware.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/07/havex-its-down-with-opc.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2016/02/maimed_ramnit_still.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2015/11/ibackdoor_high-risk.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/09/flare-ida-pro-script-series-msdn-annotations-ida-pro-for-malware-analysis.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2020/04/limited-shifts-in-cyber-threat-landscape-driven-by-covid-19.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2020/04/code-grafting-to-unpack-malware-in-emulation.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2020/03/stimulus-bill-social-engineering-covid-19-financial-compensation-schemes.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2020/02/information-operations-fabricated-personas-to-promote-iranian-interests.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2020/01/nice-try-501-ransomware-not-implemented.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/11/fidl-flare-ida-decompiler-library.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/11/combatting-social-media-information-operations-neural-language-models.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/02/operation-greedywonk-multiple-economic-and-foreign-policy-sites-compromised-serving-up-flash-zero-day-exploit.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/10/definitive-dossier-of-devilish-debug-details-part-deux.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/10/controlling-ida-pro-with-voice-control-software.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/08/finding-evil-in-windows-ten-compressed-memory-part-three.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/08/automated-prioritization-of-software-vulnerabilities.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/09/open-sourcing-stringsifter.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/08/finding-evil-in-windows-ten-compressed-memory-part-two.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2016/03/android-malware-families.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2015/10/ibackdoor_high-risk.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2015/07/second_adobe_flashz.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2015/06/june_2_6_12_2015con.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": "2015-06-17",
+                    "source": "www.fireeye.com"
+                },
+                "text": "Subscribe to Blogs Get email updates as new blog posts are added."
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/04/churning-out-machine-learning-models-handling-changes-in-model-predictions.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/06/government-in-central-asia-targeted-with-hawkball-backdoor.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2015/08/windows_managementi.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2017/10/gocrack-managed-password-cracking-tool.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2017/06/remote-symbol-resolution.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2017/04/libemu-unicorn-compatability-layer.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/04/solving-ad-hoc-problems-with-hex-rays-api.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/04/flashmingo-open-source-automatic-analysis-tool-for-flash.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/05/framing-the-problem-cyber-threats-and-elections.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/05/learning-to-rank-strings-output-for-speedier-malware-analysis.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/05/social-media-network-impersonates-us-political-candidates-supports-iranian-interests.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/07/cryptocurrencies-cyber-crime-growth-of-miners.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2017/02/spear_phishing_techn.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2016/06/rotten_apples_apple.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2016/06/locky-is-back-and-asking-for-unpaid-debts.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2016/01/hot_or_not_the_bene.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2015/11/xcodeghost_s_a_new.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2015/06/three_new_masqueatt.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2015/05/nitlovepos_another.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2015/02/ios_masque_attackre.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/10/two-targeted-attacks-two-new-zero-days.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/08/connecting-the-dots-syrian-malware-team-uses-blackworm-for-attacks.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2016/02/flare_script_series.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2015/09/flare-on_challenges.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2017/01/flare_script_series.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2017/07/linux-support-for-fakenet-ng.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/04/loading-kernel-shellcode.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/11/cmd-and-conquer-de-dosfuscation-with-flare-qdb.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2017/10/fakenet-content-based-protocol-detection.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2015/11/flare_ida_pro_script.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/01/simplifying-graphs-in-ida.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2015/12/flare_script_series.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/04/spear-phishing-campaign-targets-ukraine-government.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/03/winrar-zero-day-abused-in-multiple-campaigns.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/03/dissecting-netwire-phishing-campaign-usage-of-process-hollowing.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2019/03/breaking-the-bank-weakness-in-financial-ai-applications.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/12/automating-objective-c-code-analysis-with-emulation.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2017/03/introducing_monitor.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/06/rig-ek-delivering-monero-miner-via-propagate-injection-technique.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/05/remote-authentication-geofeasibility-tool-geologonalyzer.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/04/metamorfo-campaign-targeting-brazilian-users.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/04/fake-software-update-abuses-netsupport-remote-access-tool.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/03/sanny-malware-delivery-method-updated-in-recently-observed-attacks.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/02/cve-2017-10271-used-to-deliver-cryptominers.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/02/attacks-leveraging-adobe-zero-day.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2018/01/microsoft-office-vulnerabilities-used-to-distribute-zyklon-malware.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/01/android-hehe-malware-now-disconnects-phone-calls.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/01/js-binding-over-http-vulnerability-and-javascript-sidedoor.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/01/trends-in-targeted-attacks-2013.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/02/amazons-mobile-shopping-clients-and-captcha.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/02/background-monitoring-on-non-jailbroken-ios-7-devices-and-a-mitigation.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/02/operation-snowman-deputydog-actor-compromises-us-veterans-of-foreign-wars-website.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/02/write-once-exploit-everywhere-fireeye-report-analyzes-four-widely-exploited-java-vulnerabilities.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/03/a-little-bird-told-me-personal-information-sharing-in-angry-birds-and-its-ad-libraries.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/03/from-windows-to-droids-an-insight-in-to-multi-vector-attack-mechanisms-in-rats.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
+        },
+        {
+            "https://www.fireeye.com/blog/threat-research/2014/03/spear-phishing-the-news-cycle-apt-actors-leverage-interest-in-the-disappearance-of-malaysian-flight-mh-370.html": {
+                "metadata": {
+                    "dateAccessed": "2022-11-15",
+                    "dateCreated": null,
+                    "source": "www.fireeye.com"
+                },
+                "text": ""
+            }
         }
     ]
 }
