@@ -1,0 +1,4 @@
+Online shopping is now an established part of daily life: we get food, clothes and other goods delivered to our door in a couple of clicks.
+Online shopaholics, of which there are many, are may sometimes forget about a parcel or miss a call from the courier.
+Unsurprisingly, this is exploited by attackers who use fake delivery notifications as bait.
+One example of this is cybercriminals pretending to be the international express courier service, DHL.

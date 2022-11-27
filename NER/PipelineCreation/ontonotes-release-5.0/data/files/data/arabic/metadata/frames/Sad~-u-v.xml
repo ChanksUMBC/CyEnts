@@ -1,0 +1,24 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>sad~-u</id>
+    <comment/>
+    <frameset cdef="" edef="to close, block" id="01">
+        <role argnum="0" argrole="cause of closing"/>
+        <frame>
+            <mapping>
+                <comment/>
+            </mapping>
+            <example>
+                <parse>سد المتظاهرون الشارع بالحواجز حتى يمنعوا عبور سيارات الشرطة</parse>
+                <comment/>
+                <arg f="" g="Protesters" n="0">المتظاهرون</arg>
+                <arg f="" g="the street" n="1">الشارع</arg>
+                <arg f="" g="with barriers" n="2">بالحواجز</arg>
+            </example>
+            <comment/>
+        </frame>
+        <comment/>
+        <role argnum="1" argrole="thing closing"/>
+        <role argnum="2" argrole="closed with what?"/>
+    </frameset>
+</verb>

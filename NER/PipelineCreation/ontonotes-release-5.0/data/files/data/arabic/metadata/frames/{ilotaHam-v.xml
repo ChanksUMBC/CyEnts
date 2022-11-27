@@ -1,0 +1,176 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>{ilotaham</id>
+    <frameset cdef="" edef="to slurp" id="01">
+        <role argnum="0" argrole="agent"/>
+        <role argnum="1" argrole="entity slurped"/>
+        <frame>
+            <example>
+                <parse>
+                    (FRAG
+                    (PP
+                    (PREP من)
+                    (NP
+                    (NOUN_PROP صباح)
+                    (NOUN_PROP نصر)))
+                    (PUNC :)
+                    (S
+                    (PUNC &amp;quot;)
+                    (S
+                    (S
+                    (VP
+                    (PRT
+                    (NEG_PART لا))
+                    (IV3MS+IV+IVSUFF_MOOD:I يمر)
+                    (NP-SBJ
+                    (NOUN+CASE_INDEF_NOM اسبوع))
+                    (PP
+                    (-NONE- *RNR*-1))))
+                    (PUNC ,)
+                    (CONJ بل)
+                    (S
+                    (VP
+                    (PRT
+                    (NEG_PART لا))
+                    (IV3MS+IV+IVSUFF_MOOD:I يمر)
+                    (NP-SBJ
+                    (NOUN+CASE_INDEF_NOM يوم))
+                    (PP
+                    (-NONE- *RNR*-1))))
+                    (PUNC ,)
+                    (PP-1
+                    (PREP من)
+                    (NP
+                    (NOUN+CASE_DEF_GEN دون)
+                    (SBAR
+                    (SUB_CONJ ان)
+                    (S
+                    (S
+                    (VP
+                    (IV1P+IV+IVSUFF_MOOD:S نسمع)
+                    (NP-SBJ
+                    (-NONE- *))
+                    (NP-OBJ
+                    (-NONE- *RNR*-2))))
+                    (CONJ او)
+                    (S
+                    (VP
+                    (IV1P+IV+IVSUFF_MOOD:S نشاهد)
+                    (NP-SBJ
+                    (-NONE- *))
+                    (NP-OBJ
+                    (-NONE- *RNR*-2))))
+                    (NP-OBJ-2
+                    (NP
+                    (NP
+                    (NOUN+CASE_DEF_ACC حرائق))
+                    (PP-LOC
+                    (PREP في)
+                    (NP
+                    (NOUN+CASE_DEF_GEN مختلف)
+                    (NP
+                    (DET+NOUN الاراضي)
+                    (DET+ADJ+NSUFF_FEM_SG+CASE_DEF_GEN اللبنانية)))))
+                    (SBAR
+                    (WHNP-3
+                    (-NONE- 0))
+                    (S
+                    (VP
+                    (IV3FS+IV+IVSUFF_MOOD:I تلتهم)
+                    (NP-SBJ
+                    (-NONE- *T*-3))
+                    (NP-OBJ
+                    (DET+NOUN+CASE_DEF_ACC الاحراج)))))))))))
+                    (PUNC ,)
+                    (CONJ ف)
+                    (S
+                    (VP
+                    (IV3FS+IV+IVSUFF_MOOD:I تندفع)
+                    (S-ADV
+                    (VP
+                    (ADJ.VN+NSUFF_FEM_SG+CASE_INDEF_ACC مشكورة)
+                    (NP-SBJ
+                    (-NONE- *-4))
+                    (NP-OBJ
+                    (-NONE- *-4))))
+                    (NP-SBJ-4
+                    (NP
+                    (NOUN+CASE_DEF_NOM فرق)
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الدفاع)
+                    (DET+ADJ+CASE_DEF_GEN المدني)))
+                    (CONJ و)
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الجيش))
+                    (CONJ و)
+                    (NP
+                    (NOUN قوى)
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الامن)
+                    (DET+ADJ+CASE_DEF_GEN الداخلي)))
+                    (CONJ و)
+                    (NP
+                    (DET+NOUN+NSUFF_FEM_PL+CASE_DEF_NOM البلديات)
+                    (DET+ADJ+NSUFF_FEM_SG+CASE_DEF_NOM المعنية)))
+                    (PP-PRP
+                    (PREP ل)
+                    (NP
+                    (NOUN+CASE_DEF_GEN اطفائ)
+                    (NP
+                    (POSS_PRON_3FS ها))))))
+                    (PUNC ,)
+                    (CONJ و)
+                    (S
+                    (NP-ADV
+                    (NOUN+NSUFF_FEM_SG+CASE_INDEF_ACC عادة))
+                    (VP
+                    (IV3FS+IV+IVSUFF_MOOD:I تنجح)
+                    (NP-SBJ
+                    (-NONE- *))
+                    (PP-CLR
+                    (PREP في)
+                    (NP
+                    (NOUN+NSUFF_FEM_SG+CASE_DEF_GEN مهمت)
+                    (NP
+                    (POSS_PRON_3FS ها))))
+                    (PP-MNR
+                    (PREP ب)
+                    (NP
+                    (NOUN+NSUFF_FEM_SG+CASE_INDEF_GEN سرعة)))))
+                    (PUNC ,)
+                    (CONJ و)
+                    (S
+                    (VP
+                    (IV3MS+IV+IVSUFF_MOOD:I ينتهي)
+                    (NP-SBJ
+                    (DET+NOUN+CASE_DEF_NOM الامر))
+                    (NP-TMP
+                    (PRT
+                    (RESTRIC_PART انما))
+                    (NOUN+CASE_DEF_ACC بعد)
+                    (NP
+                    (NOUN+CASE_DEF_GEN احتراق)
+                    (NP
+                    (NP
+                    (NOUN+CASE_DEF_GEN آلاف)
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الاشجار)))
+                    (ADJP
+                    (DET+ADJ+NSUFF_FEM_SG+CASE_DEF_GEN المثمرة)
+                    (CONJ او)
+                    (DET+ADJ+NSUFF_FEM_SG+CASE_DEF_GEN الحرجية))))))))
+                    (PUNC .))
+                </parse>
+                <arg f="" g="-NONE- &amp;lt; fire" n="0">*T*-3 &amp;lt; حرائق</arg>
+                <arg f="" g="the forests" n="1">الاحراج</arg>
+            </example>
+            <example>
+                <parse>
+                    إلتهمت البنت قطعة البيتزا
+                </parse>
+                <arg f="" g="the girl" n="0">البنت</arg>
+                <arg f="" g="the slice of pizza" n="1">قطعة البيتزا</arg>
+            </example>
+        </frame>
+    </frameset>
+</verb>

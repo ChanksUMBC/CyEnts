@@ -1,0 +1,5 @@
+
+Installer We found the installer distributed as .pif files.
+Some of these files were seen as discord attachments, which indicates how the threat actors used Discord as an infection vector.
+Below are some of the installer files we found:
+Filename : Photo_2022-07-10_19-23-19.pif Sha256 : 754cc559a2c861c0ef8acfbbb632e79e04839ab9f8948fa3392c1cd69d14f026 ITW URL : https://cdn.discordapp.com/attachments/911561368359039026/995990526950117406/photo_2022-07-10_19-23-19.pif Filename : Need to download attachments.pif Sha256 : C5a720c2460da4c49b912409b204fbec31c79af3f7aaa011a3e679645f060760 ITW URL : Unknown Filename : WhatsAppSMS reception.txt Sha256 : a2cdf57b6a1cbf36d0440feedb2d9593e81cf646fd6f736a66d32950c1fa6857 ITW URL :

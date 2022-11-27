@@ -1,0 +1,12 @@
+
+Therefore, we recommend to be on guard and not to treat packages as trusted.
+In general, development or build environments are convenient targets for attackers trying to organize supply chain attacks.
+That means such environments urgently require strong antimalware protection such as Kaspersky Hybrid Cloud Security .
+Our products successfully detect LofyLife attack with verdicts HEUR:Trojan.
+Script.
+Lofy.gen and Trojan.
+Python.
+Lofy.a.
+If you want to be among the first to know about new malicious campaigns spreading via open-source code, subscribe to threat intelligence feeds and reports, such as the ones provided via Threat Intelligence Portal .
+
+

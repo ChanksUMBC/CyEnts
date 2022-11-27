@@ -1,0 +1,5 @@
+
+It turned out that the duration of this mode is limited: in version iOS 15.3 only 96 broadcast sessions are set with an interval of 15 minutes.
+That is, a lost and powered-off iPhone will be findable for just 24 hours.
+If the phone powered off due to a low battery, the window is even shorter — about five hours.
+This can be considered a quirk of the feature, but a real bug was also found: sometimes when the phone is off, the “beacon” mode is not activated at all, although it should be.

@@ -1,0 +1,12 @@
+
+The YouTube video itself explains how to hide online activity using Tor, and a link is given in the description.
+It points to a Chinese cloud file-hosting service.
+Unfortunately, the version of Tor Browser located there is infected with OnionPoison spyware.
+So, instead of privacy, the user gets the exact opposite: all their data is revealed.
+Screenshot of a YouTube video advertising a malicious version of Tor Browser.
+Source
+What the infected Tor Browser knows about the user The infected version of Tor Browser lacks a digital signature, which should be a big red flag for the security-minded user.
+On installing such a program, the Windows operating system displays a warning regarding this.
+Naturally, the official version of Tor Browser has a digital signature.
+The distribution contents in the infected package, however, differ very little from the original.
+But the minor differences are important.

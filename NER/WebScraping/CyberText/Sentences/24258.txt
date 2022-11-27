@@ -1,0 +1,111 @@
+You check your computer for viruses every week, update systems and programs promptly , use strong passwords and generally take care online… yet for some reason your internet is slow and some websites deny access?
+
+It could be malware not on your computer, but in the router.
+
+Why routers?
+
+Cybercriminals target routers largely for two reasons.
+
+First, because all network traffic goes through these devices; second, you can’t scan a router with a regular antivirus.
+
+So malware that has set up shop in the router has plenty of opportunities to attack, and way less chance of being detected — let alone deleted.
+
+Let’s now talk about some things cybercriminals can do with an infected router.
+
+Create a botnet One of the most common cases is when an infected router joins a botnet; that is, a network of devices that send myriads of requests to a particular website or online service as part of a DDoS attack.
+
+The goal of the attackers is to overload the targeted service to such an extent that it slows down and eventually fails.
+
+Meanwhile, it’s ordinary users whose routers are hijacked that suffer slower internet speeds because their routers are busy sending malicious requests, and only handle other traffic when they pause for breath.
+
+According to our data, routers in 2021 were most actively attacked by two malware families: Mirai and Mēris, with the former leading by a huge margin — accounting for almost half of all attacks on routers.
+
+Mirai
+
+This notorious malware family with the sweet-sounding name (meaning “future” in Japanese) has been known since 2016.
+
+Besides routers, it’s known to infect IP cameras, smart TVs, and other IoT devices, including corporate ones, such as wireless controllers and digital advertising displays.
+
+Initially conceived to carry out large-scale DDoS attacks on Minecraft servers, the Mirai botnet was later unleashed on other services.
+
+The source code of the malware has long been leaked online and forms the basis of ever more new variants.
+
+Mēris Not for nothing does Mēris mean “plague” in Latvian.
+
+It has already affected thousands of high-performance devices — mostly MikroTik routers — and linked them into a network for DDoS attacks.
+
+For instance, during an attack on a U.S. financial company in 2021 , the number of requests from the network of Mēris-infected devices reached 17.2 million per second.
+
+A few months later, the botnet attacked several Russian financial and IT companies , with a record 21.8 million requests per second.
+
+Steal data Some router-infecting malware can do even more serious damage, such as steal your data.
+
+When online, you send and receive a lot of important information: payment data in online stores, credentials on social networks, work documents by email.
+
+All of this information, along with the rest of your network traffic, inevitably passes through the router.
+
+During an attack, the data can be intercepted by malware and fall straight into the cybercriminals’ hands.
+
+One such data-stealing piece of malware is VPNFilter .
+
+By infecting routers and NAS servers, it gains the ability to collect information and control or disable the router.
+
+Spoof websites Malware lodged in the router can surreptitiously redirect you to pages with ads or malicious sites instead of the ones you want to visit.
+
+You (and even your browser) will think you’re accessing a legitimate website, when in fact you’re in the hands of cybercrooks.
+
+It works like this: when you enter the URL of a site (say, google.com) in the address bar, your computer or smartphone sends a request to a special DNS server, where all registered IP addresses and their corresponding URLs are stored.
+
+If the router is infected, instead of a legitimate DNS server, it may send requests to a fake one that responds to the “google.com” query with the IP address of a completely different site — one that might be a phishing one .
+
+The Switcher Trojan was doing precisely that: infiltrating router settings and specifying a malicious DNS server as the default.
+
+Naturally, all data entered on the fake pages leaked to the attackers.
+
+How does malware get into routers?
+
+There are two main ways to plant malware in a router: by guessing the admin password, or exploiting a vulnerability in the device.
+
+Password guessing All routers of the same model tend to have the same admin password in the factory settings.
+
+Not to be confused with the network security key (the string of characters you enter to connect to Wi-Fi), the admin password is used to get inside the router settings menu.
+
+If the user unwittingly left the factory settings unchanged, attackers can easily guess the password — especially if they know the router brand — and infect the router.
+
+Recently however, manufacturers have started taking security more seriously by assigning a unique random password to each particular device, making this method less effective.
+
+But guessing the right combination for older models is still child’s play.
+
+Vulnerability exploitation Router vulnerabilities are holes in your gateway to the internet through which all kinds of threats can stroll right into your home or corporate network — or maybe just sit in the router itself, where detection is less likely.
+
+The above-mentioned Mēris botnet does just that, exploiting unpatched vulnerabilities in MikroTik routers.
+
+According to our research , several hundred new vulnerabilities have been discovered in routers in the past two years alone.
+
+To secure weak spots, router vendors release patches and new firmware versions (essentially routers’ operating system updates).
+
+Unfortunately, many users simply do not realize that the router software needs to be updated, just like other programs.
+
+How to protect your network?
+
+If you want to secure your home or corporate router and keep your data safe: At least once a month, check the manufacturer’s website for the latest router firmware updates.
+
+Install them as soon as they become available.
+
+For some models, patches arrive automatically, but sometimes you have to install them manually.
+
+Information about updating your device’s software can also be found on the vendor’s website.
+
+Create a long, strong admin password for your router.
+
+And so as not to forget the combination, use a password manager .
+
+If you are skilled enough or you find instructions (on that same vendor’s website, for example), disable remote access to the router admin settings.
+
+Configure Wi-Fi correctly : think up a unique password, use strong wireless encryption standard, and set up guest networks so that unscrupulous or just careless guests and neighbors do not spread malware on your network from their infected devices.
+
+Use a VPN app that will encrypt all outbound information before passing it to the router, keeping it safe from cybercriminals even if they have infected the device.
+
+
+
+

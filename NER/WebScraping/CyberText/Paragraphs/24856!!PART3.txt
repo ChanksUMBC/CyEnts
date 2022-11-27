@@ -1,0 +1,6 @@
+
+Hinting that the recipient of the e-mail could be one of the victims, the scammers ask them to assist in the investigation.
+Nothing complicated is required for this: simply follow the link to fill out a special online form, or call the number given in the e-mail.
+The message itself resembles an official e-mail: it contains the the logo of the “sender” government agency, the actual address of a Berlin business center (home to several financial organizations, but none bearing the name Finanzmarktaufsicht), and contact details.
+At the end, the scammers have gone to the trouble of adding a perfectly genuine link to an article about a real investigation published on the website of one of Germany’s most popular TV news shows.
+One of the links in the e-mail points to a real article about a financial fraud investigation on the genuine website of a popular German TV news show Although at first glance the e-mail comes across very well, upon closer inspection certain tell-tale signs can be found showing it’s bogus.

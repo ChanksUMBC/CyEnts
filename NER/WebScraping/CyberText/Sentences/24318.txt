@@ -1,0 +1,87 @@
+Online shopping is now an established part of daily life: we get food, clothes and other goods delivered to our door in a couple of clicks.
+
+Online shopaholics, of which there are many, are may sometimes forget about a parcel or miss a call from the courier.
+
+Unsurprisingly, this is exploited by attackers who use fake delivery notifications as bait.
+
+One example of this is cybercriminals pretending to be the international express courier service, DHL.
+
+However, instead of the usual phishing link, it’s a QR code that’s contained in the e-mail received that kicks off this kind of swindle.
+
+How and why is the topic of this post.
+
+“Your package is at the post office” An attack begins with an e-mail, seemingly from DHL.
+
+Although the sender’s address is a random set of words bearing no resemblance to the courier service’s name, the message body is quite convincing: company logo, order number (albeit fake), and supposed date of receipt of a package.
+
+The message itself (in this case in Spanish) states that an order has arrived at a local post office, but the courier was unable to deliver it in person.
+
+Usually such bait is accompanied by a link to “resolve the issue,” but this time there’s a QR code instead.
+
+E-mail with QR code supposedly from DHL.
+
+For safety, we replaced the QR code in the screenshot with a harmless one A QR code is quite a versatile thing.
+
+It can be used, for example, to connect to Wi-Fi, pay for a purchase, or confirm you’ve bought a ticket to a concert or movie.
+
+But perhaps their most common use is to distribute links offline: scanning a black-and-white square that can appear on product packaging, advertising posters, business cards, or elsewhere is a quick route to the relevant website.
+
+In this case, of course, the attackers were not thinking about user convenience.
+
+The idea seems to be that if the victim initially opens the e-mail on a computer, they’ll still have to read the QR code with a smartphone, which means that the malicious site will open on the small screen of a mobile, where signs of phishing are harder to spot.
+
+Due to the space constraints in mobile browsers, URLs are not fully visible.
+
+And in Safari, the address bar was recently moved to the bottom of the screen, where many users don’t even look.
+
+This plays straight into the hands of the cybercriminals because the URL of their fake site looks nothing like the official one: the word DHL doesn’t even make an appearance.
+
+The website text is also small, which means that any design flaws are less noticeable.
+
+In any case, there aren’t that many of them: the page welcomes users with the trademark yellow and red colors, the company name is shown below, and the text is pretty much error-free save for a couple of lowercase letters at the beginning of sentences.
+
+The victim is informed that the package will arrive within 1?2 days; to receive it, they’re prompted to enter their first name, surname, and address with zip code.
+
+The delivery service does indeed request such kind of information, so no suspicions are aroused.
+
+Fake DHL site asks for personal information, plus bank card details But the data harvesting doesn’t end there.
+
+On the next page, the victim is asked to share more sensitive information: bank card details, including the CVV code on the back ?
+
+purportedly to pay for delivery.
+
+The attackers don’t specify an amount, mentioning only that the cost depends on the region, and giving assurances that money won’t be debited until the package arrives.
+
+In actual fact, the genuine DHL requires payment for delivery in advance, when the order is made.
+
+If a customer does indeed miss the courier, another delivery attempt is made for free.
+
+What do the criminals do with your payment data?
+
+It’s unlikely the criminals will start charging the victim’s card immediately ?
+
+so that the latter doesn’t link the debits to the bogus “DHL” e-mail.
+
+They’re more likely to sell the payment data on the dark web, and it will be the buyer there who later siphons the funds instead ?
+
+when the victim may have already forgotten about the non-existent package.
+
+How to protect yourself All the usual rules for protecting against cyberfraud apply in this case: Upon receipt of an e-mail claiming to be from a well-known service, always check the sender’s e-mail address.
+
+The real name of the company doesn’t appear after the @?
+
+It’s most likely a scam.
+
+For other recognizable signs, see our separate post .
+
+If you’re expecting a package, be sure to make a note of the tracking code and check its status on the official website yourself by opening it from Favorites or entering the URL in a search engine manually.
+
+To be on the safe side, when scanning QR codes, use our Kaspersky QR Scanner (available for both Android and iOS ).
+
+The app will tell you if the code points to a dangerous site.
+
+Equip all devices with a reliable antivirus with anti-phishing and anti-fraud protection, which will warn you of any danger in good time.
+
+
+
+

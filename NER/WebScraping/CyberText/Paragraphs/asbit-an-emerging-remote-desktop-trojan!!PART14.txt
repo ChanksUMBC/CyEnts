@@ -1,0 +1,8 @@
+
+Unknown The following analysis is based on the installer 754cc559a2c861c0ef8acfbbb632e79e04839ab9f8948fa3392c1cd69d14f026 .
+The installer drops the loader module and libexpat.dll .
+It has a slightly different install command than the first version.
+It still uses RegAsm.exe to load the loader module but now it drops it in C:\\ with a random filename not with a .NET folder-like name.
+Libexpat.dll is also dropped in C:\\ProgramData.
+\"C:\\Windows\\Microsoft.
+NET\\Framework\\v4.0.30319\\RegAsm.exe\" /u \"C:\\kfdjvzx5.5ie\" dd99e3acca16b02fa947b0742acfdc0a entry The loader module, C:\\kfdjvzx5.5ie installs libexpat.dll as a service.

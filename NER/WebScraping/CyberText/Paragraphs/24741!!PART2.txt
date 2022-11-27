@@ -1,0 +1,7 @@
+
+Recently, our researchers published a new study of the NullMixer dropper — another widespread threat that users may encounter if downloading unlicensed software.
+What are Trojan droppers?
+For example — NullMixer In simple terms, Trojan droppers (or just “droppers”) are tools for distributing malicious software.
+Their main purpose is to quietly install other malware (in some cases several instances) on the user’s device.
+Let’s find out how they do it using NullMixer as an example.
+This dropper is distributed through sites promising users pirated software and cracks (tools for breaking the protection of legitimate software).

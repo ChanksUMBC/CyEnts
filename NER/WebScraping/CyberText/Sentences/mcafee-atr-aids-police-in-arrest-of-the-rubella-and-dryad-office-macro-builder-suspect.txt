@@ -242,9 +242,7 @@ Generate Macro To generate a macro the builder is using several parts.
 
 The format function shows how each file structure is generated.
 
-The structure is the following: To save the macro in the malicious doc it uses the function ‘SaveMacro’:
-
-Evasion Techniques
+The structure is the following: To save the macro in the malicious doc it uses the function ‘SaveMacro’: Evasion Techniques
 
 Additionally, it generates random code to obfuscate the content and adds junk code.
 

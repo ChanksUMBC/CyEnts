@@ -1,0 +1,9 @@
+
+Their protest fell on deaf ears.
+The remarkable thing about this story is that the Mt.Gox heist began in 2011.
+Back then, unknown hackers got hold of the private keys to a hot wallet on the exchange and began to gradually siphon off bitcoin from it.
+By 2013, the cybercriminals had deposited 630,000 BTC into their accounts.
+Mt.Gox finally ended trading on February 28, 2014, when Karpelès declared it bankrupt and apologized for the “weaknesses in the system” that had wiped out roughly 750,000 BTC of customers’ funds and 100,000 BTC of its own.
+The amount of stolen funds is usually given at around $480 million — this is the value of the total number of stolen tokens at the exchange rate on the day before the exchange filed for bankruptcy — February 27.
+Note, though, that in the time after Mt.Gox ceased trading and before it declared bankruptcy, the bitcoin price fell heavily.
+If calculated at the exchange rate on February 6 (the day before the exchange actually shut down), the loss would be around $660 million.

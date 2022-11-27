@@ -1,0 +1,4 @@
+
+Source Find My after power off First of all, the researchers carried out a detailed analysis of the Find My service in Low Power Mode, and discovered some previously unknown traits.
+After power off, most of the work is handled by the Bluetooth module, which is reloaded and configured by a set of iOS commands.
+It then periodically sends data packets over the air, allowing other devices to detect the not-really-off iPhone.

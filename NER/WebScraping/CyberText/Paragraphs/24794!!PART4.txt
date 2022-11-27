@@ -1,0 +1,14 @@
+
+Despite the scale, this heist was not the end of the cryptoexchange.
+The day after the theft, KuCoin CEO Johnny Lyu promised during a livestream to reimburse the stolen funds.
+Lyu kept his word, and by November 2020 he’d tweeted that 84% of the affected assets had been returned to their owners .
+The remaining 16% were covered by KuCoin’s insurance fund.
+4.
+Money out of thin air Victim: Wormhole cross-chain bridge When: February 2, 2022 Loss: $334 million
+Next in our Top-5 is a heist that used a vulnerability in Wormhole, the cross-chain bridging protocol .
+The cybercriminals were aided by the fact that the platform’s developers had made their program code public.
+But first things first… Wormhole is a tool that mediates cryptocurrency transactions.
+Specifically, it allows users to move tokens between the Ethereum and Solana networks.
+Technically, the exchange works like this: tokens are frozen in one chain, while so-called “wrapped tokens” of the same value are issued in the other.
+Wormhole is an open-source project with its own repository on GitHub.
+Shortly before the heist, the developers placed code there to fix a vulnerability in the protocol.

@@ -1,0 +1,4 @@
+
+And at startup it also addresses the C2 server, from where it downloads and runs another malicious program.
+What’s more, this next stage of the attack on the user occurs only if their real IP address points to a location in China.
+This “second stage” of the attack furnishes the attack organizers with as much detailed information about the user as possible, in particular: Data about their computer and installed programs.

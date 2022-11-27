@@ -1,0 +1,4 @@
+
+Instead of ILOVEYOU, other words began to appear in the subject line, including cocky virus warnings.
+The NewLove variant, detected on May 19, did not selectively delete files, but completely wiped out all information on the hard drive.
+Final estimates of the impact of the ILOVEYOU virus are as follows: up to 10% of internet-connected computers were infected , and the total damage, including the destructive actions of its variants, is estimated at about $10 billion.

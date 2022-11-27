@@ -1,0 +1,7 @@
+Researchers from the Secure Mobile Networking Lab at the University of Darmstadt, Germany, have published a paper describing a theoretical method for hacking an iPhone — even if the device is off.
+The study examined the operation of the wireless modules, found ways to analyze the Bluetooth firmware and, consequently, to introduce malware capable of running completely independently of iOS, the device’s operating system.
+With a little imagination, it’s not hard to conceive of a scenario in which an attacker holds an infected phone close to the victim’s device and transfers malware, which then steals payment card information or even a virtual car key.
+The reason it requires any imagination at all is because the authors of the paper didn’t actually demonstrate this, stopping one step short of a practical attack implementation in which something really useful nasty is loaded into the smartphone.
+All the same, even without this, the researchers did a lot to analyze the undocumented functionality of the phone, reverse-engineer its Bluetooth firmware, and model various scenarios for using wireless modules.
+So, if the attack didn’t play out, what’s this post about?
+We’ll explain, don’t worry, but first an important statement: if a device is powered off, but interaction with it (hacking, for example) is somehow still possible, then guess what — it’s not completely off!

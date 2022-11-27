@@ -1,0 +1,61 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>{irotadaY</id>
+    <frameset cdef="" edef="to wear" id="01">
+        <role argnum="0" argrole="wearer"/>
+        <role argnum="1" argrole="clothing"/>
+        <frame>
+            <mapping>
+                <V/>
+                <mapitem src="sbj" trg="arg0"/>
+            </mapping>
+            <example>
+                <parse>
+                    (VP
+                    (PRT
+                    (VERB_PART لقد))
+                    (PV+PVSUFF_SUBJ:3MS ارتدى)
+                    (NP-SBJ
+                    (NOUN_PROP شارون))
+                    (NP-OBJ
+                    (NOUN+CASE_INDEF_ACC ثياباً)
+                    (ADJ+NSUFF_FEM_SG+CASE_INDEF_ACC رسمية))))
+                </parse>
+                <arg f="" g="sharon" n="0">شارون</arg>
+                <arg f="" g="official garments" n="1">ثياباً رسمية</arg>
+                <V/>
+            </example>
+        </frame>
+    </frameset>
+    <frameset cdef="" edef="To take a form" id="02">
+        <role argnum="0" argrole="entity or thing Taking  a form or state"/>
+        <role argnum="1" argrole="Form taken"/>
+        <frame>
+            <example>
+                <parse>
+                    (VP
+                    (IV3FS+IV+IVSUFF_MOOD:I ترتدي)
+                    (NP-SBJ
+                    (NOUN+NSUFF_FEM_SG+CASE_DEF_NOM زيارة)
+                    (NP
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الرئيس)
+                    (DET+ADJ+CASE_DEF_GEN الفرنسي))
+                    (NP
+                    (NOUN_PROP جاك)
+                    (NOUN_PROP شيراك))))
+                    (NP-TMP
+                    (NOUN+CASE_DEF_ACC بعد)
+                    (NP
+                    (NOUN+CASE_INDEF_GEN غد)))
+                    (NP-OBJ
+                    (NOUN+NSUFF_FEM_SG+CASE_INDEF_ACC اهمية)
+                    (ADJ+NSUFF_FEM_SG+CASE_INDEF_ACC خاصة))
+                </parse>
+                <arg f="" g="French President Jacques Chirac" n="0">زيارة الرئيس الفرنسي جاك شيراك</arg>
+                <arg f="" g="Particularly important" n="1">اهمية خاصة</arg>
+                <arg f="tmp" g="The day after tomorrow" n="m">بعد غد</arg>
+            </example>
+        </frame>
+    </frameset>
+</verb>

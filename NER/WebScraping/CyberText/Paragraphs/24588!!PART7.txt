@@ -1,0 +1,11 @@
+
+By extension, they are never distributed through secure official channels.
+And when downloading something from unofficial and unverified sources, the chances of encountering malware are always far greater.
+In addition, we recommend turning on two-factor authentication wherever possible.
+That way, even if malware manages to sneak onto your computer and steal important passwords, it won’t be able to use them.
+Better still, use and never disable protection features, including browser filtering and a proper security solution .
+In terms of functionality, even real-deal cheats have a lot in common with malware, which means antiviruses often block their installation.
+For this reason cheat developers encourage victims to disable their antivirus.
+You must not do this under any circumstances — once you disable protection, there’s no safety net below.
+
+

@@ -12,7 +12,6 @@ Agda
 XSLT
 Haskell
 Plankalkül
-Go
 PL/SQL
 Java
 Kotlin
@@ -22,14 +21,12 @@ R language
 The R Project for Statistical Computing
 GNU S
 PHP
-Go
 C
 C--
 Swift
 SQL
 Structured Query Language
 Perl
-BASIC
 Visual Basic .NET
 NASM   
 x86 assembly language

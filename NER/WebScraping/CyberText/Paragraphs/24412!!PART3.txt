@@ -1,0 +1,4 @@
+
+Of course, infecting UEFI is no simple task: this requires either physical access to the device, or some sophisticated mechanism for remote infection of the firmware.
+What’s more, to achieve its ultimate goal, whatever that may be, the malware not only has to reside in UEFI, but penetrate the operating system at startup, which is nothing if not tricky.
+All this requires great effort to pull off, which is why such malware is most often seen in targeted attacks against high-profile individuals or organizations.

@@ -27,8 +27,8 @@ ninethserviceupdater[.]com 1d1f7bf2c0eec7a3a0221fd473ddbafc 3/9/20 194.26.29.225
 nineteenthservicehelper[.]com 38756ffb8f2962f6071e770637a2d962 3/9/20 194.26.29.242:443 CN=thirdservicehelper[.]com
 3b911032d08ff4cb156c064bc272d935 3/9/20 194.26.29.244:443 CN=
 tenthservicehelper[.]com
-a2d9b382fe32b0139197258e3e2925c4 3/9/20 194.26.29.226:443 CN=eighteenthservicehelper[.]com 4acbca8efccafd92da9006d0cc91b264 3/9/20 194.26.29.243:443 CN=
-ninthservicehelper[.]com 0760ab4a6ed9a124aabb8c377beead54 3/9/20 194.26.29.201:443 CN=
+a2d9b382fe32b0139197258e3e2925c4 3/9/20 194.26.29.226:443 CN=eighteenthservicehelper[.]com 4acbca8efccafd92da9006d0cc91b264
+3/9/20 194.26.29.243:443 CN=ninthservicehelper[.]com 0760ab4a6ed9a124aabb8c377beead54 3/9/20 194.26.29.201:443 CN=
 secondservicehelper[.]com
 d8a8d0ad9226e3c968c58b5d2324d899 3/9/20 194.26.29.202:443 CN=thirdservicehelper[.]com 0d3b79158ceee5b6ce859bb3fc501b02 3/9/20 194.26.29.220:443 CN=
 fourservicehelper[.]com 831e0445ea580091275b7020f2153b08 3/11/20 207.246.67.70:80 CN=

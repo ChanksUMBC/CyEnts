@@ -1,0 +1,5 @@
+
+The source code of the malware has long been leaked online and forms the basis of ever more new variants.
+Mēris Not for nothing does Mēris mean “plague” in Latvian.
+It has already affected thousands of high-performance devices — mostly MikroTik routers — and linked them into a network for DDoS attacks.
+For instance, during an attack on a U.S. financial company in 2021 , the number of requests from the network of Mēris-infected devices reached 17.2 million per second.

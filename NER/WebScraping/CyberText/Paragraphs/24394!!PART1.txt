@@ -1,0 +1,2 @@
+Ransomware groups are of late increasingly targeting not only Windows computers, but Linux devices and ESXi virtual machines.
+We’ve already spotlighted the BlackCat gang, which distributes malware written in the cross-platform language Rust and is capable of encrypting such systems.

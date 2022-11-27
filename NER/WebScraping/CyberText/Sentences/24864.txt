@@ -1,0 +1,69 @@
+We’ve talked a lot lately about cryptocurrencies , as well as various scams and other crypto-targeting malicious activity .
+
+Our researchers recently checked out the situation with malicious miners — programs that secretly generate cryptocurrency for their owners using the resources of others folks’ computers.
+
+Although malicious miners don’t directly steal data or money, they can make the victim’s life a misery.
+
+A device with a miner slows down, heats up, and becomes unusable long before it would normally.
+
+What’s more, a miner consumes lots of electricity — which the affected user of course has to pay for.
+
+This post lays out our experts’ main findings, and gives tips on how to protect your devices from miners.
+
+See our Securelist blog for a more detailed report.
+
+Malicious mining on the rise Having skyrocketed last year, cryptocurrency prices this year have collapsed just as dramatically.
+
+One would expect a corresponding drop in malicious mining, but in fact the exact opposite has occurred: in the first three quarters of 2022, compared to the same period in 2021, the number of new miner modifications increased, as did the number of affected users.
+
+Cybercriminals were especially active in the third quarter, during which our solutions detected more than 150,000 new variants of malicious miners.
+
+For comparison, in the same period in 2021, fewer than 50,000 appeared.
+
+Our researchers also studied what kinds of malware attackers tried to plant on victims’ devices after exploiting known software vulnerabilities .
+
+In the first three quarters of 2022, about one in seven cases turned out to be a malicious miner.
+
+And throughout the year, as cryptocurrency prices steadily fell, the share of miners among infections showed stable growth.
+
+In the third quarter of 2022, this figure already stood at 17 percent (that is, every sixth case), making cryptocurrency miners the second most common malware after ransomware.
+
+Pirated software — with miner included Malicious miners, like other malware, spread in a variety of ways.
+
+In addition to vulnerabilities, cybercriminals often use pirated content (free movies/music, hacked software, cracks, cheats, etc.) to deliver such malware.
+
+So if, after torrenting a hacked game, your computer suddenly begins to slow down terribly, you may have picked up a miner along the way.
+
+And it might not be alone.
+
+Not so long ago, for example, our researchers discovered a malicious combo : a miner distributed along with a stealer (a program that appropriates credentials) under the guise of game cheats and cracks.
+
+What attackers mine The world is already overflowing with cryptocurrencies.
+
+Estimates as to their number vary:
+
+Cointelegraph, for instance, claims that there are almost 21,000 of them.
+
+Besides Bitcoin and Ethereum, which probably everyone has heard of today, there are cryptocurrencies dedicated to public figures and memes (such as Dogecoin), cryptocurrencies of large companies (such as Binance Coin), government cryptocurrencies (such as the Venezuelan Petro), metaverse cryptocurrencies… and so the list goes on.
+
+By studying samples of malicious miners discovered in September 2022, our researchers established what cryptojackers like to mine most of all.
+
+Monero (a cryptocurrency focused on anonymity of transactions, making it very difficult, if not impossible, to track them) proved to be the most popular.
+
+Bitcoin places second, and Ethereum third.
+
+In addition, some of the analyzed samples generated: The above-mentioned meme coin Dogecoin; Litecoin, a “lightweight” Bitcoin for cheaper and faster confirmed transactions; Dash, another Bitcoin spin-off; Neo, a Chinese cryptocurrency; Bit Hotel, the currency of the eponymous gaming metaverse.
+
+How not to fall victim To avoid unwittingly sharing your computing resources with strangers, be security-conscious: Download programs, music, and movies only from official sources.
+
+Pirated content may come with a hidden miner, or worse.
+
+Remember to promptly update all programs, and never postpone any OS updates.
+
+Vulnerabilities in outdated software are often exploited by cybercriminals.
+
+Use a reliable security solution that detects and blocks miners and other malicious programs.
+
+
+
+

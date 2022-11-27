@@ -1,0 +1,11 @@
+
+We’ve previously written about the most common families of this kind of Trojans.
+Here we’ll tell you about another.
+It’s similar to the Jocker Trojan subscriber — that’s why it’s called Harly, the (slightly altered) name of the sidekick of a well-known comic book villain.
+The two Trojans probably have common origins.
+The lowdown on Harly Trojans Since 2020 more than 190 apps infected with Harly have been found on Google Play.
+A conservative estimate of the number of downloads of these apps is 4.8 million, but the actual figure may be even higher.
+Examples of apps on Google Play that contain Harly malware
+Just like the Jocker Trojans, Trojans in the Harly family imitate legitimate apps.
+So how does it work?
+The scammers download ordinary apps from Google Play, insert malicious code into them, then upload them to Google Play under a different name.

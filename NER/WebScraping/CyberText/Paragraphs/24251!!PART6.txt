@@ -1,0 +1,9 @@
+
+Of most interest here is that the Bluetooth module is reprogrammed before power off; that is, its functionality is fundamentally altered.
+But what if it can be reprogrammed to the detriment of the owner?
+Attack on a powered-off phone
+In fact, the team’s main discovery was that the firmware of the Bluetooth module is not encrypted and not protected by Secure Boot technology.
+Secure Boot involves multistage verification of the program code at start-up, so that only firmware authorized by the device manufacturer can be run.
+The lack of encryption permits analysis of the firmware and a search for vulnerabilities, which can later be used in attacks.
+But the absence of Secure Boot allows an attacker to go further and completely replace the manufacturer’s code with their own, which the Bluetooth module then executes.
+For comparison, analysis of the iPhone’s UWB module firmware revealed that it’s protected by Secure Boot, although the firmware isn’t encrypted either.

@@ -1,0 +1,4 @@
+
+An additional feature was added to YoWhatsApp that allow intruders to steal the keys required for WhatsApp to operate.
+These keys are enough to hijack an account and use it to do things like distributing malware or extracting money from the victim’s contacts.
+As a result, the user not only loses money — since Triada signs them up for paid subscriptions — but also risks compromising their contacts, to whom the criminals may try to write in the user’s name.

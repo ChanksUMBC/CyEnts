@@ -1,0 +1,15 @@
+
+However, both of these figures are tentative: they don’t factor in the three-year duration of the heist during which time the exchange rate fluctuated wildly.
+So it’s hard to pinpoint the exact amount of damage.
+Bitcoin exchange rate in February 2014.
+Source How was the attack even possible?
+According to former employees , the company’s management was rather negligent when it came to many important issues.
+For example, Mt.Gox had serious problems with financial reporting.
+Moreover, a proper quality-and-security audit of the code was never undertaken: there was no version control system, for instance.
+Prosecutors charged Mt.Gox owner, Karpelès, with embezzlement of around $3 million worth of clients’ funds.
+But they failed to prove this in court.
+In the end, Karpelès only received a suspended sentence of two years and six months for data manipulation and was acquitted on other charges.
+2.
+Almost half a billion Victim: Coincheck cryptocurrency exchange
+When: January 26, 2018 Loss: $496 million Coincheck is one of Japan’s largest cryptoexchanges.
+In 2018, cybercriminals managed to steal from it more than 500 million NEM tokens worth roughly the same amount in dollars.

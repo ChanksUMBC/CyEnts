@@ -1,0 +1,11 @@
+
+There’s another key security rule: don’t use unofficial clients for messaging apps.
+To understand why this is important, let’s take a few steps back and look a little more closely at how messaging apps work.
+Most of them operate according to the client-server model , where the user interacts directly with the client app.
+Data exchange between client and server occurs through a special protocol .
+For many messaging apps this protocol is open.
+This makes it possible to create unofficial modified clients with additional features, such as viewing messages other users have deleted, creating mass mailings, customizing the interface, and so on.
+So where’s the danger?
+With official clients, you’re entrusting your correspondence only to the creator of the messaging app.
+When you use an unofficial client, you’re entrusting it not only to the developers of the messaging system but also to the developers of the unofficial client app.
+On top of that, the modified client may be distributed through unofficial sources (which, as we recall, shouldn’t be trusted).

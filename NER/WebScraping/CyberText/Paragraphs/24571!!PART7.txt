@@ -1,0 +1,11 @@
+
+However, on top of this functionality, they infect the victim’s device with malicious code.
+The attackers then use this code to view videos in the background without the user noticing and earn income from boosting the number of views.
+Another source of income for cybercriminals is downloading cookies to the victim’s device.
+Generally speaking, cookies are stored on the user’s device when they visit a website and can be used as a kind of digital marker.
+In a normal situation, affiliated sites promise to take customers to a legitimate site.
+For this, they attract users to their own site, which, again, in a normal situation, is done by means of interesting or useful content.
+Then, they store a cookie on the user’s computer, and send them to the target site with a link.
+Using this cookie, the site understands where the new customer has come from and pays the partner a fee — sometimes for the redirect itself, sometimes a percentage of any purchase made, and sometimes for a certain action, such as registration.
+AddScript operators employ a malicious extension to abuse this scheme.
+Instead of sending real website visitors to partners, they download multiple cookies onto the infected devices.

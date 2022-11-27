@@ -1,0 +1,11 @@
+
+It starts by dropping the loader module that installs another DLL as a service.
+The installed service further downloads and executes the core module.
+The core module has remote desktop functionality and other capabilities, including command execution and keystroke injection.
+The malicious installer ( 806523a9e4021cd72691fbdeb229339a24984b7ca79c3860ba468c832bf95c4d ) drops the loader modules C:\\2.0.50727 and C:\\4.0.30319 .
+The files appear to be folders of the .NET framework, but they are in fact files.
+This is likely done by the author to obscure itself and try to evade endpoint detection.
+It also drops a malicious libexpat.dll ( 018656e61c7c5fc8d5983a32507fbcf379dd9e2b5dd7d67b8e44590d46a8c51f ) and a benign XLSP.dll ( cca2ea493c8402ed24c9c93328066ae0ce451059e2f954929f24ab7481119b6c ).
+The installer drops the components in the C:\\ directory.
+Loader Module The loader module starts with the dropped C:\\2.0.50727 or C:\\4.0.30319.
+It executes either of these files using RegAsm.exe , an assembly registration tool that is used to load .NET assembly files.

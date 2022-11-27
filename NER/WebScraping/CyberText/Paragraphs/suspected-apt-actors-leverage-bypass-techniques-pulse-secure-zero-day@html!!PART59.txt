@@ -11,6 +11,5 @@ FE_APT_Tool_Linux_THINBLOOD_1 FE_APT_Tool_SH_THINBLOOD_1 FEC_APT_Tool_SH_THINBLO
 Linux.
 THINBLOOD.MVX FE_APT_Trojan_PL_QUIETPULSE_1 FEC_APT_Trojan_PL_QUIETPULSE_1 FE_Trojan_SH_Generic_2 FEC_Trojan_SH_Generic_3 Suspicious Pulse Secure HTTP request (IPS) Endpoint Security Real-Time (IOC) SLOWPULSE (BACKDOOR) PACEMAKER (LAUNCHER)
 THINBLOOD (UTILITY)
-Helix VPN ANALYTICS [Abnormal Logon] EXPLOIT - SONICWALL ES [CVE-2021-20021 Attempt] EXPLOIT - SONICWALL ES [CVE-2021-20021
-Success] EXPLOIT - SONICWALL ES [CVE-2021-20023 Attempt] EXPLOIT - SONICWALL ES [CVE-2021-20023 Success]
+Helix VPN ANALYTICS [Abnormal Logon] EXPLOIT - SONICWALL ES [CVE-2021-20021 Attempt] EXPLOIT - SONICWALL ES [CVE-2021-20021 Success] EXPLOIT - SONICWALL ES [CVE-2021-20023 Attempt] EXPLOIT - SONICWALL ES [CVE-2021-20023 Success]
 Mandiant Security Validation Actions Organizations can validate their security controls using the following actions with Mandiant Security Validation .

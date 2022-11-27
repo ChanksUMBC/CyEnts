@@ -1,0 +1,4 @@
+
+But in this case, our experts were unable to confirm the use of any given infection method.
+What CosmicStrand does The main purpose of CosmicStrand is to download a malicious program at operating system startup, which then performs the tasks set by the attackers.
+Having successfully passed through all stages of the OS boot process, the rootkit eventually runs a shell code and contacts the attackers’ C2 server , from which it receives a malicious payload.

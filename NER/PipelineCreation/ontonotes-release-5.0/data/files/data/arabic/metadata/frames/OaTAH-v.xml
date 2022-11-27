@@ -1,0 +1,31 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>OatAH</id>
+    <frameset edef="to let/permit" id="01">
+        <role argnum="0" argrole="allower"/>
+        <role argnum="1" argrole="thing allowed"/>
+        <role argnum="2" argrole="allowed to"/>
+        <frame>
+            <mapping>
+                <V/>
+                <mapitem src="sbj" trg="arg0"/>
+            </mapping>
+            <example>
+                <parse>
+                    (S (VP (grant/provide+he/it MOatAHa M أَتاحَ)
+                    (NP-SBJ-2 (-NONE- XTX))
+                    (PP-CLR (to/for Mli- M لِ-)
+                    (NP (the+gunman M-Almusal~aHiyna M -المُسَلَّحِينَ)))
+                    (NP-OBJ (absence_of/lack_of/not/non- MEadama M عَدَمَ)
+                    (NP (feeling/touch Mlamosi M لَمْسِ)
+                    (NP (the+fence/shield MAls~iyAji M السِّياجِ)
+                    (the+sensitive MAlHas~Asi M الحَسّاسِ)))))))))))
+                </parse>
+                <arg g="NP-SBJ-2 (-NONE- *T*)" n="0">XTX</arg>
+                <arg g="not touching the sensitive fence " n="1">Eadama lamosi Als~iyAji AlHas~Asi</arg>
+                <arg g="for the gunmen" n="2">li- -Almusal~aHiyna</arg>
+                <V/>
+            </example>
+        </frame>
+    </frameset>
+</verb>

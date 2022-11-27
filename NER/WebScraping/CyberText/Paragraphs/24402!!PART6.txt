@@ -1,0 +1,8 @@
+
+There were nine such validators in Ronin Networks at the time of the attack, and to carry out the transfer, at least five of them had to approve it.
+Eventually, the attackers managed to compromise four validators at the company itself and a fifth in the decentralized autonomous organization Axie DAO , where it would (and should) not have been, were it not for an oversight on the part of Sky Mavis itself.
+Turns out in November 2021, due to the high volume of transactions and load on the validators, the company allowed Axie DAO to approve transfers.
+After a month, the load decreased, and Axie DAO’s assistance was no longer required — but the rights to approve transactions were not withdrawn, which played into cybercriminals’ hands.
+Having penetrated the Sky Mavis system, the hackers also gained access to Axie DAO, which provided the fifth validator needed to withdraw funds from others’ accounts to their own.
+The Sky Mavis response On discovering the attack, Sky Mavis acted responsibly and took steps to beef up security.
+The company brought in outside security experts from Verichains and CertiK, and conducted a thorough audit of Ronin Networks .

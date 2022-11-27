@@ -1,0 +1,2 @@
+Microsoft’s vulnerability hunters have presented a fresh catch: 64 vulnerabilities in its various products and services — five of which are critical.
+Two vulnerabilities were publicly disclosed before the patch was released (which technically makes them zero-days), and one is being actively exploited by attackers.

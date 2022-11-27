@@ -1,0 +1,10 @@
+
+What’s more, this vulnerability is only relevant for the Windows 11 on ARM64-based systems, which makes exploitation even less practical.
+Other vulnerabilities There are surprisingly few non-dangerous vulnerabilities in the September Patch Tuesday update — only one has a low severity rating and another has a medium rating.
+The remaining 57, although not as dangerous as the five aforementioned critical ones, still belong to the “important” category.
+Therefore, as we already recommended at the beginning of this post, it’s better to update without delay.
+How to stay safe First of all, you should fix the already patched vulnerabilities .
+In addition, we recommend protecting all computers and servers connected to the internet with security solutions equipped with technologies for vulnerability detection and exploit prevention.
+This will help defend your company against both known and yet unknown vulnerabilities.
+
+

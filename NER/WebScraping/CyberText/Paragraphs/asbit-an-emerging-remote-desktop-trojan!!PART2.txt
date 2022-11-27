@@ -1,0 +1,8 @@
+
+Recently, the threat actor registered another domain and website, rdlite[.]com .
+The new website looks like a copy of the previous website.
+The website www.asbit.cn translated to English.
+It advertises itself as “Fast Desktop”, a secure remote desktop application for IT professionals.
+Timeline To provide an understanding of the Asbit operation, below is a timeline of their infrastructure.
+The domain, asbit[.]cn was registered on January 31, 2021.
+At that time, it resolved to IP 47.111.81.199 .

@@ -1,0 +1,12 @@
+
+A browser extension is a plug-in that adds functionality to your browser.
+For example, they can block ads on web pages, make notes, check spelling and much more.
+For popular browsers there are official extension stores that help select, compare and install the plug-ins you want.
+But extensions can also be installed from unofficial sources.
+It’s important to note that, for an extension to do its job, it will need permission to read and change the content of web pages you view in the browser.
+Without this access, it will likely be completely useless.
+In the case of Google Chrome, extensions will require the ability to read and change all your data on all websites you visit.
+Looks like a big deal, right?
+However, even official stores draw little attention to it.
+For example, in the official Chrome Web Store, the Privacy practices section of the popular Google Translate extension states that it collects information about location, user activity and website content.
+But the fact that it needs access to all data from all websites in order to work, isn’t revealed to the user until they’re installing the extension.

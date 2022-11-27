@@ -1,0 +1,6 @@
+
+First of all, the sender’s address is suspicious.
+It has nothing to do with the government agency that allegedly sent it.
+And the agency itself looks dubious: A quick search online reveals that Finanzmarktaufsicht is in fact an Austrian, not German, agency.
+The German equivalent goes by an even more officious-sounding name: Bundesanstalt für Finanzdienstleistungsaufsicht .
+A user who fails to spot the deception and clicks the link is taken to an online form on the website of the bogus Finanzmarktaufsicht.

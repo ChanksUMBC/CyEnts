@@ -1,0 +1,39 @@
+Ransomware groups are of late increasingly targeting not only Windows computers, but Linux devices and ESXi virtual machines.
+
+We’ve already spotlighted the BlackCat gang, which distributes malware written in the cross-platform language Rust and is capable of encrypting such systems.
+
+Our experts analyzed two more malware families that recently appeared on the dark web with similar functionality: Black Basta and Luna .
+
+Black Basta — ransomware for ESXi Black Basta was first discovered in February.
+
+It exists in two versions: for Windows and for Linux, with the latter primarily targeting ESXi virtual machine images.
+
+A standout feature of the Windows version is that it boots the system in safe mode before encrypting.
+
+This allows the malware to evade detection by security solutions, many of which don’t work in safe mode.
+
+At the time of posting, Black Basta operators had released information on 40 victims, among them manufacturing and electronics firms, contractors, and others.
+
+According to Kaspersky, their targets are located in the U.S., Australia, Europe, Asia, and Latin America.
+
+Luna — more Rust-based ransomware Our researchers discovered the Luna malware in June.
+
+Also written in Rust, it’s capable of encrypting both Windows and Linux devices, as well as ESXi virtual machine images.
+
+In an ad on the dark web , the cybercriminals claim to cooperate only with Russian-speaking partners.
+
+This means that the targets of interest to the attackers most likely are outside the former Soviet Union.
+
+This is also evidenced by the fact that the ransom note embedded into the code of the ransomware is written in English, albeit with mistakes.
+
+How to protect yourself from ransomware Ransomware remains a serious threat to business.
+
+New players continue to appear on the market and quickly pick up on the most disruptive trends.
+
+To stay safe, you need to always be tuned in to the threat landscape and build your protection strategy based on it.
+
+And remember that all internet-facing corporate devices must be equipped with security solutions , including servers running Linux — attacks on them have become more frequent recently.
+
+
+
+

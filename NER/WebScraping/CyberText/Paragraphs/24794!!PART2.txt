@@ -1,0 +1,6 @@
+
+Skeleton key Victim: KuCoin cryptoexchange When: September 26, 2020 Loss: around $285 million On the night of September 25/26, 2020, security officers at the Singapore-based company KuCoin detected a series of abnormal transactions from several hot wallets.
+To halt the suspicious transactions they transferred all remaining assets from the compromised hot wallets to cold storage .
+The whole incident lasted about two hours from detection to completion.
+During this time, the attackers managed to withdraw approximately $285 million in several cryptocurrencies.
+The investigation revealed that the cybercriminals had accessed the private keys of the hot wallets.

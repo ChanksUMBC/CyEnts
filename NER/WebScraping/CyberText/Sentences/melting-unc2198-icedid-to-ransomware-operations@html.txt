@@ -90,9 +90,7 @@ Three separate intrusions were attributed to UNC2414, and as the cluster grew, w
 
 A subset of the data points used to merge UNC2414 into UNC2198 include: UNC2198 and UNC2414 BEACON servers used self-signed certificates using the following subject on TCP port 25055: C = US, ST = CA, L = California, O = Oracle Inc, OU =
 
-Virtual Services, CN = oracle.com UNC2198 and UNC2414 installed BEACON as C:\\Windows\\int32.dll UNC2198 and UNC2414 installed the RCLONE utility as C:\\Perflogs\\rclone.exe UNC2198 and UNC2414 were proven to be financially motivated actors that had leveraged ICEDID as initial access: UNC2198 had deployed MAZE UNC2414 had deployed EGREGOR
-
-The merge between UNC2198 and UNC2414 was significant because it revealed UNC2198 has access to EGREGOR ransomware.
+Virtual Services, CN = oracle.com UNC2198 and UNC2414 installed BEACON as C:\\Windows\\int32.dll UNC2198 and UNC2414 installed the RCLONE utility as C:\\Perflogs\\rclone.exe UNC2198 and UNC2414 were proven to be financially motivated actors that had leveraged ICEDID as initial access: UNC2198 had deployed MAZE UNC2414 had deployed EGREGOR The merge between UNC2198 and UNC2414 was significant because it revealed UNC2198 has access to EGREGOR ransomware.
 
 The timing of the EGREGOR usage is also consistent with MAZE ransomware shutting down as reported by Mandiant Intelligence.
 
@@ -404,9 +402,7 @@ Scheduled Task (T1053.005) Valid Accounts (T1078)
 
 Privilege Escalation Process Injection (T1055) Scheduled Task/Job (T1053)
 
-Scheduled Task (T1053.005) Valid Accounts (T1078)
-
-Defense Evasion Impair Defenses (T1562) Disable or Modify System Firewall (T1562.004) Disable or Modify Tools (T1562.001)
+Scheduled Task (T1053.005) Valid Accounts (T1078) Defense Evasion Impair Defenses (T1562) Disable or Modify System Firewall (T1562.004) Disable or Modify Tools (T1562.001)
 
 Indicator Removal on Host (T1070)
 

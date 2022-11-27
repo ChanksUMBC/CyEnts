@@ -1,0 +1,10 @@
+
+On the next page, the victim is asked to share more sensitive information: bank card details, including the CVV code on the back ?
+purportedly to pay for delivery.
+The attackers don’t specify an amount, mentioning only that the cost depends on the region, and giving assurances that money won’t be debited until the package arrives.
+In actual fact, the genuine DHL requires payment for delivery in advance, when the order is made.
+If a customer does indeed miss the courier, another delivery attempt is made for free.
+What do the criminals do with your payment data?
+It’s unlikely the criminals will start charging the victim’s card immediately ?
+so that the latter doesn’t link the debits to the bogus “DHL” e-mail.
+They’re more likely to sell the payment data on the dark web, and it will be the buyer there who later siphons the funds instead ?

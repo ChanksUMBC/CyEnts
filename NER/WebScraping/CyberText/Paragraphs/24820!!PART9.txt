@@ -1,0 +1,10 @@
+
+The attackers in this case also distributed malware through YouTube.
+What’s more, the malware compromised the victim’s own YouTube channel, posting there the same video with a malicious link.
+YouTube-based attacks are partly helped by Google’s prioritization of videos in search results.
+Attacks of this kind are another example of how ordinary, seemingly safe resources can be misused.
+Even an experienced user can’t always distinguish a real link from a malicious one.
+Such “inconveniences” of digital life are the best possible argument for installing a high-quality security solution.
+Even if your natural online caution fails you, security software will identify and block the threat in good time.
+
+

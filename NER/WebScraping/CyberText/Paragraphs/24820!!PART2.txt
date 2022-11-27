@@ -1,0 +1,9 @@
+
+This method ensures privacy: websites see only the address of the last server in the Tor network — the so-called exit node — and cannot see the user’s real IP address.
+But that’s not all.
+The Tor network can also be used to bypass restricted access to certain sites.
+For example, in China, many “Western” internet resources are blocked, so users turn to solutions such as Tor to access them.
+Incidentally, YouTube is also officially unavailable in China, so, by definition, the video is aimed at those looking for ways to get round the restrictions.
+It’s likely that this was by no means the only method of distributing the OnionPoison malware, and that other links were placed on resources inside China.
+Normally, a user can download Tor Browser from the project’s official website.
+However, this site is also blocked in China, so there’s nothing unusual about people seeking alternative download sources.

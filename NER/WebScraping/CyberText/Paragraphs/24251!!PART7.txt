@@ -1,0 +1,10 @@
+
+Of course, that’s not enough for a serious, practical attack.
+For that, an attacker needs to analyze the firmware, try to replace it with something of their own making, and look for ways to break in.
+The authors of the paper describe in detail the theoretical model of the attack, but don’t show practically that the iPhone is hackable through Bluetooth, NFC or UWB.
+What’s clear from their findings is that if these modules are always on, the vulnerabilities likewise will always work.
+Apple was unimpressed by the study, and declined to respond.
+This in itself, however, says little: the company is careful to keep a poker face even in cases when a threat is serious and demonstrated to be so in practice.
+Bear in mind that Apple goes to great lengths to keep its secrets under wraps: researchers have to deal with closed software code, often encrypted, on Apple’s own hardware, with made-to-order third-party modules.
+A smartphone is a large, complex system that’s hard to figure out, especially if the manufacturer hinders rather than helps.
+No one would describe the team’s findings as breathtaking, but they are the result of lots of painstaking work.

@@ -1,0 +1,6 @@
+
+For starters, in the infected browser, some important settings have been changed when compared with the original Tor Browser.
+Unlike the real one, the malicious version remembers the browser history, stores temporary copies of sites on the computer, and automatically saves login credentials and all data entered into forms.
+Such settings already cause enough damage to privacy as it is, but it only gets worse… Download page of Tor Browser infected with OnionPoison spyware.
+Source One of the key Tor/Firefox libraries was replaced with malicious code.
+This calls the original library, as required, to keep the browser working.

@@ -1,0 +1,3 @@
+
+Finally, it deleted, hid or corrupted files on the hard drive: music in MP3 format, JPEG images, a variety of scripts and copies of web pages.
+The mastermind behind the ILOVEYOU outbreak incorporated developments from previous macro viruses, came up with an ultimate social engineering trick (how can anyone ignore a file with the name “I love you”?), added malicious functionality and made the most of automatic malware spreading.

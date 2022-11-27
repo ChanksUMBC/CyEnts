@@ -1,0 +1,22 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>hAD-i</id>
+    <comment/>
+    <frameset cdef="" edef="to break, fracture" id="01">
+        <role argnum="0" argrole="breaker"/>
+        <frame>
+            <mapping>
+                <comment/>
+            </mapping>
+            <example>
+                <parse>طفلة اقتلعت من جذورها وأهيض جناحها</parse>
+                <comment/>
+                <arg f="" g="her wing" n="1">جناحها</arg>
+            </example>
+            <comment/>
+        </frame>
+        <comment/>
+        <role argnum="1" argrole="thing broken"/>
+        <role argnum="2" argrole="instrument"/>
+    </frameset>
+</verb>

@@ -1,0 +1,6 @@
+
+Visitors are asked here to “select a category” to take part in the “event”.
+In fact, there’s nothing to choose from: under the invitation there’s only a single big button with the words “Bitcoin giveaway”.
+Splash screen of the fake Nvidia website After clicking the button, the user is taken to a page with detailed information about the mythical giveaway.
+At first glance the page looks convincing: there’s a photo of the CEO and additional menu sections, all nicely designed.
+But instead of the Nvidia logo there’s a Bitcoin icon, plus numerous grammatical errors in the text — something a serious company wouldn’t permit.

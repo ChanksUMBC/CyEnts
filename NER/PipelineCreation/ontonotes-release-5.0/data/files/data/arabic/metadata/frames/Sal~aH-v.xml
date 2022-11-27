@@ -1,0 +1,24 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>sal~aH</id>
+    <comment/>
+    <frameset cdef="" edef="to arm, weapon" id="01">
+        <role argnum="0" argrole="equiper, provider, agent"/>
+        <frame>
+            <mapping>
+                <comment/>
+            </mapping>
+            <example>
+                <parse>سلحت الشرطة الشرطيين بالبنادق</parse>
+                <comment/>
+                <arg f="" g="Police" n="0">الشرطة</arg>
+                <arg f="" g="Policemen" n="1">الشرطيين</arg>
+                <arg f="" g="with guns" n="2">بالبنادق</arg>
+            </example>
+            <comment/>
+        </frame>
+        <comment/>
+        <role argnum="1" argrole="entity armed"/>
+        <role argnum="2" argrole="equipment"/>
+    </frameset>
+</verb>

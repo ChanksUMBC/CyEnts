@@ -1,0 +1,45 @@
+Folks today are generally mostly aware that clicking links from questionable sources, for example in e-mails, isn’t a good idea.
+
+However, when it comes to scanning QR codes, people are often much less vigilant.
+
+In fact, QR codes can be even more dangerous: while you can check a link with your own eyes before clicking, that’s not the case with a QR code.
+
+So perhaps this story about a phishing QR-code attack in China shouldn’t come as a surprise.
+
+What happened?
+
+The other day it was reported that unknown cybercriminals distributed phishing QR codes offering free game logins, which they then used to hijack some accounts of the QQ messaging and social media platform.
+
+While largely unknown outside China, QQ is a HUGE deal there, with hundreds of millions active users.
+
+The platform provides all kinds of services, including chatting, watching movies, blogging, and gaming — the latter service being the relevant one in this case.
+
+It’s developed by Chinese tech giant Tencent.
+
+Due to the regional specific, it’s difficult to tell how exactly the attack began or how many accounts were stolen.
+
+However, the incident was large enough for Tencent to publicly apologize in a post on Sina Weibo — the Chinese version of Twitter.
+
+The mechanics of the attack are more or less clear.
+
+As mentioned above, attackers spread malicious QR codes offering free game logins.
+
+After scanning such QR codes, users were asked to authenticate with their QQ account.
+
+Once they did, the attackers stole the victims’ credentials to then use them for their own gain.
+
+As a result, an unknown number of people were locked out of their QQ accounts.
+
+Tencent is aware of the issue and has since restored the affected accounts.
+
+The company is working with the local authorities to find out more about the attack.
+
+Protect yourself Although this case mainly affected greater China, the threat of malicious QR codes should not be underestimated — especially since QR codes have become so ubiquitous in recent years mainly thanks to covid.
+
+To be on the safe side, when scanning QR codes, use our Kaspersky QR Scanner (available for both Android and iOS ).
+
+The app will tell you if the code points to a dangerous site.
+
+
+
+

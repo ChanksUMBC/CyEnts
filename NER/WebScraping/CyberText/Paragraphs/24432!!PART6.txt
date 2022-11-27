@@ -1,0 +1,5 @@
+
+Another key feature of ILOVEYOU was that the initial infection was made with a simple VBscript program.
+VBscript, in turn, is built on the even older idea of macros: essentially, simple programs that allow you to automate particular actions — for example, when working with documents.
+Most often, macros are used to perform complex calculations in spreadsheets, such as Microsoft Excel.
+Since ancient times, macros have also been supported in Microsoft Word, for example, to automatically generate reports from data entered in a form.

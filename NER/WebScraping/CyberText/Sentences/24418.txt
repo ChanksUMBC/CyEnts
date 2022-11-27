@@ -1,0 +1,73 @@
+Open-source code is a blessing for the IT industry — it helps programmers save time and build products faster and more efficiently by eliminating the need of writing repetitive common code.
+
+To facilitate this knowledge sharing, there are repositories — open platforms where any developer can publish their own packages with their code to speed up the development process for other people.
+
+Such repositories serve countless needs of the IT community and are widely used in development of basically any modern software: web app, mobile app, smart appliance, robot, you name it.
+
+Most popular packages get millions of weekly downloads and are at the foundation of many applications, from pet projects to well-known tech startups.
+
+By some estimates 97% of code in modern web applications comes from npm modules.
+
+However, their popularity and openness in uploading any packages inevitably attracts cybercriminals.
+
+For example, in 2021 unknown attackers compromised several versions of a popular JavaScript library, UAParser.js, by injecting malicious code.
+
+This library was downloaded 6 to 8 million times every week.
+
+By infecting it, cybercriminals were able to mine cryptocurrency and steal confidential information such as browser cookies, passwords and operating system credentials from infected devices.
+
+And here’s more recent example: on July 26, 2022, our researchers discovered a new threat that appeared in the open-source npm repository that they dubbed LofyLife.
+
+So what is LofyLife?
+
+Using an internal automated system for monitoring open-source repositories, our researchers identified a malicious campaign LofyLife.
+
+The campaign employed four malicious packages spreading Volt Stealer and Lofy Stealer malware in the npm repository to gather various information from victims, including Discord tokens and linked credit card information, and to spy on them over time.
+
+The identified malicious packages appeared to be used for ordinary tasks such as formatting headlines or certain gaming functions.
+
+The descriptions of the packages were incomplete and overall it looks like the attackers did not put too much effort into them.
+
+Yet, the ‘formatting headlines’ package was in Brazilian Portuguese with a #brazil hashtag, which points to the attackers looking to target users based in Brazil.
+
+Other packages were presented in English, so they could be targeting users from other countries.
+
+Description of one of the infected packages called “proc-title” (Translation from Portuguese: This package correctly capitalizes your titles as per the Chicago manual of style)
+
+These packages, however, contained highly obfuscated malicious JavaScript and Python code.
+
+This made them harder to analyze when being uploaded to the repository.
+
+The malicious payload consisted of malware written in Python dubbed Volt Stealer — an open-source malicious script, and a JavaScript malware dubbed Lofy Stealer, which has numerous features.
+
+Volt Stealer was used to steal Discord tokens from the infected machines along with the victim’s IP address, and upload them via HTTP.
+
+The Lofy Stealer, a new development from the attackers, is able to infect Discord client files and monitor the victim’s actions — detecting when a user logs in, changes registered e-mail or password, enables or disables multi-factor authentication and adds new payment methods (in which case it steals full credit card details).
+
+It uploads collected information to the remote endpoint.
+
+How to protect from malicious packages Open-source repositories allow anyone to publish their own packages, and not all of them are completely secure.
+
+For example, attackers can impersonate popular npm packages by changing one or two letters in the name to fool the user into thinking they are downloading the genuine package.
+
+Therefore, we recommend to be on guard and not to treat packages as trusted.
+
+In general, development or build environments are convenient targets for attackers trying to organize supply chain attacks.
+
+That means such environments urgently require strong antimalware protection such as Kaspersky Hybrid Cloud Security .
+
+Our products successfully detect LofyLife attack with verdicts HEUR:Trojan.
+
+Script.
+
+Lofy.gen and Trojan.
+
+Python.
+
+Lofy.a.
+
+If you want to be among the first to know about new malicious campaigns spreading via open-source code, subscribe to threat intelligence feeds and reports, such as the ones provided via Threat Intelligence Portal .
+
+
+
+

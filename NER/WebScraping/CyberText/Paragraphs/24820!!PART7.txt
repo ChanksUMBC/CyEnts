@@ -1,0 +1,11 @@
+
+Even if you don’t have to use Tor Browser to protect your privacy (in most cases, a regular VPN app will suffice), the OnionPoison study offers two useful lessons in safeguarding against malicious activity.
+First, only download software from official sites.
+For those who want additional verification, many software developers publish so-called checksums.
+This is a kind of ID of the “real” program installer.
+You can calculate the checksum for the distribution you downloaded to make sure it matches the original.
+In the case of OnionPoison, users had to download Tor Browser from unofficial sources anyway as the official site was blocked.
+In such situations, checksum verification is very useful.
+But, as we mentioned above, the distribution had another red flag: its lack of a legitimate digital signature.
+If Windows displays such a warning, better to double-check everything before running the program.
+Or just don’t run it at all.

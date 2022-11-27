@@ -1,0 +1,4 @@
+
+Open season on gamers has again been declared: cybercriminals are distributing the RedLine Trojan stealer under the guise of game cheats in an attempt to steal accounts, card numbers, cryptowallets and basically anything else within reach.
+Watch on YouTube: Trojan disguised as a cheat The details of Kaspersky’s latest discovery are set out in our Securelist post , but basically it works as follows:
+Attackers post videos on YouTube allegedly about how to use cheats in popular online games such as Rust, FIFA 22, DayZ and a couple dozen more.

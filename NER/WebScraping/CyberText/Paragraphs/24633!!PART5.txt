@@ -1,0 +1,10 @@
+
+Decryption of a file from the app resources Interestingly, the malware creators learned how to use the Go and Rust languages, but for now their skills are limited to decrypting and loading the malicious SDK .
+Like other Trojans subscribers, Harly collects information about the user’s device, and particularly about the mobile network.
+The user’s phone switches to a mobile network and then the Trojan asks the C&C server to configure the list of subscriptions that must be signed up for.
+This particular Trojan works only with Thai operators, so first it checks the MNCs (mobile network codes)
+ — the unique identifiers of network operators to make sure they’re Thai: Checking the MNCs However, as a test MNC it uses China Telecom’s code — 46011.
+This and other clues suggest that the malware developers are located in China.
+Test MNC The Trojan opens the subscription address in an invisible window, and by injecting JS scripts enters the user’s phone number, taps the required buttons, and enters the confirmation code from a text message.
+The result is that the user gets a paid subscription without realizing it.
+Another notable feature of this Trojan is that it can subscribe not only when the process is protected by a text message code, but also when it is protected by a phone call: in this case the Trojan makes a call to specific number and confirms the subscription.

@@ -1,0 +1,6 @@
+
+Luna — more Rust-based ransomware Our researchers discovered the Luna malware in June.
+Also written in Rust, it’s capable of encrypting both Windows and Linux devices, as well as ESXi virtual machine images.
+In an ad on the dark web , the cybercriminals claim to cooperate only with Russian-speaking partners.
+This means that the targets of interest to the attackers most likely are outside the former Soviet Union.
+This is also evidenced by the fact that the ransom note embedded into the code of the ransomware is written in English, albeit with mistakes.

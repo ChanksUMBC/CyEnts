@@ -1,0 +1,105 @@
+Another WhatsApp modification, known as YoWhatsApp, has turned out to be malicious: it downloads the Triada Trojan to smartphones, which shows ads, secretly subscribes the user to paid content, and steals WhatsApp accounts.
+
+How did this happen and what lessons can we learn?
+
+Don’t feed crocodiles with your hand, or Simple Cybersecurity Rules Probably the most important rule of information security is to reduce your risks.
+
+To do this: Don’t visit suspicious websites — they may contain malicious ads or be a front for a phishing scam.
+
+Don’t download hacked versions of programs via torrents.
+
+If you do, there’s a good chance that cracks will contain a password-stealing Trojan , for example.
+
+Don’t click on links in e-mails that were sent from unknown addresses, and don’t open attachments — there could be all kinds of malware lurking there.
+
+You get the idea: being careful goes a long way toward protecting yourself against cyberthreats.
+
+At the same time, it’s still important to keep your antivirus enabled and updated — as insurance in case something happens.
+
+Don’t tempt fate by doing the online equivalent of walking down a deserted alley late at night.
+
+If you apply a little bit of common sense, you can greatly reduce your chances of falling prey to scammers.
+
+In addition to the above-listed ways to lower the risk of something bad happening, it’s worth adding one more: don’t download mobile apps from unofficial sources.
+
+Google and Apple verify apps before adding them to their stores, so the chances of encountering malware there are slim — albeit still not zero (especially in the case of Google Play ).
+
+Huawei does the same with its Huawei AppGallery store, although malware has already been found there too.
+
+But it’s much more likely that you’ll run into malware on open platforms that let you simply download an APK file .
+
+There’s another key security rule: don’t use unofficial clients for messaging apps.
+
+To understand why this is important, let’s take a few steps back and look a little more closely at how messaging apps work.
+
+Most of them operate according to the client-server model , where the user interacts directly with the client app.
+
+Data exchange between client and server occurs through a special protocol .
+
+For many messaging apps this protocol is open.
+
+This makes it possible to create unofficial modified clients with additional features, such as viewing messages other users have deleted, creating mass mailings, customizing the interface, and so on.
+
+So where’s the danger?
+
+With official clients, you’re entrusting your correspondence only to the creator of the messaging app.
+
+When you use an unofficial client, you’re entrusting it not only to the developers of the messaging system but also to the developers of the unofficial client app.
+
+On top of that, the modified client may be distributed through unofficial sources (which, as we recall, shouldn’t be trusted).
+
+All these are additional stages where something can go wrong — in other words, there are extra risks.
+
+What’s up, Triada Naturally, something did go wrong, repeating the scenario we wrote about last year.
+
+To recap: back then, attackers infected the FMWhatsapp mod with a dropper that downloaded a multifunctional Trojan — Triada — onto users’ devices.
+
+This modular Trojan mainly shows ads and signs the user up for paid content.
+
+Now, practically the same thing has happened — with the same messaging app but a different unofficial client.
+
+This time, the YoWhatsApp mod, also known as YoWA, has been infected .
+
+This mod attracts users with expanded privacy options, the ability to transfer files up of to 700 MB, increased speed, and so on.
+
+Apparently YoWhatsApp caught the eye of the malware distributors because it has a significant user base.
+
+Also, the fact that the mod wasn’t allowed on Google Play played into the hands of the criminals.
+
+Therefore, users are accustomed to downloading YoWhatsApp from sources of varying degrees of trustworthiness.
+
+One of the main distribution channels for the infected version of the mod was advertising in SnapTube , an app for downloading video and audio.
+
+SnapTube owners themselves probably didn’t even suspect that one of its advertising campaigns was spreading malware.
+
+Along with the infected YoWhatsApp, users got a dropper that delivered the Triada Trojan to their device.
+
+Unlike last year’s campaign, this time the dropper wasn’t the only thing that came with the Trojan.
+
+An additional feature was added to YoWhatsApp that allow intruders to steal the keys required for WhatsApp to operate.
+
+These keys are enough to hijack an account and use it to do things like distributing malware or extracting money from the victim’s contacts.
+
+As a result, the user not only loses money — since Triada signs them up for paid subscriptions — but also risks compromising their contacts, to whom the criminals may try to write in the user’s name.
+
+How to protect yourself from malware on Android The best way to fight malware is to avoid situations where you might get it in the first place.
+
+In this case, there are three simple rules to follow to protect yourself: Don’t download apps from unknown sources.
+
+In fact, it’s a good idea to block the ability to install apps from places other than Google Play on your Android smartphone.
+
+Don’t install alternative clients for messaging apps.
+
+Even if official versions of apps aren’t always ideal, they’re much more reliable and secure.
+
+Use good protection and always keep it enabled.
+
+Kaspersky for Android can detect different modifications of the Triada Trojan and other Android malware and block them before they have a chance to wreak havoc.
+
+Keep in mind that with the free version of our mobile protection you need to manually run the scan every time you download or install something new.
+
+The full version automatically scans every new app.
+
+
+
+

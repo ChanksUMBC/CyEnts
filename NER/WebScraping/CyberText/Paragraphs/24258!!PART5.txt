@@ -1,0 +1,5 @@
+
+During an attack, the data can be intercepted by malware and fall straight into the cybercriminals’ hands.
+One such data-stealing piece of malware is VPNFilter .
+By infecting routers and NAS servers, it gains the ability to collect information and control or disable the router.
+Spoof websites Malware lodged in the router can surreptitiously redirect you to pages with ads or malicious sites instead of the ones you want to visit.

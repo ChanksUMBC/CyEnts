@@ -1,0 +1,81 @@
+We often write about scams promising someone mountains of gold , when in reality the opposite happens and their pockets get emptied.
+
+Similarly, cybercriminals can get their hands on the money of entire companies by exploiting the greed and negligence of their employees.
+
+That’s exactly what happened with the Ronin Networks blockchain system, created by Sky Mavis for the play-to-earn game Axie Infinity.
+
+A Sky Mavis employee downloaded a PDF file with spyware hidden inside, resulting in one of the biggest cryptocurrency thefts ever.
+
+The company lost 173 600 ETH and 25.5 million USDC (around $540 million at the time of the incident).
+
+We discuss the attack in more detail and share tips on how to protect yourself.
+
+A word about Axie Infinity and Ronin Networks Axie Infinity is an online video game in which players earn cryptocurrency with the help of fantastic creatures known as “axies” which can be “bred,” used in competitions and sold to other players.
+
+To players, axies look like cuddly animals, but they are essentially non-fungible tokens (NFTs).
+
+Released in 2018, Axie Infinity soon gained a wide audience.
+
+At its peak, players could earn so much that for some in South East Asia it became a full-time job .
+
+In its record-breaking November 2021, the game had a daily player count of 2.7 million and revenues last year hit $215 million per week (by the summer of 2022, however, they had dipped to a modest $1 million per week).
+
+Payments in the Axie Infinity ecosystem are made using the in-game currency Smooth Love Potion (SLP), based on the Ethereum blockchain.
+
+To allow users to buy and sell SLP for regular cryptocurrency conveniently and without high fees, the developers created the Ronin platform .
+
+It was this platform that attracted cybercriminal attention.
+
+A juicy offer: how scammers tricked the developers To get to the platform, the attackers carried out a targeted attack on Sky Mavis employees.
+
+They collected information about the company and devised a scam built around a fake job offer with a very attractive salary.
+
+The scheme involved sending (most likely on LinkedIn) a tempting job offer to a senior engineer, who should have known better.
+
+Having passed all the “selection stages” with flying colors, the employee, as expected, received the mouth-watering offer in the form of a PDF file.
+
+When this file was downloaded, the spyware inside it was released into the company’s network.
+
+Spyware in action: withdrawal of funds The cybercriminals used the malware to gain access to the private keys of network validators , that is, nodes that verify and confirm cryptocurrency transactions.
+
+There were nine such validators in Ronin Networks at the time of the attack, and to carry out the transfer, at least five of them had to approve it.
+
+Eventually, the attackers managed to compromise four validators at the company itself and a fifth in the decentralized autonomous organization Axie DAO , where it would (and should) not have been, were it not for an oversight on the part of Sky Mavis itself.
+
+Turns out in November 2021, due to the high volume of transactions and load on the validators, the company allowed Axie DAO to approve transfers.
+
+After a month, the load decreased, and Axie DAO’s assistance was no longer required — but the rights to approve transactions were not withdrawn, which played into cybercriminals’ hands.
+
+Having penetrated the Sky Mavis system, the hackers also gained access to Axie DAO, which provided the fifth validator needed to withdraw funds from others’ accounts to their own.
+
+The Sky Mavis response On discovering the attack, Sky Mavis acted responsibly and took steps to beef up security.
+
+The company brought in outside security experts from Verichains and CertiK, and conducted a thorough audit of Ronin Networks .
+
+Sky Mavis also increased the number of validators to 11, promising to gradually scale up to at least 100.
+
+The larger the total number of validators there are, the more of them have to be compromised to carry out unauthorized transactions, so increasing their number should in theory make such attacks more difficult.
+
+Since the stolen funds actually belonged to Axie Infinity players, Sky Mavis began compensation payments to victims on June 28.
+
+For this, the company leveraged both its own resources and $150 million of Binance funding received in early April.
+
+How to stay protected When planning targeted attacks, cybercriminals carefully study the victim for weak spots.
+
+These can be both security holes in devices and software, as well as the human factor.
+
+The “hero” of our post was an experienced IT specialist, but even they were duped.
+
+To avoid a similar fate and keep hold of your data, money and tokens, stay vigilant and do not neglect security measures.
+
+Do not trust unexpected generous offers: be it your dream job with a huge salary, a prize, an inheritance from some far-flung relative or other heaven-sent goodies.
+
+Avoid downloading files or following links in e-mails and messages from senders you don’t know.
+
+All the more so if you’re on the office network and the files and links are not work-related.
+
+Use a reliable security solution that will prevent malware from running on your device.
+
+
+
+

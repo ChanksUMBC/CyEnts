@@ -1,0 +1,73 @@
+It’s common to find all sorts of malware lurking under what seem to be harmless apps on the official Google Play store.
+
+Unfortunately, even if the platform is policed carefully, moderators can’t always catch these apps before they’re posted.
+
+One of the most popular variations of this kind of malware is Trojan subscribers, which sign up for paid services without the user’s knowledge.
+
+We’ve previously written about the most common families of this kind of Trojans.
+
+Here we’ll tell you about another.
+
+It’s similar to the Jocker Trojan subscriber — that’s why it’s called Harly, the (slightly altered) name of the sidekick of a well-known comic book villain.
+
+The two Trojans probably have common origins.
+
+The lowdown on Harly Trojans Since 2020 more than 190 apps infected with Harly have been found on Google Play.
+
+A conservative estimate of the number of downloads of these apps is 4.8 million, but the actual figure may be even higher.
+
+Examples of apps on Google Play that contain Harly malware
+
+Just like the Jocker Trojans, Trojans in the Harly family imitate legitimate apps.
+
+So how does it work?
+
+The scammers download ordinary apps from Google Play, insert malicious code into them, then upload them to Google Play under a different name.
+
+The apps may still have the features that are listed in the description, so the users may not even suspect a threat.
+
+More examples of apps on Google Play that contain Harly malware
+
+Most members of the Jocker family are multi-staged downloaders — they receive the payload from the scammers’ C&C servers.
+
+Trojans in the Harly family, on the other hand, contain the whole payload within the app and use different methods to decrypt and launch it.
+
+Reviews by users complaining about charges How Harly Trojan subscriber works Let’s take as an example an app called com.binbin.flashlight (md5: 2cc9ab72f12baa8c0876c1bd6f8455e7), a flashlight app that has had more than 10,000 downloads from Google Play.
+
+An app infected with the Harly Trojan When the app is launched, a dodgy library is loaded: A dodgy library The library decrypts the file from the app resources.
+
+Decryption of a file from the app resources Interestingly, the malware creators learned how to use the Go and Rust languages, but for now their skills are limited to decrypting and loading the malicious SDK .
+
+Like other Trojans subscribers, Harly collects information about the user’s device, and particularly about the mobile network.
+
+The user’s phone switches to a mobile network and then the Trojan asks the C&C server to configure the list of subscriptions that must be signed up for.
+
+This particular Trojan works only with Thai operators, so first it checks the MNCs (mobile network codes)
+
+ — the unique identifiers of network operators to make sure they’re Thai: Checking the MNCs However, as a test MNC it uses China Telecom’s code — 46011.
+
+This and other clues suggest that the malware developers are located in China.
+
+Test MNC The Trojan opens the subscription address in an invisible window, and by injecting JS scripts enters the user’s phone number, taps the required buttons, and enters the confirmation code from a text message.
+
+The result is that the user gets a paid subscription without realizing it.
+
+Another notable feature of this Trojan is that it can subscribe not only when the process is protected by a text message code, but also when it is protected by a phone call: in this case the Trojan makes a call to specific number and confirms the subscription.
+
+Our products detect the harmful apps we have described here as Trojan.
+
+AndroidOS.Harly and Trojan.
+
+AndroidOS.Piom.
+
+How to protect yourself from Trojan subscribers The official app stores are continually combating the spread of malware but, as we see, they’re not always successful.
+
+Before you install an app, you should first read the user reviews and check its rating on Google Play.
+
+Of course, keep in mind that reviews and ratings may be inflated .
+
+To cover all your bases so you can avoid falling prey to this kind of malware, we recommend that you install a reliable security solution .
+
+
+
+

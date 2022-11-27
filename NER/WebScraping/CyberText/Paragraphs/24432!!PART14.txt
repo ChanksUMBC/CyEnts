@@ -1,0 +1,9 @@
+
+In some companies, this additional acknowledgment broke down internal processes built on scripts.
+For that reason, even when developing a patch in the wake of ILOVEYOU, the question of “Is it going to break something for users?” was on the agenda, but this time it was already clear that security needed to improve, and quickly.
+Old virus, modern problems The ILOVEYOU epidemic has raised many questions that are still relevant today in the field of information security.
+The most important one seems to be: can’t we send out patches any faster?
+There were definitely problems with this: Microsoft released a patch kit for Outlook over a month after the outbreak started.
+Also, the automatic delivery mechanisms for these updates were rudimentary, so local outbreaks of mail infection took a long time to cease.
+The security solutions industry had already shown itself to be quite beneficial in this sense.
+As Eugene Kaspersky recalls, it wasn’t difficult to protect the company’s anti-virus users .

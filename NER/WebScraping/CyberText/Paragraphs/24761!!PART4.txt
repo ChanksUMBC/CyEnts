@@ -1,0 +1,10 @@
+
+This time, the YoWhatsApp mod, also known as YoWA, has been infected .
+This mod attracts users with expanded privacy options, the ability to transfer files up of to 700 MB, increased speed, and so on.
+Apparently YoWhatsApp caught the eye of the malware distributors because it has a significant user base.
+Also, the fact that the mod wasn’t allowed on Google Play played into the hands of the criminals.
+Therefore, users are accustomed to downloading YoWhatsApp from sources of varying degrees of trustworthiness.
+One of the main distribution channels for the infected version of the mod was advertising in SnapTube , an app for downloading video and audio.
+SnapTube owners themselves probably didn’t even suspect that one of its advertising campaigns was spreading malware.
+Along with the infected YoWhatsApp, users got a dropper that delivered the Triada Trojan to their device.
+Unlike last year’s campaign, this time the dropper wasn’t the only thing that came with the Trojan.

@@ -79,3 +79,5 @@ apk
 .cs
 .doc
 .docx
+dll
+.dll

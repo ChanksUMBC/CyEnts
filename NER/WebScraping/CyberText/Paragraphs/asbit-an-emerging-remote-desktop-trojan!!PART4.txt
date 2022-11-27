@@ -1,0 +1,7 @@
+
+It’s unclear to us why they shifted to Windows.
+Domain Creation Date DNS Resolution ASN Country First Seen Last Seen OS asbit.cn January 31, 2021 47.111.81.199 Hangzhou Alibaba Advertising Co.,Ltd.
+China 2021-01-31 14:12:49 2021-10-22 5:50:25 Linux 43.128.31.158 Asia Pacific Network Information Center,
+Pty. Ltd.
+Hong Kong 2021-10-23
+0:35:40 2021-12-21 0:35:50 Linux 43.156.37.105 Tencent Cloud Computing (Beijing) Co., Ltd China 2021-12-22 15:42:42 2021-12-22 15:42:42 Linux mitm.work May 24, 2021 43.128.31.158 Asia Pacific Network Information Center,

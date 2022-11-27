@@ -1,0 +1,4 @@
+
+One of the primary suspects is Lazarus Group, a North Korean APT cybergang.
+This is because the attackers employed a multi-stage algorithm to launder the loot, similar to the schemes used in previous hacks by Lazarus group.
+First, they ran equal amounts of crypto through a tumbler (a tool for mixing cryptocurrency funds with others to obscure the trail), then transferred the cryptocurrency through decentralized platforms .

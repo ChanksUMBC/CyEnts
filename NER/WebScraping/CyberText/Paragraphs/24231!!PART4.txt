@@ -1,0 +1,8 @@
+
+The text itself is full of errors and typos, which a reputable company wouldn’t permit.
+There are two links in the e-mail: one supposedly pointing to the new site, the other to contact the senders.
+In actual fact, both lead to the same page, which automatically redirects the victim to another — phishing — website.
+The phishing site looks far more convincing than the e-mail, with the same welcome message and design as the real Wise site.
+The only difference is the image on the left of the page, and also the URL.
+The latter unexpectedly displays the name of an obscure app for finding restaurants and discounted services.
+At this point, the cybercriminals ask the user to enter their e-mail and password for account login.

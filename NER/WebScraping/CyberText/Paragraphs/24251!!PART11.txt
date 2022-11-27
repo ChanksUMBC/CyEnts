@@ -1,0 +1,9 @@
+
+This is not a completely new problem, mind.
+The Intel Management Engine and AMD Secure Technology, which also handle system protection and secure remote management, are active whenever the motherboard of a laptop or desktop computer is connected to a power source.
+As in the case of the Bluetooth/UWB/NFC/Secure Element bundle in iPhones, these systems have extensive rights inside the computer, and vulnerabilities in them can be very dangerous.
+On the bright side, the paper has no immediate impact on ordinary users: the data obtained in the study is insufficient for a practical attack.
+As a surefire solution, the authors suggest that Apple should implement a hardware switch that kills the power to the phone completely.
+But given Apple’s  physical-button phobia, you can be sure that won’t happen.
+
+

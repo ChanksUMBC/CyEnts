@@ -1,4 +1,6 @@
-FortiGuard Labs Threat Research Report Affected platforms: Windows Impacted parties: Users of Adobe Illustrator 2021, versions 25.4.1 and earlier Impact: Multiple Vulnerabilities leading to Arbitrary Code Execution, Memory Leak and Application Denial of Service Severity level: Critical
+FortiGuard Labs Threat Research Report Affected platforms: Windows Impacted parties: Users of Adobe Illustrator 2021, versions 25.4.1 and earlier Impact: Multiple Vulnerabilities leading to Arbitrary Code Execution, Memory Leak and Application Denial of Service Severity level:
+
+Critical
 
 In August of 2021, I discovered and reported multiple zero-day vulnerabilities in Adobe Illustrator to Adobe, Inc.
 

@@ -1,0 +1,13 @@
+
+In 1995, this Word functionality was exploited by the WM/Concept.
+A virus.
+This macro virus infected Microsoft Word documents and displayed this message when the document was opened:
+That’s what the Concept.
+A macro virus infection lead to.
+Source
+And that’s all.
+There was no malicious functionality as such, just a rather annoying window that kept popping up.
+Former Microsoft employee Steven Sinofsky, who was responsible for the development of the company’s office solutions from 1998 to 2006, refers to Concept.
+A in his memoirs as the first signal: at that point it became clear that automation implemented in all Microsoft solutions could be used to its detriment.
+As a result, it was decided to display a warning before running macros: the document contains a program, are you sure you want to run it?
+As soon as Microsoft began implementing restrictions on running macros, malware authors began to look for ways to circumvent these restrictions.

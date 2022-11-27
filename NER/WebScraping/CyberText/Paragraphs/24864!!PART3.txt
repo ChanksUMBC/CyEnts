@@ -1,0 +1,5 @@
+
+In the third quarter of 2022, this figure already stood at 17 percent (that is, every sixth case), making cryptocurrency miners the second most common malware after ransomware.
+Pirated software — with miner included Malicious miners, like other malware, spread in a variety of ways.
+In addition to vulnerabilities, cybercriminals often use pirated content (free movies/music, hacked software, cracks, cheats, etc.) to deliver such malware.
+So if, after torrenting a hacked game, your computer suddenly begins to slow down terribly, you may have picked up a miner along the way.

@@ -1,0 +1,5 @@
+
+Such repositories serve countless needs of the IT community and are widely used in development of basically any modern software: web app, mobile app, smart appliance, robot, you name it.
+Most popular packages get millions of weekly downloads and are at the foundation of many applications, from pet projects to well-known tech startups.
+By some estimates 97% of code in modern web applications comes from npm modules.
+However, their popularity and openness in uploading any packages inevitably attracts cybercriminals.

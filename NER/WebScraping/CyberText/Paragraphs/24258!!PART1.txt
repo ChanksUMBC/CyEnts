@@ -1,0 +1,8 @@
+You check your computer for viruses every week, update systems and programs promptly , use strong passwords and generally take care online… yet for some reason your internet is slow and some websites deny access?
+It could be malware not on your computer, but in the router.
+Why routers?
+Cybercriminals target routers largely for two reasons.
+First, because all network traffic goes through these devices; second, you can’t scan a router with a regular antivirus.
+So malware that has set up shop in the router has plenty of opportunities to attack, and way less chance of being detected — let alone deleted.
+Let’s now talk about some things cybercriminals can do with an infected router.
+Create a botnet One of the most common cases is when an infected router joins a botnet; that is, a network of devices that send myriads of requests to a particular website or online service as part of a DDoS attack.

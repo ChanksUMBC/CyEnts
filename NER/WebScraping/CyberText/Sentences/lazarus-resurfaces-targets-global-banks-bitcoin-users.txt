@@ -128,7 +128,9 @@ Once the malware has performed all these activities it sends an HTTP POST reques
 
 In the format: HTTP POST to www[dot]worker.co.kr /board2004/Upload/files/main.asp?idx=%d&no=%s&mode=%s OR HTTP POST to www[dot]palgong-cc.co.kr /html/course/course05.asp?idx=%d&no=%s&mode=%s where idx= 20 (14h) if the Registry key does not exist; 24 (18h) if the key exists.
 
-no= XORed + base64 encoded “<Computername> \\ <username>” mode= XORed + base64 encoded Process listing + Registry key flag Command and control server domain Persistence The persistence mechanism of the malware is performed only for the downloaded implant.
+no= XORed + base64 encoded “<Computername> \\ <username>” mode= XORed + base64 encoded Process listing + Registry key flag Command and control server domain Persistence
+
+The persistence mechanism of the malware is performed only for the downloaded implant.
 
 Persistence is established for the implant via the visual basic macro code initially executed upon document loading by the victim.
 

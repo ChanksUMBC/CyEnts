@@ -1,0 +1,13 @@
+
+Our researchers could not intercept the file received by the rootkit from its C2 server.
+Instead, on one of the infected machines, they found a piece of malware that is likely related to CosmicStrand.
+This malware creates a user named “aaaabbbb” in the operating system with a local administrator rights.
+For more technical details about CosmicStrand, see our researchers’ post on Securelist .
+Should we fear rootkits?
+Since 2016, CosmicStrand has been serving cybercriminals well, attracting little or no attention from infosec researchers.
+That’s worrying, of course, but it’s not all bad.
+First, this is an example of sophisticated, expensive malware used for targeted, not mass, attacks — even if seemingly random people sometimes get hit.
+Second, there are security products able to detect such malware.
+For example, our security solutions protect our users from rootkits.
+
+

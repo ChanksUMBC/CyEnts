@@ -1,0 +1,143 @@
+Each of us has probably installed some kind of browser extension at least once: an ad blocker, an online translator, a spellchecker or something else.
+
+However, few of us stop to think: is it safe?
+
+Unfortunately, these seemingly innocuous mini-apps can be far more dangerous than they seem at first glance.
+
+Let’s see what might go wrong.
+
+For this, we shall use data from our experts’ recent report on the most common families of malicious browser extensions.
+
+What are extensions and what do they do?
+
+Let’s start with the basic definition and identify root of the problem.
+
+A browser extension is a plug-in that adds functionality to your browser.
+
+For example, they can block ads on web pages, make notes, check spelling and much more.
+
+For popular browsers there are official extension stores that help select, compare and install the plug-ins you want.
+
+But extensions can also be installed from unofficial sources.
+
+It’s important to note that, for an extension to do its job, it will need permission to read and change the content of web pages you view in the browser.
+
+Without this access, it will likely be completely useless.
+
+In the case of Google Chrome, extensions will require the ability to read and change all your data on all websites you visit.
+
+Looks like a big deal, right?
+
+However, even official stores draw little attention to it.
+
+For example, in the official Chrome Web Store, the Privacy practices section of the popular Google Translate extension states that it collects information about location, user activity and website content.
+
+But the fact that it needs access to all data from all websites in order to work, isn’t revealed to the user until they’re installing the extension.
+
+The Google Translate extension asks for permission to “Read and change all your data all websites” you visit Many if not most users probably won’t even read this message and will automatically click Add extension to start using the plugin right away.
+
+All of this creates an opportunity for cybercriminals to distribute adware and even malware under the guise of what appears to be harmless extensions.
+
+As for adware extensions, the right to alter the displayed content allows them to show ads on the sites you visit.
+
+In this case, the extension creators earn money from users clicking tracked affiliate links to advertisers’ websites.
+
+For better targeted ad content, they may also analyze your search queries and other data.
+
+Things are even worse when it comes to malicious extensions.
+
+Access to the content of all visited websites allows an attacker to steal card details , cookies and other sensitive information .
+
+Let’s look at some examples.
+
+Rogue tools for Office files In recent years, cybercriminals have been actively spreading malicious WebSearch adware extensions.
+
+Members of this family are usually disguised as tools for Office files, for example, for Word-to-PDF conversion.
+
+Most of them even perform their stated function.
+
+But then, after installation, they replace the usual browser homepage with a mini-site with a search bar and tracked affiliate links to third-party resources, such as AliExpress or Farfetch.
+
+Browser homepage after downloading one of the extensions of the WebSearch family Once installed, the extension also changes the default search engine to something called search.myway.
+
+This allows cybercriminals to save and analyze user search queries and feed them with more relevant links according to their interests.
+
+At present, WebSearch extensions are no longer available in the official Chrome store, but they can still be downloaded from third-party resources.
+
+Adware add-on that won’t leave you be Members of DealPly, another common family of adware extensions, usually sneak onto people’s computers along with pirated content downloaded from dubious sites.
+
+They work in roughly the same way as WebSearch plugins.
+
+DealPly extensions likewise replace the browser homepage with a mini-site with affiliate links to popular digital platforms, and just like malicious WebSearch extensions, they substitute the default search engine and analyzes user search queries to create more tailored ads.
+
+Browser homepage after downloading one of the extensions of the DealPly family
+
+What’s more, members of the DealPly family are extremely difficult to get rid of.
+
+Even if the user removes the adware extension, it will reinstall on their device each time the browser is opened.
+
+AddScript hands out unwanted cookies Extensions from the AddScript family often masquerade as tools for downloading music and videos from social networks, or proxy server managers.
+
+However, on top of this functionality, they infect the victim’s device with malicious code.
+
+The attackers then use this code to view videos in the background without the user noticing and earn income from boosting the number of views.
+
+Another source of income for cybercriminals is downloading cookies to the victim’s device.
+
+Generally speaking, cookies are stored on the user’s device when they visit a website and can be used as a kind of digital marker.
+
+In a normal situation, affiliated sites promise to take customers to a legitimate site.
+
+For this, they attract users to their own site, which, again, in a normal situation, is done by means of interesting or useful content.
+
+Then, they store a cookie on the user’s computer, and send them to the target site with a link.
+
+Using this cookie, the site understands where the new customer has come from and pays the partner a fee — sometimes for the redirect itself, sometimes a percentage of any purchase made, and sometimes for a certain action, such as registration.
+
+AddScript operators employ a malicious extension to abuse this scheme.
+
+Instead of sending real website visitors to partners, they download multiple cookies onto the infected devices.
+
+These cookies serve as markers for the scammers’ partner program, and the AddScript operators receive a fee.
+
+In fact, they don’t attract any new customers at all, and their “partner” activity consists of infecting computers with these malicious extensions.
+
+FB Stealer — a cookie thief FB Stealer, another family of malicious extensions, works differently.
+
+Unlike AddScript, members of this family don’t download “extras” to the device, rather they steal important cookies.
+
+Here’s how it works.
+
+The FB Stealer extension gets onto users’ devices together with the NullMixer Trojan, which the victims usually pick up when trying to download a hacked software installer.
+
+Once installed, the Trojan modifies the file used to store the Chrome browser settings, including information about extensions.
+
+Then, after activation, FB Stealer pretends to be the Google Translate extension, so that users let their guard down.
+
+The extension does look very convincing, the only downside for the attackers being the browser warning that the official store contains no information about it.
+
+Browser warning that the official store contains no information about the extension Members of this family also substitute the browser’s default search engine, but that is not the most unpleasant thing about these extensions.
+
+FB Stealer’s main function is to steal session cookies from users of the world’s largest social network, hence the name.
+
+These are the same cookies that allow you to bypass logging in every time you visit the site — and they also allow attackers to gain entry without a password.
+
+Having hijacked an account in this way, they can then, for example, message the victim’s friends and relatives asking for money.
+
+How to stay safe Browser extensions are useful tools, but it’s important to treat them with caution and realize they’re not nearly as harmless as one might think.
+
+Therefore, we recommend the following security measures: Download extensions only from official sources.
+
+Remember that this is no watertight security guarantee — malicious extensions do manage to penetrate official stores every now and again.
+
+But such platforms usually care about user safety, and eventually manage to remove malicious extensions.
+
+Don’t install too many extensions and regularly check the list.
+
+If you see something that you didn’t install yourself, it’s a bright red flag.
+
+Use a reliable security solution .
+
+
+
+

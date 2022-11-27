@@ -1,0 +1,5 @@
+
+But in May 2000, this “digital transformation,” as it became popular to call it much later, was suddenly halted by the ILOVEYOU virus outbreak.
+Many companies were forced to temporarily shut down their mail servers, which were simply unable to cope with the flow of tens of thousands of love messages.
+Predecessors: Concept.
+B and Melissa Strictly speaking, ILOVEYOU should be classified as a network worm : it is a malicious program that spreads itself over the network.

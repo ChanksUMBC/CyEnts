@@ -1,0 +1,3 @@
+We’ve talked a lot lately about cryptocurrencies , as well as various scams and other crypto-targeting malicious activity .
+Our researchers recently checked out the situation with malicious miners — programs that secretly generate cryptocurrency for their owners using the resources of others folks’ computers.
+Although malicious miners don’t directly steal data or money, they can make the victim’s life a misery.

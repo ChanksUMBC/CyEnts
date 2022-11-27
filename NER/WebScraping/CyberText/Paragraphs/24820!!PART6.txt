@@ -1,0 +1,10 @@
+
+Their browsing history — not only in Tor Browser, but also in other browsers installed in the system, such as Google Chrome and Microsoft Edge.
+The IDs of Wi-Fi networks they connect to.
+And lastly, account data in the popular Chinese messengers QQ and WeChat.
+Such details can be used to associate any online activity with a specific user.
+Wi-Fi network data can even allow their location to be established rather accurately.
+Privacy risks OnionPoison is so named because it essentially destroys the privacy provided by The Onion Router software.
+The consequences are obvious: all attempts to hide your online activity will, on the contrary, reveal it to the attackers.
+Curiously, unlike most malware of this kind, OnionPoison doesn’t bother stealing user passwords.
+The organizers clearly have no need for them: the sole purpose of the attack is surveillance.

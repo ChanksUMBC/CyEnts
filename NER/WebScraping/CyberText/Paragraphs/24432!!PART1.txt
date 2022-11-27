@@ -1,0 +1,11 @@
+Let’s take a trip down memory lane to May 2000.
+Just another day at the office: You turn on your work computer, connect to the internet and download the latest e-mail in the Microsoft Outlook client.
+You immediately notice a strange message with the subject line “ILOVEYOU.”
+A person you know confesses their love to you.
+Maybe a school friend…
+Wait, no!
+Even better — your older supervisor.
+Whoever it is, it’s definitely eye-catching, so you click the attached file called “LOVE-LETTER-FOR-YOU.TXT.VBS” and… nothing seems to happen.
+However, sometime later, you discover that important documents on your hard disk have been irreparably corrupted, and a bunch of similar love letters have been sent out on your behalf — to all of the contacts in your address book.
+An e-mail with the ILOVEYOU worm looked something like this in the old Microsoft e-mail client.
+Source ILOVEYOU was not the first malware to exploit a hole in Microsoft’s e-mail client, but it certainly initiated one of the most serious virus outbreaks at the beginning of the new millennium.

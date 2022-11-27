@@ -1,0 +1,6 @@
+
+Archive and instructions for downloading fake pirated software
+The good news is that there are no tricky mechanisms here to infect the victim’s computer simply by having them visit the site.
+All steps — from clicking the link to downloading the malware and eventually launching it — must be completed by users themselves.
+If a victim smells a rat and stops, nothing will happen to the computer.
+Nullmixer distributors are clearly counting on creating a false sense of security: many people think that nothing bad could possibly appear on the first page of search results, and so carelessly click away and end up installing a Trojan.

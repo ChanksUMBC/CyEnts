@@ -1,0 +1,5 @@
+
+The danger of UEFI malware Since UEFI firmware is embedded in a chip on the motherboard and not written to the hard drive, it is immune to any hard drive manipulations.
+Therefore, it is very difficult to get rid of UEFI-based malware: even wiping the drive and reinstalling the operating system will not touch UEFI.
+For this same reason, not all security solutions can detect malware hidden in UEFI.
+Simply put, once malware has made its way into the firmware, it is there to stay.

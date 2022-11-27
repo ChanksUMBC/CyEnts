@@ -1,0 +1,6 @@
+
+The company lost 173 600 ETH and 25.5 million USDC (around $540 million at the time of the incident).
+We discuss the attack in more detail and share tips on how to protect yourself.
+A word about Axie Infinity and Ronin Networks Axie Infinity is an online video game in which players earn cryptocurrency with the help of fantastic creatures known as “axies” which can be “bred,” used in competitions and sold to other players.
+To players, axies look like cuddly animals, but they are essentially non-fungible tokens (NFTs).
+Released in 2018, Axie Infinity soon gained a wide audience.

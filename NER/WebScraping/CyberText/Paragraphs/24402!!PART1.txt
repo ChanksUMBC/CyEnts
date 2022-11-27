@@ -1,0 +1,4 @@
+We often write about scams promising someone mountains of gold , when in reality the opposite happens and their pockets get emptied.
+Similarly, cybercriminals can get their hands on the money of entire companies by exploiting the greed and negligence of their employees.
+That’s exactly what happened with the Ronin Networks blockchain system, created by Sky Mavis for the play-to-earn game Axie Infinity.
+A Sky Mavis employee downloaded a PDF file with spyware hidden inside, resulting in one of the biggest cryptocurrency thefts ever.

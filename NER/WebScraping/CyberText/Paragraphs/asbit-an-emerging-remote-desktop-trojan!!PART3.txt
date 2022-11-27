@@ -1,0 +1,6 @@
+
+  Later in the year 2021, the threat actors registered mitm[.]work and fmt[.]ink .
+At this time, the servers are hosted on Linux servers.
+In 2022, they registered the domain def[.]cab, rfb[.]ink and rdlite[.]com .
+Around June of 2022, we also see a shift of the OS they used in hosting these servers.
+Based on third-party server fingerprinting services like Shodan and Cencys, we found that they shifted to Windows OS and used IIS.

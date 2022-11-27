@@ -1,0 +1,59 @@
+Our researchers examined a new version of the CosmicStrand rootkit , which they found in modified UEFI (Unified Extensible Firmware Interface) firmware — the code that loads first and initiates the OS boot process when the computer is turned on.
+
+The danger of UEFI malware Since UEFI firmware is embedded in a chip on the motherboard and not written to the hard drive, it is immune to any hard drive manipulations.
+
+Therefore, it is very difficult to get rid of UEFI-based malware: even wiping the drive and reinstalling the operating system will not touch UEFI.
+
+For this same reason, not all security solutions can detect malware hidden in UEFI.
+
+Simply put, once malware has made its way into the firmware, it is there to stay.
+
+Of course, infecting UEFI is no simple task: this requires either physical access to the device, or some sophisticated mechanism for remote infection of the firmware.
+
+What’s more, to achieve its ultimate goal, whatever that may be, the malware not only has to reside in UEFI, but penetrate the operating system at startup, which is nothing if not tricky.
+
+All this requires great effort to pull off, which is why such malware is most often seen in targeted attacks against high-profile individuals or organizations.
+
+Victims and possible infection vectors of CosmicStrand Oddly enough, the CosmicStrand victims identified by our researchers were ordinary people using our free antivirus.
+
+They seemingly had nothing to do with any organization of interest to attackers of this caliber.
+
+It also turned out that the motherboards infected in all known cases came from just two manufacturers.
+
+Therefore, it is likely that the attackers found some common vulnerability in these motherboards that made UEFI infection possible.
+
+It is unknown how exactly the cybercriminals managed to deliver the malware.
+
+The fact that these CosmicStrand victims were small fries may indicate that the attackers behind this rootkit can infect UEFI remotely.
+
+But there are other possible explanations: for example, experts at Qihoo 360, having investigated early versions of CosmicStrand of 2016 vintage, suggested that one of the victims had purchased a modified motherboard from a reseller.
+
+But in this case, our experts were unable to confirm the use of any given infection method.
+
+What CosmicStrand does The main purpose of CosmicStrand is to download a malicious program at operating system startup, which then performs the tasks set by the attackers.
+
+Having successfully passed through all stages of the OS boot process, the rootkit eventually runs a shell code and contacts the attackers’ C2 server , from which it receives a malicious payload.
+
+Our researchers could not intercept the file received by the rootkit from its C2 server.
+
+Instead, on one of the infected machines, they found a piece of malware that is likely related to CosmicStrand.
+
+This malware creates a user named “aaaabbbb” in the operating system with a local administrator rights.
+
+For more technical details about CosmicStrand, see our researchers’ post on Securelist .
+
+Should we fear rootkits?
+
+Since 2016, CosmicStrand has been serving cybercriminals well, attracting little or no attention from infosec researchers.
+
+That’s worrying, of course, but it’s not all bad.
+
+First, this is an example of sophisticated, expensive malware used for targeted, not mass, attacks — even if seemingly random people sometimes get hit.
+
+Second, there are security products able to detect such malware.
+
+For example, our security solutions protect our users from rootkits.
+
+
+
+

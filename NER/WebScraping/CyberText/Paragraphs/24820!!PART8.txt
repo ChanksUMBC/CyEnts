@@ -1,0 +1,7 @@
+
+The site hosted on the OnionPoison command-and-control server is visually identical to the real www.torproject.org.
+Source Now for the second lesson, which stems from the first.
+Never download programs from YouTube links!
+You might argue that OnionPoison poses a threat only to folks in China, and those in other countries seem unaffected.
+But in fact, this isn’t the only attack that uses social networks as bait to hook gullible users.
+Another recent Kaspersky report showed how cybercriminals infect gamers’ devices and steal their data.

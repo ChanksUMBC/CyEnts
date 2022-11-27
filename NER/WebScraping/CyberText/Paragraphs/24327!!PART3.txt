@@ -1,0 +1,11 @@
+
+The platform provides all kinds of services, including chatting, watching movies, blogging, and gaming — the latter service being the relevant one in this case.
+It’s developed by Chinese tech giant Tencent.
+Due to the regional specific, it’s difficult to tell how exactly the attack began or how many accounts were stolen.
+However, the incident was large enough for Tencent to publicly apologize in a post on Sina Weibo — the Chinese version of Twitter.
+The mechanics of the attack are more or less clear.
+As mentioned above, attackers spread malicious QR codes offering free game logins.
+After scanning such QR codes, users were asked to authenticate with their QQ account.
+Once they did, the attackers stole the victims’ credentials to then use them for their own gain.
+As a result, an unknown number of people were locked out of their QQ accounts.
+Tencent is aware of the issue and has since restored the affected accounts.

@@ -1,0 +1,7 @@
+
+The UWB firmware can also be examined for vulnerabilities.
+The main problem, however, is that these wireless modules (as well as NFC) communicate directly with the protected enclave that is Secure Element.
+Which brings us to some of the paper’s most exciting conclusions: Theoretically, it’s possible to steal a virtual car key from an iPhone — even if the device is powered off!
+Clearly, if the iPhone is the car key, losing the device could mean losing the car.
+However, in this case the actual phone remains in your possession while the key is stolen.
+Imagine it like this: an intruder approaches you at the mall, brushes their phone against your bag, and steals your virtual key.

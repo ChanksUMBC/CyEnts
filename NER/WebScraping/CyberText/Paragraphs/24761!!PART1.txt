@@ -1,0 +1,15 @@
+Another WhatsApp modification, known as YoWhatsApp, has turned out to be malicious: it downloads the Triada Trojan to smartphones, which shows ads, secretly subscribes the user to paid content, and steals WhatsApp accounts.
+How did this happen and what lessons can we learn?
+Don’t feed crocodiles with your hand, or Simple Cybersecurity Rules Probably the most important rule of information security is to reduce your risks.
+To do this: Don’t visit suspicious websites — they may contain malicious ads or be a front for a phishing scam.
+Don’t download hacked versions of programs via torrents.
+If you do, there’s a good chance that cracks will contain a password-stealing Trojan , for example.
+Don’t click on links in e-mails that were sent from unknown addresses, and don’t open attachments — there could be all kinds of malware lurking there.
+You get the idea: being careful goes a long way toward protecting yourself against cyberthreats.
+At the same time, it’s still important to keep your antivirus enabled and updated — as insurance in case something happens.
+Don’t tempt fate by doing the online equivalent of walking down a deserted alley late at night.
+If you apply a little bit of common sense, you can greatly reduce your chances of falling prey to scammers.
+In addition to the above-listed ways to lower the risk of something bad happening, it’s worth adding one more: don’t download mobile apps from unofficial sources.
+Google and Apple verify apps before adding them to their stores, so the chances of encountering malware there are slim — albeit still not zero (especially in the case of Google Play ).
+Huawei does the same with its Huawei AppGallery store, although malware has already been found there too.
+But it’s much more likely that you’ll run into malware on open platforms that let you simply download an APK file .

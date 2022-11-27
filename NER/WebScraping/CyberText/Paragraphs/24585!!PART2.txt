@@ -1,0 +1,5 @@
+
+As usual, we recommend installing updates with no delay.
+In the meantime, we’ll briefly talk about the vulnerabilities that deserve special attention.
+CVE-2022-37969, which is being actively exploited by attackers CVE-2022-37969 is a zero-day vulnerability in the Common Log File System driver.
+This is not the most dangerous bug of those that were patched by the latest update (its CVSS rating is only 7.8), since, in order to take advantage of it, attackers need to somehow gain access to the victim’s computer.

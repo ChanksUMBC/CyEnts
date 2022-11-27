@@ -1,0 +1,5 @@
+
+The apps may still have the features that are listed in the description, so the users may not even suspect a threat.
+More examples of apps on Google Play that contain Harly malware
+Most members of the Jocker family are multi-staged downloaders — they receive the payload from the scammers’ C&C servers.
+Trojans in the Harly family, on the other hand, contain the whole payload within the app and use different methods to decrypt and launch it.

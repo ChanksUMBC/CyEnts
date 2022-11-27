@@ -1,0 +1,59 @@
+Microsoft’s vulnerability hunters have presented a fresh catch: 64 vulnerabilities in its various products and services — five of which are critical.
+
+Two vulnerabilities were publicly disclosed before the patch was released (which technically makes them zero-days), and one is being actively exploited by attackers.
+
+As usual, we recommend installing updates with no delay.
+
+In the meantime, we’ll briefly talk about the vulnerabilities that deserve special attention.
+
+CVE-2022-37969, which is being actively exploited by attackers CVE-2022-37969 is a zero-day vulnerability in the Common Log File System driver.
+
+This is not the most dangerous bug of those that were patched by the latest update (its CVSS rating is only 7.8), since, in order to take advantage of it, attackers need to somehow gain access to the victim’s computer.
+
+However, successful exploitation will allow them to elevate their privileges to SYSTEM.
+
+According to Microsoft some attackers are already using the exploit for this vulnerability in the wild; therefore, it should be patched as soon as possible.
+
+Critical vulnerabilities All five newly fixed critical vulnerabilities belong to the remote code execution (RCE) class; that is, they can be used to run arbitrary code on victim computers.
+
+CVE-2022-34718 — a bug in Windows TCP/IP with a CVSS rating of 9.8.
+
+An unauthorized attacker can use it to execute arbitrary code on the attacked Windows computer with the IPSec service enabled by sending a specially crafted IPv6 packet to it.
+
+CVE-2022-34721 and CVE-2022-34722 — vulnerabilities in the Internet Key Exchange protocol that allow an attacker to execute malicious code by also sending an IP packet to a vulnerable machine.
+
+Both have a CVSS rating of 9.8.
+
+Although these vulnerabilities only affect the IKEv1 protocol version, Microsoft reminds that all Windows Server systems are vulnerable because they accept both v1 and v2 packets.
+
+CVE-2022-34700 and CVE-2022-35805 — a pair of vulnerabilities in the Microsoft Dynamics customer relationship management (CRM) software.
+
+Their exploitation allows an authenticated user to execute arbitrary SQL commands, after which the attacker can elevate their rights and execute commands inside the Dynamics 365 database with db_owner rights.
+
+Since an attacker still needs to somehow authenticate, the CVSS ratings of these vulnerabilities are slightly lower (8.8), but they are still considered critical.
+
+A vulnerability relevant to ARM processors — CVE-2022-23960 CVE-2022-23960 is the second vulnerability that was publicly disclosed before the patch.
+
+Theoretically, this could have meant that attackers could have started using it before it was patched, but it doesn’t seem to have been the case.
+
+In fact, CVE-2022-23960 is yet another variation of the Spectre vulnerability, which interferes with a processor’s speculative execution of instructions mechanism.
+
+In other words, the probability of its use in real attacks is extremely small — the danger is somewhat theoretical.
+
+What’s more, this vulnerability is only relevant for the Windows 11 on ARM64-based systems, which makes exploitation even less practical.
+
+Other vulnerabilities There are surprisingly few non-dangerous vulnerabilities in the September Patch Tuesday update — only one has a low severity rating and another has a medium rating.
+
+The remaining 57, although not as dangerous as the five aforementioned critical ones, still belong to the “important” category.
+
+Therefore, as we already recommended at the beginning of this post, it’s better to update without delay.
+
+How to stay safe First of all, you should fix the already patched vulnerabilities .
+
+In addition, we recommend protecting all computers and servers connected to the internet with security solutions equipped with technologies for vulnerability detection and exploit prevention.
+
+This will help defend your company against both known and yet unknown vulnerabilities.
+
+
+
+

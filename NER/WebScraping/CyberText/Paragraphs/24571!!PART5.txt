@@ -1,0 +1,9 @@
+
+Most of them even perform their stated function.
+But then, after installation, they replace the usual browser homepage with a mini-site with a search bar and tracked affiliate links to third-party resources, such as AliExpress or Farfetch.
+Browser homepage after downloading one of the extensions of the WebSearch family Once installed, the extension also changes the default search engine to something called search.myway.
+This allows cybercriminals to save and analyze user search queries and feed them with more relevant links according to their interests.
+At present, WebSearch extensions are no longer available in the official Chrome store, but they can still be downloaded from third-party resources.
+Adware add-on that won’t leave you be Members of DealPly, another common family of adware extensions, usually sneak onto people’s computers along with pirated content downloaded from dubious sites.
+They work in roughly the same way as WebSearch plugins.
+DealPly extensions likewise replace the browser homepage with a mini-site with affiliate links to popular digital platforms, and just like malicious WebSearch extensions, they substitute the default search engine and analyzes user search queries to create more tailored ads.

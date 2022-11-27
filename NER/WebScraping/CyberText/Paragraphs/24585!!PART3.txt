@@ -1,0 +1,9 @@
+
+However, successful exploitation will allow them to elevate their privileges to SYSTEM.
+According to Microsoft some attackers are already using the exploit for this vulnerability in the wild; therefore, it should be patched as soon as possible.
+Critical vulnerabilities All five newly fixed critical vulnerabilities belong to the remote code execution (RCE) class; that is, they can be used to run arbitrary code on victim computers.
+CVE-2022-34718 — a bug in Windows TCP/IP with a CVSS rating of 9.8.
+An unauthorized attacker can use it to execute arbitrary code on the attacked Windows computer with the IPSec service enabled by sending a specially crafted IPv6 packet to it.
+CVE-2022-34721 and CVE-2022-34722 — vulnerabilities in the Internet Key Exchange protocol that allow an attacker to execute malicious code by also sending an IP packet to a vulnerable machine.
+Both have a CVSS rating of 9.8.
+Although these vulnerabilities only affect the IKEv1 protocol version, Microsoft reminds that all Windows Server systems are vulnerable because they accept both v1 and v2 packets.

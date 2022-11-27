@@ -1,0 +1,25 @@
+
+d: /on
+=d: /maxsize=401MB vssadmin resize shadowstorage /for=d: /on
+=d: /maxsize=unbounded vssadmin resize shadowstorage /for
+=e: /on
+=e: /maxsize=401MB vssadmin resize shadowstorage /for
+=e: /on
+=e: /maxsize
+=unbounded vssadmin resize shadowstorage /for
+=f: /on
+=f: /maxsize=401MB vssadmin resize shadowstorage /for
+=f: /on
+=f: /maxsize=unbounded vssadmin resize shadowstorage /for
+=g: /on
+=g: /maxsize=401
+MB vssadmin resize shadowstorage /for
+=g: /on
+=g: /maxsize=unbounded vssadmin resize shadowstorage /for
+=h: /on
+=h:
+/maxsize=401
+MB vssadmin resize shadowstorage /for
+=h: /on
+=h: /maxsize
+=unbounded bcdedit /set {default} recoveryenabled No bcdedit /set {default} bootstatuspolicy ignoreallfailures vssadmin Delete Shadows /all /quiet

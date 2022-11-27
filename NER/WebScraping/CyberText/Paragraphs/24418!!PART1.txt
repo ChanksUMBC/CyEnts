@@ -1,0 +1,2 @@
+Open-source code is a blessing for the IT industry — it helps programmers save time and build products faster and more efficiently by eliminating the need of writing repetitive common code.
+To facilitate this knowledge sharing, there are repositories — open platforms where any developer can publish their own packages with their code to speed up the development process for other people.

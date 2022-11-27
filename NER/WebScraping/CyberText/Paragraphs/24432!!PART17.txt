@@ -1,0 +1,14 @@
+
+There are fewer large-scale outbreaks where a piece of malware spreads to tens or hundreds of millions of computers, but we still can’t completely prevent them.
+What has definitely changed is the way cyberattacks are monetized, taking company and user data hostage and demanding ransom .
+Let’s finish our story with a brief summary of the fate of the ILOVEYOU internet worm’s creator.
+Onel de Guzman was a 24-year-old student at the time of the outbreak.
+In 2000, FBI officials were able to determine that the original messages containing the worm had been sent to popular mailing lists for users from the Philippines, where de Guzman still lives.
+In 2000, he was put on the list of ILOVEYOU’s suspected authors.
+But he was not punished for two reasons: a lack of evidence and the absence of a criminal article for cybercrime in local law at the time.
+In 2020, de Guzman was tracked down by journalists.
+He told them that ILOVEYOU did not originally have a mass mailing function for the Outlook address book, and that he created the worm to steal passwords for internet access because he couldn’t afford to pay for it.
+De Guzman never managed to monetize his malicious talents.
+At the time the article was published, he was working in a modest phone repair shop in Manila.
+
+

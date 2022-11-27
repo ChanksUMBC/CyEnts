@@ -1,0 +1,8 @@
+
+One is a module that creates a web proxy ( f223ceb9830ed18d823f42d9d8d5c09429782e0bcdbc62da5f00c881964e7041 ) and the other is the core module ( 4b1efadc55c0cc3471e0945804125317b2a75772393541f680b1617f8a42773d ).
+Second Loader Module This module installs a browser proxy by downloading a Proxy Auto-Configuration (PAC) file from 47.111.81.199 .
+This allows the threat actor to act as a Browser-in-the-Middle by making all requests from the browser proxied to the threat actor’s server.
+Installation of the PAC file also includes installation of the threat actor’s certificate.
+Function that download and install a PAC file The certificate installed by asbit malware.
+Lastly, the module contacts “rat.t.com” to report the newly infected system.
+The system information which includes MAC address, OS, CPU and date is hashed and sent as the ID.

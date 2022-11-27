@@ -1,0 +1,232 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>{isotaEar</id>
+    <frameset cdef="" edef="to flare , to become intense" id="01">
+        <role argnum="1" argrole="thing starting"/>
+        <frame>
+            <example>
+                <parse>
+                    (S
+                    (S
+                    (CONJ و)
+                    (VP
+                    (PSEUDO_VERB لكن)
+                    (NP-SBJ-1
+                    (PUNC &amp;quot;)
+                    (DET+NOUN+CASE_DEF_ACC الاتفاق)
+                    (DET+ADJ+CASE_DEF_ACC الثلاثي)
+                    (PUNC &amp;quot;))
+                    (S
+                    (VP
+                    (PRT
+                    (NEG_PART لم))
+                    (IV3MS+IV+IVSUFF_MOOD:J يمر)
+                    (NP-SBJ
+                    (-NONE- *-1))))))
+                    (PUNC ,)
+                    (CONJ و)
+                    (S
+                    (VP
+                    (PV+PVSUFF_SUBJ:3MS استعر)
+                    (NP-SBJ
+                    (NP
+                    (DET+NOUN+CASE_DEF_NOM الخلاف))
+                    (NP-ADV
+                    (NOUN+CASE_DEF_ACC بين)
+                    (NP
+                    (NP
+                    (NOUN+CASE_DEF_GEN رئيس)
+                    (NP
+                    (NP
+                    (DET+NOUN+NSUFF_FEM_SG+CASE_DEF_GEN الهيئة)
+                    (DET+ADJ+NSUFF_FEM_SG+CASE_DEF_GEN التنفيذية))
+                    (PP
+                    (PREP ل_)
+                    (NP
+                    (PUNC &amp;quot;)
+                    (DET+NOUN+NSUFF_FEM_PL+CASE_DEF_GEN القوات)))))
+                    (PUNC ;)
+                    (CONJ و)
+                    (NP
+                    (NP
+                    (NOUN+CASE_DEF_GEN رئيس)
+                    (NP
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الاركان))
+                    (PP
+                    (PREP في)
+                    (NP
+                    (PRON_3FS ها)))))
+                    (NP
+                    (NOUN_PROP سمير)
+                    (NOUN_PROP جعجع))))))
+                    (PUNC ,)
+                    (SBAR-ADV
+                    (SUB_CONJ اذ)
+                    (S
+                    (VP
+                    (PV+PVSUFF_SUBJ:3MS تزعم)
+                    (NP-SBJ
+                    (NOUN_PROP جعجع))
+                    (NP-OBJ
+                    (NP
+                    (NOUN+NSUFF_FEM_SG+CASE_INDEF_ACC انتفاضة))
+                    (SBAR
+                    (-NONE- *ICH*-3)))
+                    (PP
+                    (PREP على)
+                    (NP
+                    (NOUN_PROP+NSUFF_FEM_SG حبيقة)))
+                    (PP-TMP
+                    (PREP في)
+                    (NP
+                    (NP
+                    (NOUN_NUM 15))
+                    (NP
+                    (NOUN_PROP كانون)
+                    (DET+ADJ_NUM الثاني))
+                    (PUNC ,)
+                    (NP
+                    (NOUN_NUM 1986))))
+                    (SBAR-3
+                    (WHNP-2
+                    (-NONE- 0))
+                    (S
+                    (S
+                    (VP
+                    (PV+PVSUFF_SUBJ:3MS انتصر)
+                    (PP
+                    (PREP في)
+                    (NP
+                    (NP
+                    (PRON_3FS ها))
+                    (NP
+                    (-NONE- *T*-2))))
+                    (NP-SBJ
+                    (DET+ADJ_NUM+CASE_DEF_NOM الاول))))
+                    (CONJ و)
+                    (S
+                    (VP
+                    (PV+PVSUFF_SUBJ:3MS ارغم)
+                    (NP-SBJ
+                    (-NONE- *))
+                    (NP-OBJ
+                    (DET+NOUN+CASE_DEF_ACC الاخير))
+                    (PP-CLR
+                    (PREP على)
+                    (NP
+                    (NP
+                    (NOUN+NSUFF_FEM_SG+CASE_DEF_GEN مغادرة)
+                    (NP
+                    (NOUN_PROP+CASE_INDEF_GEN لبنان)))
+                    (PP-DIR
+                    (PREP الى)
+                    (NP
+                    (NOUN_PROP باريس)))))))
+                    (S
+                    (VP
+                    (IV3MS+IV+IVSUFF_MOOD:I يرافق)
+                    (NP-OBJ
+                    (IVSUFF_DO:3MS ه))
+                    (NP-SBJ
+                    (NP
+                    (NOUN_PROP غانم))
+                    (CONJ و)
+                    (NP
+                    (NP
+                    (NOUN+CASE_INDEF_NOM عدد))
+                    (PP
+                    (PREP من)
+                    (NP
+                    (NOUN+CASE_DEF_GEN اركان)
+                    (NP
+                    (PUNC &amp;quot;)
+                    (DET+NOUN+NSUFF_FEM_SG+CASE_DEF_GEN الهيئة)
+                    (DET+ADJ+NSUFF_FEM_SG+CASE_DEF_GEN التنفيذية)
+                    (PUNC &amp;quot;))))))
+                    (PUNC ,)
+                    (PRN
+                    (CONJ و)
+                    (PP-LOC
+                    (PREP من)
+                    (NP
+                    (PRON_3FS ها)))
+                    (PP-DIR
+                    (PREP الى)
+                    (NP
+                    (NOUN_PROP+CASE_INDEF_GEN دمشق)
+                    (CONJ ف)
+                    (NOUN_PROP+NSUFF_FEM_SG زحلة))))
+                    (PUNC ,)
+                    (PP-TMP
+                    (PREP حتى)
+                    (NP
+                    (NP
+                    (NOUN+CASE_DEF_GEN عام))
+                    (NP
+                    (NOUN_NUM 1990))))
+                    (NP-TMP
+                    (NOUN+CASE_DEF_ACC عند)
+                    (SBAR
+                    (SUB_CONJ ما)
+                    (S
+                    (VP
+                    (PV+PVSUFF_SUBJ:3MD عادا)
+                    (NP-SBJ
+                    (-NONE- *))
+                    (PP-DIR
+                    (PREP الى)
+                    (NP
+                    (NOUN_PROP+CASE_INDEF_GEN بيروت)))
+                    (NP-ADV
+                    (NOUN+CASE_DEF_ACC مع)
+                    (NP
+                    (NOUN+CASE_DEF_GEN بدء)
+                    (NP
+                    (NOUN+CASE_DEF_GEN تنفيذ)
+                    (NP
+                    (NP
+                    (PUNC &amp;quot;)
+                    (NOUN+NSUFF_FEM_SG+CASE_DEF_GEN وثيقة)
+                    (NP
+                    (DET+NOUN_PROP الطائف))
+                    (PUNC &amp;quot;))
+                    (CONJ و)
+                    (NP
+                    (NOUN+NSUFF_FEM_SG+CASE_DEF_GEN اطاحة)
+                    (NP
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الجناح)
+                    (DET+ADJ+CASE_DEF_GEN العسكري))
+                    (PP
+                    (PREP في)
+                    (NP
+                    (PUNC &amp;quot;)
+                    (DET+NOUN+NSUFF_FEM_PL+CASE_DEF_GEN القوات)))
+                    (PUNC &amp;quot;)))
+                    (CONJ و)
+                    (NP
+                    (NOUN+CASE_DEF_GEN بدء)
+                    (NP
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN العمل))
+                    (PP
+                    (PREP ل)
+                    (NP
+                    (NOUN+CASE_DEF_GEN تأسيس)
+                    (NP
+                    (NOUN+CASE_DEF_GEN حزب)
+                    (NP
+                    (PUNC &amp;quot;)
+                    (DET+NOUN+CASE_DEF_GEN الوعد)
+                    (PUNC &amp;quot;)))))))))))
+                    (ADVP-TMP-4
+                    (-NONE- *T*)))))))))))))))
+                    (PUNC .))
+                </parse>
+                <arg f="" g="The disagreement between the President of the executive body of troops; and Chief of Staff Samir Geagea" n="1">الخلاف بين رئيس الهيئة التنفيذية ل_ &amp;quot; القوات ; و رئيس الاركان في ها سمير جعجع</arg>
+                <arg f="adv" g="As Geagea lead the uprising against Hobeika in the January 15, 1986, when he won and forced the latter to leave Lebanon to Paris accompanied by Ghanim and a number of staff, &amp;quot;the executive&amp;quot;, and from there to Damascus, when they returned to Beirut it coincided with the start of the implementation of the &amp;quot;The Taif Accord&amp;quot; and the overthrow of the military wing of the &amp;quot;Forces&amp;quot; and the work to form a party, &amp;quot;The Promise&amp;quot;" n="m">اذ تزعم جعجع انتفاضة *ICH*-3 على حبيقة في 15 كانون الثاني , 1986 0 انتصر في ها *T*-2 الاول و ارغم * الاخير على مغادرة لبنان الى باريس يرافق ه غانم و عدد من اركان &amp;quot; الهيئة التنفيذية &amp;quot; , و من ها الى دمشق ف زحلة , حتى عام 1990 عند ما عادا * الى بيروت مع بدء تنفيذ &amp;quot; وثيقة الطائف &amp;quot; و اطاحة الجناح العسكري في &amp;quot; القوات &amp;quot; و بدء العمل ل تأسيس حزب &amp;quot; الوعد &amp;quot; *T* .</arg>
+            </example>
+        </frame>
+    </frameset>
+</verb>

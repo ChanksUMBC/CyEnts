@@ -114,9 +114,9 @@ We used Volatility to analyze the memory image looking for any suspicious event 
 
 While reviewing the memory image, we identified numerous instances of mshta.exe spawned under javaw.exe , the creation date for these processes was 2019-09-20, and we pivoted our investigative focus to that date.
 
-.. httpd.exe            2388    604      3     84 2019-06-28 09:32:53 UTC+0000 ... java.exe            2420   2388      0 ------ 2019-06-28 09:32:53 UTC+0000 .... javaw.exe          4804   2420     36    530 2019-06-28 09:33:19 UTC+0000 ..... javaw.exe         
+.. httpd.exe            2388    604      3     84 2019-06-28 09:32:53 UTC+0000 ... java.exe            2420   2388      0 ------ 2019-06-28 09:32:53 UTC+0000 .... javaw.exe          4804   2420     36    530 2019-06-28 09:33:19 UTC+0000 ..... javaw.exe         5976   4804    177   4925 2019-06-28 09:33:21 UTC+0000 ...... mshta.exe       17768   5976     12    320 2019-09-20 14:20:00 UTC+0000 ...... mshta.exe        9356   5976     12    306 2019-09-20 11:12:04 UTC+0000 ......
 
-5976   4804    177   4925 2019-06-28 09:33:21 UTC+0000 ...... mshta.exe       17768   5976     12    320 2019-09-20 14:20:00 UTC+0000 ...... mshta.exe        9356   5976     12    306 2019-09-20 11:12:04 UTC+0000 ...... mshta.exe       22416   5976     12    310 2019-09-20 11:31:14 UTC+0000 ...... mshta.exe       23240   5976     13    318 2019-09-20 14:20:01 UTC+0000 ...... mshta.exe       15116   5976     12    311 2019-09-20 11:31:23 UTC+0000
+mshta.exe       22416   5976     12    310 2019-09-20 11:31:14 UTC+0000 ...... mshta.exe       23240   5976     13    318 2019-09-20 14:20:01 UTC+0000 ...... mshta.exe       15116   5976     12    311 2019-09-20 11:31:23 UTC+0000
 
 This matched our initial findings and gave us some further context.
 

@@ -1,0 +1,8 @@
+Attackers often send phishing e-mails in the name of well-known companies to extract credentials for users’ personal accounts, phone numbers and other information that can be useful for scams or account takeovers.
+Of course, among the most attractive targets for phishers are clients of financial organizations such as banks , cryptoexchanges , payment systems and the like.
+This time we detected phishing exploiting the online financial service
+Wise (until recently — TransferWise), which is used by millions.
+Here we analyze the setup and explain how not to fall victim to fraud and data theft.
+A word about Wise Why Wise in particular?
+It’s not just that people entrust their money to it.
+Until recently, the company was known as TransferWise, and its main business was low-cost cross-border money transfers.

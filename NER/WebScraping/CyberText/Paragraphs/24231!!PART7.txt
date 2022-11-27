@@ -1,0 +1,9 @@
+
+When you receive an e-mail seemingly from a well-known company, start with checking where it really came from.
+If the sender’s address includes a meaningless jumble of numbers and letters, random words or an unusual domain, it’s more than likely a scam.
+Don’t follow links in e-mails and notifications, even if you think you know the sender; it’s always better to open sites from your bookmarks or a search engine, or to enter URLs manually if you know them by heart.
+If you suspect phishing, contact the support team of the company the e-mail supposedly came from, and they’ll tell you for sure whether it’s real or fake.
+If necessary, they’ll take action and alert other users.
+Install reliable antivirus with antiphishing and online fraud protection, which will warn you in a timely manner about the threat.
+
+

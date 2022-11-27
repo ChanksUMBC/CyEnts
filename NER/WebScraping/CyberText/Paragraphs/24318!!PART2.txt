@@ -1,0 +1,7 @@
+
+However, instead of the usual phishing link, it’s a QR code that’s contained in the e-mail received that kicks off this kind of swindle.
+How and why is the topic of this post.
+“Your package is at the post office” An attack begins with an e-mail, seemingly from DHL.
+Although the sender’s address is a random set of words bearing no resemblance to the courier service’s name, the message body is quite convincing: company logo, order number (albeit fake), and supposed date of receipt of a package.
+The message itself (in this case in Spanish) states that an order has arrived at a local post office, but the courier was unable to deliver it in person.
+Usually such bait is accompanied by a link to “resolve the issue,” but this time there’s a QR code instead.

@@ -46,9 +46,7 @@ To protect earlier releases of Log4j (from 2.0-beta9 to 2.10.0), the library dev
 
 -q -d log4j-core – *.
 
-Jar org / apache / logging / log4j / core / lookup
-
-/ JndiLookup .class .
+Jar org / apache / logging / log4j / core / lookup / JndiLookup .class .
 
 In addition, we recommend to install security solutions on your servers — in many cases this will allow you to detect the launch of malicious code and stop the attack’s development.
 

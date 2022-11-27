@@ -1,0 +1,1 @@
+python -m prodigy ner.correct Casey_annotations2 onramp_nlp ./MichaelAnnotationSet.txt --label ./cyber_labels.txt

@@ -1,0 +1,3 @@
+Folks today are generally mostly aware that clicking links from questionable sources, for example in e-mails, isn’t a good idea.
+However, when it comes to scanning QR codes, people are often much less vigilant.
+In fact, QR codes can be even more dangerous: while you can check a link with your own eyes before clicking, that’s not the case with a QR code.

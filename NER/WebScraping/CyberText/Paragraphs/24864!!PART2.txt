@@ -1,0 +1,12 @@
+
+A device with a miner slows down, heats up, and becomes unusable long before it would normally.
+What’s more, a miner consumes lots of electricity — which the affected user of course has to pay for.
+This post lays out our experts’ main findings, and gives tips on how to protect your devices from miners.
+See our Securelist blog for a more detailed report.
+Malicious mining on the rise Having skyrocketed last year, cryptocurrency prices this year have collapsed just as dramatically.
+One would expect a corresponding drop in malicious mining, but in fact the exact opposite has occurred: in the first three quarters of 2022, compared to the same period in 2021, the number of new miner modifications increased, as did the number of affected users.
+Cybercriminals were especially active in the third quarter, during which our solutions detected more than 150,000 new variants of malicious miners.
+For comparison, in the same period in 2021, fewer than 50,000 appeared.
+Our researchers also studied what kinds of malware attackers tried to plant on victims’ devices after exploiting known software vulnerabilities .
+In the first three quarters of 2022, about one in seven cases turned out to be a malicious miner.
+And throughout the year, as cryptocurrency prices steadily fell, the share of miners among infections showed stable growth.

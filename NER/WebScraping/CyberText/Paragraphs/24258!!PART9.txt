@@ -1,0 +1,13 @@
+
+How to protect your network?
+If you want to secure your home or corporate router and keep your data safe: At least once a month, check the manufacturer’s website for the latest router firmware updates.
+Install them as soon as they become available.
+For some models, patches arrive automatically, but sometimes you have to install them manually.
+Information about updating your device’s software can also be found on the vendor’s website.
+Create a long, strong admin password for your router.
+And so as not to forget the combination, use a password manager .
+If you are skilled enough or you find instructions (on that same vendor’s website, for example), disable remote access to the router admin settings.
+Configure Wi-Fi correctly : think up a unique password, use strong wireless encryption standard, and set up guest networks so that unscrupulous or just careless guests and neighbors do not spread malware on your network from their infected devices.
+Use a VPN app that will encrypt all outbound information before passing it to the router, keeping it safe from cybercriminals even if they have infected the device.
+
+

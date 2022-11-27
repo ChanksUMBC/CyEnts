@@ -1,0 +1,219 @@
+Let’s take a trip down memory lane to May 2000.
+
+Just another day at the office: You turn on your work computer, connect to the internet and download the latest e-mail in the Microsoft Outlook client.
+
+You immediately notice a strange message with the subject line “ILOVEYOU.”
+
+A person you know confesses their love to you.
+
+Maybe a school friend…
+
+Wait, no!
+
+Even better — your older supervisor.
+
+Whoever it is, it’s definitely eye-catching, so you click the attached file called “LOVE-LETTER-FOR-YOU.TXT.VBS” and… nothing seems to happen.
+
+However, sometime later, you discover that important documents on your hard disk have been irreparably corrupted, and a bunch of similar love letters have been sent out on your behalf — to all of the contacts in your address book.
+
+An e-mail with the ILOVEYOU worm looked something like this in the old Microsoft e-mail client.
+
+Source ILOVEYOU was not the first malware to exploit a hole in Microsoft’s e-mail client, but it certainly initiated one of the most serious virus outbreaks at the beginning of the new millennium.
+
+Let’s look back at its history and talk about how it changed our perception of computer system security.
+
+Context: the internet is the trendiest technology The year 2000…
+
+That was a long time ago — from 2022, it seems like prehistoric times.
+
+Today, you can look at archived copies of websites from those days or take an old Windows 98 laptop out of the closet to remember what programs we used — it was like the Stone Age, wasn’t it?
+
+Well, not really.
+
+Of course, the technology at the turn of the millennium was primitive by today’s standards.
+
+The vast majority of users connected to the net by modem, and it was monstrously slow.
+
+But prototypes of almost all modern network services already existed back then.
+
+There was no video streaming, but there was radio streaming.
+
+There was a wide range of online messengers.
+
+Internet commerce was developing at breakneck speed, though it was often easier to call a store by phone rather than place an order on a website.
+
+Generally, in 2000, any network technology, or any service with the prefix “e-”
+
+(that is, electronic!)
+
+received lots of attention and investment.
+
+There was some disappointment a bit later in 2001 when many internet startups went bankrupt and the industry lost a little hype but gained a little more sense.
+
+An important indicator of how widespread the internet already was back then is the 1998 release of the popular movie You’ve Got Mail , half rom-com and half commercial for the then-giant America Online.
+
+For our story, it is important that at the end of the 1990s, the internet was no longer a place for the privileged: in 2000, hundreds of millions of people were already going online.
+
+As such, e-mail was already an important tool for communication and collaboration in many companies and government agencies, as well as for ordinary home users.
+
+But in May 2000, this “digital transformation,” as it became popular to call it much later, was suddenly halted by the ILOVEYOU virus outbreak.
+
+Many companies were forced to temporarily shut down their mail servers, which were simply unable to cope with the flow of tens of thousands of love messages.
+
+Predecessors: Concept.
+
+B and Melissa Strictly speaking, ILOVEYOU should be classified as a network worm : it is a malicious program that spreads itself over the network.
+
+Another key feature of ILOVEYOU was that the initial infection was made with a simple VBscript program.
+
+VBscript, in turn, is built on the even older idea of macros: essentially, simple programs that allow you to automate particular actions — for example, when working with documents.
+
+Most often, macros are used to perform complex calculations in spreadsheets, such as Microsoft Excel.
+
+Since ancient times, macros have also been supported in Microsoft Word, for example, to automatically generate reports from data entered in a form.
+
+In 1995, this Word functionality was exploited by the WM/Concept.
+
+A virus.
+
+This macro virus infected Microsoft Word documents and displayed this message when the document was opened:
+
+That’s what the Concept.
+
+A macro virus infection lead to.
+
+Source
+
+And that’s all.
+
+There was no malicious functionality as such, just a rather annoying window that kept popping up.
+
+Former Microsoft employee Steven Sinofsky, who was responsible for the development of the company’s office solutions from 1998 to 2006, refers to Concept.
+
+A in his memoirs as the first signal: at that point it became clear that automation implemented in all Microsoft solutions could be used to its detriment.
+
+As a result, it was decided to display a warning before running macros: the document contains a program, are you sure you want to run it?
+
+As soon as Microsoft began implementing restrictions on running macros, malware authors began to look for ways to circumvent these restrictions.
+
+The next high-profile event occurred in March 1999.
+
+Steven Sinofsky described what it was like: when you check your e-mail, you get a message with an attached file and the “Important message from…” subject line.
+
+Message infected by the Melissa virus.
+
+Source And then another one from another sender.
+
+And another.
+
+And then e-mail stopped working: even Microsoft’s e-mail server couldn’t take the load.
+
+It was the Melissa internet worm.
+
+The attached Microsoft Word document contained malicious code that sent a message through Microsoft Outlook to the first 50 contacts in the address book.
+
+It’s all about love The ILOVEYOU worm was an evolution of the ideas used in Melissa.
+
+It did not exploit any vulnerability in Microsoft products, but instead used standard functionality.
+
+The only bug was that no warning was displayed when the script was launched from the Outlook e-mail client.
+
+The worm’s functionality was not limited to sending love messages to all recipients.
+
+In addition to e-mail spam sent on behalf of the victim, it was also capable of spreading via the then-popular IRC messenger .
+
+What’s more, the worm downloaded a Trojan program that sent the passwords for mail and internet access to the malware’s creator.
+
+Finally, it deleted, hid or corrupted files on the hard drive: music in MP3 format, JPEG images, a variety of scripts and copies of web pages.
+
+The mastermind behind the ILOVEYOU outbreak incorporated developments from previous macro viruses, came up with an ultimate social engineering trick (how can anyone ignore a file with the name “I love you”?), added malicious functionality and made the most of automatic malware spreading.
+
+Following Kaspersky and media reports from the time, it is possible to reconstruct the sequence of events.
+
+Already on the first day, May 4, thousands of system infections were detected .
+
+On May 9, 2.5 million infected computers were reported , meaning there were tens of millions of e-mails sent around the world.
+
+The virus’ creator did not even try to hide the malicious code under the guise of an office document.
+
+The file name “LOVE-LETTER-FOR-YOU.TXT.VBS” exploited the fact that Microsoft mail clients only showed the first part of a long name, as can be seen in the screenshot at the beginning of the article.
+
+The code inside was in open format, and soon many skilled malefactors were using it to create different variations of the internet worm.
+
+Instead of ILOVEYOU, other words began to appear in the subject line, including cocky virus warnings.
+
+The NewLove variant, detected on May 19, did not selectively delete files, but completely wiped out all information on the hard drive.
+
+Final estimates of the impact of the ILOVEYOU virus are as follows: up to 10% of internet-connected computers were infected , and the total damage, including the destructive actions of its variants, is estimated at about $10 billion.
+
+The incident was widely covered by the press, and there were even hearings in the U.S. Senate.
+
+Mistakes were made In 2022, knowing the whole story from beginning to end, one would like to ask: couldn’t the outbreak of such a trivial virus have been prevented straight away?
+
+It wasn’t until June 8, 2000 that Microsoft released a major security update for the Outlook e-mail client, which finally introduced serious restrictions on running scripts.
+
+All e-mail attachments were untrusted by default, and checks were introduced if an external application accessed the Outlook address book or tried to send multiple e-mails at once.
+
+After an update in June 2000, the Outlook e-mail client warned users about an external app accessing the address book and attempts to send multiple messages simultaneously.
+
+Source They didn’t do it earlier, because when choosing between security and convenience, Microsoft preferred the latter.
+
+And so did the users.
+
+Back in 1995, when Microsoft introduced a simple warning in Microsoft Word (“This document contains macros”), the company received negative feedback from customers.
+
+In some companies, this additional acknowledgment broke down internal processes built on scripts.
+
+For that reason, even when developing a patch in the wake of ILOVEYOU, the question of “Is it going to break something for users?” was on the agenda, but this time it was already clear that security needed to improve, and quickly.
+
+Old virus, modern problems The ILOVEYOU epidemic has raised many questions that are still relevant today in the field of information security.
+
+The most important one seems to be: can’t we send out patches any faster?
+
+There were definitely problems with this: Microsoft released a patch kit for Outlook over a month after the outbreak started.
+
+Also, the automatic delivery mechanisms for these updates were rudimentary, so local outbreaks of mail infection took a long time to cease.
+
+The security solutions industry had already shown itself to be quite beneficial in this sense.
+
+As Eugene Kaspersky recalls, it wasn’t difficult to protect the company’s anti-virus users .
+
+Even then, an online delivery system for regular updates was introduced in security software, while it took many more years for the developers of other kinds of programs to implement a similar scheme for rapid patch distribution.
+
+A little later, heuristic analysis methods were developed to detect and block even unknown malicious scripts automatically.
+
+Although the security of popular programs and operating systems has improved enormously over the past 22 years, malware creators keep finding new loopholes for successful cyberattacks.
+
+Malicious macros have not gone anywhere either.
+
+In February 2022, Microsoft promised to finally restrict the ability to distribute them by banning the execution of any scripts in Office documents obtained over the internet.
+
+In early July 2022, this ban was lifted — it’s reasonable to assume that the fears that something gets broken at the users’ end came true.
+
+Later that same July, Microsoft once again decided to start blocking macros by default , this time explaining to those in need how to get around the ban.
+
+There are fewer large-scale outbreaks where a piece of malware spreads to tens or hundreds of millions of computers, but we still can’t completely prevent them.
+
+What has definitely changed is the way cyberattacks are monetized, taking company and user data hostage and demanding ransom .
+
+Let’s finish our story with a brief summary of the fate of the ILOVEYOU internet worm’s creator.
+
+Onel de Guzman was a 24-year-old student at the time of the outbreak.
+
+In 2000, FBI officials were able to determine that the original messages containing the worm had been sent to popular mailing lists for users from the Philippines, where de Guzman still lives.
+
+In 2000, he was put on the list of ILOVEYOU’s suspected authors.
+
+But he was not punished for two reasons: a lack of evidence and the absence of a criminal article for cybercrime in local law at the time.
+
+In 2020, de Guzman was tracked down by journalists.
+
+He told them that ILOVEYOU did not originally have a mass mailing function for the Outlook address book, and that he created the worm to steal passwords for internet access because he couldn’t afford to pay for it.
+
+De Guzman never managed to monetize his malicious talents.
+
+At the time the article was published, he was working in a modest phone repair shop in Manila.
+
+
+
+

@@ -1,0 +1,5 @@
+
+So perhaps this story about a phishing QR-code attack in China shouldn’t come as a surprise.
+What happened?
+The other day it was reported that unknown cybercriminals distributed phishing QR codes offering free game logins, which they then used to hijack some accounts of the QQ messaging and social media platform.
+While largely unknown outside China, QQ is a HUGE deal there, with hundreds of millions active users.

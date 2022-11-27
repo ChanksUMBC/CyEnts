@@ -1,0 +1,5 @@
+
+But the attackers managed to exploit the vulnerability before the changes took effect.
+The bug allowed them to bypass the transaction verification on the Solana side and issue 120,000 “wrapped ETH” (worth around $334 million at the time of the attack) without freezing the equivalent collateral in the Ethereum blockchain.
+The cybercriminals transferred two-thirds of the total amount to an Ethereum wallet, and used the rest to buy other tokens.
+Wormhole publicly appealed to the attackers to return the stolen funds and detail the exploit for a $10 million reward.

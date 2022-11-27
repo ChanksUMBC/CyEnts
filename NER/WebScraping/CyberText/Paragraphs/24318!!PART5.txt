@@ -1,0 +1,6 @@
+
+Due to the space constraints in mobile browsers, URLs are not fully visible.
+And in Safari, the address bar was recently moved to the bottom of the screen, where many users don’t even look.
+This plays straight into the hands of the cybercriminals because the URL of their fake site looks nothing like the official one: the word DHL doesn’t even make an appearance.
+The website text is also small, which means that any design flaws are less noticeable.
+In any case, there aren’t that many of them: the page welcomes users with the trademark yellow and red colors, the company name is shown below, and the text is pretty much error-free save for a couple of lowercase letters at the beginning of sentences.

@@ -1,0 +1,10 @@
+
+However, it does not use the traditional way of getting the IP address, which is connecting to the DNS at port 53 using UDP.
+Rather, it gets the IP address using DNS over HTTP (DoH).
+Below is a query for the IP address of ddns.b.rdlite.com using Alibaba DoH server.
+GET /resolve?name=
+ddns.b.rdlite.com&short=true&_=28042000
+HTTP/1.1 Host: 223.5.5.5
+Connection: Keep-Alive [\"222.210.157.249\"]
+Currently, it can either use AliDns or DnsPod DoH servers.
+Using DoH makes the malware more resilient against network filters that rely on traditional DNS queries for blocking domains.

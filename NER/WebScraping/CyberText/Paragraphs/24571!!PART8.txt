@@ -1,0 +1,5 @@
+
+These cookies serve as markers for the scammers’ partner program, and the AddScript operators receive a fee.
+In fact, they don’t attract any new customers at all, and their “partner” activity consists of infecting computers with these malicious extensions.
+FB Stealer — a cookie thief FB Stealer, another family of malicious extensions, works differently.
+Unlike AddScript, members of this family don’t download “extras” to the device, rather they steal important cookies.

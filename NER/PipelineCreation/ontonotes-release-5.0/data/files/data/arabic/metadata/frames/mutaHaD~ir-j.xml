@@ -1,0 +1,90 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>mutaHad~ir</id>
+    <comment/>
+    <frameset cdef="" edef="descendant" id="01">
+        <role argnum="1" argrole="descendant entity"/>
+        <frame>
+            <mapping>
+                <comment/>
+            </mapping>
+            <example>
+                <parse>(S
+                    (CONJ و)
+                    (VP
+                    (PV+PVSUFF_SUBJ:3MS استقبل)
+                    (NP-SBJ
+                    (NOUN_PROP لحود))
+                    (NP-OBJ
+                    (NP
+                    (NP
+                    (NP
+                    (NP
+                    (NP
+                    (DET+NOUN+CASE_DEF_ACC الرئيس)
+                    (DET+ADJ+CASE_DEF_ACC السابق))
+                    (PP
+                    (PREP ل)
+                    (NP
+                    (NOUN+NSUFF_FEM_SG+CASE_DEF_GEN شركة)
+                    (NP
+                    (PUNC ")
+                    (NOUN_PROP فورد)
+                    (NOUN_PROP موتورز)
+                    (PUNC ")))))
+                    (CONJ و)
+                    (NP
+                    (NP
+                    (DET+NOUN+CASE_DEF_ACC المستشار))
+                    (PP
+                    (PREP في)
+                    (NP
+                    (PRON_3FS ها)))))
+                    (PUNC ,)
+                    (NP
+                    (NP
+                    (NOUN+CASE_DEF_ACC رجل)
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الاعمال)))
+                    (ADJP
+                    (DET+ADJ+CASE_DEF_ACC اللبناني)
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الاصل)))))
+                    (NP
+                    (NOUN_PROP جاك)
+                    (NOUN_PROP نصر)))
+                    (CONJ و)
+                    (NP
+                    (NP
+                    (NP
+                    (NOUN+CASE_DEF_ACC رجل)
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الاعمال)))
+                    (SBAR
+                    (WHNP-1
+                    (-NONE- 0))
+                    (S
+                    (VP
+                    (DET+ADJ.VN+CASE_DEF_ACC المتحدر)
+                    (NP-SBJ
+                    (-NONE- *T*-1))
+                    (PP-CLR
+                    (PREP من)
+                    (NP
+                    (NOUN+CASE_INDEF_GEN اصل)
+                    (ADJ+CASE_INDEF_GEN لبناني)))))))
+                    (NP
+                    (NOUN_PROP يوسف)
+                    (NOUN_PROP غفري))))
+                    (PUNC ,)
+                </parse>
+                <comment/>
+                <arg f="" g="he" n="1">-NONE- *T*-1 &gt; رجل الأعمال</arg>
+                <arg f="" g="of Lebanese origin" n="2">من أصل لبناني</arg>
+            </example>
+            <comment/>
+        </frame>
+        <comment/>
+        <role argnum="2" argrole="source  (marked by من)"/>
+    </frameset>
+</verb>

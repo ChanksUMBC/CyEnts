@@ -1,0 +1,6 @@
+
+Here’s how it works.
+The FB Stealer extension gets onto users’ devices together with the NullMixer Trojan, which the victims usually pick up when trying to download a hacked software installer.
+Once installed, the Trojan modifies the file used to store the Chrome browser settings, including information about extensions.
+Then, after activation, FB Stealer pretends to be the Google Translate extension, so that users let their guard down.
+The extension does look very convincing, the only downside for the attackers being the browser warning that the official store contains no information about it.

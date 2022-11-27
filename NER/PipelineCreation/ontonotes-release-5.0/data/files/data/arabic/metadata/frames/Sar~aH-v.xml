@@ -1,0 +1,55 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>sar~aH</id>
+    <frameset cdef="" edef="To dismiss" id="01">
+        <role argnum="0" argrole="entity removing"/>
+        <role argnum="1" argrole="thing being removed"/>
+        <role argnum="2" argrole="removed from"/>
+        <frame>
+            <example>
+                <parse>
+                    (S
+                    (S
+                    (CONJ و)
+                    (VP
+                    (PV+PVSUFF_SUBJ:3FS اوقفت)
+                    (NP-SBJ
+                    (-NONE- *))
+                    (NP-OBJ
+                    (NOUN+CASE_DEF_ACC انتاج)
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الافلام)))))
+                    (CONJ و)
+                    (S
+                    (VP
+                    (PV+PVSUFF_SUBJ:3FS سرّحت)
+                    (NP-SBJ
+                    (-NONE- *))
+                    (NP-OBJ
+                    (NP
+                    (DET+NOUN+CASE_DEF_ACC العمال))
+                    (SBAR
+                    (WHNP-1
+                    (REL_PRON الذين))
+                    (S
+                    (VP
+                    (PV+PVSUFF_SUBJ:3MP تجرأوا)
+                    (NP-SBJ
+                    (-NONE- *T*-1))
+                    (PP-CLR
+                    (PREP على)
+                    (NP
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الاحتجاج))
+                    (PP
+                    (PREP على)
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الاستبداد)))))))))))
+                    (PUNC .))
+                </parse>
+                <arg f="" g="I" n="0">-NONE- *</arg>
+                <arg f="" g="Workers who dared to protest against tyranny" n="1">العمال الذين تجرأوا على الاحتجاج على الاستبداد</arg>
+            </example>
+        </frame>
+    </frameset>
+</verb>

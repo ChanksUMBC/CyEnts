@@ -1,0 +1,15 @@
+
+As a result, the NEM exchange rate fell sharply, and Coincheck lost around $500 million, which, however, did not force the exchange to close.
+What’s more, the criminals couldn’t be traced.
+The exchange had to suspend operations for a while and promised to compensate clients with its own funds.
+NEM exchange rate after the Coincheck incident.
+Source 1.
+Job offer with a surprise Victim: Ronin Network blockchain platform When: March 23, 2022 Loss: $540 million Ronin Network was specifically created by Sky Mavis for the play-to-earn game Axie Infinity , allowing players to buy the in-game currency Smooth Love Potion (SLP) .
+In late March 2022, unknown attackers stole from Ronin a record $540 million worth of cryptocurrency.
+They were aided by spyware and the magic of social engineering.
+The targeted attack was aimed at Sky Mavis employees, one of whom took the bait (most likely on LinkedIn).
+Having passed a “selection process”, one of senior engineers received a “job offer” in the form of a PDF file with spyware inside.
+This enabled the thieves to take control of four of the network’s private validator keys.
+To gain access to the company’s assets, they needed to compromise at least five of the nine validators.
+As just mentioned, the spyware helped them get hold of four keys.
+The fifth they got hold of due to an oversight by the company itself, which had authorized Axie DAO ( decentralized autonomous organization ) to sign off on transactions to help Ronin Network mitigate user volume, and then forgot to revoke the permission.

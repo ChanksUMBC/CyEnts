@@ -1,0 +1,8 @@
+
+The goal of the attackers is to overload the targeted service to such an extent that it slows down and eventually fails.
+Meanwhile, it’s ordinary users whose routers are hijacked that suffer slower internet speeds because their routers are busy sending malicious requests, and only handle other traffic when they pause for breath.
+According to our data, routers in 2021 were most actively attacked by two malware families: Mirai and Mēris, with the former leading by a huge margin — accounting for almost half of all attacks on routers.
+Mirai
+This notorious malware family with the sweet-sounding name (meaning “future” in Japanese) has been known since 2016.
+Besides routers, it’s known to infect IP cameras, smart TVs, and other IoT devices, including corporate ones, such as wireless controllers and digital advertising displays.
+Initially conceived to carry out large-scale DDoS attacks on Minecraft servers, the Mirai botnet was later unleashed on other services.

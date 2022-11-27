@@ -1,0 +1,12 @@
+
+How to protect yourself from malware on Android The best way to fight malware is to avoid situations where you might get it in the first place.
+In this case, there are three simple rules to follow to protect yourself: Don’t download apps from unknown sources.
+In fact, it’s a good idea to block the ability to install apps from places other than Google Play on your Android smartphone.
+Don’t install alternative clients for messaging apps.
+Even if official versions of apps aren’t always ideal, they’re much more reliable and secure.
+Use good protection and always keep it enabled.
+Kaspersky for Android can detect different modifications of the Triada Trojan and other Android malware and block them before they have a chance to wreak havoc.
+Keep in mind that with the free version of our mobile protection you need to manually run the scan every time you download or install something new.
+The full version automatically scans every new app.
+
+

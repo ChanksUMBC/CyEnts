@@ -1,0 +1,7 @@
+
+It’s all about love The ILOVEYOU worm was an evolution of the ideas used in Melissa.
+It did not exploit any vulnerability in Microsoft products, but instead used standard functionality.
+The only bug was that no warning was displayed when the script was launched from the Outlook e-mail client.
+The worm’s functionality was not limited to sending love messages to all recipients.
+In addition to e-mail spam sent on behalf of the victim, it was also capable of spreading via the then-popular IRC messenger .
+What’s more, the worm downloaded a Trojan program that sent the passwords for mail and internet access to the malware’s creator.

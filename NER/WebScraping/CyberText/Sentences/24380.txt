@@ -1,0 +1,79 @@
+Online fraudsters are continuing to use the names of famous people and companies to scam cryptocurrency users.
+
+This time the scammers are exploiting the brand name Nvidia, the US developer of GPUs that are particularly popular among crypto enthusiasts.
+
+Many devices for cryptocurrency mining were created on the basis of their GPUs.
+
+Next year Nvidia turns 30, and it’s common practice for companies to celebrate round-number anniversaries.
+
+The scammers took advantage of this by arranging fake cryptocurrency giveaways.
+
+Unheard-of generosity The fraudsters created a fake website supposedly dedicated to Nvidia’s 30th anniversary, and announced a large bitcoin giveaway there.
+
+On the splash screen of the fake website visitors see the company logo (albeit purple, not the usual green) and the name of its CEO, Jensen Huang.
+
+Visitors are asked here to “select a category” to take part in the “event”.
+
+In fact, there’s nothing to choose from: under the invitation there’s only a single big button with the words “Bitcoin giveaway”.
+
+Splash screen of the fake Nvidia website After clicking the button, the user is taken to a page with detailed information about the mythical giveaway.
+
+At first glance the page looks convincing: there’s a photo of the CEO and additional menu sections, all nicely designed.
+
+But instead of the Nvidia logo there’s a Bitcoin icon, plus numerous grammatical errors in the text — something a serious company wouldn’t permit.
+
+Here, purportedly on behalf of Mr. Huang and Nvidia, the cybercriminals announce a giveaway of 50,000 BTC (worth more than a billion US dollars at the time of writing).
+
+One of the main conditions for taking part is that users themselves must first make a contribution, like buying a lottery ticket.
+
+The scammers promise that the participant will immediately get double their money back, not to mention the prospect of winning the 50,000 BTC.
+
+The address of the cryptowallet to which they should make a transfer is given in the instructions for participants.
+
+And at the very bottom of the page is an online broadcast of the “winnings” paid out by the organizers.
+
+Fake website page with information about the “giveaway” To reinforce the impression of a legitimate website, the scammers set up a fake Nvidia support chat.
+
+It’s not clear who responds to users’ messages — the criminals themselves or a robot.
+
+Fake support chat on the website
+
+Curiously, if you enter the address of the scammers’ cryptowallet on blockchain.com , it turns out that some money has actually been transferred thereto — a total of 0.42 BTC (worth more than $8000 at the time of writing).
+
+It’s unknown who sent the funds: it could be victims or the scammers themselves, for example, to check if the wallet is working or to pretend to be “lottery” participants.
+
+In any case, there’s no trace of the reported 50,000 BTC, and no hint of double-your-money paybacks.
+
+The scammers’ cryptowallet If it’s good enough for Elon!…
+
+Cryptocurrency scams in which fraudsters use the names of celebrities or well-known brands are quite common and embody varying degrees of sophistication.
+
+For example, scammers have tried to lure Twitter users to fake cryptocurrency handouts masquerading as Elon Musk, Bill Gates or Pavel Durov .
+
+More complex schemes involve fake-news websites with stories of famous people who supposedly got even richer than they already are by investing in cryptocurrency in a certain way.
+
+Those wishing to emulate their success followed links to fake websites about cryptocurrency investments.
+
+There, victims were persuaded to deposit a certain amount of money into the cybercriminals’ account, and when they did they had their personal data stolen.
+
+How to protect yourself?
+
+It can be really hard to resist a tempting offer.
+
+To avoid unpleasant situations, we recommend you keep some simple safety rules in mind: Do not blindly trust information just because it appears to come from a celebrity or well-known brand.
+
+Double-check all information from secondary sources on official websites.
+
+Do not click on links of unknown origin, such as in e-mails.
+
+It’s better to look for important information yourself using a search engine.
+
+Keep your cool at the sight of contests, giveaways or lotteries offering a fortune; also be very wary when urged to act urgently or you’ll lose money — this is another common cybercriminal trick.
+
+Learn to spot online scammers; this post will help you recognize the most common signs of fraud.
+
+Use a reliable security solution that warns you about suspicious websites.
+
+
+
+

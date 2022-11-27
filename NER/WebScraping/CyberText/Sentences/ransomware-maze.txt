@@ -86,7 +86,9 @@ X32DBG PROCESS CAUGHT BY THE MALWARE WITH THE HASH It can terminate IDA debugger
 
 A partial list of the processes that can be cracked using a dictionary list terminated by the malware is shown below: dumpcap.exe -> 0x5fb805c5 excel.exe -> 0x48780528 fiddler.exe -> 0x5e0c05b1 msaccess.exe -> 0x6a9c05ff mysqld-nt.exe -> 0x79ec0661 outlook.exe -> 0x615605dc pipanel.exe -> 0x5fb805c4 procexp64.exe -> 0x78020640 procexp.exe -> 0x606805d4 procmon64.exe -> 0x776e0635 procmon.exe -> 0x600005c9 python.exe -> 0x55ee0597 taskkill.exe -> 0x6c2e0614 visio.exe -> 0x49780539 winword.exe -> 0x60d805d5 x32dbg.exe -> 0x5062053b x64dbg.exe ->
 
-0x50dc0542 This short list shows the name of the process to kill and the custom hash from the special name generated from the original process name.
+0x50dc0542
+
+This short list shows the name of the process to kill and the custom hash from the special name generated from the original process name.
 
 FIGURE 8.
 

@@ -1,0 +1,8 @@
+
+C:\\Windows\\Microsoft.
+NET\\Framework\\v4.0.30319\\RegAsm.exe /u \"C:\\4.0.30319\" The \"/u\" parameter, which means \"Unregister “, is part of the command to install this module.
+This could be interpreted as being used to remove the module.
+However, the module itself has an “Unregister” function that does the opposite.
+It creates a service for libexpat.dll that further downloads additional modules, including the core module.
+Unregister function in the loader module that installs 2 DLLs as a service.
+Once the libexpat.dll service is installed and running, it downloads 2 additional modules.

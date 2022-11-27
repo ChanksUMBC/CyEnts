@@ -1,0 +1,124 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>Eaw~ad</id>
+    <frameset cdef="" edef="to habituate, make somebody accustomed to something" id="01">
+        <role argnum="0" argrole="the agent causing the habituation"/>
+        <role argnum="1" argrole="the entity becoming accustomed"/>
+        <role argnum="2" argrole="thing accustomed to"/>
+        <frame>
+            <example>
+                <parse>
+                    (S
+                    (S
+                    (CONJ و)
+                    (NP-TPC-1
+                    (PRON_1P نحن)
+                    (VP
+                    (IV1P+IV+IVSUFF_MOOD:I ننطلق)
+                    (NP-SBJ
+                    (-NONE- *T*-1)
+                    (PP
+                    (PREP من)
+                    (NP
+                    (NP
+                    (DEM_PRON_F هذه)
+                    (NP
+                    (DET+NOUN+NSUFF_FEM_PL+CASE_DEF_GEN الاعتبارات)
+                    (PP-PRP
+                    (PREP ل)
+                    (SBAR
+                    (-NONE- 0)
+                    (S
+                    (VP
+                    (IV1P+IV+IVSUFF_MOOD:S نؤكد)
+                    (NP-SBJ
+                    (-NONE- *)
+                    (NP-OBJ
+                    (NP
+                    (NP
+                    (NOUN+CASE_DEF_ACC تعاطف)
+                    (NP
+                    (POSS_PRON_1P نا)
+                    (CONJ و)
+                    (NP
+                    (NOUN+CASE_DEF_ACC تعاون)
+                    (NP
+                    (POSS_PRON_1P نا)
+                    (ADJP
+                    (DET+ADJ+NSUFF_MASC_DU_ACC الدائمين)
+                    (NP-ADV
+                    (NOUN+CASE_DEF_ACC مع)
+                    (NP
+                    (DET+NOUN+NSUFF_FEM_SG+CASE_DEF_GEN الجمهورية)
+                    (DET+ADJ+NSUFF_FEM_SG+CASE_DEF_GEN الاسلامية)
+                    (DET+ADJ+NSUFF_FEM_SG+CASE_DEF_GEN الايرانية)
+                    (PUNC ,)
+                    (CONJ و)
+                    (S
+                    (NP-PRD
+                    (NOUN يقين)
+                    (NP
+                    (POSS_PRON_1S ي)
+                    (SBAR-SBJ
+                    (SUB_CONJ ان)
+                    (S
+                    (NP-TPC-2
+                    (NP
+                    (DEM_PRON_MS هذا)
+                    (NP
+                    (DET+NOUN+CASE_DEF_ACC المؤتمر)
+                    (VP
+                    (PRT
+                    (FUT_PART س)
+                    (IV3MS+IV+IVSUFF_MOOD:I يكون)
+                    (NP-SBJ
+                    (-NONE- *T*-2)
+                    (NP-PRD
+                    (NP
+                    (NOUN+CASE_INDEF_ACC نجاحاً)
+                    (ADJ+CASE_INDEF_ACC موصولاً)
+                    (SBAR
+                    (WHNP-3
+                    (-NONE- 0)
+                    (S
+                    (VP
+                    (IV3MS+IV_PASS+IVSUFF_MOOD:I يضاف)
+                    (NP-SBJ
+                    (-NONE- *T*-3)
+                    (NP-OBJ
+                    (-NONE- *-3)
+                    (PP-CLR
+                    (PREP الى)
+                    (NP
+                    (NP
+                    (NOUN+NSUFF_FEM_PL+CASE_INDEF_GEN نجاحات)
+                    (ADJ+NSUFF_FEM_SG+CASE_INDEF_GEN سابقة)
+                    (SBAR
+                    (WHNP-4
+                    (-NONE- 0)
+                    (S
+                    (VP
+                    (PV+PVSUFF_SUBJ:3FS عودت)
+                    (NP-DTV
+                    (PVSUFF_DO:1P نا)
+                    (NP-OBJ
+                    (PRT
+                    (PART ايا)
+                    (NP
+                    (NP
+                    (PRON_3FS ها)
+                    (NP
+                    (-NONE- *T*-4)
+                    (NP-SBJ
+                    (DET+NOUN+NSUFF_FEM_SG+CASE_DEF_NOM الجمهورية)
+                    (DET+ADJ+NSUFF_FEM_SG+CASE_DEF_NOM الاسلامية)
+                    (DET+ADJ+NSUFF_FEM_SG+CASE_DEF_NOM الايرانية)
+                    (PUNC &amp;quot;)
+                </parse>
+                <arg f="" g="us" n="1">نا</arg>
+                <arg f="" g="it" n="2">اياها</arg>
+                <arg f="" g="the Islamic Republic of Iran" n="0">الجمهورية الاسلامية الايرانية</arg>
+            </example>
+        </frame>
+    </frameset>
+</verb>

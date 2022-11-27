@@ -1,0 +1,6 @@
+
+All these are additional stages where something can go wrong — in other words, there are extra risks.
+What’s up, Triada Naturally, something did go wrong, repeating the scenario we wrote about last year.
+To recap: back then, attackers infected the FMWhatsapp mod with a dropper that downloaded a multifunctional Trojan — Triada — onto users’ devices.
+This modular Trojan mainly shows ads and signs the user up for paid content.
+Now, practically the same thing has happened — with the same messaging app but a different unofficial client.

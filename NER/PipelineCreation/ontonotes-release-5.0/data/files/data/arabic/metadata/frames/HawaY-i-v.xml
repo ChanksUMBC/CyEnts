@@ -1,0 +1,29 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>hawaY-i</id>
+    <frameset cdef="" edef="to fall (down)" id="01">
+        <role argnum="1" argrole="Logical subject, patient, thing falling"/>
+        <role argnum="2" argrole="start point"/>
+        <role argnum="3" argrole="end point, end state of arg1"/>
+        <frame>
+            <example>
+                <parse>
+                    (S
+                    (S
+                    (CONJ و)
+                    (VP
+                    (PV+PVSUFF_SUBJ:3MS هوى)
+                    (NP-SBJ
+                    (DET+NOUN+CASE_DEF_NOM الفندق))
+                    (PP-TMP
+                    (PREP في)
+                    (NP
+                    (NOUN_QUANT+CASE_DEF_GEN بضع)
+                    (NP
+                    (NOUN+CASE_INDEF_GEN ثوان))))))
+                </parse>
+                <arg f="" g="the hotel" n="1">الفندق</arg>
+            </example>
+        </frame>
+    </frameset>
+</verb>

@@ -1,0 +1,8 @@
+
+We recently uncovered a new scheme in which YouTube users are lured to a fake cryptoexchange through videos about a “bug” that supposedly lets them take advantage of a huge discrepancy in exchange rates.
+The cryptocurrency exchange rate bug Just like traditional currencies, cryptocurrencies’ exchange rates are determined by the market: as of the writing of this post, one bitcoin is worth around 18 Ethereum on average.
+But exchange rates may vary between the different platforms where these currencies are traded.
+The differences are usually small, but what if one of the platforms has a technical glitch that works to buyers’ advantage?
+Then it could be those buyers’ lucky day, and they might strike it rich thanks to the discrepancy in exchange rates.
+Finding a bug like this is a dream for freebie lovers ?
+and this is exactly what the scammers are promising in videos on YouTube.

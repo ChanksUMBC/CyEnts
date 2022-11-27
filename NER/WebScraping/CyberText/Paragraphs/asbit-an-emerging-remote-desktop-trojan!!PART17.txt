@@ -1,0 +1,19 @@
+
+For example, a network filter that blocks the domain ddns.b.rdlite.com won’t be able to block the request because it can only see the HTTP request to DoH servers (e.g., Alibaba or DnsPod).
+The way to block this request is to directly block the IP address associated with the domain.
+It’s interesting to note however that the malware author did not use HTTPS which will make it more resilient as such requests are encrypted.
+RDP Client Module
+This module is mainly for remote desktop control as the name implies.
+The old versions relied on commercial or free remote desktop applications, such as TightVNC or UltraVNC while the latest version implements its own RDP.
+It does this by using the built-in Windows RDP application.
+It works by creating an RDP Session instance by using the CLSID ( 9B78F0E6-3E05-4A5B-B2E8-E743A8956B65 ) which is the RDPSession Class in Windows.
+The RDP modules control server is v2.team.rfb.ink:5100 , and it also uses DoH to determine the IP of its control server.
+Conclusion In this blog, we have detailed the evolution of an emerging Chinese remote desktop trojan.
+We have identified some of its capabilities and its infrastructure and how it tries to evade endpoint and network detection.
+We believe that this RAT is in its early development but it’s actively being developed.
+It’s likely that we will see future versions of this malware with enhanced capabilities and new ways of evading endpoint and network detection.
+Juniper ATP Cloud detects this malware using Machine Learning based on behavioral analysis engine.
+Indicators of Compromise asbit[.]cn mitm[.]work rdlite[.]com fmt[.]ink def[.]cab rfb[.]ink 47[.]111[.]81[.]199 43[.]128[.]31[.]158 43[.]156[.]37[.]105 43[.]154[.]232[.]199 119[.]28[.]78[.]209 43[.]154[.]211[.]60 104[.]21[.]10[.]90 172[.]67[.]162[.]192
+806523a9e4021cd72691fbdeb229339a24984b7ca79c3860ba468c832bf95c4d 018656e61c7c5fc8d5983a32507fbcf379dd9e2b5dd7d67b8e44590d46a8c51f f223ceb9830ed18d823f42d9d8d5c09429782e0bcdbc62da5f00c881964e7041 4b1efadc55c0cc3471e0945804125317b2a75772393541f680b1617f8a42773d 754cc559a2c861c0ef8acfbbb632e79e04839ab9f8948fa3392c1cd69d14f026
+C5a720c2460da4c49b912409b204fbec31c79af3f7aaa011a3e679645f060760 a2cdf57b6a1cbf36d0440feedb2d9593e81cf646fd6f736a66d32950c1fa6857
+

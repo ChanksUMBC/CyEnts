@@ -1,0 +1,5 @@
+
+Core Module The core module is a fully functional RAT.
+It has a hard coded server to where it connects to, which is 47.111.81.199:6000 .
+It also includes several functionalities including command execution and keystroke injection.
+Below are the list of functions it can perform: Capture Screenshots Run TightVNC for Remote Desktop Control Control Mouse Movements Inject Keystrokes Kill Process by PID Download Files Execute Commands Collect Installed Certificates An interesting function of this RAT is that it uses TightVNC for its remote desktop functions.

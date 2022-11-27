@@ -1,0 +1,5 @@
+
+The paper has merit for questioning the security policy of powering off the phone, but keeping some modules alive.
+The doubts were shown to be justified.
+A half powered-off device The paper concludes that the Bluetooth firmware is not sufficiently protected.
+It’s theoretically possible either to modify it in iOS or to reprogram the same Low Power Mode by expanding or changing its functionality.

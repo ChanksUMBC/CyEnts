@@ -1,0 +1,11 @@
+
+So what is LofyLife?
+Using an internal automated system for monitoring open-source repositories, our researchers identified a malicious campaign LofyLife.
+The campaign employed four malicious packages spreading Volt Stealer and Lofy Stealer malware in the npm repository to gather various information from victims, including Discord tokens and linked credit card information, and to spy on them over time.
+The identified malicious packages appeared to be used for ordinary tasks such as formatting headlines or certain gaming functions.
+The descriptions of the packages were incomplete and overall it looks like the attackers did not put too much effort into them.
+Yet, the ‘formatting headlines’ package was in Brazilian Portuguese with a #brazil hashtag, which points to the attackers looking to target users based in Brazil.
+Other packages were presented in English, so they could be targeting users from other countries.
+Description of one of the infected packages called “proc-title” (Translation from Portuguese: This package correctly capitalizes your titles as per the Chicago manual of style)
+These packages, however, contained highly obfuscated malicious JavaScript and Python code.
+This made them harder to analyze when being uploaded to the repository.

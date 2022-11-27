@@ -1,0 +1,4 @@
+
+The videos look quite convincing and prompt actions that gamers who are no strangers to cheating are well accustomed to , in particular, following a link in the description to download a self-extracting archive and then running it.
+If the download fails, the video creators kindly suggest disabling Windows SmartScreen, a filter that protects Microsoft Edge users from phishing and malicious sites.
+For some reason, however, they unkindly fail to mention that this will result in a whole package of malware being installed on the user’s computer at once.

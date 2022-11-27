@@ -1,0 +1,6 @@
+
+Although the security of popular programs and operating systems has improved enormously over the past 22 years, malware creators keep finding new loopholes for successful cyberattacks.
+Malicious macros have not gone anywhere either.
+In February 2022, Microsoft promised to finally restrict the ability to distribute them by banning the execution of any scripts in Office documents obtained over the internet.
+In early July 2022, this ban was lifted — it’s reasonable to assume that the fears that something gets broken at the users’ end came true.
+Later that same July, Microsoft once again decided to start blocking macros by default , this time explaining to those in need how to get around the ban.

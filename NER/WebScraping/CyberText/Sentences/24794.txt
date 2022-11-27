@@ -1,0 +1,219 @@
+Cryptocurrency is an ideal target for cybercriminals: there are many ways to steal it, and it’s very difficult for the victims to ever recover it.
+
+And some hackers make an absolute killing from it — getting tens, or sometimes hundreds of millions of dollars from a cryptoexchange attack.
+
+This post looks at the Top-5 biggest ever heists in the relatively short history of cryptocurrencies.
+
+And there’s a bonus at the end: an amazing story of a cryptocurrency robbery worthy of a Netflix show… 5.
+
+Skeleton key Victim: KuCoin cryptoexchange When: September 26, 2020 Loss: around $285 million On the night of September 25/26, 2020, security officers at the Singapore-based company KuCoin detected a series of abnormal transactions from several hot wallets.
+
+To halt the suspicious transactions they transferred all remaining assets from the compromised hot wallets to cold storage .
+
+The whole incident lasted about two hours from detection to completion.
+
+During this time, the attackers managed to withdraw approximately $285 million in several cryptocurrencies.
+
+The investigation revealed that the cybercriminals had accessed the private keys of the hot wallets.
+
+One of the primary suspects is Lazarus Group, a North Korean APT cybergang.
+
+This is because the attackers employed a multi-stage algorithm to launder the loot, similar to the schemes used in previous hacks by Lazarus group.
+
+First, they ran equal amounts of crypto through a tumbler (a tool for mixing cryptocurrency funds with others to obscure the trail), then transferred the cryptocurrency through decentralized platforms .
+
+Despite the scale, this heist was not the end of the cryptoexchange.
+
+The day after the theft, KuCoin CEO Johnny Lyu promised during a livestream to reimburse the stolen funds.
+
+Lyu kept his word, and by November 2020 he’d tweeted that 84% of the affected assets had been returned to their owners .
+
+The remaining 16% were covered by KuCoin’s insurance fund.
+
+4.
+
+Money out of thin air Victim: Wormhole cross-chain bridge When: February 2, 2022 Loss: $334 million
+
+Next in our Top-5 is a heist that used a vulnerability in Wormhole, the cross-chain bridging protocol .
+
+The cybercriminals were aided by the fact that the platform’s developers had made their program code public.
+
+But first things first… Wormhole is a tool that mediates cryptocurrency transactions.
+
+Specifically, it allows users to move tokens between the Ethereum and Solana networks.
+
+Technically, the exchange works like this: tokens are frozen in one chain, while so-called “wrapped tokens” of the same value are issued in the other.
+
+Wormhole is an open-source project with its own repository on GitHub.
+
+Shortly before the heist, the developers placed code there to fix a vulnerability in the protocol.
+
+But the attackers managed to exploit the vulnerability before the changes took effect.
+
+The bug allowed them to bypass the transaction verification on the Solana side and issue 120,000 “wrapped ETH” (worth around $334 million at the time of the attack) without freezing the equivalent collateral in the Ethereum blockchain.
+
+The cybercriminals transferred two-thirds of the total amount to an Ethereum wallet, and used the rest to buy other tokens.
+
+Wormhole publicly appealed to the attackers to return the stolen funds and detail the exploit for a $10 million reward.
+
+The cybercriminals ignored the generous offer.
+
+The day after the heist, Wormhole tweeted that all funds had been restored and the bridge was operating as before.
+
+The financial hole was closed by Jump Trading — the company that had bought Wormhole’s developer six months before the incident.
+
+Judging by open-source information, the thieves remain unknown.
+
+3.
+
+Three-year heist Victim: Mt.Gox cryptoexchange
+
+When: February 2014 Loss: $480 million The history of Mt.Gox begins way back in 2007, when it was a platform for exchanging cards from the Magic: The Gathering game.
+
+Three years later, amid the growing popularity of cryptocurrencies, the site owner, US programmer Jed McCaleb, decided to turn it into a cryptoexchange, but then sold the service to French developer Mark Karpelès in 2011.
+
+Just two years later, Mt.Gox was trading around 70% of the world’s bitcoin.
+
+The rapid rise was followed by a crippling crash.
+
+On February 7, 2014, the exchange suddenly blocked all bitcoin withdrawals.
+
+The company blamed the move on technical issues.
+
+Outraged customers gathered outside the headquarters of Mt.Gox in Tokyo, demanding their money back.
+
+Their protest fell on deaf ears.
+
+The remarkable thing about this story is that the Mt.Gox heist began in 2011.
+
+Back then, unknown hackers got hold of the private keys to a hot wallet on the exchange and began to gradually siphon off bitcoin from it.
+
+By 2013, the cybercriminals had deposited 630,000 BTC into their accounts.
+
+Mt.Gox finally ended trading on February 28, 2014, when Karpelès declared it bankrupt and apologized for the “weaknesses in the system” that had wiped out roughly 750,000 BTC of customers’ funds and 100,000 BTC of its own.
+
+The amount of stolen funds is usually given at around $480 million — this is the value of the total number of stolen tokens at the exchange rate on the day before the exchange filed for bankruptcy — February 27.
+
+Note, though, that in the time after Mt.Gox ceased trading and before it declared bankruptcy, the bitcoin price fell heavily.
+
+If calculated at the exchange rate on February 6 (the day before the exchange actually shut down), the loss would be around $660 million.
+
+However, both of these figures are tentative: they don’t factor in the three-year duration of the heist during which time the exchange rate fluctuated wildly.
+
+So it’s hard to pinpoint the exact amount of damage.
+
+Bitcoin exchange rate in February 2014.
+
+Source How was the attack even possible?
+
+According to former employees , the company’s management was rather negligent when it came to many important issues.
+
+For example, Mt.Gox had serious problems with financial reporting.
+
+Moreover, a proper quality-and-security audit of the code was never undertaken: there was no version control system, for instance.
+
+Prosecutors charged Mt.Gox owner, Karpelès, with embezzlement of around $3 million worth of clients’ funds.
+
+But they failed to prove this in court.
+
+In the end, Karpelès only received a suspended sentence of two years and six months for data manipulation and was acquitted on other charges.
+
+2.
+
+Almost half a billion Victim: Coincheck cryptocurrency exchange
+
+When: January 26, 2018 Loss: $496 million Coincheck is one of Japan’s largest cryptoexchanges.
+
+In 2018, cybercriminals managed to steal from it more than 500 million NEM tokens worth roughly the same amount in dollars.
+
+The company claimed that their security system was robust, and didn’t report how exactly the intruders carried out the attack.
+
+That said, some experts believe that the cybercriminals may have gained access to the private keys of the Coincheck hot wallets with the aid of malware embedded on a computer in the company’s office.
+
+The attackers also created their own site selling NEM tokens for bitcoin and other cryptocurrencies at a 15% discount.
+
+As a result, the NEM exchange rate fell sharply, and Coincheck lost around $500 million, which, however, did not force the exchange to close.
+
+What’s more, the criminals couldn’t be traced.
+
+The exchange had to suspend operations for a while and promised to compensate clients with its own funds.
+
+NEM exchange rate after the Coincheck incident.
+
+Source 1.
+
+Job offer with a surprise Victim: Ronin Network blockchain platform When: March 23, 2022 Loss: $540 million Ronin Network was specifically created by Sky Mavis for the play-to-earn game Axie Infinity , allowing players to buy the in-game currency Smooth Love Potion (SLP) .
+
+In late March 2022, unknown attackers stole from Ronin a record $540 million worth of cryptocurrency.
+
+They were aided by spyware and the magic of social engineering.
+
+The targeted attack was aimed at Sky Mavis employees, one of whom took the bait (most likely on LinkedIn).
+
+Having passed a “selection process”, one of senior engineers received a “job offer” in the form of a PDF file with spyware inside.
+
+This enabled the thieves to take control of four of the network’s private validator keys.
+
+To gain access to the company’s assets, they needed to compromise at least five of the nine validators.
+
+As just mentioned, the spyware helped them get hold of four keys.
+
+The fifth they got hold of due to an oversight by the company itself, which had authorized Axie DAO ( decentralized autonomous organization ) to sign off on transactions to help Ronin Network mitigate user volume, and then forgot to revoke the permission.
+
+Sky Mavis, however, quickly recovered from the incident.
+
+In June 2022, it relaunched the blockchain platform and began compensating affected players.
+
+NFT character from blockchain-based game Axie Infinity.
+
+Replica Bonus.
+
+A hack with a refund Target: Poly Network cross-chain protocol
+
+When: August 10, 2021 Loss (later recovered): $610 million As a bonus story, let’s finish with another huge crypto heist — which ended with the return of every cent of the loot.
+
+Here’s what happened… Poly Network is yet another protocol for implementing blockchain interoperability.
+
+In summer 2021, it witnessed one of the biggest heists in cryptocurrency history.
+
+An unknown hacker, exploiting a vulnerability in Poly Network, stole more than $600 million in various cryptocurrencies .
+
+Poly Network appealed to the perpetrator on Twitter to return the stolen tokens.
+
+To everyone’s amazement, the hacker made contact and agreed.
+
+They proceeded to transfer the stolen tokens bit by bit, dividing them into several unequal parts.
+
+The online exchange between the hacker and Poly Network went on for quite some time.
+
+During it, the attacker stated he wasn’t interested in money and had only carried out the heist for “ideological reasons”.
+
+As a mark of gratitude, Poly Network dropped its claims against him, guaranteed his anonymity, offered a reward of $500,000 and even invited him to become its chief security consultant.
+
+It also launched a bug-bounty program worth $500,000.
+
+No real moral to the story, but… We’ve listed here only the Top-5 crypto heists, all of which targeted major organizations.
+
+But of course many minor incidents affect ordinary users all the time.
+
+Therefore, every investor needs to take steps to secure their assets.
+
+Here are some helpful tips: Choose platforms for trading and other operations carefully: read feedback and reviews, and, if possible, consult with experienced users you trust.
+
+Don’t give anyone the login details for your account on the exchange or your wallet credentials.
+
+Remember to keep not only your passwords and private keys secret, but also your seed phrase .
+
+Store your main cryptocurrency savings in cold wallets: unlike hot ones, they don’t need to be permanently online and so are more secure in general.
+
+If you do use a hot wallet, be sure to enable two-factor authentication.
+
+Beware of phishing.
+
+To learn how to spot cryptocurrency hunters, see this post .
+
+Use a reliable solution that protects financial transactions, prevents malware from stealing your wallet password or private key, and warns you about scam sites.
+
+
+
+

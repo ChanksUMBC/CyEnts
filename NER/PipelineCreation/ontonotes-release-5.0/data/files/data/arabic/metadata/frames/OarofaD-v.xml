@@ -1,0 +1,63 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>Oarofad</id>
+    <frameset cdef="" edef="help, support, feed (a river)" id="01">
+        <role argnum="0" argrole="entity giving support"/>
+        <role argnum="1" argrole="entity being supported"/>
+        <frame>
+            <example>
+                <parse>
+                    (S
+                    (S
+                    (VP
+                    (PSEUDO_VERB ان)
+                    (NP-SBJ-1
+                    (NOUN+CASE_DEF_ACC نهر)
+                    (NP
+                    (DET+NOUN_PROP+CASE_DEF_GEN الوزاني))
+                    (PUNC ,)
+                    (PRN
+                    (CONJ و)
+                    (S
+                    (NP-SBJ
+                    (PRON_3MS هو))
+                    (NP-PRD
+                    (NOUN+CASE_DEF_NOM احد)
+                    (NP
+                    (NOUN+CASE_DEF_GEN روافد)
+                    (NP
+                    (NOUN+CASE_DEF_GEN نهر)
+                    (NP
+                    (DET+NOUN_PROP+CASE_DEF_GEN الحاصباني))))))))
+                    (S
+                    (VP
+                    (PUNC ,)
+                    (IV3MS+IV+IVSUFF_MOOD:I ينبع)
+                    (NP-SBJ
+                    (-NONE- *-1))
+                    (PP-DIR
+                    (PREP من)
+                    (NP
+                    (DET+NOUN الاراضي)
+                    (DET+ADJ+NSUFF_FEM_SG+CASE_DEF_GEN اللبنانية)))))))
+                    (CONJ و)
+                    (S
+                    (VP
+                    (IV3MS+IV+IVSUFF_MOOD:I يرفد)
+                    (NP-SBJ
+                    (NOUN+CASE_DEF_ACC نهر)
+                    (NP
+                    (DET+NOUN_PROP+CASE_DEF_GEN الحاصباني)))
+                    (NP-LOC
+                    (NOUN+CASE_DEF_ACC ضمن)
+                    (NP
+                    (DET+NOUN الاراضي)
+                    (DET+ADJ+NSUFF_FEM_SG+CASE_DEF_GEN اللبنانية)))))
+                    (PUNC .))
+                </parse>
+                <arg f="" g="" n=""></arg>
+                <arg f="" g="" n=""></arg>
+            </example>
+        </frame>
+    </frameset>
+</verb>

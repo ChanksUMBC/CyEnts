@@ -1,0 +1,75 @@
+Online scammers use all sorts of ways to separate cryptoinvestors from their prized bitcoin.
+
+They create fake news sites and promise helicopter money .
+
+They even post screenshots in Lightshot with “cryptowallet login credentials” ?
+
+this being a trap for folks who have a weakness for other folks’ secrets and a free lunch.
+
+We recently uncovered a new scheme in which YouTube users are lured to a fake cryptoexchange through videos about a “bug” that supposedly lets them take advantage of a huge discrepancy in exchange rates.
+
+The cryptocurrency exchange rate bug Just like traditional currencies, cryptocurrencies’ exchange rates are determined by the market: as of the writing of this post, one bitcoin is worth around 18 Ethereum on average.
+
+But exchange rates may vary between the different platforms where these currencies are traded.
+
+The differences are usually small, but what if one of the platforms has a technical glitch that works to buyers’ advantage?
+
+Then it could be those buyers’ lucky day, and they might strike it rich thanks to the discrepancy in exchange rates.
+
+Finding a bug like this is a dream for freebie lovers ?
+
+and this is exactly what the scammers are promising in videos on YouTube.
+
+Using YouTube comments to build hype The first thing the fraudsters do is create a YouTube channel where they post videos describing a “clever” way to get rich, which they want to share with the cryptocommunity.
+
+One of the fraudulent YouTube channels used in this scheme ?
+
+with just one video posted on the channel In the single video on the channel, the scammers claim that they’ve found a bug in one of the automated exchanges: by some happy turn of events, the exchange buys one bitcoin for 184 Ethereum, while on Binance the exchange rate is 18.4.
+
+That means that you should get 10 times more money on this website, all because of a vanishing decimal point.
+
+In their video, the scammers show an error they allegedly found in the BTC-to-ETH exchange rate To get users excited and steer them away from fact-checking, the fraudsters pad the comments section with bot-posts expressing the deepest of gratitude for the amazing insider knowledge.
+
+Fake comments under a video by “users” who suddenly struck it rich To promote their channel, the scammers go to popular videos made by other people ?
+
+these are often newly posted ones where the comments section is the most active ?
+
+and leave comments talking about a bug on a cryptoexchange and recommending a video about it.
+
+To make sure the comments don’t get lost among others, the bots give them lots of likes.
+
+Scammers’ comments with tons of likes under another creator’s popular video Directing users to the website
+
+The link to the website with the allegedly favorable exchange rate is provided for those who are interested.
+
+You guessed it: this website is also run by the scammers.
+
+Website of a fake cryptocurrency exchange When they try to sell their crypto on this website, victims see a message saying that the rate is good for only 180 minutes.
+
+During that time, victims are asked to transfer the bitcoin they want to sell for Ethereum to a specific cryptowallet address.
+
+If the victim sends the bitcoin, they go to the criminals ?
+
+who of course don’t send back any Ethereum in return.
+
+A fake cryptoexchange page The described website isn’t the only one of its kind: fraudsters are creating dozens of fake cryptoexchanges and YouTube channels for other cryptocurrencies too.
+
+The cybercriminals are probably banking on the fact that users will seek out information about the tokens they’re interested in.
+
+The website names and addresses may be different, but in every case the scam revolves around a “bug in an exchange rate”.
+
+A bunch of similar fraudulent videos in a YouTube search How to protect yourself As always, your most powerful weapon in combating cybercriminals is vigilance.
+
+Always be wary if you’re offered something for free, or if you see a deal that looks too good to be true.
+
+Ask yourself why someone would want to share that pot of gold with you.
+
+If anyone asks you to send funds somewhere, do your homework and check where they’d be going.
+
+If you’re not confident that the recipient is legitimate, it’s best not to take the risk no matter how great the deal looks.
+
+And make sure that all the devices you use to handle cryptocurrency have a reliable antivirus that will block malicious software and warn you before you visit a suspicious website.
+
+
+
+

@@ -1,0 +1,101 @@
+Online fraud knows no bounds.
+
+Cybercriminals are adapting — not always successfully — their usual schemes for new countries.
+
+To wheedle out victims’ personal and banking data, they send e-mails purporting to be from, among others, online marketplaces , video streaming services and, of course, government agencies .
+
+Today we look at two separate scams in which cybercriminals impersonate financial regulators investigating, you guessed it, fraud.
+
+Under this pretext, they extract an array of personal information from their hapless victims.
+
+A German tragedy in two parts The first scam targets German residents.
+
+It starts with an e-mail in which an organization calling itself Finanzmarktaufsicht
+
+(the name suggests it has something to do with with financial regulation) states that Osnabrück police has supposedly arrested some criminals and confiscated their hard drives, which were found to contain citizens’ decrypted personal data — including the recipient’s.
+
+E-mail seemingly from “German financial regulator”
+
+Finanzmarktaufsicht The e-mail goes on to state that, given the large number of victims, “Finanzmarktaufsicht” suspects organized crime to be at work.
+
+Hinting that the recipient of the e-mail could be one of the victims, the scammers ask them to assist in the investigation.
+
+Nothing complicated is required for this: simply follow the link to fill out a special online form, or call the number given in the e-mail.
+
+The message itself resembles an official e-mail: it contains the the logo of the “sender” government agency, the actual address of a Berlin business center (home to several financial organizations, but none bearing the name Finanzmarktaufsicht), and contact details.
+
+At the end, the scammers have gone to the trouble of adding a perfectly genuine link to an article about a real investigation published on the website of one of Germany’s most popular TV news shows.
+
+One of the links in the e-mail points to a real article about a financial fraud investigation on the genuine website of a popular German TV news show Although at first glance the e-mail comes across very well, upon closer inspection certain tell-tale signs can be found showing it’s bogus.
+
+First of all, the sender’s address is suspicious.
+
+It has nothing to do with the government agency that allegedly sent it.
+
+And the agency itself looks dubious: A quick search online reveals that Finanzmarktaufsicht is in fact an Austrian, not German, agency.
+
+The German equivalent goes by an even more officious-sounding name: Bundesanstalt für Finanzdienstleistungsaufsicht .
+
+A user who fails to spot the deception and clicks the link is taken to an online form on the website of the bogus Finanzmarktaufsicht.
+
+And to receive “expert assistance”, they need to enter the following details: Surname First name E-mail address Contact phone number Name of the organization they recently invested in Deposit date, amount and purpose of the investment Form for entering personal data on the fake Finanzmarktaufsicht site Further down the page the cybercriminals promise to help return the funds stolen by the scammers, for which reason they allegedly need information to prepare documents, including past correspondence, details of bank transactions, etc.
+
+It’s most likely that later the victim will be asked for their bank card number (supposedly to reimburse the damage), be required to pay a bogus fee, or part with their money in some other way.
+
+The bogus Finanzmarktaufsicht site itself looks as though it belongs to a bona fide government agency.
+
+The user sees several menu sections, plus detailed information about the agency including its activities, history, opening hours, contact details, and a lot more besides.
+
+Even the logo of the Austrian government agency is there on display.
+
+However the e-mail address given there is wholly unlike the one from which the message came; it looks more like the real deal, and at least contains the abbreviated name of the agency.
+
+But it’s fake too, of course.
+
+As already mentioned, there’s no organization with that name in Germany, so anyone could register such a .de domain name.
+
+Which is precisely what the scammers did.
+
+Information about the organization on the fake Finanzmarktaufsicht website Swiss letter The second scam focuses on Switzerland.
+
+This time, the e-mail “reminds” the recipient that back in 2015–2017 they supposedly invested in a company called SolidCFD.
+
+Too bad, since now it’s been closed down due to some illegal activity.
+
+And the “recovery and resolution manager” of the independent financial regulator wants to help return the investment.
+
+The pseudo-employee, alas, could not reach the recipient by phone, so the latter is asked to reply by e-mail to discuss the fate of their investment.
+
+In this instance, the cybercriminals have chosen a financial regulator that does exist in the target country.
+
+The e-mail makes reference to FINMA , an independent financial regulator operating in Switzerland.
+
+The company mentioned in the e-mail — SolidCFD — was also real, and did have a dubious reputation (but more in the UK than in Switzerland).
+
+As for a website, the attackers in this second scam don’t even bother with one.
+
+Most likely they’re hoping they’ll just get lucky and the user will agree to discuss their investments first by e-mail, then possibly by phone or messenger app.
+
+At that stage, employing various social engineering techniques, they’ll be able to squeeze personal information, and likely money, out of the victim.
+
+How to protect yourself To avoid unpleasantness and the loss of personal data and/or money, we recommend as follows:
+
+Paying attention to the e-mail address of the sender.
+
+If it has nothing to do with the company it purportedly comes from, or consists of random letters and numbers, you can be sure it’s a scam.
+
+If the e-mail mentions a law, regulation, or high-profile case, do an online search for information about it.
+
+Can’t find anything, or what you found doesn’t match the content of the e-mail?
+
+Again, it’s no doubt fraudsters at work.
+
+To learn how to spot scams, read our post on ways to detect online scam .
+
+Even if you’re confident in your abilities to unmask scammers, it’s better to play it safe just in case.
+
+With that in mind, use a reliable security solution that automatically recognizes danger and warns you when visiting a suspicious website.
+
+
+
+

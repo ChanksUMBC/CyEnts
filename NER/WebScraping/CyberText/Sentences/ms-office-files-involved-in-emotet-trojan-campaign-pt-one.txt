@@ -248,9 +248,9 @@ It includes a module on Internet threats that is designed to help end users lear
 
 IOCs URLs Involved in the Campaign: \"hxxps[:]//youlanda[.]org/eln-images/n8DPZISf/\" \"hxxp[:]//rosevideo[.]net/eln-images/EjdCoMlY8Gy/\" \"hxxp[:]//vbaint[.]com/eln-images/H2pPGte8XzENC/\" \"hxxps[:]//framemakers[.]us/eln-images/U5W2IGE9m8i9h9r/\" \"hxxp[:]//niplaw[.]com/asolidfoundation/yCE9/\" \"hxxp[:]//robertmchilespe[.]com/cgi/3f/\" \"hxxp[:]//vocoptions[.]net/cgi/ifM9R5ylbVpM8hfR/\" \"hxxp[:]//missionnyc[.]org/fonts/JO5/\" \"hxxp[:]//robertflood[.]us/eln-images/DGI2YOkSc99XPO/\" \"hxxp[:]//mpmcomputing[.]com/fonts/fJJrjqpIY3Bt3Q/\" \"hxxp[:]//dadsgetinthegame[.]com/eln-images/tAAUG/\" \"hxxp[:]//smbservices[.]net/cgi/JO01ckuwd/\" \"hxxp[:]//stkpointers[.]com/eln-images/D/\" \"hxxp[:]//rosewoodcraft[.]com/
 
-Merchant2/5[.]00/PGqX/\" C2 Server List in this Variant: (49 in total
+Merchant2/5[.]00/PGqX/\" C2 Server List in this Variant:
 
-) 185[.]248[.]140[.]40:443 8[.]9
+(49 in total) 185[.]248[.]140[.]40:443 8[.]9
 
 [.]11
 

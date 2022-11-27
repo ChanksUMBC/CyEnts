@@ -127,6 +127,8 @@
 {"label":"File_Extension","pattern":[{"LOWER":".cs"}]}
 {"label":"File_Extension","pattern":[{"LOWER":".doc"}]}
 {"label":"File_Extension","pattern":[{"LOWER":".docx"}]}
+{"label":"File_Extension","pattern":[{"LOWER":"dll"}]}
+{"label":"File_Extension","pattern":[{"LOWER":".dll"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"javascript"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"c#"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"visual"},{"LOWER":"basic"}]}
@@ -141,7 +143,6 @@
 {"label":"Programming_Language","pattern":[{"LOWER":"xslt"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"haskell"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"plankalk\u00e3\u00bcl"}]}
-{"label":"Programming_Language","pattern":[{"LOWER":"go"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"pl/sql"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"java"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"kotlin"}]}
@@ -151,14 +152,12 @@
 {"label":"Programming_Language","pattern":[{"LOWER":"the"},{"LOWER":"r"},{"LOWER":"project"},{"LOWER":"for"},{"LOWER":"statistical"},{"LOWER":"computing"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"gnu"},{"LOWER":"s"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"php"}]}
-{"label":"Programming_Language","pattern":[{"LOWER":"go"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"c"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"c--"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"swift"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"sql"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"structured"},{"LOWER":"query"},{"LOWER":"language"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"perl"}]}
-{"label":"Programming_Language","pattern":[{"LOWER":"basic"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"visual"},{"LOWER":"basic"},{"LOWER":".net"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"nasm"}]}
 {"label":"Programming_Language","pattern":[{"LOWER":"x86"},{"LOWER":"assembly"},{"LOWER":"language"}]}
@@ -308,8 +307,14 @@
 {"label":"Protocol","pattern":[{"LOWER":"torrent"}]}
 {"label":"Protocol","pattern":[{"LOWER":"soap"}]}
 {"label":"Email","pattern":[{"LIKE_EMAIL":true}]}
+{"label":"Email","pattern":[{"TEXT":{"REGEX":"[\\w-]+@([\\w-]+\\[\\.\\])+[\\w-]+"}}]}
 {"label":"URL","pattern":[{"LIKE_URL":true}]}
-{"label":"IP_Address","pattern":[{"TEXT":{"REGEX":"^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$"}}]}
+{"label":"URL","pattern":[{"TEXT":{"REGEX":"(http(s)?:\\/\\/.)?(www\\[\\.\\])?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\[\\.\\][a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)"}}]}
+{"label":"IP_Address","pattern":[{"TEXT":{"REGEX":"(^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$)"}}]}
+{"label":"IP_Address","pattern":[{"TEXT":{"REGEX":"(^(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?:\\[\\.\\](?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$)"}}]}
 {"label":"Hash","pattern":[{"TEXT":{"REGEX":"^[0-9a-fA-F]{32}$"}}]}
+{"label":"Hash","pattern":[{"TEXT":{"REGEX":"^[A-Fa-f0-9]{64}$"}}]}
+{"label":"Hash","pattern":[{"TEXT":{"REGEX":"^[A-Fa-f0-9]{128}$"}}]}
+{"label":"Hash","pattern":[{"TEXT":{"REGEX":"^[a-fA-F0-9]{40}$"}}]}
 {"label":"Port","pattern":[{"LOWER":"port"},{"TEXT":{"REGEX":"^\\d{1,5}$"}}]}
 {"label":"Vulnerability","pattern":[{"LOWER":{"REGEX":"cve-\\d{4}"}},{"TEXT":"-"},{"TEXT":{"REGEX":"\\d{4,7}"}}]}

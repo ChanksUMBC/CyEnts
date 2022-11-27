@@ -1,0 +1,4 @@
+
+The malicious payload consisted of malware written in Python dubbed Volt Stealer — an open-source malicious script, and a JavaScript malware dubbed Lofy Stealer, which has numerous features.
+Volt Stealer was used to steal Discord tokens from the infected machines along with the victim’s IP address, and upload them via HTTP.
+The Lofy Stealer, a new development from the attackers, is able to infect Discord client files and monitor the victim’s actions — detecting when a user logs in, changes registered e-mail or password, enables or disables multi-factor authentication and adds new payment methods (in which case it steals full credit card details).

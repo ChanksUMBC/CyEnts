@@ -1,0 +1,135 @@
+Researchers from the Secure Mobile Networking Lab at the University of Darmstadt, Germany, have published a paper describing a theoretical method for hacking an iPhone — even if the device is off.
+
+The study examined the operation of the wireless modules, found ways to analyze the Bluetooth firmware and, consequently, to introduce malware capable of running completely independently of iOS, the device’s operating system.
+
+With a little imagination, it’s not hard to conceive of a scenario in which an attacker holds an infected phone close to the victim’s device and transfers malware, which then steals payment card information or even a virtual car key.
+
+The reason it requires any imagination at all is because the authors of the paper didn’t actually demonstrate this, stopping one step short of a practical attack implementation in which something really useful nasty is loaded into the smartphone.
+
+All the same, even without this, the researchers did a lot to analyze the undocumented functionality of the phone, reverse-engineer its Bluetooth firmware, and model various scenarios for using wireless modules.
+
+So, if the attack didn’t play out, what’s this post about?
+
+We’ll explain, don’t worry, but first an important statement: if a device is powered off, but interaction with it (hacking, for example) is somehow still possible, then guess what — it’s not completely off!
+
+How did we get to the point where switching something off doesn’t necessarily mean it’s actually off?
+
+Let’s start from the beginning…
+
+Apple’s Low Power Mode In 2021, Apple announced that the Find My service, which is used for locating a lost device, will now work even if the device is switched off.
+
+This improvement is available in all Apple smartphones since the iPhone 11.
+
+If, for example, you lose your phone somewhere and its battery runs out after a while, it doesn’t turn off completely, but switches to Low Power Mode, in which only a very limited set of modules are kept alive.
+
+These are primarily the Bluetooth and Ultra WideBand (UWB) wireless modules, as well as NFC.
+
+There’s also the so-called Secure Element — a secure chip that stores your most precious secrets like credit card details for contactless payments or car keys — the latest feature available since 2020 for a limited number of vehicles.
+
+Bluetooth in Low Power Mode is used for data transfer, while UWB — for determining the smartphone’s location.
+
+In Low Power Mode, the smartphone sends out information about itself, which the iPhones of passers-by can pick up.
+
+If the owner of a lost phone logs in to their Apple account online and marks the phone as lost, information from surrounding smartphones is then used to determine the whereabouts of the device.
+
+For details of how this works, see our recent post about AirTag stalking .
+
+The announcement quickly prompted a heated discussion among information security experts about the maze of potential security risks.
+
+The research team from Germany decided to test out possible attack scenarios in practice.
+
+When powering off the phone, the user now sees the “iPhone Remains Findable After Power Off” message.
+
+Source Find My after power off First of all, the researchers carried out a detailed analysis of the Find My service in Low Power Mode, and discovered some previously unknown traits.
+
+After power off, most of the work is handled by the Bluetooth module, which is reloaded and configured by a set of iOS commands.
+
+It then periodically sends data packets over the air, allowing other devices to detect the not-really-off iPhone.
+
+It turned out that the duration of this mode is limited: in version iOS 15.3 only 96 broadcast sessions are set with an interval of 15 minutes.
+
+That is, a lost and powered-off iPhone will be findable for just 24 hours.
+
+If the phone powered off due to a low battery, the window is even shorter — about five hours.
+
+This can be considered a quirk of the feature, but a real bug was also found: sometimes when the phone is off, the “beacon” mode is not activated at all, although it should be.
+
+Of most interest here is that the Bluetooth module is reprogrammed before power off; that is, its functionality is fundamentally altered.
+
+But what if it can be reprogrammed to the detriment of the owner?
+
+Attack on a powered-off phone
+
+In fact, the team’s main discovery was that the firmware of the Bluetooth module is not encrypted and not protected by Secure Boot technology.
+
+Secure Boot involves multistage verification of the program code at start-up, so that only firmware authorized by the device manufacturer can be run.
+
+The lack of encryption permits analysis of the firmware and a search for vulnerabilities, which can later be used in attacks.
+
+But the absence of Secure Boot allows an attacker to go further and completely replace the manufacturer’s code with their own, which the Bluetooth module then executes.
+
+For comparison, analysis of the iPhone’s UWB module firmware revealed that it’s protected by Secure Boot, although the firmware isn’t encrypted either.
+
+Of course, that’s not enough for a serious, practical attack.
+
+For that, an attacker needs to analyze the firmware, try to replace it with something of their own making, and look for ways to break in.
+
+The authors of the paper describe in detail the theoretical model of the attack, but don’t show practically that the iPhone is hackable through Bluetooth, NFC or UWB.
+
+What’s clear from their findings is that if these modules are always on, the vulnerabilities likewise will always work.
+
+Apple was unimpressed by the study, and declined to respond.
+
+This in itself, however, says little: the company is careful to keep a poker face even in cases when a threat is serious and demonstrated to be so in practice.
+
+Bear in mind that Apple goes to great lengths to keep its secrets under wraps: researchers have to deal with closed software code, often encrypted, on Apple’s own hardware, with made-to-order third-party modules.
+
+A smartphone is a large, complex system that’s hard to figure out, especially if the manufacturer hinders rather than helps.
+
+No one would describe the team’s findings as breathtaking, but they are the result of lots of painstaking work.
+
+The paper has merit for questioning the security policy of powering off the phone, but keeping some modules alive.
+
+The doubts were shown to be justified.
+
+A half powered-off device The paper concludes that the Bluetooth firmware is not sufficiently protected.
+
+It’s theoretically possible either to modify it in iOS or to reprogram the same Low Power Mode by expanding or changing its functionality.
+
+The UWB firmware can also be examined for vulnerabilities.
+
+The main problem, however, is that these wireless modules (as well as NFC) communicate directly with the protected enclave that is Secure Element.
+
+Which brings us to some of the paper’s most exciting conclusions: Theoretically, it’s possible to steal a virtual car key from an iPhone — even if the device is powered off!
+
+Clearly, if the iPhone is the car key, losing the device could mean losing the car.
+
+However, in this case the actual phone remains in your possession while the key is stolen.
+
+Imagine it like this: an intruder approaches you at the mall, brushes their phone against your bag, and steals your virtual key.
+
+It is theoretically possible to modify the data sent by the Bluetooth module, for example, in order to use a smartphone to spy on a victim — again, even if the phone is powered off.
+
+Having payment card information stolen from your phone is another theoretical possibility.
+
+But all this of course still remains to be proven.
+
+The work of the team from Germany shows once more that adding new functionality carries certain security risks that must be taken into account.
+
+Especially when the reality is so different from the perception: you think your phone is fully off, when in fact it isn’t.
+
+This is not a completely new problem, mind.
+
+The Intel Management Engine and AMD Secure Technology, which also handle system protection and secure remote management, are active whenever the motherboard of a laptop or desktop computer is connected to a power source.
+
+As in the case of the Bluetooth/UWB/NFC/Secure Element bundle in iPhones, these systems have extensive rights inside the computer, and vulnerabilities in them can be very dangerous.
+
+On the bright side, the paper has no immediate impact on ordinary users: the data obtained in the study is insufficient for a practical attack.
+
+As a surefire solution, the authors suggest that Apple should implement a hardware switch that kills the power to the phone completely.
+
+But given Apple’s  physical-button phobia, you can be sure that won’t happen.
+
+
+
+

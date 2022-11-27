@@ -1,0 +1,12 @@
+
+This improvement is available in all Apple smartphones since the iPhone 11.
+If, for example, you lose your phone somewhere and its battery runs out after a while, it doesn’t turn off completely, but switches to Low Power Mode, in which only a very limited set of modules are kept alive.
+These are primarily the Bluetooth and Ultra WideBand (UWB) wireless modules, as well as NFC.
+There’s also the so-called Secure Element — a secure chip that stores your most precious secrets like credit card details for contactless payments or car keys — the latest feature available since 2020 for a limited number of vehicles.
+Bluetooth in Low Power Mode is used for data transfer, while UWB — for determining the smartphone’s location.
+In Low Power Mode, the smartphone sends out information about itself, which the iPhones of passers-by can pick up.
+If the owner of a lost phone logs in to their Apple account online and marks the phone as lost, information from surrounding smartphones is then used to determine the whereabouts of the device.
+For details of how this works, see our recent post about AirTag stalking .
+The announcement quickly prompted a heated discussion among information security experts about the maze of potential security risks.
+The research team from Germany decided to test out possible attack scenarios in practice.
+When powering off the phone, the user now sees the “iPhone Remains Findable After Power Off” message.

@@ -1,0 +1,7 @@
+Each of us has probably installed some kind of browser extension at least once: an ad blocker, an online translator, a spellchecker or something else.
+However, few of us stop to think: is it safe?
+Unfortunately, these seemingly innocuous mini-apps can be far more dangerous than they seem at first glance.
+Let’s see what might go wrong.
+For this, we shall use data from our experts’ recent report on the most common families of malicious browser extensions.
+What are extensions and what do they do?
+Let’s start with the basic definition and identify root of the problem.

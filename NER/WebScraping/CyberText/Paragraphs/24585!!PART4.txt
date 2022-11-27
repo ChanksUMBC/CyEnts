@@ -1,0 +1,5 @@
+
+CVE-2022-34700 and CVE-2022-35805 — a pair of vulnerabilities in the Microsoft Dynamics customer relationship management (CRM) software.
+Their exploitation allows an authenticated user to execute arbitrary SQL commands, after which the attacker can elevate their rights and execute commands inside the Dynamics 365 database with db_owner rights.
+Since an attacker still needs to somehow authenticate, the CVSS ratings of these vulnerabilities are slightly lower (8.8), but they are still considered critical.
+A vulnerability relevant to ARM processors — CVE-2022-23960 CVE-2022-23960 is the second vulnerability that was publicly disclosed before the patch.

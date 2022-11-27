@@ -1,0 +1,133 @@
+Earlier this month, Kaspersky experts published a detailed report on a threat they’ve called OnionPoison.
+
+They discovered malicious code being distributed through YouTube video.
+
+The video advertised using Tor Browser for private browsing.
+
+This browser is a modified version of the Firefox browser — with maximum privacy settings.
+
+But its most important feature is that it can redirect all user data through The Onion Router (hence the name Tor) network.
+
+Data is transmitted in encrypted form through several layers of server (hence the onion in the name), where it’s mixed with data of other users of the network.
+
+This method ensures privacy: websites see only the address of the last server in the Tor network — the so-called exit node — and cannot see the user’s real IP address.
+
+But that’s not all.
+
+The Tor network can also be used to bypass restricted access to certain sites.
+
+For example, in China, many “Western” internet resources are blocked, so users turn to solutions such as Tor to access them.
+
+Incidentally, YouTube is also officially unavailable in China, so, by definition, the video is aimed at those looking for ways to get round the restrictions.
+
+It’s likely that this was by no means the only method of distributing the OnionPoison malware, and that other links were placed on resources inside China.
+
+Normally, a user can download Tor Browser from the project’s official website.
+
+However, this site is also blocked in China, so there’s nothing unusual about people seeking alternative download sources.
+
+The YouTube video itself explains how to hide online activity using Tor, and a link is given in the description.
+
+It points to a Chinese cloud file-hosting service.
+
+Unfortunately, the version of Tor Browser located there is infected with OnionPoison spyware.
+
+So, instead of privacy, the user gets the exact opposite: all their data is revealed.
+
+Screenshot of a YouTube video advertising a malicious version of Tor Browser.
+
+Source
+
+What the infected Tor Browser knows about the user The infected version of Tor Browser lacks a digital signature, which should be a big red flag for the security-minded user.
+
+On installing such a program, the Windows operating system displays a warning regarding this.
+
+Naturally, the official version of Tor Browser has a digital signature.
+
+The distribution contents in the infected package, however, differ very little from the original.
+
+But the minor differences are important.
+
+For starters, in the infected browser, some important settings have been changed when compared with the original Tor Browser.
+
+Unlike the real one, the malicious version remembers the browser history, stores temporary copies of sites on the computer, and automatically saves login credentials and all data entered into forms.
+
+Such settings already cause enough damage to privacy as it is, but it only gets worse… Download page of Tor Browser infected with OnionPoison spyware.
+
+Source One of the key Tor/Firefox libraries was replaced with malicious code.
+
+This calls the original library, as required, to keep the browser working.
+
+And at startup it also addresses the C2 server, from where it downloads and runs another malicious program.
+
+What’s more, this next stage of the attack on the user occurs only if their real IP address points to a location in China.
+
+This “second stage” of the attack furnishes the attack organizers with as much detailed information about the user as possible, in particular: Data about their computer and installed programs.
+
+Their browsing history — not only in Tor Browser, but also in other browsers installed in the system, such as Google Chrome and Microsoft Edge.
+
+The IDs of Wi-Fi networks they connect to.
+
+And lastly, account data in the popular Chinese messengers QQ and WeChat.
+
+Such details can be used to associate any online activity with a specific user.
+
+Wi-Fi network data can even allow their location to be established rather accurately.
+
+Privacy risks OnionPoison is so named because it essentially destroys the privacy provided by The Onion Router software.
+
+The consequences are obvious: all attempts to hide your online activity will, on the contrary, reveal it to the attackers.
+
+Curiously, unlike most malware of this kind, OnionPoison doesn’t bother stealing user passwords.
+
+The organizers clearly have no need for them: the sole purpose of the attack is surveillance.
+
+Even if you don’t have to use Tor Browser to protect your privacy (in most cases, a regular VPN app will suffice), the OnionPoison study offers two useful lessons in safeguarding against malicious activity.
+
+First, only download software from official sites.
+
+For those who want additional verification, many software developers publish so-called checksums.
+
+This is a kind of ID of the “real” program installer.
+
+You can calculate the checksum for the distribution you downloaded to make sure it matches the original.
+
+In the case of OnionPoison, users had to download Tor Browser from unofficial sources anyway as the official site was blocked.
+
+In such situations, checksum verification is very useful.
+
+But, as we mentioned above, the distribution had another red flag: its lack of a legitimate digital signature.
+
+If Windows displays such a warning, better to double-check everything before running the program.
+
+Or just don’t run it at all.
+
+The site hosted on the OnionPoison command-and-control server is visually identical to the real www.torproject.org.
+
+Source Now for the second lesson, which stems from the first.
+
+Never download programs from YouTube links!
+
+You might argue that OnionPoison poses a threat only to folks in China, and those in other countries seem unaffected.
+
+But in fact, this isn’t the only attack that uses social networks as bait to hook gullible users.
+
+Another recent Kaspersky report showed how cybercriminals infect gamers’ devices and steal their data.
+
+The attackers in this case also distributed malware through YouTube.
+
+What’s more, the malware compromised the victim’s own YouTube channel, posting there the same video with a malicious link.
+
+YouTube-based attacks are partly helped by Google’s prioritization of videos in search results.
+
+Attacks of this kind are another example of how ordinary, seemingly safe resources can be misused.
+
+Even an experienced user can’t always distinguish a real link from a malicious one.
+
+Such “inconveniences” of digital life are the best possible argument for installing a high-quality security solution.
+
+Even if your natural online caution fails you, security software will identify and block the threat in good time.
+
+
+
+

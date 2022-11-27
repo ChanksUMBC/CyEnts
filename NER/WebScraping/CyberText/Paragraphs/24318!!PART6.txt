@@ -1,0 +1,4 @@
+
+The victim is informed that the package will arrive within 1?2 days; to receive it, they’re prompted to enter their first name, surname, and address with zip code.
+The delivery service does indeed request such kind of information, so no suspicions are aroused.
+Fake DHL site asks for personal information, plus bank card details But the data harvesting doesn’t end there.

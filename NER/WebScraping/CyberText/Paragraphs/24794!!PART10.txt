@@ -1,0 +1,4 @@
+
+The company claimed that their security system was robust, and didn’t report how exactly the intruders carried out the attack.
+That said, some experts believe that the cybercriminals may have gained access to the private keys of the Coincheck hot wallets with the aid of malware embedded on a computer in the company’s office.
+The attackers also created their own site selling NEM tokens for bitcoin and other cryptocurrencies at a 15% discount.

@@ -1,0 +1,7 @@
+
+We also found other variants of this malware that use UltraVNC instead of TightVNC.
+Function in the core module that uses TightVNCServer.
+WinVNC.exe process seen during execution of the malware.
+Latest Version As we noted in the “Timeline” section, the threat actor changed its infrastructure.
+It shifted to the following domains for its download and control servers.
+ink ink cab work They have also added functionality to bypass network security using DNS over HTTPS (DoH) and added a separate module solely for Remote Desktop using the RDPSession Class built in Windows.

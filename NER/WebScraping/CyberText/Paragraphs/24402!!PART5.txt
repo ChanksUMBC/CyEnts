@@ -1,0 +1,4 @@
+
+Having passed all the “selection stages” with flying colors, the employee, as expected, received the mouth-watering offer in the form of a PDF file.
+When this file was downloaded, the spyware inside it was released into the company’s network.
+Spyware in action: withdrawal of funds The cybercriminals used the malware to gain access to the private keys of network validators , that is, nodes that verify and confirm cryptocurrency transactions.

@@ -1,0 +1,6 @@
+
+Hong Kong 2022-07-12 9:50:46 2022-07-25 11:51:59 Windows, IIS server rdlite.com June 8, 2022 104.21.10.90 Cloudflare United States 2022-06-08 17:26:55 2022-08-10 2:16:40 Unknown 172.67.162.192 Cloudflare United States 2022-06-08 17:26:55 2022-08-10 2:16:40
+Unknown Early Version of asbit
+RAT The earliest version of the malware we could find dates back to May 2021.
+It included a series of loader modules which will eventually download the core module.
+The malware is typically bundled with installers.

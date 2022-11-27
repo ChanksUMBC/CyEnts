@@ -1,0 +1,9 @@
+
+The next high-profile event occurred in March 1999.
+Steven Sinofsky described what it was like: when you check your e-mail, you get a message with an attached file and the “Important message from…” subject line.
+Message infected by the Melissa virus.
+Source And then another one from another sender.
+And another.
+And then e-mail stopped working: even Microsoft’s e-mail server couldn’t take the load.
+It was the Melissa internet worm.
+The attached Microsoft Word document contained malicious code that sent a message through Microsoft Outlook to the first 50 contacts in the address book.

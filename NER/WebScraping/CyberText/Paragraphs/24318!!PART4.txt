@@ -1,0 +1,4 @@
+
+But perhaps their most common use is to distribute links offline: scanning a black-and-white square that can appear on product packaging, advertising posters, business cards, or elsewhere is a quick route to the relevant website.
+In this case, of course, the attackers were not thinking about user convenience.
+The idea seems to be that if the victim initially opens the e-mail on a computer, they’ll still have to read the QR code with a smartphone, which means that the malicious site will open on the small screen of a mobile, where signs of phishing are harder to spot.

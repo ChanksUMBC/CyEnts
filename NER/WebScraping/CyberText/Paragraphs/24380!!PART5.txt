@@ -1,0 +1,4 @@
+
+Curiously, if you enter the address of the scammers’ cryptowallet on blockchain.com , it turns out that some money has actually been transferred thereto — a total of 0.42 BTC (worth more than $8000 at the time of writing).
+It’s unknown who sent the funds: it could be victims or the scammers themselves, for example, to check if the wallet is working or to pretend to be “lottery” participants.
+In any case, there’s no trace of the reported 50,000 BTC, and no hint of double-your-money paybacks.

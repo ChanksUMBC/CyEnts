@@ -1,0 +1,5 @@
+
+The Google Translate extension asks for permission to “Read and change all your data all websites” you visit Many if not most users probably won’t even read this message and will automatically click Add extension to start using the plugin right away.
+All of this creates an opportunity for cybercriminals to distribute adware and even malware under the guise of what appears to be harmless extensions.
+As for adware extensions, the right to alter the displayed content allows them to show ads on the sites you visit.
+In this case, the extension creators earn money from users clicking tracked affiliate links to advertisers’ websites.

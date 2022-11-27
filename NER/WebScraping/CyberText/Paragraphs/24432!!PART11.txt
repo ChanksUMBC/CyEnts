@@ -1,0 +1,7 @@
+
+Following Kaspersky and media reports from the time, it is possible to reconstruct the sequence of events.
+Already on the first day, May 4, thousands of system infections were detected .
+On May 9, 2.5 million infected computers were reported , meaning there were tens of millions of e-mails sent around the world.
+The virus’ creator did not even try to hide the malicious code under the guise of an office document.
+The file name “LOVE-LETTER-FOR-YOU.TXT.VBS” exploited the fact that Microsoft mail clients only showed the first part of a long name, as can be seen in the screenshot at the beginning of the article.
+The code inside was in open format, and soon many skilled malefactors were using it to create different variations of the internet worm.

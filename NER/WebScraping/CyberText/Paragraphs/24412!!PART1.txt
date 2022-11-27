@@ -1,0 +1,1 @@
+Our researchers examined a new version of the CosmicStrand rootkit , which they found in modified UEFI (Unified Extensible Firmware Interface) firmware — the code that loads first and initiates the OS boot process when the computer is turned on.

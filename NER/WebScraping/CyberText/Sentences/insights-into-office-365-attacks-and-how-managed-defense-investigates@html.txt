@@ -66,7 +66,9 @@ The UAL has a few nuances that are important to consider.
 
 While it provides a good high-level summary of activity across various O365 applications, it won’t log comprehensive mailbox activity (for that, acquire the Mailbox Audit Log).
 
-Furthermore, the UAL has a few limitations, namely: Results to a single query are limited to 5000 results Only 90 days of activity are retained Events may take up to 24 hours before they are searchable Mailbox Audit Log (MAL)
+Furthermore, the UAL has a few limitations, namely: Results to a single query are limited to 5000 results Only 90 days of activity are retained Events may take up to 24 hours before they are searchable Mailbox
+
+Audit Log (MAL)
 
 The Mailbox Audit Log, part of Exchange Online, will capture additional actions performed against objects within a mailbox.
 

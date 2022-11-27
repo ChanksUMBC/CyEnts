@@ -1,0 +1,4 @@
+
+You (and even your browser) will think you’re accessing a legitimate website, when in fact you’re in the hands of cybercrooks.
+It works like this: when you enter the URL of a site (say, google.com) in the address bar, your computer or smartphone sends a request to a special DNS server, where all registered IP addresses and their corresponding URLs are stored.
+If the router is infected, instead of a legitimate DNS server, it may send requests to a fake one that responds to the “google.com” query with the IP address of a completely different site — one that might be a phishing one .

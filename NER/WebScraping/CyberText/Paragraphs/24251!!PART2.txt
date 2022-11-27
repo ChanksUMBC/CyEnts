@@ -1,0 +1,4 @@
+
+How did we get to the point where switching something off doesn’t necessarily mean it’s actually off?
+Let’s start from the beginning…
+Apple’s Low Power Mode In 2021, Apple announced that the Find My service, which is used for locating a lost device, will now work even if the device is switched off.

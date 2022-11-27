@@ -1,0 +1,46 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>hay~A</id>
+    <frameset cdef="" edef="come on" id="01">
+        <role argnum="0" argrole="comer"/>
+        <role argnum="1" argrole="start point"/>
+        <role argnum="2" argrole="end point"/>
+        <frame>
+            <example>
+                <parse>
+                    (NP
+                    (NOUN+NSUFF_FEM_SG+CASE_DEF_GEN شقيقة)
+                    (NP
+                    (NOUN+CASE_DEF_GEN رئيس)
+                    (NP
+                    (DET+NOUN+NSUFF_FEM_SG+CASE_DEF_GEN الجمهورية))))))
+                    (PUNC ,)
+                    (SBAR
+                    (WHNP-2
+                    (REL_PRON التي))
+                    (S
+                    (VP
+                    (PV+PVSUFF_SUBJ:3FS استطردت)
+                    (NP-SBJ
+                    (-NONE- *T*-2))
+                    (PP-MNR
+                    (PREP ب)
+                    (NP
+                    (NOUN+CASE_INDEF_GEN اصرار)))
+                    (PUNC :)
+                    (INTJ
+                    (PUNC &amp;quot;)
+                    (VERB هيا)
+                    (PUNC .)
+                    (PUNC .)
+                    (PUNC .)
+                    (VERB هيا)
+                    (PUNC ?)
+                    (PUNC &amp;quot;)))))))))))
+                    (PUNC .))
+                </parse>
+                <arg f="" g="You" n="0">?</arg>
+            </example>
+        </frame>
+    </frameset>
+</verb>

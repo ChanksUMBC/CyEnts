@@ -1,0 +1,7 @@
+
+The Switcher Trojan was doing precisely that: infiltrating router settings and specifying a malicious DNS server as the default.
+Naturally, all data entered on the fake pages leaked to the attackers.
+How does malware get into routers?
+There are two main ways to plant malware in a router: by guessing the admin password, or exploiting a vulnerability in the device.
+Password guessing All routers of the same model tend to have the same admin password in the factory settings.
+Not to be confused with the network security key (the string of characters you enter to connect to Wi-Fi), the admin password is used to get inside the router settings menu.

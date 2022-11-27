@@ -1,0 +1,5 @@
+
+A few months later, the botnet attacked several Russian financial and IT companies , with a record 21.8 million requests per second.
+Steal data Some router-infecting malware can do even more serious damage, such as steal your data.
+When online, you send and receive a lot of important information: payment data in online stores, credentials on social networks, work documents by email.
+All of this information, along with the rest of your network traffic, inevitably passes through the router.

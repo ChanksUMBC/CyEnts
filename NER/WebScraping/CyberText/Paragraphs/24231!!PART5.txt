@@ -1,0 +1,6 @@
+
+Phishing version of Wise login page However, credentials are not the only personal information collected: having “accepted” the e-mail and password (whether real or not, there are no checks), the site asks for the victim’s phone number.
+Incidentally, you don’t need to enter your phone number to login to the real Wise site.
+Lastly, the attackers ask for the Wise user’s phone number When the user clicks the Continue button, the site seems to freeze: while the data is sent to the cybercriminals, the victim sees just a spinning logo with the word “loading”.
+The phishing page lost in thought The impatient user who clicks the Continue button is again redirected to the official Wise site.
+The idea here is that even if the user senses something amiss and checks the URL at this point, they won’t realize their data has fallen into cybercriminal hands and will just continue to go about their business.

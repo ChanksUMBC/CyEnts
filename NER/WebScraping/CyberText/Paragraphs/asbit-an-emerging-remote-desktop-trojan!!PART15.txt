@@ -1,0 +1,8 @@
+
+Libexpat.dll further downloads the following additional modules.
+Core Downloaded from http://106[.]12.129.126/build?project=loader.core&version=4.0.30319 Downloads the core Module Has functions to uninstall itself and the malware Core Module Downloaded from http://106[.]12.129.126/build?project=client.core&version=4.0.30319 as a gzip file Uses DoH to determine the IP of ddns.b.rdlite.com where it can download the rdp module.
+Rdp Client Module Downloaded from http://222[.]210.157.249:1024/build?project=rdp.client.core&version=4.0.30319&t=28069859 Uses DoH to determine the IP of its control server (v2.team.rfb.ink:5100)
+Core Module The new core module includes functions such as capture screenshots, inject keystrokes and execute commands, but we noticed a much cleaner programming style hinting active development of the malware.
+We also noticed it added several functions, particularly handlers, for example, vnc, rfb and p2p functions.
+Another interesting function is the use of DNS over HTTP (DoH) to query the ip address of its control servers.
+For instance, the domain name of the file server where it hosts the rdp module could be any of the following domains: a.rdlite.com:1024 b.rdlite.com:1024 w.rdlite.com:1024

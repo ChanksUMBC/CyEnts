@@ -1,0 +1,4 @@
+
+Theoretically, this could have meant that attackers could have started using it before it was patched, but it doesn’t seem to have been the case.
+In fact, CVE-2022-23960 is yet another variation of the Spectre vulnerability, which interferes with a processor’s speculative execution of instructions mechanism.
+In other words, the probability of its use in real attacks is extremely small — the danger is somewhat theoretical.

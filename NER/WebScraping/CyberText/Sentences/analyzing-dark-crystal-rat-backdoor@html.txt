@@ -348,9 +348,7 @@ Close chat window RDStop Stop remote control over user’s desktop fm_opendir Li
 
 Show desktop icons Clipboardget Transfer clipboard contents to C2 playaudiourl
 
-Play a sound file opencd Open the CD-ROM drive door shutdown Shut down the machine restart Restart the machine browseurl Open a web URL in the default browser Table 3: Capabilities of DCRat Proof-of-Concept Dark Crystal RAT Server
-
-After gathering information from Dark Crystal RAT about its capabilities and C2 message format, another way to illustrate the capabilities and test our understanding of the messages was to write a proof-of-concept server.
+Play a sound file opencd Open the CD-ROM drive door shutdown Shut down the machine restart Restart the machine browseurl Open a web URL in the default browser Table 3: Capabilities of DCRat Proof-of-Concept Dark Crystal RAT Server After gathering information from Dark Crystal RAT about its capabilities and C2 message format, another way to illustrate the capabilities and test our understanding of the messages was to write a proof-of-concept server.
 
 Here is a code snippet that we wrote containing a barebones DCRat server written in Python .
 
@@ -458,9 +456,7 @@ Registry value HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\Wininit 
 
 File C:\\<random process name>.exe Network artifacts HTTP request hxxp://domalo[.]online/ksezblxlvou3kcmbq8l7hf3f4cy5xgeo4udla91due u3qa54/46kqbjvyklunp1z56txzkhen7gjci3cyx8ggkptx25i74mo6myqpx9kl vv3/212bad81b4208a2b412dfca05f1d9fa7.php?data=active HTTP request hxxp://domalo[.]online/ksezblxlvou3kcmbq8l7hf3f4cy5xgeo4udla91due u3qa54/46kqbjvyklunp1z56txzkhen7gjci3cyx8ggkptx25i74mo6myqpx9kl vv3/akcii239myzon0xwjlxqnn3b34w212bad81b4208a2b412dfca05f1d9f a7.php?
 
-type=__ds_getdata&__ds_getdata_user=<user_hash>&__ds_getdata_ex t=<message_hash>&__ds_getdata_key=<key> HTTP request hxxp://domalo[.]online /ksezblxlvou3kcmbq8l7hf3f4cy5xgeo4udla91dueu3qa54/46kqbjvyklunp 1z56txzkhen7gjci3cyx8ggkptx25i74mo6myqpx9klvv3/
-
-akcii239myzon0xw jlxqnn3b34w/<user_hash>.<message_hash>
+type=__ds_getdata&__ds_getdata_user=<user_hash>&__ds_getdata_ex t=<message_hash>&__ds_getdata_key=<key> HTTP request hxxp://domalo[.]online /ksezblxlvou3kcmbq8l7hf3f4cy5xgeo4udla91dueu3qa54/46kqbjvyklunp 1z56txzkhen7gjci3cyx8ggkptx25i74mo6myqpx9klvv3/akcii239myzon0xw jlxqnn3b34w/<user_hash>.<message_hash>
 
 TCP connection domalo[.]online:80 TCP connection ipinfo[.]ip DNS lookup domalo[.]online DNS lookup ipinfo[.]ip Strings Static string DCRatBuild Table 4:
 

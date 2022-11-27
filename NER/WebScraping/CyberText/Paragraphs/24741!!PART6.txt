@@ -1,0 +1,5 @@
+
+It steals passwords, bank card details, cryptowallet keys, session cookies (that allow anyone to log into your accounts without passwords), and messages from IMs.
+In addition to downloaders and stealers, NullMixer victims get a couple of banking Trojans , most notably DanaBot .
+This one not only steals information from the device but can inject fake forms on online store or social network pages, so that victims themselves share their bank card data with it.
+Perhaps most importantly, DanaBot can provide its owners with full access to the infected device, allowing the attackers to do whatever they want.

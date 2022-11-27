@@ -1,0 +1,71 @@
+The video game market, with its 3.2-billion-strong audience worldwide, attracts every kind of business under the sun.
+
+All sorts of computer devices specially created for gamers are already par for the course, but it went beyond that a long time ago.
+
+These days, there is gaming furniture, gaming drinks, gaming you-name-it.
+
+Is it any wonder that cybercriminals do not stand idly by?
+
+Gamers are passionate people, hooked on their hobby, making them vulnerable to well-designed social engineering.
+
+Sometimes it’s enough to simply promise an Android version of a game that’s not on Google Play, or the chance to play games for free .
+
+Not to mention that in the world of gaming there is piracy, cheats and dark web forums selling hijacked accounts — a vast canvas for attackers to work with.
+
+Open season on gamers has again been declared: cybercriminals are distributing the RedLine Trojan stealer under the guise of game cheats in an attempt to steal accounts, card numbers, cryptowallets and basically anything else within reach.
+
+Watch on YouTube: Trojan disguised as a cheat The details of Kaspersky’s latest discovery are set out in our Securelist post , but basically it works as follows:
+
+Attackers post videos on YouTube allegedly about how to use cheats in popular online games such as Rust, FIFA 22, DayZ and a couple dozen more.
+
+The videos look quite convincing and prompt actions that gamers who are no strangers to cheating are well accustomed to , in particular, following a link in the description to download a self-extracting archive and then running it.
+
+If the download fails, the video creators kindly suggest disabling Windows SmartScreen, a filter that protects Microsoft Edge users from phishing and malicious sites.
+
+For some reason, however, they unkindly fail to mention that this will result in a whole package of malware being installed on the user’s computer at once.
+
+First, the unlucky cheater will get the RedLine Trojan stealer, which steals almost any kind of valuable information on the computer, starting with browser-saved passwords.
+
+In addition, RedLine can execute commands on the computer, as well as download and install other programs onto the infected machine.
+
+So if it can’t manage some malicious task by itself, it can call on friends.
+
+Second, RedLine comes with a cryptocurrency miner for deployment on the victim’s computer.
+
+Gaming computers are a logical target for cybercriminals in this regard, since they usually have powerful GPUs, which are quite useful for cryptocurrency mining.
+
+The price to pay for using cheats For real cheats, players can get banned by the game moderators, but a user who has downloaded and installed a fake cheat can face even worse problems.
+
+First, when installed under the guise of a cheat, RedLine attempts to steal everything of value on the computer, in particular: Account passwords Card details Session cookies for logging in to accounts without passwords Cryptowallet keys Messenger chat history Second, the cryptominer bundled with RedLine adds the following special effects: Computer slowdown GPU wear and tear Higher electricity bills Plus the user risks paying with their reputation, because RedLine does another interesting thing: it downloads videos from the command-and-control server and posts them on the victim’s YouTube channel.
+
+These are the exact same videos about cheats with the exact same description: download and run the self-extracting archive, after which the cycle repeats but with the next victim.
+
+Thus, the Trojan spreads of its own accord, acquiring even more unwitting proponents in the process.
+
+Incidentally, RedLine distributors previously employed a rather similar technique, trying to pass off a malware installer as a Windows 11 update or as an installer for Discord, a platform popular with gamers.
+
+How to stay safe We really should start with the obvious: don’t download cheats.
+
+Besides being unethical, it’s simply not safe.
+
+Cheats violate the user agreement with the game developer, which means they automatically occupy a gray zone.
+
+By extension, they are never distributed through secure official channels.
+
+And when downloading something from unofficial and unverified sources, the chances of encountering malware are always far greater.
+
+In addition, we recommend turning on two-factor authentication wherever possible.
+
+That way, even if malware manages to sneak onto your computer and steal important passwords, it won’t be able to use them.
+
+Better still, use and never disable protection features, including browser filtering and a proper security solution .
+
+In terms of functionality, even real-deal cheats have a lot in common with malware, which means antiviruses often block their installation.
+
+For this reason cheat developers encourage victims to disable their antivirus.
+
+You must not do this under any circumstances — once you disable protection, there’s no safety net below.
+
+
+
+

@@ -1,0 +1,9 @@
+
+The incident was widely covered by the press, and there were even hearings in the U.S. Senate.
+Mistakes were made In 2022, knowing the whole story from beginning to end, one would like to ask: couldn’t the outbreak of such a trivial virus have been prevented straight away?
+It wasn’t until June 8, 2000 that Microsoft released a major security update for the Outlook e-mail client, which finally introduced serious restrictions on running scripts.
+All e-mail attachments were untrusted by default, and checks were introduced if an external application accessed the Outlook address book or tried to send multiple e-mails at once.
+After an update in June 2000, the Outlook e-mail client warned users about an external app accessing the address book and attempts to send multiple messages simultaneously.
+Source They didn’t do it earlier, because when choosing between security and convenience, Microsoft preferred the latter.
+And so did the users.
+Back in 1995, when Microsoft introduced a simple warning in Microsoft Word (“This document contains macros”), the company received negative feedback from customers.

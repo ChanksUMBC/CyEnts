@@ -1,0 +1,4 @@
+
+Sky Mavis also increased the number of validators to 11, promising to gradually scale up to at least 100.
+The larger the total number of validators there are, the more of them have to be compromised to carry out unauthorized transactions, so increasing their number should in theory make such attacks more difficult.
+Since the stolen funds actually belonged to Axie Infinity players, Sky Mavis began compensation payments to victims on June 28.

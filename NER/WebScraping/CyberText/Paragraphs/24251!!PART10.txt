@@ -1,0 +1,6 @@
+
+It is theoretically possible to modify the data sent by the Bluetooth module, for example, in order to use a smartphone to spy on a victim — again, even if the phone is powered off.
+Having payment card information stolen from your phone is another theoretical possibility.
+But all this of course still remains to be proven.
+The work of the team from Germany shows once more that adding new functionality carries certain security risks that must be taken into account.
+Especially when the reality is so different from the perception: you think your phone is fully off, when in fact it isn’t.

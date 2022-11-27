@@ -1,0 +1,6 @@
+
+To allow users to buy and sell SLP for regular cryptocurrency conveniently and without high fees, the developers created the Ronin platform .
+It was this platform that attracted cybercriminal attention.
+A juicy offer: how scammers tricked the developers To get to the platform, the attackers carried out a targeted attack on Sky Mavis employees.
+They collected information about the company and devised a scam built around a fake job offer with a very attractive salary.
+The scheme involved sending (most likely on LinkedIn) a tempting job offer to a senior engineer, who should have known better.

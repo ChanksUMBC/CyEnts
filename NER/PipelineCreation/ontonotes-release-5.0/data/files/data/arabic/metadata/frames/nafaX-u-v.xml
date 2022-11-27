@@ -1,0 +1,17 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>nafax-u</id>
+    <frameset cdef="" edef="to blow or sound a horn" id="01">
+        <role argnum="0" argrole="blower"/>
+        <role argnum="1" argrole="instrument"/>
+        <frame>
+            <example>
+                <parse>
+                    أجبت*ها : لأني اعتبرت **-1الصحافة رسالة, والصحافي جندياً 0 لا يبيع * نفسه **-3 لأصحاب النفوذ و السلطان , أياً كانوا * **- , وإلاّ تحوّل * *-7 صوتاً لسيّده , وبوقاً 0 ينفخ فيه **-5 أصحاب المصالح والغايات التي قد تكون **-6 ضد مصلحة الوطن .
+                </parse>
+                <arg f="" g="in it &amp;lt; a trumpet" n="1">فيه **-5 &amp;lt; بوقاً</arg>
+                <arg f="" g="people whose goals and benefits might go against the interests of the nation" n="0">أصحاب المصالح والغايات التي قد تكون **-6 ضد مصلحة الوطن</arg>
+            </example>
+        </frame>
+    </frameset>
+</verb>

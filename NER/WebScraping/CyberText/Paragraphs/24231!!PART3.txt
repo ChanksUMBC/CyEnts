@@ -1,0 +1,3 @@
+
+E-mail supposedly from TransferWise about moving the user’s account to a new platform The inattentive user could easily mistake it as genuine, since wise.com appears in the line with the sender’s name, and the message body contains the company logo with the trademark blue flag.
+A closer look, however, reveals a couple of more-red-than-blue flags: the sender’s address consists of a random string of numbers along with words totally unrelated to Wise, and for some reason the domain belongs to… Moringa School in Kenya !

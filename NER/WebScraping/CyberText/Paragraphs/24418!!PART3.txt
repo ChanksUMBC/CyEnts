@@ -1,0 +1,5 @@
+
+For example, in 2021 unknown attackers compromised several versions of a popular JavaScript library, UAParser.js, by injecting malicious code.
+This library was downloaded 6 to 8 million times every week.
+By infecting it, cybercriminals were able to mine cryptocurrency and steal confidential information such as browser cookies, passwords and operating system credentials from infected devices.
+And here’s more recent example: on July 26, 2022, our researchers discovered a new threat that appeared in the open-source npm repository that they dubbed LofyLife.

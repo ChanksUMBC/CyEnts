@@ -1,0 +1,9 @@
+Introduction Juniper Threat Labs is currently monitoring an emerging Chinese Remote Desktop Trojan called Asbit.
+It’s a remote access Trojan being advertised on its developer’s website as a “Fast Remote Desktop”.
+This RAT first made its appearance in 2021 and kept updating its infrastructure and features as it went along.
+It uses a number of strategies to avoid endpoint and network detection.
+By using DNS over HTTPS (DoH) to resolve the IP addresses of its control servers, it aims to get past network DNS filters.
+The domain asbit[.]cn was registered on January 31, 2021.
+This domain was used to host the malware and its modules.
+It also hosts the threat actor’s website.
+The website is still live at the time of this publication.

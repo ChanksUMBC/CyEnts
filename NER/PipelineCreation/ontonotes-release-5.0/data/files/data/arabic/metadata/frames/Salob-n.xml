@@ -1,0 +1,45 @@
+<!DOCTYPE verb SYSTEM "verb.dtd">
+<verb>
+    <id>salob</id>
+    <frameset cdef="" edef="steeling, robbing, pludering" id="01">
+        <role argnum="0" argrole="entity steeling"/>
+        <role argnum="1" argrole="thing stolen"/>
+        <role argnum="2" argrole="stolen from who"/>
+        <frame>
+            <example>
+                <parse>
+                    (S
+                    (CONJ و)
+                    (VP
+                    (PV+PVSUFF_SUBJ:3MS اتهم)
+                    (NP-SBJ
+                    (DET+NOUN+CASE_DEF_NOM الرئيس)
+                    (DET+ADJ+CASE_DEF_NOM الفنزويلي))
+                    (NP-OBJ
+                    (DET+NOUN+NSUFF_MASC_PL_ACC المضربين))
+                    (PP-CLR
+                    (PREP ب_)
+                    (NP
+                    (PUNC &amp;quot;)
+                    (NOUN+NSUFF_FEM_SG+CASE_DEF_GEN محاولة)
+                    (S-NOM
+                    (VP
+                    (NOUN.VN+CASE_DEF_GEN سلب)
+                    (NP-SBJ
+                    (-NONE- *))
+                    (NP-DTV
+                    (DET+NOUN+CASE_DEF_GEN البلاد))
+                    (NP-OBJ
+                    (NOUN+CASE_DEF_ACC عيد)
+                    (NP
+                    (DET+NOUN+CASE_DEF_GEN الميلاد)))))
+                    (PUNC &amp;quot;))))
+                    (PUNC .))
+                </parse>
+                <arg f="" g="they" n="0">&amp;lt;* المضربين</arg>
+                <arg f="" g="Christmas" n="1">عيد الميلاد</arg>
+                <arg f="" g="the country" n="2">البلاد</arg>
+            </example>
+        </frame>
+    </frameset>
+</verb>

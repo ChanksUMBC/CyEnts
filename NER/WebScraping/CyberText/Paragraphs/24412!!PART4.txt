@@ -1,0 +1,8 @@
+
+Victims and possible infection vectors of CosmicStrand Oddly enough, the CosmicStrand victims identified by our researchers were ordinary people using our free antivirus.
+They seemingly had nothing to do with any organization of interest to attackers of this caliber.
+It also turned out that the motherboards infected in all known cases came from just two manufacturers.
+Therefore, it is likely that the attackers found some common vulnerability in these motherboards that made UEFI infection possible.
+It is unknown how exactly the cybercriminals managed to deliver the malware.
+The fact that these CosmicStrand victims were small fries may indicate that the attackers behind this rootkit can infect UEFI remotely.
+But there are other possible explanations: for example, experts at Qihoo 360, having investigated early versions of CosmicStrand of 2016 vintage, suggested that one of the victims had purchased a modified motherboard from a reseller.

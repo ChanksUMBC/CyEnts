@@ -1,0 +1,3 @@
+It’s common to find all sorts of malware lurking under what seem to be harmless apps on the official Google Play store.
+Unfortunately, even if the platform is policed carefully, moderators can’t always catch these apps before they’re posted.
+One of the most popular variations of this kind of malware is Trojan subscribers, which sign up for paid services without the user’s knowledge.

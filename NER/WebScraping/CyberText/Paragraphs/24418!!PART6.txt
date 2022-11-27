@@ -1,0 +1,4 @@
+
+It uploads collected information to the remote endpoint.
+How to protect from malicious packages Open-source repositories allow anyone to publish their own packages, and not all of them are completely secure.
+For example, attackers can impersonate popular npm packages by changing one or two letters in the name to fool the user into thinking they are downloading the genuine package.

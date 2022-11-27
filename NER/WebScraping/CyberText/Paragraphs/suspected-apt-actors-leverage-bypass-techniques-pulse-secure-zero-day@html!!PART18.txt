@@ -9,4 +9,4 @@ PULSEJUMP, RADIALPULSE AND PACEMAKER use the following files to record credentia
 dsserver-check.statementcounters cd09ec795a8f4b6ced003500a44d810f49943514e2f92c81ab96c33e1c0fbd68 The malicious operations of SLOWPULSE can be detected via log correlation between the authentication servers responsible for LDAP and RADIUS auth and the VPN server.
 Authentication failures in either LDAP or RADIUS logs with the associated VPN logins showing success would be an anomalous event worthy of flagging.
 a1dcdf62aafc36dd8cf64774dea80d79fb4e24ba2a82adf4d944d9186acd1cc1
-Upon invocation of the PULSECHECK webshell, the following HTTP request headers will be sent: Key Value REQUEST_METHOD
+Upon invocation of the PULSECHECK webshell, the following HTTP request headers will be sent: Key Value REQUEST_METHOD POST HTTP_X_KEY <BackdoorKey> HTTP_X_CNT

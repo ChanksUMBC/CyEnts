@@ -1,0 +1,5 @@
+
+Malware developers make clever use of search engine optimization (SEO) tools.
+For queries like “cracked software” or “keygens” (slang for key generator ), the malicious sites in question often appear at the top of search results.
+When trying to download pirated software from such a site, the user is redirected several times until they end up on a certain web page.
+On this page, they see a link to a password-protected archive and instructions on how to download and unpack it.

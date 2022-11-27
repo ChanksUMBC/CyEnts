@@ -1,0 +1,7 @@
+
+What malware comes with NullMixer NullMixer runs many instances of malware all at once, and more than half of them are malicious downloaders .
+That is, once launched, they plant some other thing (or more likely, things) on your system.
+As a result, instead of the program you want, you get a whole host of malware.
+What else comes in the package besides downloaders?
+A whole set of stealers — programs that hunt for login credentials.
+The most infamous of these is RedLine , which first showed up on researchers’ radars in 2020 and has since become a “market leader.”

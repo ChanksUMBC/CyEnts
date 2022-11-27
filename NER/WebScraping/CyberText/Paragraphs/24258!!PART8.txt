@@ -1,0 +1,9 @@
+
+If the user unwittingly left the factory settings unchanged, attackers can easily guess the password — especially if they know the router brand — and infect the router.
+Recently however, manufacturers have started taking security more seriously by assigning a unique random password to each particular device, making this method less effective.
+But guessing the right combination for older models is still child’s play.
+Vulnerability exploitation Router vulnerabilities are holes in your gateway to the internet through which all kinds of threats can stroll right into your home or corporate network — or maybe just sit in the router itself, where detection is less likely.
+The above-mentioned Mēris botnet does just that, exploiting unpatched vulnerabilities in MikroTik routers.
+According to our research , several hundred new vulnerabilities have been discovered in routers in the past two years alone.
+To secure weak spots, router vendors release patches and new firmware versions (essentially routers’ operating system updates).
+Unfortunately, many users simply do not realize that the router software needs to be updated, just like other programs.

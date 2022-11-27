@@ -1,0 +1,79 @@
+Attackers often send phishing e-mails in the name of well-known companies to extract credentials for users’ personal accounts, phone numbers and other information that can be useful for scams or account takeovers.
+
+Of course, among the most attractive targets for phishers are clients of financial organizations such as banks , cryptoexchanges , payment systems and the like.
+
+This time we detected phishing exploiting the online financial service
+
+Wise (until recently — TransferWise), which is used by millions.
+
+Here we analyze the setup and explain how not to fall victim to fraud and data theft.
+
+A word about Wise Why Wise in particular?
+
+It’s not just that people entrust their money to it.
+
+Until recently, the company was known as TransferWise, and its main business was low-cost cross-border money transfers.
+
+In 2021, it expanded its range of services to include not only international transfers, but multi-currency accounts and debit cards (among others), too.
+
+As part of a rebranding, Wise dropped the “Transfer” from its name.
+
+Enter cybercriminals — who decided to exploit some initial confusion connected with the name change.
+
+How the scheme works An attack begins with a phishing e-mail purporting to be from the Wise support team.
+
+The e-mail informs the victim that due to the rebranding they need to “migrate their account to the new platform”.
+
+E-mail supposedly from TransferWise about moving the user’s account to a new platform The inattentive user could easily mistake it as genuine, since wise.com appears in the line with the sender’s name, and the message body contains the company logo with the trademark blue flag.
+
+A closer look, however, reveals a couple of more-red-than-blue flags: the sender’s address consists of a random string of numbers along with words totally unrelated to Wise, and for some reason the domain belongs to… Moringa School in Kenya !
+
+The text itself is full of errors and typos, which a reputable company wouldn’t permit.
+
+There are two links in the e-mail: one supposedly pointing to the new site, the other to contact the senders.
+
+In actual fact, both lead to the same page, which automatically redirects the victim to another — phishing — website.
+
+The phishing site looks far more convincing than the e-mail, with the same welcome message and design as the real Wise site.
+
+The only difference is the image on the left of the page, and also the URL.
+
+The latter unexpectedly displays the name of an obscure app for finding restaurants and discounted services.
+
+At this point, the cybercriminals ask the user to enter their e-mail and password for account login.
+
+Phishing version of Wise login page However, credentials are not the only personal information collected: having “accepted” the e-mail and password (whether real or not, there are no checks), the site asks for the victim’s phone number.
+
+Incidentally, you don’t need to enter your phone number to login to the real Wise site.
+
+Lastly, the attackers ask for the Wise user’s phone number When the user clicks the Continue button, the site seems to freeze: while the data is sent to the cybercriminals, the victim sees just a spinning logo with the word “loading”.
+
+The phishing page lost in thought The impatient user who clicks the Continue button is again redirected to the official Wise site.
+
+The idea here is that even if the user senses something amiss and checks the URL at this point, they won’t realize their data has fallen into cybercriminal hands and will just continue to go about their business.
+
+The user is eventually redirected to the official Wise website Where does the data go Most likely, it’s phone numbers that cybercriminals want most of all.
+
+They probably collect them in databases and sell them to phone scammers.
+
+And from compromised accounts they can get additional information about users, in particular, first name, surname and home address.
+
+Armed with such information, the phone scammers can sound far more convincing.
+
+How to stay safe To avoid the trap and protect your data, follow some basic cybersecurity rules .
+
+When you receive an e-mail seemingly from a well-known company, start with checking where it really came from.
+
+If the sender’s address includes a meaningless jumble of numbers and letters, random words or an unusual domain, it’s more than likely a scam.
+
+Don’t follow links in e-mails and notifications, even if you think you know the sender; it’s always better to open sites from your bookmarks or a search engine, or to enter URLs manually if you know them by heart.
+
+If you suspect phishing, contact the support team of the company the e-mail supposedly came from, and they’ll tell you for sure whether it’s real or fake.
+
+If necessary, they’ll take action and alert other users.
+
+Install reliable antivirus with antiphishing and online fraud protection, which will warn you in a timely manner about the threat.
+
+
+
+

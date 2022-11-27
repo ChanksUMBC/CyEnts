@@ -1,0 +1,75 @@
+Downloading pirated software is always a lottery: some get lucky, other less so: the user might end up losing even more money than they’d pay for a license.
+
+We’ve already talked a lot about various types of malware that hide under the guise of pirated games and spread through torrents .
+
+Recently, our researchers published a new study of the NullMixer dropper — another widespread threat that users may encounter if downloading unlicensed software.
+
+What are Trojan droppers?
+
+For example — NullMixer In simple terms, Trojan droppers (or just “droppers”) are tools for distributing malicious software.
+
+Their main purpose is to quietly install other malware (in some cases several instances) on the user’s device.
+
+Let’s find out how they do it using NullMixer as an example.
+
+This dropper is distributed through sites promising users pirated software and cracks (tools for breaking the protection of legitimate software).
+
+Malware developers make clever use of search engine optimization (SEO) tools.
+
+For queries like “cracked software” or “keygens” (slang for key generator ), the malicious sites in question often appear at the top of search results.
+
+When trying to download pirated software from such a site, the user is redirected several times until they end up on a certain web page.
+
+On this page, they see a link to a password-protected archive and instructions on how to download and unpack it.
+
+Archive and instructions for downloading fake pirated software
+
+The good news is that there are no tricky mechanisms here to infect the victim’s computer simply by having them visit the site.
+
+All steps — from clicking the link to downloading the malware and eventually launching it — must be completed by users themselves.
+
+If a victim smells a rat and stops, nothing will happen to the computer.
+
+Nullmixer distributors are clearly counting on creating a false sense of security: many people think that nothing bad could possibly appear on the first page of search results, and so carelessly click away and end up installing a Trojan.
+
+What malware comes with NullMixer NullMixer runs many instances of malware all at once, and more than half of them are malicious downloaders .
+
+That is, once launched, they plant some other thing (or more likely, things) on your system.
+
+As a result, instead of the program you want, you get a whole host of malware.
+
+What else comes in the package besides downloaders?
+
+A whole set of stealers — programs that hunt for login credentials.
+
+The most infamous of these is RedLine , which first showed up on researchers’ radars in 2020 and has since become a “market leader.”
+
+It steals passwords, bank card details, cryptowallet keys, session cookies (that allow anyone to log into your accounts without passwords), and messages from IMs.
+
+In addition to downloaders and stealers, NullMixer victims get a couple of banking Trojans , most notably DanaBot .
+
+This one not only steals information from the device but can inject fake forms on online store or social network pages, so that victims themselves share their bank card data with it.
+
+Perhaps most importantly, DanaBot can provide its owners with full access to the infected device, allowing the attackers to do whatever they want.
+
+And last but not least, the NullMixer assortment also includes full-fledged spyware.
+
+The PseudoManuscrypt Trojan can steal user data (even when it’s sent through a VPN), take screenshots, and record audio and on-screen video.
+
+Like a real spy, it can also cover its tracks: to hide its activity, PseudoManuscrypt deletes system logs .
+
+How not to fall victim to the cybercriminals As we said at the start, downloading pirated software is always a risky venture.
+
+So, as ever, we recommend installing only licensed programs downloaded from official sources.
+
+If, for some reason, you are unable to purchase a full-price license, you could always look for a free alternative, use a trial version for a while, or wait for some discounts.
+
+In this post , for example, we explain how to save on games without breaking the law or risking your money or accounts.
+
+To make sure your device is truly secure, use a reliable security solution that will keep malware at bay.
+
+Our products successfully catch NullMixer itself plus all the jolly company it brings with it.
+
+
+
+

@@ -190,11 +190,7 @@ Authentication failures in either LDAP or RADIUS logs with the associated VPN lo
 
 a1dcdf62aafc36dd8cf64774dea80d79fb4e24ba2a82adf4d944d9186acd1cc1
 
-Upon invocation of the PULSECHECK webshell, the following HTTP request headers will be sent: Key Value REQUEST_METHOD
-
-POST HTTP_X_KEY <
-
-BackdoorKey> HTTP_X_CNT
+Upon invocation of the PULSECHECK webshell, the following HTTP request headers will be sent: Key Value REQUEST_METHOD POST HTTP_X_KEY <BackdoorKey> HTTP_X_CNT
 
 <RC4Key> HTTP_X_CMD <RC4Command> 1ab50b77dd9515f6cd9ed07d1d3176ba4627a292dc4a21b16ac9d211353818bd SLOWPULSE VARIANT 2 writes ACE logon credentials to the file /home/perl/PAUS.pm in a+ (append) mode, using the format string %s:%s\\n .
 
@@ -208,7 +204,9 @@ Attaches to victim processes with PTRACE and opens subfiles in /proc/
 
 /runtime/logs/log.access.vc2 Executes the system API with the mv command specifying one of the files above, targeting: /home
 
-/runtime/logs/log.access.vc0 /home/runtime/logs/log.events.vc0 Executes the rm command specify one of the .vc1 files above 133631957d41eed9496ac2774793283ce26f8772de226e7f520d26667b51481a SLIGHTPULSE uses /tmp/1 as command execution log All POST requests to meeting_testjs.cgi are suspicious POST parameters: cert , img , name are used by malicious logic Responses to the endpoint with the name parameter respond with no-cache and image/gif
+/runtime/logs/log.access.vc0 /home/runtime/logs/log.events.vc0 Executes the rm command specify one of the .vc1 files above 133631957d41eed9496ac2774793283ce26f8772de226e7f520d26667b51481a SLIGHTPULSE uses /tmp/1 as command execution log
+
+All POST requests to meeting_testjs.cgi are suspicious POST parameters: cert , img , name are used by malicious logic Responses to the endpoint with the name parameter respond with no-cache and image/gif
 
 1741dc0a491fcc8d078220ac9628152668d3370b92a8eae258e34ba28c6473b9 THINBLOOD execution of sed on the files: log.events.vc0 log.access.vc0 Log.admin.vc0 Sed patterns used: s/.\\x00[^\\x00]*<regex_string>[^\\x00]*\\x09.\\x00//g s/\\x<hex_char>\\x00[^\\x00]*<regex_string>[^\\x00]*\\x09\\x<hex_char>\\x00//g
 
@@ -438,9 +436,9 @@ The attacker chose to remove the patches applied to libdsplibs.so .
 
 The file with SHA256: b2350954b9484ae4eac42b95fae6edf7a126169d0b93d79f49d36c5e6497062a is the unpatcher utility for SLOWPULSE V4.
 
-This sample is also a simple bash script, in full it is: printf '\\xE8' | dd conv=notrunc of=/home/lib/libdsplibs.so bs=1 count=1 seek=$((0x5C7B31)) printf '\\xE2' | dd conv=notrunc of=/home/lib/libdsplibs.so bs=1 count=1 seek=$((0x5C7B32)) printf '\\x08' | dd conv=notrunc of=/home/lib/libdsplibs.so bs=1 count=1 seek=$((0x5C7B33))
+This sample is also a simple bash script, in full it is: printf '\\xE8' | dd conv=notrunc of=/home/lib/libdsplibs.so bs=1 count=1 seek=$((0x5C7B31)) printf '\\xE2' | dd conv=notrunc of=/home/lib/libdsplibs.so bs=1 count=1 seek=$((0x5C7B32))
 
-printf '\\xD0' | dd conv=notrunc of=/home/lib/libdsplibs.so bs=1 count=1 seek=$((0x5C7B34)) printf '\\xFF' | dd conv=notrunc of=/home/lib/libdsplibs.so bs=1 count=1 seek=$((0x5C7B35))
+printf '\\x08' | dd conv=notrunc of=/home/lib/libdsplibs.so bs=1 count=1 seek=$((0x5C7B33)) printf '\\xD0' | dd conv=notrunc of=/home/lib/libdsplibs.so bs=1 count=1 seek=$((0x5C7B34)) printf '\\xFF' | dd conv=notrunc of=/home/lib/libdsplibs.so bs=1 count=1 seek=$((0x5C7B35))
 
 STEADYPULSE
 
@@ -754,9 +752,7 @@ THINBLOOD.MVX FE_APT_Trojan_PL_QUIETPULSE_1 FEC_APT_Trojan_PL_QUIETPULSE_1 FE_Tr
 
 THINBLOOD (UTILITY)
 
-Helix VPN ANALYTICS [Abnormal Logon] EXPLOIT - SONICWALL ES [CVE-2021-20021 Attempt] EXPLOIT - SONICWALL ES [CVE-2021-20021
-
-Success] EXPLOIT - SONICWALL ES [CVE-2021-20023 Attempt] EXPLOIT - SONICWALL ES [CVE-2021-20023 Success]
+Helix VPN ANALYTICS [Abnormal Logon] EXPLOIT - SONICWALL ES [CVE-2021-20021 Attempt] EXPLOIT - SONICWALL ES [CVE-2021-20021 Success] EXPLOIT - SONICWALL ES [CVE-2021-20023 Attempt] EXPLOIT - SONICWALL ES [CVE-2021-20023 Success]
 
 Mandiant Security Validation Actions Organizations can validate their security controls using the following actions with Mandiant Security Validation .
 

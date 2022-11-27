@@ -1,0 +1,6 @@
+Earlier this month, Kaspersky experts published a detailed report on a threat they’ve called OnionPoison.
+They discovered malicious code being distributed through YouTube video.
+The video advertised using Tor Browser for private browsing.
+This browser is a modified version of the Firefox browser — with maximum privacy settings.
+But its most important feature is that it can redirect all user data through The Onion Router (hence the name Tor) network.
+Data is transmitted in encrypted form through several layers of server (hence the onion in the name), where it’s mixed with data of other users of the network.
