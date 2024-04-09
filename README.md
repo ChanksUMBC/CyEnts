@@ -10,7 +10,7 @@ Run the following command:
 To train the model on annotated data:
     `spacy train config.cfg -o CyEnts`
 
-To add Gazeteers to the model use makePipelin3.py in the Pipeline Creation Folder
+To add Gazeteers to the model use makePipeline.py in the Pipeline Creation Folder
 
 # Directories Included
 (as of 4/9/2024)
