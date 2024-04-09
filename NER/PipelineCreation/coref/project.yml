@@ -60,7 +60,7 @@ vars:
   # XXX Change to your actual GPU ID
   gpu_id: 0
   # XXX fill with your local path to OntoNotes
-  ontonotes: C:/Users/thepi/VSCWorkspace/UMBCREU/Caseys-Code/NER/PipelineCreation/ontonotes-release-5.0
+  ontonotes: D:/Downloads/School/VSCWorkspace/UMBCREU/ontonotes-release-5.0
   max_epochs: 20
   # File to use for data in ci testing
   test_file: assets/litbank/95_the_prisoner_of_zenda_brat.conll

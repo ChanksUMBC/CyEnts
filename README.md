@@ -7,8 +7,13 @@ Install Python version >= 3.5.3
 Run the following command:
     `pip install -r requirements.txt`
 
+To train the model on annotated data:
+    `spacy train config.cfg -o CyEnts`
+
+To add Gazeteers to the model use makePipelin3.py in the Pipeline Creation Folder
+
 # Directories Included
-(as of 11/28/2022)
+(as of 4/9/2024)
 -NER
 
     Holds the code relevant to the project
@@ -29,12 +34,11 @@ Run the following command:
     -PipelineCreation
 
         Code involved in created the NLP model.
-        Includes makePipeline.py which creates the base model that uses rule based recognition such as regular expressions and Gazeteers.
-        Includes the spaCy experimental coref project, to be intergrated with the model.
+        Contains the lists of entties we use as Gazeteers
 
-    -TrainingData
+        -TrainingData
 
-        Various sets of training data for the ML parts of the NLP model.
+            Various sets of training data for the ML parts of the NLP model.
 
     -WebScraping
 

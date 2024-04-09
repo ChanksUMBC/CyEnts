@@ -159,7 +159,7 @@ def loadProtocolList():
 
 
 if __name__ == "__main__":
-    nlp = spacy.load("en_core_web_md")
+    nlp = spacy.load("../CyEnts/model-best")
 
     ruler = nlp.add_pipe("entity_ruler", before="ner")
 
@@ -254,7 +254,7 @@ if __name__ == "__main__":
     """
 
     save_pipeline = True
-    pipeline_directory = "./onramp_nlp"
+    pipeline_directory = "./CyEnts_with_gazeteers"
     if save_pipeline:
         print("Saving pipeline")
         nlp.to_disk(pipeline_directory)
@@ -288,11 +288,11 @@ Two of the domains appeared to mimic Northrop Grumman joint ventures."""
     doc = nlp(text)
     print("done!")
 
-    colors = {'URL': "#85C1E9", "EMAIL": "red", "MALWARE_NAME":"orange", "vulnerability":"#CAFF70", \
-            "IP_ADDRESS":"#EE82EE", 'threat_actor':"#FFB90F", 'port':'#E0FFFF', 'hash':'#FFFF00', \
-            'MALWARE_TYPE':'#3CB371'}
+    #colors = {'URL': "#85C1E9", "EMAIL": "red", "MALWARE_NAME":"orange", "vulnerability":"#CAFF70", \
+    #       "IP_ADDRESS":"#EE82EE", 'threat_actor':"#FFB90F", 'port':'#E0FFFF', 'hash':'#FFFF00', \
+    #        'MALWARE_TYPE':'#3CB371',"THREAT_ACTOR":"blue"}
 
-    html = displacy.render(doc, style="ent", options={"colors": colors}, page = True)
+    html = displacy.render(doc, style="ent", page = True)
 
     with open("test.html", "w") as file:
         file.write(html)
